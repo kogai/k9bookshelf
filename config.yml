@@ -1,0 +1,4 @@
+development:
+  password: ${THEME_APP_SECRET}
+  theme_id: ${THEME_ID}
+  store: k9books.myshopify.com

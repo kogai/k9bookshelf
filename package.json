@@ -1,0 +1,16 @@
+{
+  "name": "k9books",
+  "version": "1.0.0",
+  "description": "### Pragmaticbookshelf",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@bazel/bazelisk": "1.7.3",
+    "@shopify/theme-lint": "3.1.0"
+  }
+}
