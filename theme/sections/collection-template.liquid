@@ -1,0 +1,219 @@
+<!-- /templates/collection.liquid -->
+{% paginate collection.products by 12 %}
+
+<div data-section-id="{{ section.id }}" data-section-type="collection-template" data-sort-enabled="{{ section.settings.collection_sort_enable }}" data-tags-enabled="{{ section.settings.collection_tag_enable }}">
+  <header class="grid">
+    <h1 class="grid__item small--text-center {% if section.settings.collection_sort_enable or section.settings.collection_tag_enable %}medium-up--one-third{% endif %}">{% if current_tags.size > 0 %}{{ current_tags.first }}{% else %}{{ collection.title }}{% endif %}</h1>
+
+    {% if section.settings.collection_sort_enable or section.settings.collection_tag_enable %}
+      <div class="collection-sorting grid__item medium-up--two-thirds medium-up--text-right small--text-center">
+        {% if section.settings.collection_tag_enable and collection.all_tags.size > 0 %}
+          <div class="collection-sorting__dropdown">
+            <label for="BrowseBy" class="label--hidden">{{ 'collections.general.tags' | t }}</label>
+            <select name="BrowseBy" id="BrowseBy" aria-describedby="a11y-refresh-page-message a11y-selection-message">
+              {%- if current_tags -%}
+                <option value="{{ collection.url }}">{{ 'collections.general.all_tags' | t }}</option>
+              {%- else -%}
+                <option value="">{{ 'collections.general.tags' | t }}</option>
+              {%- endif -%}
+              {% for tag in collection.all_tags %}
+                {%- assign new_url = tag | link_to_tag: tag | split: 'href="' | last | split: '"' | first -%}
+                <option value="{{ new_url }}"{% if current_tags contains tag %} selected="selected"{% endif %}>{{ tag }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        {% endif %}
+        {% if section.settings.collection_sort_enable and collection.products.size > 1 %}
+          <div class="collection-sorting__dropdown">
+            <label for="SortBy" class="label--hidden">{{ 'collections.sorting.title' | t }}</label>
+            {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+            <select name="sort_by" id="SortBy" aria-describedby="a11y-refresh-page-message a11y-selection-message">
+              {% for option in collection.sort_options %}
+                <option value="{{ option.value }}"{% if sort_by == option.value %} selected="selected"{% endif %}>{{ option.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if collection.description != blank %}
+      <div class="collection-description grid__item rte">
+        {{ collection.description }}
+      </div>
+    {% endif %}
+  </header>
+
+  <div class="grid grid--uniform" role="list">
+
+    {% for product in collection.products %}
+      {% if collection.products.size == 1 %}
+        {% assign grid_item_width = 'medium-up--one-third small--one-whole' %}
+      {% else %}
+        {% assign grid_item_width = 'medium-up--one-third small--one-half' %}
+      {% endif %}
+      {% include 'product-grid-item' %}
+    {% else %}
+      {% comment %}
+        Add default products to help with onboarding for collections/all only.
+
+        The onboarding styles and products are only loaded if the
+        store has no products.
+      {% endcomment %}
+      {% if shop.products_count == 0 and collection.handle == 'all' %}
+        {% unless onboardingLoaded %}
+          {% comment %}
+            Only load onboarding styles if they have not already been loaded.
+          {% endcomment %}
+          {% assign onboardingLoaded = true %}
+        {% endunless %}
+        <div class="grid__item">
+          <div class="grid grid--uniform">
+            {% assign collection_index = 1 %}
+            {% for i in (1..6) %}
+              <div class="grid__item small--one-half medium-up--one-third text-center">
+                <a href="/admin/products" class="grid__image">
+                  {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                  {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                </a>
+                <div class="product__title"><a href="/admin/products">{{ 'homepage.onboarding.product_title' | t }}</a></div>
+                <div class="product__price">$19.99</div>
+              </div>
+              {% assign collection_index = collection_index | plus: 1 %}
+            {% endfor %}
+          </div>
+        </div>
+      {% else %}
+        {% comment %}
+          If collection exists but is empty, display message
+        {% endcomment %}
+        <div class="grid__item">
+          <p>{{ 'collections.general.no_matches' | t }}</p>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  {% if paginate.pages > 1 %}
+    <div class="pagination text-center">
+      {{ paginate | default_pagination }}
+    </div>
+  {% endif %}
+ </div>
+
+{% endpaginate %}
+
+
+
+{% schema %}
+{
+  "name": {
+    "cs": "Stránky s kolekcemi",
+    "da": "Kollektionssider",
+    "de": "Kategorie-Seiten",
+    "en": "Collection pages",
+    "es": "Páginas de colección",
+    "fi": "Kokoelman sivut",
+    "fr": "Pages de collections",
+    "it": "Pagine di collezioni",
+    "ja": "コレクションページ",
+    "ko": "컬렉션 페이지",
+    "nb": "Samlingssider",
+    "nl": "Collectiepagina's",
+    "pl": "Strony kolekcji",
+    "pt-BR": "Páginas de coleções",
+    "pt-PT": "Páginas de coleções",
+    "sv": "Produktseriesidor",
+    "th": "หน้าคอลเลกชัน",
+    "tr": "Koleksiyon sayfaları",
+    "vi": "Trang bộ sưu tập",
+    "zh-CN": "产品系列页面",
+    "zh-TW": "商品系列頁面"
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "vendor_show",
+      "label": {
+        "cs": "Zobrazit dodavatele produktu",
+        "da": "Vis produktleverandør",
+        "de": "Produktanbieter anzeigen",
+        "en": "Show product vendor",
+        "es": "Mostrar proveedor del producto",
+        "fi": "Näytä tuotteen myyjä",
+        "fr": "Afficher le distributeur du produit",
+        "it": "Mostra fornitore prodotto",
+        "ja": "商品の販売元を表示する",
+        "ko": "제품 공급 업체 표시",
+        "nb": "Vis produktleverandør",
+        "nl": "Productleverancier weergeven",
+        "pl": "Pokaż dostawcę produktu",
+        "pt-BR": "Exiba o fornecedor do produto",
+        "pt-PT": "Mostrar o fornecedor do produto",
+        "sv": "Visa produktsäljare",
+        "th": "แสดงผู้ขายสินค้า",
+        "tr": "Ürün satıcısını göster",
+        "vi": "Hiển thị nhà cung cấp sản phẩm",
+        "zh-CN": "显示产品厂商",
+        "zh-TW": "顯示產品廠商"
+      }
+    },
+    {
+      "type": "checkbox",
+      "id": "collection_sort_enable",
+      "label": {
+        "cs": "Povolit řazení kolekcí",
+        "da": "Aktivér sortering af kollektioner",
+        "de": "Kategoriesortierung aktivieren",
+        "en": "Enable collection sorting",
+        "es": "Habilitar la función ordenar colecciones",
+        "fi": "Ota kokoelman lajittelu käyttöön",
+        "fr": "Activer le tri de la collection",
+        "it": "Abilita ordinamento collezione",
+        "ja": "コレクションの並べ替えを有効にする",
+        "ko": "컬렉션 정렬 사용",
+        "nb": "Aktiver sortering av samlinger",
+        "nl": "Sorteren op collectie inschakelen",
+        "pl": "Włącz sortowanie kolekcji",
+        "pt-BR": "Habilitar a organização de coleções",
+        "pt-PT": "Ativar ordenação de coleções",
+        "sv": "Aktivera produktseriesortering",
+        "th": "เปิดใช้การเรียงลำดับคอลเลกชัน",
+        "tr": "Koleksiyon sıralamayı etkinleştir",
+        "vi": "Bật sắp xếp bộ sưu tập",
+        "zh-CN": "启用产品系列排序",
+        "zh-TW": "啟用商品系列排序功能"
+      },
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "collection_tag_enable",
+      "label": {
+        "cs": "Povolit filtrování podle produktového štítku",
+        "da": "Aktivér filtrering efter produkttag",
+        "de": "Filterung nach Produkt-Tag aktivieren",
+        "en": "Enable filtering by product tag",
+        "es": "Habilitar filtro por etiqueta de producto",
+        "fi": "Ota suodatus tuotetunnisteen perusteella käyttöön",
+        "fr": "Activer le filtrage par balise de produit",
+        "it": "Abilita filtri per tag di prodotto",
+        "ja": "商品タグによる絞り込みを有効にする",
+        "ko": "제품 태그별로 필터링 사용",
+        "nb": "Aktiver filtrering etter produkttagg",
+        "nl": "Schakel filteren in per producttag",
+        "pl": "Włącz filtrowanie według tagu produktu",
+        "pt-BR": "Habilitar filtragem por tag de produto",
+        "pt-PT": "Ativar filtragem por etiqueta de produto",
+        "sv": "Aktivera filtrering efter produkttagg",
+        "th": "เปิดใช้การกรองตามแท็กสินค้า",
+        "tr": "Ürün etiketine göre filtrelemeyi etkinleştir",
+        "vi": "Bật lọc theo thẻ sản phẩm",
+        "zh-CN": "启用按产品标记筛选",
+        "zh-TW": "啟用產品標籤篩選功能"
+      },
+      "default": false
+    }
+  ]
+}
+{% endschema %}

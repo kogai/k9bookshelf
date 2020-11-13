@@ -1,0 +1,92 @@
+<nav class="breadcrumb-nav small--text-center{% if request.page_type == blank %} breadcrumb-nav--no-template{% endif %}" aria-label="{{ 'general.breadcrumbs.you_are_here' | t }}">
+  <span itemscope itemtype="http://schema.org/BreadcrumbList">
+    <span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+      <a href="{{ routes.root_url }}" itemprop="item" title="{{ 'general.breadcrumbs.home_link_title' | t }}">
+        <span itemprop="name">{{ 'general.breadcrumbs.home' | t }}</span>
+      </a>
+      <span itemprop="position" hidden>1</span>
+    </span>
+    <span class="breadcrumb-nav__separator" aria-hidden="true">›</span>
+  {% case request.page_type %}
+    {% when 'collection' %}
+      {% if current_tags %}
+        {% assign collection_url = current_tags.first | link_to_remove_tag: current_tags.first | split: 'href="' | last | split: '"' | first %}
+        <span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+          <a href="{{ collection_url }}" itemprop="item">
+            <span itemprop="name">{{ collection.title }}</span>
+          </a>
+          <span itemprop="position" hidden>2</span>
+        </span>
+        <span class="breadcrumb-nav__separator" aria-hidden="true">›</span>
+        <span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+          <span itemprop="name">{{ current_tags.first }}</span>
+          <span itemprop="position" hidden>3</span>
+        </span>
+      {% else %}
+        <span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+          <span itemprop="name">{{ collection.title }}</span>
+          <span itemprop="position" hidden>2</span>
+        </span>
+      {% endif %}
+    {% when 'product' %}
+      {% if collection %}
+        <span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+          <a href="{{ collection.url }}" itemprop="item">
+            <span itemprop="name">{{ collection.title }}</span>
+          </a>
+          <span itemprop="position" hidden>2</span>
+        </span>
+        <span class="breadcrumb-nav__separator" aria-hidden="true">›</span>
+      {% endif %}
+      <span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+        <span itemprop="name">{{ product.title }}</span>
+        {% assign item_prop_position = 2 %}
+        {% if request.path contains 'collections' %}
+          {% assign item_prop_position = 3 %}
+        {% endif %}
+        <span itemprop="position" hidden>{{ item_prop_position }}</span>
+      </span>
+    {% when 'blog' %}
+      {% if current_tags %}
+        <span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+          <a href="{{ blog.url }}" itemprop="item">
+            <span itemprop="name">{{ blog.title }}</span>
+          </a>
+          <span itemprop="position" hidden>2</span>
+        </span>
+        <span class="breadcrumb-nav__separator" aria-hidden="true">›</span>
+        <span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+          <span itemprop="name">{{ current_tags.first }}</span>
+          <span itemprop="position" hidden>3</span>
+        </span>
+      {% else %}
+        <span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+          <span itemprop="name">{{ blog.title }}</span>
+          <span itemprop="position" hidden>2</span>
+        </span>
+      {% endif %}
+    {% when 'article' %}
+      <span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+        <a href="{{ blog.url }}" itemprop="item">
+          <span itemprop="name">{{ blog.title }}</span>
+        </a>
+        <span itemprop="position" hidden>2</span>
+      </span>
+      <span class="breadcrumb-nav__separator" aria-hidden="true">›</span>
+      <span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+        <span itemprop="name">{{ article.title }}</span>
+        <span itemprop="position" hidden>3</span>
+      </span>
+    {% when 'page' %}
+      <span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+        <span itemprop="name">{{ page.title }}</span>
+        <span itemprop="position" hidden>2</span>
+      </span>
+  {% else %}
+    <span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+      <span itemprop="name">{{ page_title }}</span>
+      <span itemprop="position" hidden>2</span>
+    </span>
+  {% endcase %}
+  </span>
+</nav>

@@ -1,0 +1,229 @@
+<div class="grid banner-wrapper">
+  <div class="grid__item banner slide-up-animation animated">
+    {% if section.settings.title != blank %}
+      <h2 class="small--text-center">{{ section.settings.title | escape }}</h2>
+    {% endif %}
+    {% unless section.settings.banner_url == blank %}
+      <a href="{{ section.settings.banner_url }}">
+    {% endunless %}
+    {% if section.settings.banner != blank %}
+      {%- assign img_url = section.settings.banner | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+      {% capture image_size %}970x{% endcapture %}
+
+      <div class="supports-js" style="max-width: {{ 2048 | times: section.settings.banner.aspect_ratio | round }}px;">
+        <div class="banner__image-wrapper" style="padding-top:{{ 1 | divided_by: section.settings.banner.aspect_ratio | times: 100}}%;">
+          <img class="banner__image lazyload"
+               src="{{ section.settings.banner | img_url: '300x300' }}"
+               data-src="{{ img_url }}"
+               data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+               data-aspectratio="{{ section.settings.banner.aspect_ratio }}"
+               data-sizes="auto"
+               style="max-width: {{ 2048 | times: section.settings.banner.aspect_ratio | round }}px;"
+               alt="{{ section.settings.banner.alt | default: shop.name }}"
+               itemprop="image">
+        </div>
+      </div>
+
+      <noscript>
+        <img class="banner__image" src="{{ section.settings.banner | img_url: image_size }}"
+        srcset="{{ section.settings.banner | img_url: image_size }} 1x, {{ section.settings.banner | img_url: image_size, scale: 2 }} 2x"
+        alt="{{ section.settings.banner.alt | default: shop.name }}"
+        itemprop="image">
+      </noscript>
+    {% else %}
+      <div class="placeholder-background">
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+    {% endif %}
+    {% unless section.settings.banner_url == blank %}
+      </a>
+    {% endunless %}
+  </div>
+</div>
+
+
+
+{% schema %}
+{
+  "name": {
+    "cs": "Speciální banner",
+    "da": "Udvalgt banner",
+    "de": "Feature-Banner",
+    "en": "Featured banner",
+    "es": "Banner destacado",
+    "fi": "Esittelybanneri",
+    "fr": "Bannière en vedette",
+    "it": "Banner in primo piano",
+    "ja": "特集バナー",
+    "ko": "추천 배너",
+    "nb": "Utvalgt banner",
+    "nl": "Uitgelichte banner",
+    "pl": "Baner Polecane",
+    "pt-BR": "Banner em destaque",
+    "pt-PT": "Faixa em destaque",
+    "sv": "Utvald banderoll",
+    "th": "แบนเนอร์แนะนำ",
+    "tr": "Öne çıkan banner",
+    "vi": "Biểu ngữ nổi bật",
+    "zh-CN": "特色横幅",
+    "zh-TW": "精選產品橫幅"
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": {
+        "cs": "Nadpis",
+        "da": "Overskrift",
+        "de": "Titel",
+        "en": "Heading",
+        "es": "Título",
+        "fi": "Otsake",
+        "fr": "Titre",
+        "it": "Heading",
+        "ja": "見出し",
+        "ko": "제목",
+        "nb": "Overskrift",
+        "nl": "Kop",
+        "pl": "Nagłówek",
+        "pt-BR": "Título",
+        "pt-PT": "Título",
+        "sv": "Rubrik",
+        "th": "ส่วนหัว",
+        "tr": "Başlık",
+        "vi": "Tiêu đề",
+        "zh-CN": "标题",
+        "zh-TW": "標題"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "banner",
+      "label": {
+        "cs": "Obrázek",
+        "da": "Billede",
+        "de": "Foto",
+        "en": "Image",
+        "es": "Imagen",
+        "fi": "Kuva",
+        "fr": "Image",
+        "it": "Immagine",
+        "ja": "画像",
+        "ko": "이미지",
+        "nb": "Bilde",
+        "nl": "Afbeelding",
+        "pl": "Obraz",
+        "pt-BR": "Imagem",
+        "pt-PT": "Imagem",
+        "sv": "Bild",
+        "th": "รูปภาพ",
+        "tr": "Görsel",
+        "vi": "Hình ảnh",
+        "zh-CN": "图片",
+        "zh-TW": "圖片"
+      },
+      "info": {
+        "cs": "Minimální šířka 970 px",
+        "da": "Skal mindst være 970 px bred",
+        "de": "Breite mindestens 970 Pixel",
+        "en": "970px wide minimum",
+        "es": "970px de ancho mínimo",
+        "fi": "Leveys vähintään 970 piks.",
+        "fr": "970 px minimum",
+        "it": "Larghezza minima: 970 px",
+        "ja": "最小幅970ピクセル",
+        "ko": "970픽셀 최소 와이드",
+        "nb": "Bredde på minst 970 piksler",
+        "nl": "Minimaal 970 pixels breed",
+        "pl": "Minimalna szerokość 970 px",
+        "pt-BR": "Mínimo de 970px de largura",
+        "pt-PT": "Mínimo de 970px de largura",
+        "sv": "970px bredd minimum",
+        "th": "ความกว้างขั้นต่ำ 970px",
+        "tr": "Minimum 970 piksel genişlik",
+        "vi": "rộng tối thiểu 970px",
+        "zh-CN": "至少 970 px 宽",
+        "zh-TW": "最小寬度 970 像素"
+      }
+    },
+    {
+      "type": "url",
+      "id": "banner_url",
+      "label": {
+        "cs": "Odkaz na obrázek",
+        "da": "Billedlink",
+        "de": "Bild-Link",
+        "en": "Image link",
+        "es": "Enlace de imagen",
+        "fi": "Kuvan linkki",
+        "fr": "Lien vers l'image",
+        "it": "Link immagine",
+        "ja": "画像リンク",
+        "ko": "이미지 링크",
+        "nb": "Bildekobling",
+        "nl": "Afbeeldingslink",
+        "pl": "Link obrazu",
+        "pt-BR": "Link da imagem",
+        "pt-PT": "Ligação de imagem",
+        "sv": "Bildlänk",
+        "th": "ลิงก์รูปภาพ",
+        "tr": "Görsel bağlantısı",
+        "vi": "Liên kết hình ảnh",
+        "zh-CN": "图片链接",
+        "zh-TW": "圖片連結"
+      }
+    }
+  ],
+  "presets": [
+    {
+      "name": {
+        "cs": "Speciální banner",
+        "da": "Udvalgt banner",
+        "de": "Feature-Banner",
+        "en": "Featured banner",
+        "es": "Banner destacado",
+        "fi": "Esittelybanneri",
+        "fr": "Bannière en vedette",
+        "it": "Banner in primo piano",
+        "ja": "特集バナー",
+        "ko": "추천 배너",
+        "nb": "Utvalgt banner",
+        "nl": "Uitgelichte banner",
+        "pl": "Baner Polecane",
+        "pt-BR": "Banner em destaque",
+        "pt-PT": "Faixa em destaque",
+        "sv": "Utvald banderoll",
+        "th": "แบนเนอร์แนะนำ",
+        "tr": "Öne çıkan banner",
+        "vi": "Biểu ngữ nổi bật",
+        "zh-CN": "特色横幅",
+        "zh-TW": "精選產品橫幅"
+      },
+      "category": {
+        "cs": "Obrázek",
+        "da": "Billede",
+        "de": "Foto",
+        "en": "Image",
+        "es": "Imagen",
+        "fi": "Kuva",
+        "fr": "Image",
+        "it": "Immagine",
+        "ja": "画像",
+        "ko": "이미지",
+        "nb": "Bilde",
+        "nl": "Afbeelding",
+        "pl": "Obraz",
+        "pt-BR": "Imagem",
+        "pt-PT": "Imagem",
+        "sv": "Bild",
+        "th": "รูปภาพ",
+        "tr": "Görsel",
+        "vi": "Hình ảnh",
+        "zh-CN": "图片",
+        "zh-TW": "圖片"
+      }
+    }
+  ],
+  "blocks": []
+}
+{% endschema %}

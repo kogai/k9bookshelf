@@ -1,0 +1,108 @@
+<!doctype html>
+<html class="supports-no-js" lang="{{ shop.locale }}">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="{{ settings.color_primary }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  {% if settings.favicon %}
+    <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png" />
+  {% endif %}
+
+  <title>
+  {{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+  </title>
+
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
+
+  {% include 'social-meta-tags' %}
+
+  <script>
+    document.documentElement.className = document.documentElement.className.replace('supports-no-js', 'supports-js');
+
+    var theme = {
+      mapStrings: {
+        addressError: {{ 'homepage.map.address_error' | t | json }},
+        addressNoResults: {{ 'homepage.map.address_no_results' | t | json }},
+        addressQueryLimit: {{ 'homepage.map.address_query_limit_html' | t | json }},
+        authError: {{ 'homepage.map.auth_error_html' | t | json }}
+      }
+    }
+  </script>
+
+  {{ 'theme.scss.css' | asset_url | stylesheet_tag }}
+
+  {{ content_for_header }}
+
+  {{ 'jquery-1.11.0.min.js' | asset_url | script_tag }}
+  {{ 'modernizr.min.js' | asset_url | script_tag }}
+
+  <script src="{{ 'lazysizes.min.js' | asset_url }}" async="async"></script>
+
+  {% if request.page_type contains 'customers/' %}
+    {{ 'shopify_common.js' | shopify_asset_url | script_tag }}
+  {% endif %}
+</head>
+
+<body id="{{ page_title | handle }}" class="{% if customer %}customer-logged-in {% endif %}template-{{ request.page_type | handle }}">
+
+  <a class="in-page-link visually-hidden skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
+
+  {% section "header" %}
+
+    {% comment %}
+    <hr class="small--hide hr--small">
+    {% endcomment %}
+
+  <div class="site-wrapper">
+
+    <div class="grid">
+
+      {% section "sidebar" %}
+
+      <main class="main-content grid__item medium-up--four-fifths" id="MainContent" role="main">
+        {% unless request.page_type == 'index' %}
+          <hr class="hr--border-top small--hide">
+        {% endunless %}
+        {% if settings.show_breadcrumb_nav and request.page_type != 'index' %}
+          {% include 'breadcrumb-nav' %}
+        {% endif %}
+        {{ content_for_layout }}
+      </main>
+
+    </div>
+
+    <hr>
+
+    {% section "footer" %}
+
+    {%- if request.page_type == 'index' -%}
+      <p id="slideshow-info" class="visually-hidden" aria-hidden="true">
+        {{- 'homepage.slideshow.navigation_instructions' | t -}}
+      </p>
+    {%- endif -%}
+
+  </div>
+
+  {% if request.page_type == 'product' or request.page_type == 'index' %}
+    {{ 'option_selection.js' | shopify_asset_url | script_tag }}
+    <script>
+      // Set a global variable for theme.js to use on product single init
+      window.theme = window.theme || {};
+      theme.moneyFormat = {{ shop.money_format | json }};
+      theme.productSingleObject = {{ product | json }};
+    </script>
+  {% endif %}
+
+  <ul hidden>
+    <li id="a11y-refresh-page-message">{{ 'general.accessibility.refresh_page' | t }}</li>
+    <li id="a11y-selection-message">{{ 'general.accessibility.selection_help' | t }}</li>
+  </ul>
+
+  {{ 'theme.js' | asset_url | script_tag }}
+</body>
+</html>

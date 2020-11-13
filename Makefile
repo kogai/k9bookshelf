@@ -4,13 +4,13 @@ LINT := yarn theme-lint
 .PHONY: deploy,watch,download
 
 deploy:
-	$(TK) deploy
+	$(TK) deploy --dir theme
 
 watch:
-	$(TK) watch
+	$(TK) watch --dir theme
 
 download:
-	$(TK) download
+	$(TK) --dir theme download
 
 version:
 	$(TK) version
