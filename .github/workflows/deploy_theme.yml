@@ -1,0 +1,31 @@
+name: deploy theme
+
+on:
+  push:
+    branches:
+      - main
+      - "**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.0
+        with:
+          node-version: 12.x
+      - name: Restore caches
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.npm
+            ~/.cache/bazel
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-
+      - run: yarn install
+      - run: make deploy
+        env:
+          THEME_APP_SECRET: ${{ secrets.THEME_APP_SECRET }}
+          THEME_ID: ${{ secrets.THEME_ID }}
