@@ -1,32 +1,12 @@
-## 出版社毎
-
-### Pragmaticbookshelf
-
-メール送信済
-
-### Pact
-
-コンタクトフォームより問い合わせ済
-
-### Pearson
-
-- https://www.pearson.com.au/community/bookseller/
-
-### Manning
-
-### no starch press
-
 ## 仕入れたい
 
 ### Pragmaticbookshelf
 
-- https://pragprog.com/titles/khrust/programming-webassembly-with-rust/
 - https://pragprog.com/titles/swdddf/domain-modeling-made-functional/
 - https://pragprog.com/titles/wdradio/explore-software-defined-radio/
 
-### Pact
+### Packt
 
-- https://www.packtpub.com/product/node-js-design-patterns/9781783287314
 - https://www.packtpub.com/product/mastering-distributed-tracing/9781788628464
 
 ### Pearson
@@ -52,7 +32,5 @@
 ### others
 
 - https://www.amazon.com/Ethics-Engineers-Martin-Peterson/dp/0190609192
-- https://www.harpercollins.com/products/blood-sweat-and-pixels-jason-schreier?variant=32122042744866
 - https://press.stripe.com/ elegant puzzle
-- https://www.maa.org/press/maa-reviews/an-introduction-to-functional-programming-through-lambda-calculus
 - https://www.informit.com/store/hackers-delight-9780321842688

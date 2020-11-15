@@ -181,6 +181,12 @@
             </div>
           {% endunless %}
 
+          {% if product.metafields.global.ebook %}
+            <a class="btn" href="{{ product.metafields.global.ebook }}" target="_blank" style="margin-top:10px;">
+              電子版(Amazon)
+            </a>
+          {% endif %}
+
         </div>
 
         {% if section.settings.product_description_position == 'right' %}
