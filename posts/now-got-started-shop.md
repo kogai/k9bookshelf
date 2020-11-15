@@ -1,0 +1,21 @@
+出版社に問い合わせる
+取次を紹介される
+
+取次のオンラインサービスにアカウントを作成する
+https://getstarted.ingramcontent.com
+
+ingramはアメリカの出版取次大手（トーハンみたいな感じ）
+人間による確認を経てアカウント有効化
+
+ipageにアカウントを作成する
+小売業者や個人事業主などが仕入れのために利用する
+
+動画
+https://www.ingramcontent.com/retailers/ordering/ipage
+
+FAQ
+https://www.ingramcontent.com/publishers/lp/introducingipage-faq
+
+書誌情報がダウンロードできる
+種類が多い
+BISAC https://www2.archivists.org/groups/standards-committee/book-industry-standards-and-communications-bisac

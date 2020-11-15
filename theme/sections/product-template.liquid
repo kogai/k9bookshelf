@@ -154,6 +154,33 @@
 
           {% endform %}
 
+          {% unless product.available %}
+            <div id="sold-out">
+              {% form 'contact' %}
+                {% if form.posted_successfully? %}
+                  <p class="accent-text">ありがとうございます! この商品が入荷したらお知らせします。</p>
+                {% else %}
+                  <div>
+                    <div style='margin-bottom:5px;'>
+                      {% if customer %}
+                        <input type="hidden" name="contact[email]" value="{{ customer.email }}" />
+                      {% else %}
+                        <input required="required" type="email" name="contact[email]" placeholder="your@email.com" class="styled-input{% if form.errors contains 'email' %} error{% endif %}" value="{{ contact.fields.email }}" />
+                      {% endif %}
+                    </div>
+                    <input type="hidden" name="contact[body]" value="Please notify me when {{ product.title | escape }} becomes available." />
+                    <input class="btn styled-submit" type="submit" value="この商品が入荷したら通知する" />
+                  </div>
+                {% endif %}
+                {% if form.errors %}
+                  <div class="error feedback accent-text">
+                    <p>正しい形式のメールアドレスを入力して下さい</p>
+                  </div>
+                {% endif %}
+              {% endform %}
+            </div>
+          {% endunless %}
+
         </div>
 
         {% if section.settings.product_description_position == 'right' %}
