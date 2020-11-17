@@ -16,7 +16,7 @@ version:
 	$(TK) version
 
 lint:
-	$(LINT) .
+	$(LINT) ./theme
 
 list:
 	$(TK) get --list

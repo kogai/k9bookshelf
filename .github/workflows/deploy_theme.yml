@@ -25,6 +25,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-
       - run: yarn install
+      - run: make lint
       - run: make deploy
         env:
           THEME_APP_SECRET: ${{ secrets.THEME_APP_SECRET }}
