@@ -34,3 +34,5 @@
 - https://www.amazon.com/Ethics-Engineers-Martin-Peterson/dp/0190609192
 - https://press.stripe.com/ elegant puzzle
 - https://www.informit.com/store/hackers-delight-9780321842688
+
+	$(BZL) build --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 //packages/przplz/functions/...:all

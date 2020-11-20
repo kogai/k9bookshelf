@@ -1,0 +1,4 @@
+schema:
+  - https://k9books.myshopify.com/admin/api/2020-07/graphql.json:
+      headers:
+        X-Shopify-Access-Token: ${MARKDOWN_APP_SECRET}
