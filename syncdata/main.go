@@ -6,6 +6,7 @@ import (
 	"k9bookshelf/generated"
 	"net/http"
 	"os"
+	"path"
 	"strings"
 
 	"github.com/Yamashou/gqlgenc/client"
@@ -30,10 +31,19 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	cwd, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
+
+	// TODO: Use goroutine
 	for _, edge := range res.Products.Edges {
-		fmt.Println("")
+		file, err := os.Create(path.Join(cwd, "products", edge.Node.Handle+".md"))
+		if err != nil {
+			panic(err)
+		}
 		fmt.Println(edge.Node.Handle, edge.Node.Metafield)
-		err := godown.Convert(os.Stdout, strings.NewReader(edge.Node.DescriptionHTML), nil)
+		err = godown.Convert(file, strings.NewReader(edge.Node.DescriptionHTML), nil)
 		if err != nil {
 			panic(err)
 		}
