@@ -1,3 +1,8 @@
+load("@bazel_gazelle//:def.bzl", "gazelle")
+
+# gazelle:prefix k9bookshelf
+gazelle(name = "gazelle")
+
 config_setting(
     name = "darwin",
     values = {"cpu": "darwin"},
