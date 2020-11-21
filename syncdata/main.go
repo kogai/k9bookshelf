@@ -1,48 +1,34 @@
 package main
 
 import (
-	"bytes"
-	"encoding/json"
+	"context"
 	"fmt"
-	"io/ioutil"
+	"k9bookshelf/generated"
 	"net/http"
 	"os"
+
+	"github.com/Yamashou/gqlgenc/client"
 )
 
 func main() {
-	file, err := ioutil.ReadFile("./syncdata/product.gql")
-	if err != nil {
-		panic(err)
-	}
-	body, err := json.Marshal(map[string]interface{}{
-		"query": fmt.Sprintf("%s", file),
-		"variables": map[string]int{
-			"first": 10,
-		},
-	})
-	if err != nil {
-		panic(err)
+	authHeader := func(req *http.Request) {
+		req.Header.Set("X-Shopify-Access-Token", os.Getenv("MARKDOWN_APP_SECRET"))
+		req.Header.Set("Content-Type", "application/json")
 	}
 
-	req, err := http.NewRequest("POST",
-		fmt.Sprintf("https://%s/admin/api/%s/graphql.json", "k9books.myshopify.com", "2020-10"),
-		bytes.NewBuffer(body))
+	adminClient := &generated.Client{
+		Client: client.NewClient(http.DefaultClient,
+			fmt.Sprintf("https://%s/admin/api/%s/graphql.json", "k9books.myshopify.com", "2020-10"),
+			authHeader),
+	}
+
+	ctx := context.Background()
+	res, err := adminClient.Products(ctx, 10)
+
 	if err != nil {
 		panic(err)
 	}
-
-	req.Header.Add("X-Shopify-Access-Token", os.Getenv("MARKDOWN_APP_SECRET"))
-	req.Header.Add("Content-Type", "application/json")
-
-	res, err := http.DefaultClient.Do(req)
-	if err != nil {
-		panic(err)
+	for _, edge := range res.Products.Edges {
+		fmt.Println(edge.Node.Handle)
 	}
-	defer res.Body.Close()
-
-	body, err = ioutil.ReadAll(res.Body)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println("Response", string(body))
 }
