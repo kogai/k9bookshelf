@@ -1,5 +1,5 @@
 - [ ] Google 設定
-  - [ ] 書影を入手する
+  - [x] 書影を入手する
 - [ ] Facebook 設定
 - [ ] Instagram 設定
 - [x] 予約販売
