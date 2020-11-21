@@ -1521,12 +1521,12 @@ type Customer struct {
 	VerifiedEmail bool `json:"verifiedEmail"`
 }
 
+func (Customer) IsCommentEventEmbed()      {}
 func (Customer) IsNode()                   {}
 func (Customer) IsCommentEventSubject()    {}
 func (Customer) IsHasMetafields()          {}
 func (Customer) IsLegacyInteroperability() {}
 func (Customer) IsHasEvents()              {}
-func (Customer) IsCommentEventEmbed()      {}
 
 // Return type for `customerAddTaxExemptions` mutation.
 type CustomerAddTaxExemptionsPayload struct {
@@ -2982,8 +2982,8 @@ type DiscountPercentage struct {
 	Percentage float64 `json:"percentage"`
 }
 
-func (DiscountPercentage) IsDiscountCustomerGetsValue() {}
 func (DiscountPercentage) IsDiscountEffect()            {}
+func (DiscountPercentage) IsDiscountCustomerGetsValue() {}
 
 // The entitled or prerequisite products and product variants for a discount.
 type DiscountProducts struct {
@@ -5539,8 +5539,8 @@ type MoneyV2 struct {
 	CurrencyCode CurrencyCode `json:"currencyCode"`
 }
 
-func (MoneyV2) IsDeliveryConditionCriteria() {}
 func (MoneyV2) IsPricingValue()              {}
+func (MoneyV2) IsDeliveryConditionCriteria() {}
 
 // An individual move to perform of an object to a position.
 type MoveInput struct {
@@ -5883,13 +5883,13 @@ type Order struct {
 	UpdatedAt string `json:"updatedAt"`
 }
 
-func (Order) IsCommentEventEmbed()         {}
 func (Order) IsNode()                      {}
 func (Order) IsCommentEventSubject()       {}
 func (Order) IsHasMetafields()             {}
 func (Order) IsLegacyInteroperability()    {}
 func (Order) IsHasEvents()                 {}
 func (Order) IsHasLocalizationExtensions() {}
+func (Order) IsCommentEventEmbed()         {}
 
 // Specifies the authorized transaction to capture and the total amount to capture from it.
 type OrderCaptureInput struct {
@@ -7336,12 +7336,12 @@ type ProductVariant struct {
 	WeightUnit WeightUnit `json:"weightUnit"`
 }
 
+func (ProductVariant) IsCommentEventEmbed()        {}
 func (ProductVariant) IsNode()                     {}
 func (ProductVariant) IsHasMetafields()            {}
 func (ProductVariant) IsHasPublishedTranslations() {}
 func (ProductVariant) IsNavigable()                {}
 func (ProductVariant) IsLegacyInteroperability()   {}
-func (ProductVariant) IsCommentEventEmbed()        {}
 
 type ProductVariantConnection struct {
 	// A list of edges.
