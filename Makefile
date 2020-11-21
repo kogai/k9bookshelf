@@ -1,10 +1,14 @@
+MD_FILES := $(shell find ./ -type f -name '*.md')
 TK := npx bazelisk run //:theme --
 LINT := yarn theme-lint
 
-.PHONY: deploy,watch,download
+.PHONY: deploy/theme,deploy/products,watch,download
 
-deploy:
+deploy/theme:
 	$(TK) deploy --dir theme
+
+deploy/products: $(MD_FILES)
+	go run syncdata/main.go --name deploy
 
 watch:
 	$(TK) watch --dir theme
