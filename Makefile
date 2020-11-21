@@ -25,4 +25,5 @@ generated/client.go: syncdata/*.gql
 	# $(BZL_BIN)/external/com_github_yamashou_gqlgenc
 
 bin/syncdata: $(GO_FILES)
+	mkdir -p bin
 	go build -o bin k9bookshelf/syncdata
