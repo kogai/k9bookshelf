@@ -1,4 +1,5 @@
 MD_FILES := $(shell find ./ -type f -name '*.md')
+GO_FILES := $(shell find ./ -type f -name '*.go')
 TK := npx bazelisk run //:theme --
 LINT := yarn theme-lint
 
@@ -7,8 +8,8 @@ LINT := yarn theme-lint
 deploy/theme:
 	$(TK) deploy --dir theme
 
-deploy/products: $(MD_FILES)
-	go run syncdata/main.go --name deploy
+deploy/products: $(MD_FILES) bin/syncdata
+	./bin/syncdata --name deploy
 
 watch:
 	$(TK) watch --dir theme
@@ -22,3 +23,6 @@ lint:
 generated/client.go: syncdata/*.gql
 	gqlgenc
 	# $(BZL_BIN)/external/com_github_yamashou_gqlgenc
+
+bin/syncdata: $(GO_FILES)
+	go build -o bin k9bookshelf/syncdata
