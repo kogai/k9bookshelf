@@ -1,1 +1,3 @@
 /bazel-*
+# /generated
+/syncdata/BUILD.bazel

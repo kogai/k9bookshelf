@@ -1,0 +1,12 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "client.go",
+        "model.go",
+    ],
+    importpath = "app/generated",
+    visibility = ["//visibility:public"],
+    deps = ["@com_github_yamashou_gqlgenc//client:go_default_library"],
+)
