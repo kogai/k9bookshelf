@@ -7063,53 +7063,53 @@ type ProductInput struct {
 	// Whether a redirect is required after a new handle has been provided.
 	// If true, then the old handle is redirected to the new one automatically.
 	//
-	RedirectNewHandle *bool `json:"redirectNewHandle"`
+	RedirectNewHandle *bool `json:"redirectNewHandle,omitempty"`
 	// The SEO information associated with the product.
-	Seo *SEOInput `json:"seo"`
+	Seo *SEOInput `json:"seo,omitempty"`
 	// The product type specified by the merchant.
-	ProductType *string `json:"productType"`
+	ProductType *string `json:"productType,omitempty"`
 	// A comma separated list tags that have been added to the product.
-	Tags []string `json:"tags"`
+	Tags []string `json:"tags,omitempty"`
 	// The theme template used when viewing the product in a store.
-	TemplateSuffix *string `json:"templateSuffix"`
+	TemplateSuffix *string `json:"templateSuffix,omitempty"`
 	// Whether the product is a gift card.
-	GiftCard *bool `json:"giftCard"`
+	GiftCard *bool `json:"giftCard,omitempty"`
 	// The theme template used when viewing the gift card in a store.
-	GiftCardTemplateSuffix *string `json:"giftCardTemplateSuffix"`
+	GiftCardTemplateSuffix *string `json:"giftCardTemplateSuffix,omitempty"`
 	// The title of the product.
-	Title *string `json:"title"`
+	Title *string `json:"title,omitempty"`
 	// The name of the product's vendor.
-	Vendor *string `json:"vendor"`
+	Vendor *string `json:"vendor,omitempty"`
 	// A description of the product. Supports HTML formatting. This argument is deprecated: Use `descriptionHtml` instead.
-	BodyHTML *string `json:"bodyHtml"`
+	BodyHTML *string `json:"bodyHtml,omitempty"`
 	// The IDs of the collections that this product will be added to.
-	CollectionsToJoin []string `json:"collectionsToJoin"`
+	CollectionsToJoin []string `json:"collectionsToJoin,omitempty"`
 	// The IDs of collections that will no longer include the product.
-	CollectionsToLeave []string `json:"collectionsToLeave"`
+	CollectionsToLeave []string `json:"collectionsToLeave,omitempty"`
 	// Specifies the product to update in productUpdate or creates a new product if absent in productCreate.
 	ID *string `json:"id"`
 	// The images to associate with the product.
-	Images []*ImageInput `json:"images"`
+	Images []*ImageInput `json:"images,omitempty"`
 	// The metafields to associate with this product.
-	Metafields []*MetafieldInput `json:"metafields"`
+	Metafields []*MetafieldInput `json:"metafields,omitempty"`
 	// The private metafields to associated with this product.
-	PrivateMetafields []*PrivateMetafieldInput `json:"privateMetafields"`
+	PrivateMetafields []*PrivateMetafieldInput `json:"privateMetafields,omitempty"`
 	// List of custom product options (maximum of 3 per product).
-	Options []string `json:"options"`
+	Options []string `json:"options,omitempty"`
 	// A list of the channels where the product is published. This argument is deprecated: Use `PublishablePublish` instead.
-	ProductPublications []*ProductPublicationInput `json:"productPublications"`
+	ProductPublications []*ProductPublicationInput `json:"productPublications,omitempty"`
 	// A list of the channels where the product is published. This argument is deprecated: Use `PublishablePublish` instead.
-	Publications []*ProductPublicationInput `json:"publications"`
+	Publications []*ProductPublicationInput `json:"publications,omitempty"`
 	// Only products with an active status can be published. This argument is deprecated: Use `PublishablePublish` instead.
-	PublishDate *string `json:"publishDate"`
+	PublishDate *string `json:"publishDate,omitempty"`
 	// Only products with an active status can be published. This argument is deprecated: Use `PublishablePublish` instead.
-	PublishOn *string `json:"publishOn"`
+	PublishOn *string `json:"publishOn,omitempty"`
 	// Only products with an active status can be published. This argument is deprecated: Use `PublishablePublish` instead.
-	Published *bool `json:"published"`
+	Published *bool `json:"published,omitempty"`
 	// Only products with an active status can be published. This argument is deprecated: Use `PublishablePublish` instead.
-	PublishedAt *string `json:"publishedAt"`
+	PublishedAt *string `json:"publishedAt,omitempty"`
 	// A list of variants associated with the product.
-	Variants []*ProductVariantInput `json:"variants"`
+	Variants []*ProductVariantInput `json:"variants,omitempty"`
 }
 
 // Custom product property names like "Size", "Color", and "Material".
