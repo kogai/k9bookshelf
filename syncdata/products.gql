@@ -1,0 +1,14 @@
+query products($first: Int!) {
+  products(first: $first) {
+    edges {
+      node {
+        handle
+        descriptionHtml
+        metafield(namespace: "global", key: "ebook") {
+          namespace
+          value
+        }
+      }
+    }
+  }
+}

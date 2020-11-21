@@ -1,3 +1,8 @@
+load("@bazel_gazelle//:def.bzl", "gazelle")
+
+# gazelle:prefix k9bookshelf
+gazelle(name = "gazelle")
+
 config_setting(
     name = "darwin",
     values = {"cpu": "darwin"},
@@ -18,9 +23,4 @@ alias(
         ":ci": "@theme_linux//file:downloaded",
         "//conditions:default": "@theme_darwin//file:downloaded",
     }),
-)
-
-alias(
-    name = "buildifier",
-    actual = "@com_github_bazelbuild_buildtools//buildifier",
 )
