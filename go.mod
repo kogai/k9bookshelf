@@ -1,4 +1,4 @@
-module syncdata
+module k9bookshelf
 
 go 1.14
 

@@ -16,4 +16,5 @@ lint:
 	$(LINT) ./theme
 
 generated/client.go: syncdata/*.gql
-	$(BZL_BIN)/external/com_github_yamashou_gqlgenc
+	gqlgenc
+	# $(BZL_BIN)/external/com_github_yamashou_gqlgenc
