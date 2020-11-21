@@ -1,3 +1,5 @@
+[k9bookshelf](https://k9bookshelf.com)のテーマやコンテンツ、サブツールの管理レポジトリ。
+
 ## テーマの更新
 
 ```sh

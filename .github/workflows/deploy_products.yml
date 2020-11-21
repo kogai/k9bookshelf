@@ -1,4 +1,4 @@
-name: deploy theme
+name: deploy products
 
 on:
   push:
@@ -25,8 +25,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-
       - run: yarn install
-      - run: make lint
-      - run: make deploy/theme
+      - run: make deploy/products
         env:
-          THEME_APP_SECRET: ${{ secrets.THEME_APP_SECRET }}
-          THEME_ID: ${{ secrets.THEME_ID }}
+          MARKDOWN_APP_SECRET: ${{ secrets.MARKDOWN_APP_SECRET }}
+          GRAPHQL_ADMIN_API_SECRET: ${{ secrets.GRAPHQL_ADMIN_API_SECRET }}
