@@ -2156,8 +2156,8 @@ type DeliveryRateDefinition struct {
 	Price *MoneyV2 `json:"price"`
 }
 
-func (DeliveryRateDefinition) IsNode()                 {}
 func (DeliveryRateDefinition) IsDeliveryRateProvider() {}
+func (DeliveryRateDefinition) IsNode()                 {}
 
 // Input fields for a rate definition.
 type DeliveryRateDefinitionInput struct {
@@ -2372,9 +2372,9 @@ type DiscountAutomaticBxgy struct {
 	UsesPerOrderLimit *int64 `json:"usesPerOrderLimit"`
 }
 
+func (DiscountAutomaticBxgy) IsDiscountAutomatic() {}
 func (DiscountAutomaticBxgy) IsNode()              {}
 func (DiscountAutomaticBxgy) IsHasEvents()         {}
-func (DiscountAutomaticBxgy) IsDiscountAutomatic() {}
 
 // Return type for `discountAutomaticBxgyCreate` mutation.
 type DiscountAutomaticBxgyCreatePayload struct {
@@ -2982,8 +2982,8 @@ type DiscountPercentage struct {
 	Percentage float64 `json:"percentage"`
 }
 
-func (DiscountPercentage) IsDiscountEffect()            {}
 func (DiscountPercentage) IsDiscountCustomerGetsValue() {}
+func (DiscountPercentage) IsDiscountEffect()            {}
 
 // The entitled or prerequisite products and product variants for a discount.
 type DiscountProducts struct {
@@ -3191,12 +3191,12 @@ type DraftOrder struct {
 	UpdatedAt string `json:"updatedAt"`
 }
 
+func (DraftOrder) IsCommentEventEmbed()      {}
 func (DraftOrder) IsNode()                   {}
 func (DraftOrder) IsHasMetafields()          {}
 func (DraftOrder) IsCommentEventSubject()    {}
 func (DraftOrder) IsLegacyInteroperability() {}
 func (DraftOrder) IsHasEvents()              {}
-func (DraftOrder) IsCommentEventEmbed()      {}
 
 // The order-level discount applied to a draft order.
 type DraftOrderAppliedDiscount struct {
@@ -5539,8 +5539,8 @@ type MoneyV2 struct {
 	CurrencyCode CurrencyCode `json:"currencyCode"`
 }
 
-func (MoneyV2) IsPricingValue()              {}
 func (MoneyV2) IsDeliveryConditionCriteria() {}
+func (MoneyV2) IsPricingValue()              {}
 
 // An individual move to perform of an object to a position.
 type MoveInput struct {
@@ -5883,13 +5883,13 @@ type Order struct {
 	UpdatedAt string `json:"updatedAt"`
 }
 
+func (Order) IsCommentEventEmbed()         {}
 func (Order) IsNode()                      {}
 func (Order) IsCommentEventSubject()       {}
 func (Order) IsHasMetafields()             {}
 func (Order) IsLegacyInteroperability()    {}
 func (Order) IsHasEvents()                 {}
 func (Order) IsHasLocalizationExtensions() {}
-func (Order) IsCommentEventEmbed()         {}
 
 // Specifies the authorized transaction to capture and the total amount to capture from it.
 type OrderCaptureInput struct {
@@ -6930,6 +6930,7 @@ type Product struct {
 	Vendor string `json:"vendor"`
 }
 
+func (Product) IsCommentEventEmbed()        {}
 func (Product) IsNode()                     {}
 func (Product) IsNavigable()                {}
 func (Product) IsHasMetafields()            {}
@@ -6937,7 +6938,6 @@ func (Product) IsHasPublishedTranslations() {}
 func (Product) IsPublishable()              {}
 func (Product) IsOnlineStorePreviewable()   {}
 func (Product) IsLegacyInteroperability()   {}
-func (Product) IsCommentEventEmbed()        {}
 
 // Specifies product images to append.
 type ProductAppendImagesInput struct {
@@ -12447,12 +12447,12 @@ const (
 	DiscountErrorCodeTooManyArguments DiscountErrorCode = "TOO_MANY_ARGUMENTS"
 	// Missing a required argument.
 	DiscountErrorCodeMissingArgument DiscountErrorCode = "MISSING_ARGUMENT"
+	// Cannot have both minimum subtotal and quantity present.
+	DiscountErrorCodeMinimumSubtotalAndQuantityRangeBothPresent DiscountErrorCode = "MINIMUM_SUBTOTAL_AND_QUANTITY_RANGE_BOTH_PRESENT"
 	// Value is outside allowed range.
 	DiscountErrorCodeValueOutsideRange DiscountErrorCode = "VALUE_OUTSIDE_RANGE"
 	// Exceeded maximum allowed value.
 	DiscountErrorCodeExceededMax DiscountErrorCode = "EXCEEDED_MAX"
-	// Cannot have both minimum subtotal and quantity present.
-	DiscountErrorCodeMinimumSubtotalAndQuantityRangeBothPresent DiscountErrorCode = "MINIMUM_SUBTOTAL_AND_QUANTITY_RANGE_BOTH_PRESENT"
 	// Active period overlaps with other automatic discounts. At any given time, only one automatic discount can be active.
 	DiscountErrorCodeActivePeriodOverlap DiscountErrorCode = "ACTIVE_PERIOD_OVERLAP"
 	// Attribute selection contains conflicting settings.
@@ -12478,9 +12478,9 @@ var AllDiscountErrorCode = []DiscountErrorCode{
 	DiscountErrorCodeInternalError,
 	DiscountErrorCodeTooManyArguments,
 	DiscountErrorCodeMissingArgument,
+	DiscountErrorCodeMinimumSubtotalAndQuantityRangeBothPresent,
 	DiscountErrorCodeValueOutsideRange,
 	DiscountErrorCodeExceededMax,
-	DiscountErrorCodeMinimumSubtotalAndQuantityRangeBothPresent,
 	DiscountErrorCodeActivePeriodOverlap,
 	DiscountErrorCodeConflict,
 	DiscountErrorCodeImplicitDuplicate,
@@ -12489,7 +12489,7 @@ var AllDiscountErrorCode = []DiscountErrorCode{
 
 func (e DiscountErrorCode) IsValid() bool {
 	switch e {
-	case DiscountErrorCodeBlank, DiscountErrorCodePresent, DiscountErrorCodeEqualTo, DiscountErrorCodeGreaterThan, DiscountErrorCodeGreaterThanOrEqualTo, DiscountErrorCodeInvalid, DiscountErrorCodeLessThanOrEqualTo, DiscountErrorCodeLessThan, DiscountErrorCodeTaken, DiscountErrorCodeTooLong, DiscountErrorCodeTooShort, DiscountErrorCodeInternalError, DiscountErrorCodeTooManyArguments, DiscountErrorCodeMissingArgument, DiscountErrorCodeValueOutsideRange, DiscountErrorCodeExceededMax, DiscountErrorCodeMinimumSubtotalAndQuantityRangeBothPresent, DiscountErrorCodeActivePeriodOverlap, DiscountErrorCodeConflict, DiscountErrorCodeImplicitDuplicate, DiscountErrorCodeDuplicate:
+	case DiscountErrorCodeBlank, DiscountErrorCodePresent, DiscountErrorCodeEqualTo, DiscountErrorCodeGreaterThan, DiscountErrorCodeGreaterThanOrEqualTo, DiscountErrorCodeInvalid, DiscountErrorCodeLessThanOrEqualTo, DiscountErrorCodeLessThan, DiscountErrorCodeTaken, DiscountErrorCodeTooLong, DiscountErrorCodeTooShort, DiscountErrorCodeInternalError, DiscountErrorCodeTooManyArguments, DiscountErrorCodeMissingArgument, DiscountErrorCodeMinimumSubtotalAndQuantityRangeBothPresent, DiscountErrorCodeValueOutsideRange, DiscountErrorCodeExceededMax, DiscountErrorCodeActivePeriodOverlap, DiscountErrorCodeConflict, DiscountErrorCodeImplicitDuplicate, DiscountErrorCodeDuplicate:
 		return true
 	}
 	return false

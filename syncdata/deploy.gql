@@ -1,0 +1,8 @@
+mutation deploy($input: ProductInput!) {
+  productUpdate(input: $input) {
+    userErrors {
+      message
+      field
+    }
+  }
+}

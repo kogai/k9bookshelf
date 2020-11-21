@@ -255,6 +255,19 @@ type Mutation struct {
 	WebhookSubscriptionDelete                 *WebhookSubscriptionDeletePayload                 "json:\"webhookSubscriptionDelete\" graphql:\"webhookSubscriptionDelete\""
 	WebhookSubscriptionUpdate                 *WebhookSubscriptionUpdatePayload                 "json:\"webhookSubscriptionUpdate\" graphql:\"webhookSubscriptionUpdate\""
 }
+type DeployPayload struct {
+	ProductUpdate *struct {
+		UserErrors []*struct {
+			Message string   "json:\"message\" graphql:\"message\""
+			Field   []string "json:\"field\" graphql:\"field\""
+		} "json:\"userErrors\" graphql:\"userErrors\""
+	} "json:\"productUpdate\" graphql:\"productUpdate\""
+}
+type ProductByHandle struct {
+	ProductByHandle *struct {
+		ID string "json:\"id\" graphql:\"id\""
+	} "json:\"productByHandle\" graphql:\"productByHandle\""
+}
 type Products struct {
 	Products struct {
 		Edges []*struct {
@@ -268,6 +281,49 @@ type Products struct {
 			} "json:\"node\" graphql:\"node\""
 		} "json:\"edges\" graphql:\"edges\""
 	} "json:\"products\" graphql:\"products\""
+}
+
+const DeployQuery = `mutation deploy ($input: ProductInput!) {
+	productUpdate(input: $input) {
+		userErrors {
+			message
+			field
+		}
+	}
+}
+`
+
+func (c *Client) Deploy(ctx context.Context, input ProductInput, httpRequestOptions ...client.HTTPRequestOption) (*DeployPayload, error) {
+	vars := map[string]interface{}{
+		"input": input,
+	}
+
+	var res DeployPayload
+	if err := c.Client.Post(ctx, DeployQuery, &res, vars, httpRequestOptions...); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+const ProductByHandleQuery = `query productByHandle ($handle: String!) {
+	productByHandle(handle: $handle) {
+		id
+	}
+}
+`
+
+func (c *Client) ProductByHandle(ctx context.Context, handle string, httpRequestOptions ...client.HTTPRequestOption) (*ProductByHandle, error) {
+	vars := map[string]interface{}{
+		"handle": handle,
+	}
+
+	var res ProductByHandle
+	if err := c.Client.Post(ctx, ProductByHandleQuery, &res, vars, httpRequestOptions...); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
 }
 
 const ProductsQuery = `query products ($first: Int!) {
