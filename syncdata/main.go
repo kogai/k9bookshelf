@@ -6,8 +6,10 @@ import (
 	"k9bookshelf/generated"
 	"net/http"
 	"os"
+	"strings"
 
 	"github.com/Yamashou/gqlgenc/client"
+	"github.com/mattn/godown"
 )
 
 func main() {
@@ -29,6 +31,11 @@ func main() {
 		panic(err)
 	}
 	for _, edge := range res.Products.Edges {
-		fmt.Println(edge.Node.Handle)
+		fmt.Println("")
+		fmt.Println(edge.Node.Handle, edge.Node.Metafield)
+		err := godown.Convert(os.Stdout, strings.NewReader(edge.Node.DescriptionHTML), nil)
+		if err != nil {
+			panic(err)
+		}
 	}
 }
