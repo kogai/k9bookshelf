@@ -63,8 +63,8 @@ go_repository(
 go_repository(
     name = "com_github_cpuguy83_go_md2man_v2",
     importpath = "github.com/cpuguy83/go-md2man/v2",
-    sum = "h1:U+s90UTSYgptZMwQh2aRr3LuazLJIa+Pg3Kc1ylSYVY=",
-    version = "v2.0.0-20190314233015-f79a8a8ca69d",
+    sum = "h1:EoUDS0afbrsXAZ9YQ9jdu/mZ2sXgT1/2yyNng4PGlyM=",
+    version = "v2.0.0",
 )
 
 go_repository(
@@ -126,8 +126,8 @@ go_repository(
 go_repository(
     name = "com_github_hashicorp_golang_lru",
     importpath = "github.com/hashicorp/golang-lru",
-    sum = "h1:CL2msUPvZTLb5O648aiLNJw3hnBxN2+1Jq8rCOH9wdo=",
-    version = "v0.5.0",
+    sum = "h1:YDjusn29QI/Das2iO9M0BHnIbxPeyuCHsjMW+lJfyTc=",
+    version = "v0.5.4",
 )
 
 go_repository(
@@ -161,8 +161,8 @@ go_repository(
 go_repository(
     name = "com_github_matryer_moq",
     importpath = "github.com/matryer/moq",
-    sum = "h1:reVOUXwnhsYv/8UqjvhrMOu5CNT9UapHFLbQ2JcXsmg=",
-    version = "v0.0.0-20200106131100-75d0ddfc0007",
+    sum = "h1:dkN4G4jtl0zpssB9OPCb8D+m4zTHdnZpi62HhlGnyTU=",
+    version = "v0.1.4",
 )
 
 go_repository(
@@ -182,8 +182,8 @@ go_repository(
 go_repository(
     name = "com_github_mitchellh_mapstructure",
     importpath = "github.com/mitchellh/mapstructure",
-    sum = "h1:zCoDWFD5nrJJVjbXiDZcVhOBSzKn3o9LgRLLMRNuru8=",
-    version = "v0.0.0-20180203102830-a4e142e9c047",
+    sum = "h1:SzB1nHZ2Xi+17FP0zVQBHIZqvwRN9408fJO8h+eeNA8=",
+    version = "v1.3.3",
 )
 
 go_repository(
@@ -224,8 +224,8 @@ go_repository(
 go_repository(
     name = "com_github_russross_blackfriday_v2",
     importpath = "github.com/russross/blackfriday/v2",
-    sum = "h1:lPqVAte+HuHNfhJ/0LC98ESWRz8afy9tM/0RK8m9o+Q=",
-    version = "v2.0.1",
+    sum = "h1:JIOH55/0cWyOuilr9/qlrm0BSXldqnqwMsf35Ld67mk=",
+    version = "v2.1.0",
 )
 
 go_repository(
@@ -273,15 +273,15 @@ go_repository(
 go_repository(
     name = "com_github_urfave_cli_v2",
     importpath = "github.com/urfave/cli/v2",
-    sum = "h1:Qt8FeAtxE/vfdrLmR3rxR6JRE0RoVmbXu8+6kZtYU4k=",
-    version = "v2.1.1",
+    sum = "h1:qph92Y649prgesehzOrQjdWyxFOp/QVM+6imKHad91M=",
+    version = "v2.3.0",
 )
 
 go_repository(
     name = "com_github_vektah_dataloaden",
     importpath = "github.com/vektah/dataloaden",
-    sum = "h1:+w0Zm/9gaWpEAyDlU1eKOuk5twTjAjuevXqcJJw8hrg=",
-    version = "v0.2.1-0.20190515034641-a19b9a6e7c9e",
+    sum = "h1:ZfVN2QD6swgvp+tDqdH/OIT/wu3Dhu0cus0k5gIZS84=",
+    version = "v0.3.0",
 )
 
 go_repository(
@@ -378,8 +378,8 @@ go_repository(
 go_repository(
     name = "org_golang_x_tools",
     importpath = "golang.org/x/tools",
-    sum = "h1:IXtuZap6vTKIQ3jemmcwf2gY4BT+lwfZHBYwxMGe5/k=",
-    version = "v0.0.0-20201120032337-6d151481565c",
+    sum = "h1:z5+u0pkAUPUWd3taoTialQ2JAMo4Wo1Z3L25U4ZV9r0=",
+    version = "v0.0.0-20201121010211-780cb80bd7fb",
 )
 
 go_repository(
@@ -387,6 +387,34 @@ go_repository(
     importpath = "golang.org/x/xerrors",
     sum = "h1:go1bK/D/BFZV2I8cIQd1NKEZ+0owSTG1fDTci4IqFcE=",
     version = "v0.0.0-20200804184101-5ec99f83aff1",
+)
+
+go_repository(
+    name = "com_github_gomarkdown_markdown",
+    importpath = "github.com/gomarkdown/markdown",
+    sum = "h1:/Y3B7hM9H3TOWPhe8eWGBGS4r09pjvS5Z0uoPADyjmU=",
+    version = "v0.0.0-20201113031856-722100d81a8e",
+)
+
+go_repository(
+    name = "com_github_mattn_go_runewidth",
+    importpath = "github.com/mattn/go-runewidth",
+    sum = "h1:3tS41NlGYSmhhe/8fhGRzc+z3AYCw1Fe1WAyLuujKs0=",
+    version = "v0.0.8",
+)
+
+go_repository(
+    name = "com_github_mattn_godown",
+    importpath = "github.com/mattn/godown",
+    sum = "h1:UeXqxG2wTENf2BataGYSoX3jUrJ5PI0ceUzdL1L+BPI=",
+    version = "v0.0.0-20201027140031-2c7783b24de7",
+)
+
+go_repository(
+    name = "org_golang_dl",
+    importpath = "golang.org/dl",
+    sum = "h1:jeP6FgaSLNTMP+Yri3qjlACywQLye+huGLmNGhBzm6k=",
+    version = "v0.0.0-20190829154251-82a15e2f2ead",
 )
 
 go_rules_dependencies()

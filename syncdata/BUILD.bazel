@@ -1,0 +1,20 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["main.go"],
+    importpath = "k9bookshelf/syncdata",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//generated:go_default_library",
+        "@com_github_gomarkdown_markdown//:go_default_library",
+        "@com_github_mattn_godown//:go_default_library",
+        "@com_github_yamashou_gqlgenc//client:go_default_library",
+    ],
+)
+
+go_binary(
+    name = "syncdata",
+    embed = [":go_default_library"],
+    visibility = ["//visibility:public"],
+)
