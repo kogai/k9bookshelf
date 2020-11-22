@@ -12,6 +12,7 @@ require (
 	github.com/mattn/godown v0.0.0-20201027140031-2c7783b24de7
 	github.com/mitchellh/mapstructure v1.3.3 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
+	github.com/spf13/cobra v1.1.1 // indirect
 	github.com/urfave/cli/v2 v2.3.0 // indirect
 	github.com/vektah/dataloaden v0.3.0 // indirect
 	golang.org/x/tools v0.0.0-20201121010211-780cb80bd7fb // indirect

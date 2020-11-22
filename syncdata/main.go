@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"flag"
 	"fmt"
 	"io/ioutil"
 	"k9bookshelf/generated"
@@ -16,7 +15,32 @@ import (
 	"github.com/Yamashou/gqlgenc/client"
 	"github.com/gomarkdown/markdown"
 	"github.com/mattn/godown"
+	"github.com/spf13/cobra"
 )
+
+var rootCmd = &cobra.Command{
+	Use:   "datakit",
+	Short: "datakit is a content management tool like theme-kit",
+	Run: func(cmd *cobra.Command, args []string) {
+		// 	fmt.Println("Do stuff")
+	},
+}
+
+var deployCmd = &cobra.Command{
+	Use:   "deploy",
+	Short: "Upload contents to store",
+	Run: func(cmd *cobra.Command, args []string) {
+		deploy(cmd.Flag("input").Value.String())
+	},
+}
+
+var downloadCmd = &cobra.Command{
+	Use:   "download",
+	Short: "Download contents from store",
+	Run: func(cmd *cobra.Command, args []string) {
+		download(cmd.Flag("output").Value.String())
+	},
+}
 
 func gqlClient() (*generated.Client, context.Context) {
 	authHeader := func(req *http.Request) {
@@ -30,14 +54,10 @@ func gqlClient() (*generated.Client, context.Context) {
 	}, context.Background()
 }
 
-func download() error {
+func download(output string) error {
 	adminClient, ctx := gqlClient()
 	res, err := adminClient.Products(ctx, 10)
 
-	if err != nil {
-		return err
-	}
-	cwd, err := os.Getwd()
 	if err != nil {
 		return err
 	}
@@ -52,7 +72,7 @@ func download() error {
 		go func(handle, descriptionHTML string) {
 			defer downloadGroup.Done()
 
-			file, err := os.Create(path.Join(cwd, "products", handle+".md"))
+			file, err := os.Create(path.Join(output, "products", handle+".md"))
 			if err != nil {
 				c <- err
 				return
@@ -75,12 +95,8 @@ func download() error {
 	return nil
 }
 
-func deploy() error {
-	cwd, err := os.Getwd()
-	if err != nil {
-		return err
-	}
-	files, err := ioutil.ReadDir(path.Join(cwd, "products"))
+func deploy(input string) error {
+	files, err := ioutil.ReadDir(path.Join(input, "products"))
 	if err != nil {
 		return err
 	}
@@ -129,7 +145,7 @@ func deploy() error {
 			c <- nil
 		}(
 			filename[0:len(filename)-len(filepath.Ext(filename))],
-			path.Join(cwd, "products", filename),
+			path.Join(input, "products", filename),
 		)
 
 		err = <-c
@@ -142,25 +158,18 @@ func deploy() error {
 }
 
 func main() {
-	subcommand := flag.String("name", "", "subcommand")
-	flag.Parse()
-
-	switch *subcommand {
-	case "download":
-		err := download()
-		if err != nil {
-			panic(err)
-		}
-		break
-	case "deploy":
-		err := deploy()
-		if err != nil {
-			panic(err)
-		}
-		break
-	default:
-		fmt.Println(subcommand)
-		break
+	cwd, err := os.Getwd()
+	if err != nil {
+		panic(err)
 	}
 
+	downloadCmd.PersistentFlags().StringP("output", "o", fmt.Sprintf("%s", cwd), "output directory")
+	deployCmd.PersistentFlags().StringP("input", "i", fmt.Sprintf("%s", cwd), "input directory")
+	rootCmd.AddCommand(downloadCmd)
+	rootCmd.AddCommand(deployCmd)
+
+	if err := rootCmd.Execute(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
 }
