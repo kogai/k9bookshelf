@@ -5,7 +5,7 @@ LINT := yarn theme-lint
 BZL := yarn bazelisk --
 BZL_BIN := $(shell npx bazelisk info bazel-bin)
 
-.PHONY: deploy/theme,deploy/products,watch,download
+.PHONY: deploy/theme,deploy/products,watch,download/theme
 
 deploy/theme:
 	$(TK) deploy --dir theme
@@ -13,10 +13,13 @@ deploy/theme:
 deploy/products: $(MD_FILES) bin/syncdata
 	./bin/syncdata --name deploy
 
+download/products: $(MD_FILES) bin/syncdata
+	./bin/syncdata --name download
+
 watch:
 	$(TK) watch --dir theme
 
-download:
+download/theme:
 	$(TK) --dir theme download
 
 lint:
