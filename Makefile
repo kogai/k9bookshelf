@@ -28,7 +28,7 @@ generated/client.go: bin/gqlgenc syncdata/*.gql
 bin/%: $(GO_FILES) WORKSPACE
 	mkdir -p bin
 	$(BZL) build //$(@F):all
-	mv $(BZL_BIN)/$(@F)/$(@F)_/$(@F) bin/
+	cp -f $(BZL_BIN)/$(@F)/$(@F)_/$(@F) bin/
 
 .PHONY: syncdata/BUILD.bazel gqlgenc/BUILD.bazel
 
