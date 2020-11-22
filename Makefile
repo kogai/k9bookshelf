@@ -22,17 +22,15 @@ download:
 lint:
 	$(LINT) ./theme
 
-generated/client.go: gqlgenc syncdata/*.gql
-	$(BZL_BIN)/external/com_github_yamashou_gqlgenc/gqlgenc_/gqlgenc
+generated/client.go: bin/gqlgenc syncdata/*.gql
+	./bin/gqlgenc
 
-bin/syncdata: $(GO_FILES)
+bin/%: $(GO_FILES) WORKSPACE
 	mkdir -p bin
-	go build -o bin k9bookshelf/syncdata
+	go build -o bin k9bookshelf/$(@F)
+
+*/BUILD.bazel:
+	$(BZL) run //:gazelle
 
 WORKSPACE: go.mod
 	$(BZL) run //:gazelle -- update-repos -from_file=go.mod
-
-gqlgenc: WORKSPACE
-	$(BZL) build @com_github_99designs_gqlgen//:...
-	$(BZL) build @com_github_yamashou_gqlgenc//:gqlgenc
-
