@@ -1,0 +1,21 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["main.go"],
+    importpath = "k9bookshelf/gqlgenc",
+    visibility = ["//visibility:private"],
+    deps = [
+        "@com_github_99designs_gqlgen//api:go_default_library",
+        "@com_github_99designs_gqlgen//plugin/modelgen:go_default_library",
+        "@com_github_yamashou_gqlgenc//clientgen:go_default_library",
+        "@com_github_yamashou_gqlgenc//config:go_default_library",
+        "@com_github_yamashou_gqlgenc//generator:go_default_library",
+    ],
+)
+
+go_binary(
+    name = "gqlgenc",
+    embed = [":go_default_library"],
+    visibility = ["//visibility:public"],
+)
