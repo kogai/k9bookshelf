@@ -1,5 +1,5 @@
 MD_FILES := $(shell find ./ -type f -name '*.md')
-GO_FILES := $(shell find ./ -type f -name '*.go')
+GO_FILES := $(shell find ./ -type f -name '*.go' | grep -v "generated")
 TK := npx bazelisk run //:theme --
 LINT := yarn theme-lint
 BZL := yarn bazelisk --
@@ -27,7 +27,10 @@ generated/client.go: bin/gqlgenc syncdata/*.gql
 
 bin/%: $(GO_FILES) WORKSPACE
 	mkdir -p bin
-	go build -o bin k9bookshelf/$(@F)
+	$(BZL) build //$(@F):all
+	mv $(BZL_BIN)/$(@F)/$(@F)_/$(@F) bin/
+
+.PHONY: syncdata/BUILD.bazel gqlgenc/BUILD.bazel
 
 */BUILD.bazel:
 	$(BZL) run //:gazelle

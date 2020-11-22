@@ -7,8 +7,10 @@ go_library(
     visibility = ["//visibility:private"],
     deps = [
         "@com_github_99designs_gqlgen//api:go_default_library",
-        "@com_github_99designs_gqlgen//codegen/config:go_default_library",
+        "@com_github_99designs_gqlgen//plugin/modelgen:go_default_library",
         "@com_github_yamashou_gqlgenc//clientgen:go_default_library",
+        "@com_github_yamashou_gqlgenc//config:go_default_library",
+        "@com_github_yamashou_gqlgenc//generator:go_default_library",
     ],
 )
 
