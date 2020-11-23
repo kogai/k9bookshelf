@@ -10,10 +10,10 @@ BZL_BIN := $(shell npx bazelisk info bazel-bin)
 deploy/theme:
 	$(TK) deploy --dir theme
 
-deploy/products: $(MD_FILES) bin/syncdata/cmd
+deploy/products: $(MD_FILES) bin/syncdata
 	./bin/syncdata deploy --input $(PWD)/contents
 
-download/products: $(MD_FILES) bin/syncdata/cmd
+download/products: $(MD_FILES) bin/syncdata
 	./bin/syncdata download --output $(PWD)/contents
 
 watch:
@@ -28,10 +28,15 @@ lint:
 generated/client.go: bin/gqlgenc syncdata/*.gql
 	./bin/gqlgenc
 
-bin/%: $(GO_FILES) WORKSPACE
+bin/*: $(GO_FILES) WORKSPACE
 	mkdir -p bin
 	$(BZL) build //$(@F):all
 	cp -f $(BZL_BIN)/$(@F)/$(@F)_/$(@F) bin/
+
+bin/syncdata: $(GO_FILES) WORKSPACE
+	mkdir -p bin
+	$(BZL) build //syncdata/cmd:all
+	cp -f $(BZL_BIN)/syncdata/cmd/cmd_/cmd bin/syncdata
 
 .PHONY: syncdata/BUILD.bazel gqlgenc/BUILD.bazel
 
