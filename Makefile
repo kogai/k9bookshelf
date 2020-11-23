@@ -5,18 +5,21 @@ LINT := yarn theme-lint
 BZL := yarn bazelisk --
 BZL_BIN := $(shell npx bazelisk info bazel-bin)
 
-.PHONY: deploy/theme,deploy/products,watch,download
+.PHONY: deploy/theme,deploy/products,watch,download/theme
 
 deploy/theme:
 	$(TK) deploy --dir theme
 
 deploy/products: $(MD_FILES) bin/syncdata
-	./bin/syncdata --name deploy
+	./bin/syncdata deploy --input $(PWD)/contents
+
+download/products: $(MD_FILES) bin/syncdata
+	./bin/syncdata download --output $(PWD)/contents
 
 watch:
 	$(TK) watch --dir theme
 
-download:
+download/theme:
 	$(TK) --dir theme download
 
 lint:
@@ -32,8 +35,8 @@ bin/%: $(GO_FILES) WORKSPACE
 
 .PHONY: syncdata/BUILD.bazel gqlgenc/BUILD.bazel
 
-*/BUILD.bazel:
+*/BUILD.bazel: $(GO_FILES)
 	$(BZL) run //:gazelle
 
-WORKSPACE: go.mod
+WORKSPACE: go.mod syncdata/BUILD.bazel
 	$(BZL) run //:gazelle -- update-repos -from_file=go.mod
