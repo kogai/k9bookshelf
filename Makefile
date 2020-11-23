@@ -10,10 +10,10 @@ BZL_BIN := $(shell npx bazelisk info bazel-bin)
 deploy/theme:
 	$(TK) deploy --dir theme
 
-deploy/products: $(MD_FILES) bin/syncdata
+deploy/products: $(MD_FILES) bin/syncdata/cmd
 	./bin/syncdata deploy --input $(PWD)/contents
 
-download/products: $(MD_FILES) bin/syncdata
+download/products: $(MD_FILES) bin/syncdata/cmd
 	./bin/syncdata download --output $(PWD)/contents
 
 watch:
