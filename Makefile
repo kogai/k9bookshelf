@@ -11,10 +11,10 @@ deploy/theme:
 	$(TK) deploy --dir theme
 
 deploy/products: $(MD_FILES) bin/syncdata
-	./bin/syncdata deploy
+	./bin/syncdata deploy --input $(PWD)/contents
 
 download/products: $(MD_FILES) bin/syncdata
-	./bin/syncdata download
+	./bin/syncdata download --output $(PWD)/contents
 
 watch:
 	$(TK) watch --dir theme

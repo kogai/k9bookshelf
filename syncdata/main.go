@@ -30,7 +30,11 @@ var deployCmd = &cobra.Command{
 	Use:   "deploy",
 	Short: "Upload contents to store",
 	Run: func(cmd *cobra.Command, args []string) {
-		deploy(cmd.Flag("input").Value.String())
+		err := deploy(cmd.Flag("input").Value.String())
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
 	},
 }
 
@@ -38,7 +42,11 @@ var downloadCmd = &cobra.Command{
 	Use:   "download",
 	Short: "Download contents from store",
 	Run: func(cmd *cobra.Command, args []string) {
-		download(cmd.Flag("output").Value.String())
+		err := download(cmd.Flag("output").Value.String())
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
 	},
 }
 
@@ -57,7 +65,11 @@ func gqlClient() (*generated.Client, context.Context) {
 func download(output string) error {
 	adminClient, ctx := gqlClient()
 	res, err := adminClient.Products(ctx, 10)
+	if err != nil {
+		return err
+	}
 
+	err = os.MkdirAll(path.Join(output, "products"), os.ModePerm)
 	if err != nil {
 		return err
 	}
