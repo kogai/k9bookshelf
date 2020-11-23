@@ -21,26 +21,31 @@ import (
 )
 
 const apiVersion string = "2020-10"
+const shopDomain string = "k9books.myshopify.com"
+
+var appKey string = os.Getenv("MARKDOWN_APP_KEY")
+var appSecret string = os.Getenv("MARKDOWN_APP_SECRET")
+var shopToken string = appSecret
 
 func gqlClient() (*generated.Client, context.Context) {
 	authHeader := func(req *http.Request) {
-		req.Header.Set("X-Shopify-Access-Token", os.Getenv("MARKDOWN_APP_SECRET"))
+		req.Header.Set("X-Shopify-Access-Token", appSecret)
 	}
 
 	return &generated.Client{
 		Client: client.NewClient(http.DefaultClient,
-			fmt.Sprintf("https://%s/admin/api/%s/graphql.json", "k9books.myshopify.com", "2020-10"),
+			fmt.Sprintf("https://%s/admin/api/%s/graphql.json", shopDomain, apiVersion),
 			authHeader),
 	}, context.Background()
 }
 
 func establishRestClient() *shopify.Client {
 	app := shopify.App{
-		ApiKey:    os.Getenv("MARKDOWN_APP_KEY"),
-		ApiSecret: os.Getenv("MARKDOWN_APP_SECRET"),
+		ApiKey:    appKey,
+		ApiSecret: appSecret,
 	}
 
-	return shopify.NewClient(app, "k9books.myshopify.com", os.Getenv("MARKDOWN_APP_SECRET"))
+	return shopify.NewClient(app, shopDomain, appSecret, shopify.WithVersion(apiVersion))
 }
 
 func fetchProducts(ctx context.Context, adminClient *generated.Client) (*generated.Products, error) {
