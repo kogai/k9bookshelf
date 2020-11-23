@@ -24,7 +24,7 @@ var rootCmd = &cobra.Command{
 	Use:   "datakit",
 	Short: "datakit is a content management tool like theme-kit",
 	Run: func(cmd *cobra.Command, args []string) {
-		// 	fmt.Println("Do stuff")
+		fmt.Println("Nothing to do without subcommand.")
 	},
 }
 
