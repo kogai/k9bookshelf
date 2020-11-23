@@ -104,23 +104,17 @@ type content struct {
 	html   string
 }
 
-func dowloadContens(output string, contents *[]content, p *mpb.Progress, wg *sync.WaitGroup) error {
+type contents struct {
+	kind  string
+	items []content
+}
+
+func dowloadContens(output string, contents *[]content, bar *mpb.Bar) error {
 	err := os.MkdirAll(output, os.ModePerm)
 	if err != nil {
 		return err
 	}
-
-	bar := p.AddBar(int64(len(*contents)),
-		mpb.PrependDecorators(
-			decor.Name(output),
-			decor.Percentage(decor.WCSyncSpace),
-		),
-		mpb.AppendDecorators(
-			decor.OnComplete(
-				decor.EwmaETA(decor.ET_STYLE_GO, 60), "done",
-			),
-		),
-	)
+	var wg sync.WaitGroup
 
 	for _, content := range *contents {
 		wg.Add(1)
@@ -148,7 +142,7 @@ func dowloadContens(output string, contents *[]content, p *mpb.Progress, wg *syn
 		}
 	}
 
-	p.Wait()
+	wg.Wait()
 	return nil
 }
 
@@ -160,9 +154,9 @@ func download(output string) error {
 	if err != nil {
 		return err
 	}
-	var products []content
+	products := contents{kind: "products"}
 	for _, product := range res.Products.Edges {
-		products = append(products, content{
+		products.items = append(products.items, content{
 			handle: product.Node.Handle,
 			html:   product.Node.DescriptionHTML,
 		})
@@ -172,9 +166,9 @@ func download(output string) error {
 	if err != nil {
 		return err
 	}
-	var pages []content
+	pages := contents{kind: "pages"}
 	for _, page := range rawPages {
-		pages = append(pages, content{
+		pages.items = append(pages.items, content{
 			handle: page.Handle,
 			html:   page.BodyHTML,
 		})
@@ -182,14 +176,30 @@ func download(output string) error {
 
 	var wg sync.WaitGroup
 	progress := mpb.New(mpb.WithWaitGroup(&wg))
-	go func() {
-		err = dowloadContens(path.Join(output, "products"), &products, progress, &wg)
-	}()
-	go func() {
-		err = dowloadContens(path.Join(output, "pages"), &pages, progress, &wg)
-	}()
-	progress.Wait()
+	for _, cts := range []contents{products, pages} {
+		wg.Add(1)
+		bar := progress.AddBar(int64(len(cts.items)),
+			mpb.PrependDecorators(
+				decor.Name(cts.kind),
+				decor.Percentage(decor.WCSyncSpace),
+			),
+			mpb.AppendDecorators(
+				decor.OnComplete(
+					decor.EwmaETA(decor.ET_STYLE_GO, 60), "done",
+				),
+			),
+		)
 
+		go func(o string, items []content, b *mpb.Bar) {
+			defer wg.Done()
+			err = dowloadContens(o, &items, b)
+		}(path.Join(output, cts.kind), cts.items, bar)
+		if err != nil {
+			return err
+		}
+	}
+
+	progress.Wait()
 	return nil
 }
 
