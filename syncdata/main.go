@@ -13,6 +13,7 @@ import (
 	"sync"
 
 	"github.com/Yamashou/gqlgenc/client"
+	shopify "github.com/bold-commerce/go-shopify"
 	"github.com/gomarkdown/markdown"
 	"github.com/mattn/godown"
 	"github.com/spf13/cobra"
@@ -64,13 +65,21 @@ func gqlClient() (*generated.Client, context.Context) {
 	}, context.Background()
 }
 
+func establishRestClient() *shopify.Client {
+	app := shopify.App{
+		ApiKey:    os.Getenv("MARKDOWN_APP_KEY"),
+		ApiSecret: os.Getenv("MARKDOWN_APP_SECRET"),
+	}
+
+	return shopify.NewClient(app, "k9books.myshopify.com", os.Getenv("MARKDOWN_APP_SECRET"))
+}
+
 func fetchProducts(ctx context.Context, adminClient *generated.Client) (*generated.Products, error) {
 	var cursor *string
 	var res *generated.Products
 
 	for {
 		tmpRes, err := adminClient.Products(ctx, 10, cursor)
-		fmt.Println("cursor", cursor, tmpRes.Products.Edges)
 		if err != nil {
 			return nil, err
 		}
@@ -90,23 +99,20 @@ func fetchProducts(ctx context.Context, adminClient *generated.Client) (*generat
 	return res, nil
 }
 
-func download(output string) error {
-	adminClient, ctx := gqlClient()
-	res, err := fetchProducts(ctx, adminClient)
+type content struct {
+	handle string
+	html   string
+}
+
+func dowloadContens(output string, contents *[]content, p *mpb.Progress, wg *sync.WaitGroup) error {
+	err := os.MkdirAll(output, os.ModePerm)
 	if err != nil {
 		return err
 	}
 
-	err = os.MkdirAll(path.Join(output, "products"), os.ModePerm)
-	if err != nil {
-		return err
-	}
-
-	var downloadGroup sync.WaitGroup
-	p := mpb.New(mpb.WithWaitGroup(&downloadGroup))
-	bar := p.AddBar(int64(len(res.Products.Edges)),
+	bar := p.AddBar(int64(len(*contents)),
 		mpb.PrependDecorators(
-			decor.Name(path.Join(output, "products")),
+			decor.Name(output),
 			decor.Percentage(decor.WCSyncSpace),
 		),
 		mpb.AppendDecorators(
@@ -116,15 +122,15 @@ func download(output string) error {
 		),
 	)
 
-	for _, edge := range res.Products.Edges {
-		downloadGroup.Add(1)
+	for _, content := range *contents {
+		wg.Add(1)
 		c := make(chan error)
 
 		go func(handle, descriptionHTML string) {
-			defer downloadGroup.Done()
+			defer wg.Done()
 			defer bar.Increment()
 
-			file, err := os.Create(path.Join(output, "products", handle+".md"))
+			file, err := os.Create(path.Join(output, handle+".md"))
 			if err != nil {
 				c <- err
 				return
@@ -135,7 +141,7 @@ func download(output string) error {
 				return
 			}
 			c <- nil
-		}(edge.Node.Handle, edge.Node.DescriptionHTML)
+		}(content.handle, content.html)
 		err = <-c
 		if err != nil {
 			return err
@@ -143,6 +149,47 @@ func download(output string) error {
 	}
 
 	p.Wait()
+	return nil
+}
+
+func download(output string) error {
+	adminClient, ctx := gqlClient()
+	restClient := establishRestClient()
+
+	res, err := fetchProducts(ctx, adminClient)
+	if err != nil {
+		return err
+	}
+	var products []content
+	for _, product := range res.Products.Edges {
+		products = append(products, content{
+			handle: product.Node.Handle,
+			html:   product.Node.DescriptionHTML,
+		})
+	}
+
+	rawPages, err := restClient.Page.List(nil)
+	if err != nil {
+		return err
+	}
+	var pages []content
+	for _, page := range rawPages {
+		pages = append(pages, content{
+			handle: page.Handle,
+			html:   page.BodyHTML,
+		})
+	}
+
+	var wg sync.WaitGroup
+	progress := mpb.New(mpb.WithWaitGroup(&wg))
+	go func() {
+		err = dowloadContens(path.Join(output, "products"), &products, progress, &wg)
+	}()
+	go func() {
+		err = dowloadContens(path.Join(output, "pages"), &pages, progress, &wg)
+	}()
+	progress.Wait()
+
 	return nil
 }
 

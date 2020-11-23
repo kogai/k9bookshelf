@@ -1362,6 +1362,27 @@ go_repository(
     version = "v1.10.0",
 )
 
+go_repository(
+    name = "com_github_bold_commerce_go_shopify",
+    importpath = "github.com/bold-commerce/go-shopify",
+    sum = "h1:AiedLiOoFWp7iVO8n6JJOM7IEdyU4nLAvUKNM7Hw8b4=",
+    version = "v2.3.0+incompatible",
+)
+
+go_repository(
+    name = "com_github_google_go_querystring",
+    importpath = "github.com/google/go-querystring",
+    sum = "h1:Xkwi/a1rcvNg1PPYe5vI8GbeBY/jrVuDX5ASuANWTrk=",
+    version = "v1.0.0",
+)
+
+go_repository(
+    name = "com_github_shopspring_decimal",
+    importpath = "github.com/shopspring/decimal",
+    sum = "h1:abSATXmQEYyShuxI4/vyW3tV1MrKAJzCZ/0zLUXYbsQ=",
+    version = "v1.2.0",
+)
+
 go_rules_dependencies()
 
 go_register_toolchains()
