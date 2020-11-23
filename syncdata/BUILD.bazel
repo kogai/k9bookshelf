@@ -7,7 +7,7 @@ go_library(
         "syncdata.go",
     ],
     importpath = "k9bookshelf/syncdata",
-    visibility = ["//visibility:private"],
+    visibility = ["//visibility:public"],
     deps = [
         "//generated:go_default_library",
         "@com_github_bold_commerce_go_shopify//:go_default_library",
