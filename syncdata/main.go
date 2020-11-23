@@ -16,6 +16,8 @@ import (
 	"github.com/gomarkdown/markdown"
 	"github.com/mattn/godown"
 	"github.com/spf13/cobra"
+	"github.com/vbauerster/mpb"
+	"github.com/vbauerster/mpb/decor"
 )
 
 var rootCmd = &cobra.Command{
@@ -76,6 +78,18 @@ func download(output string) error {
 
 	// TODO: Use goroutine
 	var downloadGroup sync.WaitGroup
+	p := mpb.New(mpb.WithWaitGroup(&downloadGroup))
+	bar := p.AddBar(int64(len(res.Products.Edges)),
+		mpb.PrependDecorators(
+			decor.Name(path.Join(output, "products")),
+			decor.Percentage(decor.WCSyncSpace),
+		),
+		mpb.AppendDecorators(
+			decor.OnComplete(
+				decor.EwmaETA(decor.ET_STYLE_GO, 60), "done",
+			),
+		),
+	)
 
 	for _, edge := range res.Products.Edges {
 		downloadGroup.Add(1)
@@ -83,6 +97,7 @@ func download(output string) error {
 
 		go func(handle, descriptionHTML string) {
 			defer downloadGroup.Done()
+			defer bar.Increment()
 
 			file, err := os.Create(path.Join(output, "products", handle+".md"))
 			if err != nil {
@@ -94,7 +109,6 @@ func download(output string) error {
 				c <- err
 				return
 			}
-			fmt.Printf("Done: %s.md\n", handle)
 			c <- nil
 		}(edge.Node.Handle, edge.Node.DescriptionHTML)
 		err = <-c
@@ -103,7 +117,7 @@ func download(output string) error {
 		}
 	}
 
-	downloadGroup.Wait()
+	p.Wait()
 	return nil
 }
 
@@ -114,6 +128,19 @@ func deploy(input string) error {
 	}
 	adminClient, ctx := gqlClient()
 	wg := sync.WaitGroup{}
+	p := mpb.New(mpb.WithWaitGroup(&wg))
+	bar := p.AddBar(int64(len(files)),
+		mpb.PrependDecorators(
+			decor.Name(path.Join(input, "products")),
+			decor.Percentage(decor.WCSyncSpace),
+		),
+		mpb.AppendDecorators(
+			decor.OnComplete(
+				decor.EwmaETA(decor.ET_STYLE_GO, 60), "done",
+			),
+		),
+	)
+
 	for _, file := range files {
 		wg.Add(1)
 		c := make(chan error)
@@ -121,6 +148,8 @@ func deploy(input string) error {
 
 		go func(handle, pathToFile string) {
 			defer wg.Done()
+			defer bar.Increment()
+
 			productByHandle, err := adminClient.ProductByHandle(ctx, handle)
 			if err != nil {
 				c <- err
@@ -165,7 +194,7 @@ func deploy(input string) error {
 			return err
 		}
 	}
-	wg.Wait()
+	p.Wait()
 	return nil
 }
 

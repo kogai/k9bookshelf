@@ -35,8 +35,8 @@ bin/%: $(GO_FILES) WORKSPACE
 
 .PHONY: syncdata/BUILD.bazel gqlgenc/BUILD.bazel
 
-*/BUILD.bazel:
+*/BUILD.bazel: $(GO_FILES)
 	$(BZL) run //:gazelle
 
-WORKSPACE: go.mod
+WORKSPACE: go.mod syncdata/BUILD.bazel
 	$(BZL) run //:gazelle -- update-repos -from_file=go.mod

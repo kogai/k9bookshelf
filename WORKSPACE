@@ -336,8 +336,8 @@ go_repository(
 go_repository(
     name = "org_golang_x_crypto",
     importpath = "golang.org/x/crypto",
-    sum = "h1:psW17arqaxU48Z5kZ0CQnkZWQJsqcURM6tKiBApRjXI=",
-    version = "v0.0.0-20200622213623-75b288015ac9",
+    sum = "h1:phUcVbl53swtrUN8kQEXFhUxPlIlWyBfKmidCu7P95o=",
+    version = "v0.0.0-20201117144127-c1f2f97bffc9",
 )
 
 go_repository(
@@ -364,8 +364,8 @@ go_repository(
 go_repository(
     name = "org_golang_x_sys",
     importpath = "golang.org/x/sys",
-    sum = "h1:+Nyd8tzPX9R7BWHguqsrbFdRx3WQ/1ib8I44HXV5yTA=",
-    version = "v0.0.0-20200930185726-fdedc70b468f",
+    sum = "h1:nxC68pudNYkKU6jWhgrqdreuFiOQWj1Fs7T3VrH4Pjw=",
+    version = "v0.0.0-20201119102817-f84b799fce68",
 )
 
 go_repository(
@@ -1339,6 +1339,27 @@ go_repository(
     importpath = "go.uber.org/zap",
     sum = "h1:ORx85nbTijNz8ljznvCMR1ZBIPKFn3jQrag10X2AsuM=",
     version = "v1.10.0",
+)
+
+go_repository(
+    name = "com_github_vbauerster_mpb",
+    importpath = "github.com/vbauerster/mpb",
+    sum = "h1:mfiiYw87ARaeRW6x5gWwYRUawxaW1tLAD8IceomUCNw=",
+    version = "v3.4.0+incompatible",
+)
+
+go_repository(
+    name = "com_github_vividcortex_ewma",
+    importpath = "github.com/VividCortex/ewma",
+    sum = "h1:MnEK4VOv6n0RSY4vtRe3h11qjxL3+t0B8yOL8iMXdcM=",
+    version = "v1.1.1",
+)
+
+go_repository(
+    name = "org_golang_x_term",
+    importpath = "golang.org/x/term",
+    sum = "h1:/ZHdbVpdR/jk3g30/d4yUL0JU9kksj8+F/bnQUVLGDM=",
+    version = "v0.0.0-20201117132131-f5c789dd3221",
 )
 
 go_rules_dependencies()
