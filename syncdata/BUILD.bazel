@@ -9,6 +9,9 @@ go_library(
         "//generated:go_default_library",
         "@com_github_gomarkdown_markdown//:go_default_library",
         "@com_github_mattn_godown//:go_default_library",
+        "@com_github_spf13_cobra//:go_default_library",
+        "@com_github_vbauerster_mpb//:go_default_library",
+        "@com_github_vbauerster_mpb//decor:go_default_library",
         "@com_github_yamashou_gqlgenc//client:go_default_library",
     ],
 )

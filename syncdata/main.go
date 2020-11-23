@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"flag"
 	"fmt"
 	"io/ioutil"
 	"k9bookshelf/generated"
@@ -16,7 +15,42 @@ import (
 	"github.com/Yamashou/gqlgenc/client"
 	"github.com/gomarkdown/markdown"
 	"github.com/mattn/godown"
+	"github.com/spf13/cobra"
+	"github.com/vbauerster/mpb"
+	"github.com/vbauerster/mpb/decor"
 )
+
+var rootCmd = &cobra.Command{
+	Use:   "datakit",
+	Short: "datakit is a content management tool like theme-kit",
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println("Nothing to do without subcommand.")
+	},
+}
+
+var deployCmd = &cobra.Command{
+	Use:   "deploy",
+	Short: "Upload contents to store",
+	Run: func(cmd *cobra.Command, args []string) {
+		err := deploy(cmd.Flag("input").Value.String())
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+	},
+}
+
+var downloadCmd = &cobra.Command{
+	Use:   "download",
+	Short: "Download contents from store",
+	Run: func(cmd *cobra.Command, args []string) {
+		err := download(cmd.Flag("output").Value.String())
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+	},
+}
 
 func gqlClient() (*generated.Client, context.Context) {
 	authHeader := func(req *http.Request) {
@@ -30,20 +64,57 @@ func gqlClient() (*generated.Client, context.Context) {
 	}, context.Background()
 }
 
-func download() error {
+func fetchProducts(ctx context.Context, adminClient *generated.Client) (*generated.Products, error) {
+	var cursor *string
+	var res *generated.Products
+
+	for {
+		tmpRes, err := adminClient.Products(ctx, 10, cursor)
+		fmt.Println("cursor", cursor, tmpRes.Products.Edges)
+		if err != nil {
+			return nil, err
+		}
+		if res == nil {
+			res = tmpRes
+		} else {
+			res.Products.Edges = append(res.Products.Edges, tmpRes.Products.Edges...)
+		}
+
+		if !tmpRes.Products.PageInfo.HasNextPage {
+			break
+		} else {
+			last := tmpRes.Products.Edges[len(tmpRes.Products.Edges)-1]
+			cursor = &last.Cursor
+		}
+	}
+	return res, nil
+}
+
+func download(output string) error {
 	adminClient, ctx := gqlClient()
-	res, err := adminClient.Products(ctx, 10)
-
-	if err != nil {
-		return err
-	}
-	cwd, err := os.Getwd()
+	res, err := fetchProducts(ctx, adminClient)
 	if err != nil {
 		return err
 	}
 
-	// TODO: Use goroutine
+	err = os.MkdirAll(path.Join(output, "products"), os.ModePerm)
+	if err != nil {
+		return err
+	}
+
 	var downloadGroup sync.WaitGroup
+	p := mpb.New(mpb.WithWaitGroup(&downloadGroup))
+	bar := p.AddBar(int64(len(res.Products.Edges)),
+		mpb.PrependDecorators(
+			decor.Name(path.Join(output, "products")),
+			decor.Percentage(decor.WCSyncSpace),
+		),
+		mpb.AppendDecorators(
+			decor.OnComplete(
+				decor.EwmaETA(decor.ET_STYLE_GO, 60), "done",
+			),
+		),
+	)
 
 	for _, edge := range res.Products.Edges {
 		downloadGroup.Add(1)
@@ -51,8 +122,9 @@ func download() error {
 
 		go func(handle, descriptionHTML string) {
 			defer downloadGroup.Done()
+			defer bar.Increment()
 
-			file, err := os.Create(path.Join(cwd, "products", handle+".md"))
+			file, err := os.Create(path.Join(output, "products", handle+".md"))
 			if err != nil {
 				c <- err
 				return
@@ -62,7 +134,6 @@ func download() error {
 				c <- err
 				return
 			}
-			fmt.Printf("Done: %s.md\n", handle)
 			c <- nil
 		}(edge.Node.Handle, edge.Node.DescriptionHTML)
 		err = <-c
@@ -71,21 +142,30 @@ func download() error {
 		}
 	}
 
-	downloadGroup.Wait()
+	p.Wait()
 	return nil
 }
 
-func deploy() error {
-	cwd, err := os.Getwd()
-	if err != nil {
-		return err
-	}
-	files, err := ioutil.ReadDir(path.Join(cwd, "products"))
+func deploy(input string) error {
+	files, err := ioutil.ReadDir(path.Join(input, "products"))
 	if err != nil {
 		return err
 	}
 	adminClient, ctx := gqlClient()
 	wg := sync.WaitGroup{}
+	p := mpb.New(mpb.WithWaitGroup(&wg))
+	bar := p.AddBar(int64(len(files)),
+		mpb.PrependDecorators(
+			decor.Name(path.Join(input, "products")),
+			decor.Percentage(decor.WCSyncSpace),
+		),
+		mpb.AppendDecorators(
+			decor.OnComplete(
+				decor.EwmaETA(decor.ET_STYLE_GO, 60), "done",
+			),
+		),
+	)
+
 	for _, file := range files {
 		wg.Add(1)
 		c := make(chan error)
@@ -93,6 +173,8 @@ func deploy() error {
 
 		go func(handle, pathToFile string) {
 			defer wg.Done()
+			defer bar.Increment()
+
 			productByHandle, err := adminClient.ProductByHandle(ctx, handle)
 			if err != nil {
 				c <- err
@@ -129,7 +211,7 @@ func deploy() error {
 			c <- nil
 		}(
 			filename[0:len(filename)-len(filepath.Ext(filename))],
-			path.Join(cwd, "products", filename),
+			path.Join(input, "products", filename),
 		)
 
 		err = <-c
@@ -137,30 +219,23 @@ func deploy() error {
 			return err
 		}
 	}
-	wg.Wait()
+	p.Wait()
 	return nil
 }
 
 func main() {
-	subcommand := flag.String("name", "", "subcommand")
-	flag.Parse()
-
-	switch *subcommand {
-	case "download":
-		err := download()
-		if err != nil {
-			panic(err)
-		}
-		break
-	case "deploy":
-		err := deploy()
-		if err != nil {
-			panic(err)
-		}
-		break
-	default:
-		fmt.Println(subcommand)
-		break
+	cwd, err := os.Getwd()
+	if err != nil {
+		panic(err)
 	}
 
+	downloadCmd.PersistentFlags().StringP("output", "o", fmt.Sprintf("%s", cwd), "output directory")
+	deployCmd.PersistentFlags().StringP("input", "i", fmt.Sprintf("%s", cwd), "input directory")
+	rootCmd.AddCommand(downloadCmd)
+	rootCmd.AddCommand(deployCmd)
+
+	if err := rootCmd.Execute(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
 }

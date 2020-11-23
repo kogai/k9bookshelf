@@ -1,6 +1,10 @@
-query products($first: Int!) {
-  products(first: $first) {
+query products($first: Int!, $after: String) {
+  products(first: $first, after: $after) {
+    pageInfo {
+      hasNextPage
+    }
     edges {
+      cursor
       node {
         handle
         descriptionHtml

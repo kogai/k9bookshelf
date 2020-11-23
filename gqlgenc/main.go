@@ -39,7 +39,7 @@ func main() {
 	p := modelgen.Plugin{
 		MutateHook: mutateHook,
 	}
-	if err := generator.Generate(ctx, cfg, api.AddPlugin(clientPlugin), api.NoPlugins(), api.AddPlugin(&p)); err != nil {
+	if err := generator.Generate(ctx, cfg, api.NoPlugins(), api.AddPlugin(&p), api.AddPlugin(clientPlugin)); err != nil {
 		fmt.Fprintf(os.Stderr, "%+v", err.Error())
 		os.Exit(4)
 	}
