@@ -11,6 +11,7 @@ import (
 	"path/filepath"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/Yamashou/gqlgenc/client"
 	shopify "github.com/bold-commerce/go-shopify"
@@ -21,6 +22,7 @@ import (
 	"github.com/vbauerster/mpb/decor"
 )
 
+var apiVersion string = "2020-10"
 var rootCmd = &cobra.Command{
 	Use:   "datakit",
 	Short: "datakit is a content management tool like theme-kit",
@@ -99,17 +101,19 @@ func fetchProducts(ctx context.Context, adminClient *generated.Client) (*generat
 	return res, nil
 }
 
-type content struct {
+// Content is not documented yet.
+type Content struct {
 	handle string
 	html   string
 }
 
-type contents struct {
+// Contents is not documented yet.
+type Contents struct {
 	kind  string
-	items []content
+	items []Content
 }
 
-func dowloadContens(output string, contents *[]content, bar *mpb.Bar) error {
+func dowloadContens(output string, contents *[]Content, bar *mpb.Bar) error {
 	err := os.MkdirAll(output, os.ModePerm)
 	if err != nil {
 		return err
@@ -146,6 +150,29 @@ func dowloadContens(output string, contents *[]content, bar *mpb.Bar) error {
 	return nil
 }
 
+// Article is documented at https://shopify.dev/docs/admin-api/rest/reference/online-store/article
+type Article struct {
+	ID                int64      `json:"id"`
+	Title             string     `json:"title"`
+	CreatedAt         *time.Time `json:"created_at"`
+	BodyHTML          string     `json:"body_html"`
+	BlogID            int64      `json:"blog_id"`
+	Author            string     `json:"author"`
+	UserID            int64      `json:"user_id"`
+	PublishedAt       *time.Time `json:"published_at"`
+	UpdatedAt         *time.Time `json:"updated_at"`
+	SummaryHTML       *string    `json:"summary_html"`
+	TemplateSuffix    *string    `json:"template_suffix"`
+	Handle            string     `json:"handle"`
+	Tags              string     `json:"tags"`
+	AdminGraphqlAPIID string     `json:"admin_graphql_api_id"`
+}
+
+// Articles is not documented yet.
+type Articles struct {
+	Articles []Article `json:"articles"`
+}
+
 func download(output string) error {
 	adminClient, ctx := gqlClient()
 	restClient := establishRestClient()
@@ -154,9 +181,9 @@ func download(output string) error {
 	if err != nil {
 		return err
 	}
-	products := contents{kind: "products"}
+	products := Contents{kind: "products"}
 	for _, product := range res.Products.Edges {
-		products.items = append(products.items, content{
+		products.items = append(products.items, Content{
 			handle: product.Node.Handle,
 			html:   product.Node.DescriptionHTML,
 		})
@@ -166,17 +193,40 @@ func download(output string) error {
 	if err != nil {
 		return err
 	}
-	pages := contents{kind: "pages"}
+	pages := Contents{kind: "pages"}
 	for _, page := range rawPages {
-		pages.items = append(pages.items, content{
+		pages.items = append(pages.items, Content{
 			handle: page.Handle,
 			html:   page.BodyHTML,
 		})
 	}
 
+	rawBlogs, err := restClient.Blog.List(nil)
+	if err != nil {
+		return err
+	}
+	blogs := []Contents{}
+	for _, blog := range rawBlogs {
+		contents := Contents{
+			kind: path.Join("blogs", blog.Handle),
+		}
+		articles := Articles{Articles: []Article{}}
+		err = restClient.Get(path.Join("admin", "api", apiVersion, "blogs", fmt.Sprint(blog.ID), "articles.json"), &articles, nil)
+		if err != nil {
+			return err
+		}
+		for _, article := range articles.Articles {
+			contents.items = append(contents.items, Content{
+				handle: article.Handle,
+				html:   article.BodyHTML,
+			})
+		}
+		blogs = append(blogs, contents)
+	}
+
 	var wg sync.WaitGroup
 	progress := mpb.New(mpb.WithWaitGroup(&wg))
-	for _, cts := range []contents{products, pages} {
+	for _, cts := range append([]Contents{products, pages}, blogs...) {
 		wg.Add(1)
 		bar := progress.AddBar(int64(len(cts.items)),
 			mpb.PrependDecorators(
@@ -190,7 +240,7 @@ func download(output string) error {
 			),
 		)
 
-		go func(o string, items []content, b *mpb.Bar) {
+		go func(o string, items []Content, b *mpb.Bar) {
 			defer wg.Done()
 			err = dowloadContens(o, &items, b)
 		}(path.Join(output, cts.kind), cts.items, bar)
