@@ -270,8 +270,12 @@ type ProductByHandle struct {
 }
 type Products struct {
 	Products struct {
+		PageInfo struct {
+			HasNextPage bool "json:\"hasNextPage\" graphql:\"hasNextPage\""
+		} "json:\"pageInfo\" graphql:\"pageInfo\""
 		Edges []*struct {
-			Node struct {
+			Cursor string "json:\"cursor\" graphql:\"cursor\""
+			Node   struct {
 				Handle          string "json:\"handle\" graphql:\"handle\""
 				DescriptionHTML string "json:\"descriptionHtml\" graphql:\"descriptionHtml\""
 				Metafield       *struct {
@@ -326,9 +330,13 @@ func (c *Client) ProductByHandle(ctx context.Context, handle string, httpRequest
 	return &res, nil
 }
 
-const ProductsQuery = `query products ($first: Int!) {
-	products(first: $first) {
+const ProductsQuery = `query products ($first: Int!, $after: String) {
+	products(first: $first, after: $after) {
+		pageInfo {
+			hasNextPage
+		}
 		edges {
+			cursor
 			node {
 				handle
 				descriptionHtml
@@ -342,9 +350,10 @@ const ProductsQuery = `query products ($first: Int!) {
 }
 `
 
-func (c *Client) Products(ctx context.Context, first int64, httpRequestOptions ...client.HTTPRequestOption) (*Products, error) {
+func (c *Client) Products(ctx context.Context, first int64, after *string, httpRequestOptions ...client.HTTPRequestOption) (*Products, error) {
 	vars := map[string]interface{}{
 		"first": first,
+		"after": after,
 	}
 
 	var res Products

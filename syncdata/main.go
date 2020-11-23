@@ -64,9 +64,35 @@ func gqlClient() (*generated.Client, context.Context) {
 	}, context.Background()
 }
 
+func fetchProducts(ctx context.Context, adminClient *generated.Client) (*generated.Products, error) {
+	var cursor *string
+	var res *generated.Products
+
+	for {
+		tmpRes, err := adminClient.Products(ctx, 10, cursor)
+		fmt.Println("cursor", cursor, tmpRes.Products.Edges)
+		if err != nil {
+			return nil, err
+		}
+		if res == nil {
+			res = tmpRes
+		} else {
+			res.Products.Edges = append(res.Products.Edges, tmpRes.Products.Edges...)
+		}
+
+		if !tmpRes.Products.PageInfo.HasNextPage {
+			break
+		} else {
+			last := tmpRes.Products.Edges[len(tmpRes.Products.Edges)-1]
+			cursor = &last.Cursor
+		}
+	}
+	return res, nil
+}
+
 func download(output string) error {
 	adminClient, ctx := gqlClient()
-	res, err := adminClient.Products(ctx, 10)
+	res, err := fetchProducts(ctx, adminClient)
 	if err != nil {
 		return err
 	}
@@ -76,7 +102,6 @@ func download(output string) error {
 		return err
 	}
 
-	// TODO: Use goroutine
 	var downloadGroup sync.WaitGroup
 	p := mpb.New(mpb.WithWaitGroup(&downloadGroup))
 	bar := p.AddBar(int64(len(res.Products.Edges)),

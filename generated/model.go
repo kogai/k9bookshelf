@@ -401,9 +401,9 @@ type AppInstallationEdge struct {
 // Defines the pricing model for the app subscription.
 type AppPlanInput struct {
 	// Usage based billing pricing details.
-	AppUsagePricingDetails *AppUsagePricingInput `json:"appUsagePricingDetails"`
+	AppUsagePricingDetails *AppUsagePricingInput `json:"appUsagePricingDetails,omitempty"`
 	// Recurring based billing pricing details.
-	AppRecurringPricingDetails *AppRecurringPricingInput `json:"appRecurringPricingDetails"`
+	AppRecurringPricingDetails *AppRecurringPricingInput `json:"appRecurringPricingDetails,omitempty"`
 }
 
 // Defines the app plan the merchant is subscribed to.
@@ -468,9 +468,9 @@ func (AppRecurringPricing) IsAppPricingDetails() {}
 // Allows an app to charge per billing interval.
 type AppRecurringPricingInput struct {
 	// Specifies the billing frequency of the app subscription.
-	Interval *AppPricingInterval `json:"interval"`
+	Interval *AppPricingInterval `json:"interval,omitempty"`
 	// The amount to be charged to the store every billing interval. The only permitted currency code is USD.
-	Price *MoneyInput `json:"price"`
+	Price *MoneyInput `json:"price,omitempty"`
 }
 
 // Provides users access to services and/or features for a duration of time.
@@ -543,7 +543,7 @@ type AppSubscriptionLineItem struct {
 // Allows an app to add more than one plan to an app subscription.
 type AppSubscriptionLineItemInput struct {
 	// Defines the pricing model for the app subscription.
-	Plan *AppPlanInput `json:"plan"`
+	Plan *AppPlanInput `json:"plan,omitempty"`
 }
 
 // Return type for `appSubscriptionLineItemUpdate` mutation.
@@ -573,9 +573,9 @@ func (AppUsagePricing) IsAppPricingDetails() {}
 // Allows an app to charge a store for usage.
 type AppUsagePricingInput struct {
 	// The limit a customer can be charged for usage based pricing.
-	CappedAmount *MoneyInput `json:"cappedAmount"`
+	CappedAmount *MoneyInput `json:"cappedAmount,omitempty"`
 	// The terms and conditions for app usage.
-	Terms string `json:"terms"`
+	Terms string `json:"terms,omitempty"`
 }
 
 // Store usage for app subscriptions with usage pricing.
@@ -627,9 +627,9 @@ type Attribute struct {
 // Specifies the input fields required for an attribute.
 type AttributeInput struct {
 	// Key or name of the attribute.
-	Key string `json:"key"`
+	Key string `json:"key,omitempty"`
 	// Value of the attribute.
-	Value string `json:"value"`
+	Value string `json:"value,omitempty"`
 }
 
 // Automatic discount applications capture the intentions of a discount that was automatically applied.
@@ -1064,7 +1064,7 @@ type CollectionCreatePayload struct {
 // Specifies the collection to delete.
 type CollectionDeleteInput struct {
 	// The ID of the collection to be deleted.
-	ID string `json:"id"`
+	ID string `json:"id,omitempty"`
 }
 
 // Return type for `collectionDelete` mutation.
@@ -1087,37 +1087,37 @@ type CollectionEdge struct {
 // Specifies the input fields required to create a collection.
 type CollectionInput struct {
 	// The description of the collection, in HTML format.
-	DescriptionHTML *string `json:"descriptionHtml"`
+	DescriptionHTML *string `json:"descriptionHtml,omitempty"`
 	// A unique human-friendly string for the collection. Automatically generated from the collection's title.
 	//
-	Handle *string `json:"handle"`
+	Handle *string `json:"handle,omitempty"`
 	// Specifies the collection to update or create a new collection if absent.
-	ID *string `json:"id"`
+	ID *string `json:"id,omitempty"`
 	// The image associated with the collection.
-	Image *ImageInput `json:"image"`
+	Image *ImageInput `json:"image,omitempty"`
 	// Initial list of collection products. Only valid with `productCreate` and without rules.
-	Products []string `json:"products"`
+	Products []string `json:"products,omitempty"`
 	// Initial list of collection publications. Only valid with `productCreate`. This argument is deprecated: Use PublishablePublish instead.
-	Publications []*CollectionPublicationInput `json:"publications"`
+	Publications []*CollectionPublicationInput `json:"publications,omitempty"`
 	// The private metafields to associated with this product.
-	PrivateMetafields []*PrivateMetafieldInput `json:"privateMetafields"`
+	PrivateMetafields []*PrivateMetafieldInput `json:"privateMetafields,omitempty"`
 	// The rules used to assign products to the collection.
 	//
-	RuleSet *CollectionRuleSetInput `json:"ruleSet"`
+	RuleSet *CollectionRuleSetInput `json:"ruleSet,omitempty"`
 	// The theme template used when viewing the collection in a store.
-	TemplateSuffix *string `json:"templateSuffix"`
+	TemplateSuffix *string `json:"templateSuffix,omitempty"`
 	// The order in which the collection's products are sorted.
-	SortOrder *CollectionSortOrder `json:"sortOrder"`
+	SortOrder *CollectionSortOrder `json:"sortOrder,omitempty"`
 	// Required for creating a new collection.
-	Title *string `json:"title"`
+	Title *string `json:"title,omitempty"`
 	// The metafields to associate with this collection.
-	Metafields []*MetafieldInput `json:"metafields"`
+	Metafields []*MetafieldInput `json:"metafields,omitempty"`
 	// SEO information for the collection.
-	Seo *SEOInput `json:"seo"`
+	Seo *SEOInput `json:"seo,omitempty"`
 	// Indicates whether a redirect is required after a new handle has been provided.
 	// If true, then the old handle is redirected to the new one automatically.
 	//
-	RedirectNewHandle *bool `json:"redirectNewHandle"`
+	RedirectNewHandle *bool `json:"redirectNewHandle,omitempty"`
 }
 
 // Represents the publications where a collection is published.
@@ -1151,19 +1151,19 @@ type CollectionPublicationEdge struct {
 // Specifies the publications to which a collection will be published.
 type CollectionPublicationInput struct {
 	// The ID of the publication.
-	PublicationID *string `json:"publicationId"`
+	PublicationID *string `json:"publicationId,omitempty"`
 	// The ID of the channel. This argument is deprecated: Use publicationId instead.
-	ChannelID *string `json:"channelId"`
+	ChannelID *string `json:"channelId,omitempty"`
 	// This argument is deprecated: Use publicationId instead.
-	ChannelHandle *string `json:"channelHandle"`
+	ChannelHandle *string `json:"channelHandle,omitempty"`
 }
 
 // Specifies a collection to publish and the sales channels to publish it to.
 type CollectionPublishInput struct {
 	// The collection to create or update publications for.
-	ID string `json:"id"`
+	ID string `json:"id,omitempty"`
 	// The channels where the collection will be published.
-	CollectionPublications []*CollectionPublicationInput `json:"collectionPublications"`
+	CollectionPublications []*CollectionPublicationInput `json:"collectionPublications,omitempty"`
 }
 
 // Return type for `collectionPublish` mutation.
@@ -1218,12 +1218,12 @@ type CollectionRuleConditions struct {
 // Specifies a rule to associate with a collection.
 type CollectionRuleInput struct {
 	// The attribute that the rule focuses on (for example, `title` or `product_type`).
-	Column CollectionRuleColumn `json:"column"`
+	Column CollectionRuleColumn `json:"column,omitempty"`
 	// The type of operator that the rule is based on (for example, `equals`, `contains`, or `not_equals`).
 	//
-	Relation CollectionRuleRelation `json:"relation"`
+	Relation CollectionRuleRelation `json:"relation,omitempty"`
 	// The value that the operator is applied to (for example, `Hats`).
-	Condition string `json:"condition"`
+	Condition string `json:"condition,omitempty"`
 }
 
 // The set of rules that are used to determine which products are included in the collection.
@@ -1243,17 +1243,17 @@ type CollectionRuleSetInput struct {
 	// If true, then products must match one or more of the rules to be included in the collection.
 	// If false, then products must match all of the rules to be included in the collection.
 	//
-	AppliedDisjunctively bool `json:"appliedDisjunctively"`
+	AppliedDisjunctively bool `json:"appliedDisjunctively,omitempty"`
 	// The rules used to assign products to the collection.
-	Rules []*CollectionRuleInput `json:"rules"`
+	Rules []*CollectionRuleInput `json:"rules,omitempty"`
 }
 
 // Specifies the collection to unpublish and the sales channels to remove it from.
 type CollectionUnpublishInput struct {
 	// The collection to create or update publications for.
-	ID string `json:"id"`
+	ID string `json:"id,omitempty"`
 	// The channels where the collection is published.
-	CollectionPublications []*CollectionPublicationInput `json:"collectionPublications"`
+	CollectionPublications []*CollectionPublicationInput `json:"collectionPublications,omitempty"`
 }
 
 // Return type for `collectionUnpublish` mutation.
@@ -1364,19 +1364,19 @@ type CountryHarmonizedSystemCodeEdge struct {
 //
 type CountryHarmonizedSystemCodeInput struct {
 	// Country specific harmonized system code.
-	HarmonizedSystemCode string `json:"harmonizedSystemCode"`
+	HarmonizedSystemCode string `json:"harmonizedSystemCode,omitempty"`
 	// Country ISO code.
-	CountryCode CountryCode `json:"countryCode"`
+	CountryCode CountryCode `json:"countryCode,omitempty"`
 }
 
 // Specifies the input fields required to create a media object.
 type CreateMediaInput struct {
 	// The original source of the media object. May be an external URL or signed upload URL.
-	OriginalSource string `json:"originalSource"`
+	OriginalSource string `json:"originalSource,omitempty"`
 	// The alt text associated to the media.
-	Alt *string `json:"alt"`
+	Alt *string `json:"alt,omitempty"`
 	// The media content type.
-	MediaContentType MediaContentType `json:"mediaContentType"`
+	MediaContentType MediaContentType `json:"mediaContentType,omitempty"`
 }
 
 // Currency formats.
@@ -1554,7 +1554,7 @@ type CustomerCreatePayload struct {
 // Specifies the customer to delete.
 type CustomerDeleteInput struct {
 	// The ID of the customer to delete.
-	ID string `json:"id"`
+	ID string `json:"id,omitempty"`
 }
 
 // Return type for `customerDelete` mutation.
@@ -1585,41 +1585,41 @@ type CustomerGenerateAccountActivationURLPayload struct {
 // Provides the fields and values to use when creating or updating a customer.
 type CustomerInput struct {
 	// Whether the customer has consented to receive marketing material via email.
-	AcceptsMarketing *bool `json:"acceptsMarketing"`
+	AcceptsMarketing *bool `json:"acceptsMarketing,omitempty"`
 	// The date and time when the customer consented or objected to receiving marketing material by email. Set
 	// whenever the customer consents or objects to marketing material.
 	//
-	AcceptsMarketingUpdatedAt *string `json:"acceptsMarketingUpdatedAt"`
+	AcceptsMarketingUpdatedAt *string `json:"acceptsMarketingUpdatedAt,omitempty"`
 	// An input that specifies addresses for a customer.
-	Addresses []*MailingAddressInput `json:"addresses"`
+	Addresses []*MailingAddressInput `json:"addresses,omitempty"`
 	// The unique email address of the customer.
-	Email *string `json:"email"`
+	Email *string `json:"email,omitempty"`
 	// The customer's first name.
-	FirstName *string `json:"firstName"`
+	FirstName *string `json:"firstName,omitempty"`
 	// Specifies the customer to update, or creates a new customer if one doesn't exist.
-	ID *string `json:"id"`
+	ID *string `json:"id,omitempty"`
 	// The customer's last name.
-	LastName *string `json:"lastName"`
+	LastName *string `json:"lastName,omitempty"`
 	// The customer's locale.
-	Locale *string `json:"locale"`
+	Locale *string `json:"locale,omitempty"`
 	// The marketing subscription opt-in level (as described by the M3AAWG best practices guideline) that was
 	// enabled when the customer consented to receiving marketing material by email.
 	//
-	MarketingOptInLevel *CustomerMarketingOptInLevel `json:"marketingOptInLevel"`
+	MarketingOptInLevel *CustomerMarketingOptInLevel `json:"marketingOptInLevel,omitempty"`
 	// Attaches additional metadata to the customer.
-	Metafields []*MetafieldInput `json:"metafields"`
+	Metafields []*MetafieldInput `json:"metafields,omitempty"`
 	// A note about the customer.
-	Note *string `json:"note"`
+	Note *string `json:"note,omitempty"`
 	// The unique phone number for the customer.
-	Phone *string `json:"phone"`
+	Phone *string `json:"phone,omitempty"`
 	// The private metafields to associated with this product.
-	PrivateMetafields []*PrivateMetafieldInput `json:"privateMetafields"`
+	PrivateMetafields []*PrivateMetafieldInput `json:"privateMetafields,omitempty"`
 	// A comma separated list of tags that have been added to the customer.
-	Tags []string `json:"tags"`
+	Tags []string `json:"tags,omitempty"`
 	// Whether the customer is exempt from paying taxes on their order.
-	TaxExempt *bool `json:"taxExempt"`
+	TaxExempt *bool `json:"taxExempt,omitempty"`
 	// The list of tax exemptions to apply to the customer.
-	TaxExemptions []TaxExemption `json:"taxExemptions"`
+	TaxExemptions []TaxExemption `json:"taxExemptions,omitempty"`
 }
 
 // Represents a customer's activity on a shop's online store.
@@ -1822,13 +1822,13 @@ type DeliveryCountryCodesOrRestOfWorld struct {
 // Input fields to specify a country.
 type DeliveryCountryInput struct {
 	// The country code of the country.
-	Code *CountryCode `json:"code"`
+	Code *CountryCode `json:"code,omitempty"`
 	// Use Rest of World as the country.
-	RestOfWorld *bool `json:"restOfWorld"`
+	RestOfWorld *bool `json:"restOfWorld,omitempty"`
 	// The regions associated with this country.
-	Provinces []*DeliveryProvinceInput `json:"provinces"`
+	Provinces []*DeliveryProvinceInput `json:"provinces,omitempty"`
 	// Associate all available provinces with this country.
-	IncludeAllProvinces *bool `json:"includeAllProvinces"`
+	IncludeAllProvinces *bool `json:"includeAllProvinces,omitempty"`
 }
 
 // Whether the shop is blocked from converting to full multi-location delivery profiles mode. If the shop is blocked, then the blocking reasons are also returned.
@@ -1876,15 +1876,15 @@ type DeliveryLocationGroupZoneEdge struct {
 // Input fields for a delivery zone associated to a location group and profile.
 type DeliveryLocationGroupZoneInput struct {
 	// Globally unique identifier of the Zone.
-	ID *string `json:"id"`
+	ID *string `json:"id,omitempty"`
 	// The name of the zone.
-	Name *string `json:"name"`
+	Name *string `json:"name,omitempty"`
 	// Countries to associate with the zone.
-	Countries []*DeliveryCountryInput `json:"countries"`
+	Countries []*DeliveryCountryInput `json:"countries,omitempty"`
 	// Method definitions to create.
-	MethodDefinitionsToCreate []*DeliveryMethodDefinitionInput `json:"methodDefinitionsToCreate"`
+	MethodDefinitionsToCreate []*DeliveryMethodDefinitionInput `json:"methodDefinitionsToCreate,omitempty"`
 	// Method definitions to update.
-	MethodDefinitionsToUpdate []*DeliveryMethodDefinitionInput `json:"methodDefinitionsToUpdate"`
+	MethodDefinitionsToUpdate []*DeliveryMethodDefinitionInput `json:"methodDefinitionsToUpdate,omitempty"`
 }
 
 // A method definition describes the delivery rate and the conditions that must be met for the method to be applied.
@@ -1930,23 +1930,23 @@ type DeliveryMethodDefinitionEdge struct {
 // Input fields for a method definition.
 type DeliveryMethodDefinitionInput struct {
 	// Globally unique identifier of the method definition. Use only when updating a method definiton.
-	ID *string `json:"id"`
+	ID *string `json:"id,omitempty"`
 	// The name of the method definition.
-	Name *string `json:"name"`
+	Name *string `json:"name,omitempty"`
 	// The description of the method definition.
-	Description *string `json:"description"`
+	Description *string `json:"description,omitempty"`
 	// Whether or not to use this method definition during rate calculation.
-	Active *bool `json:"active"`
+	Active *bool `json:"active,omitempty"`
 	// A rate definition to apply to the method definition.
-	RateDefinition *DeliveryRateDefinitionInput `json:"rateDefinition"`
+	RateDefinition *DeliveryRateDefinitionInput `json:"rateDefinition,omitempty"`
 	// A participant to apply to the method definition.
-	Participant *DeliveryParticipantInput `json:"participant"`
+	Participant *DeliveryParticipantInput `json:"participant,omitempty"`
 	// Weight conditions on the method definition.
-	WeightConditionsToCreate []*DeliveryWeightConditionInput `json:"weightConditionsToCreate"`
+	WeightConditionsToCreate []*DeliveryWeightConditionInput `json:"weightConditionsToCreate,omitempty"`
 	// Price conditions on the method definition.
-	PriceConditionsToCreate []*DeliveryPriceConditionInput `json:"priceConditionsToCreate"`
+	PriceConditionsToCreate []*DeliveryPriceConditionInput `json:"priceConditionsToCreate,omitempty"`
 	// Conditions on the method definition to update.
-	ConditionsToUpdate []*DeliveryUpdateConditionInput `json:"conditionsToUpdate"`
+	ConditionsToUpdate []*DeliveryUpdateConditionInput `json:"conditionsToUpdate,omitempty"`
 }
 
 // A carrier-defined rate with possible merchant-defined fixed fee or percentage-of-rate fee.
@@ -1965,23 +1965,23 @@ type DeliveryParticipant struct {
 	PercentageOfRateFee float64 `json:"percentageOfRateFee"`
 }
 
-func (DeliveryParticipant) IsNode()                 {}
 func (DeliveryParticipant) IsDeliveryRateProvider() {}
+func (DeliveryParticipant) IsNode()                 {}
 
 // Input fields for a participant.
 type DeliveryParticipantInput struct {
 	// Globally unique identifier of the participant.
-	ID *string `json:"id"`
+	ID *string `json:"id,omitempty"`
 	// Global identifier of the carrier service.
-	CarrierServiceID *string `json:"carrierServiceId"`
+	CarrierServiceID *string `json:"carrierServiceId,omitempty"`
 	// The merchant-set fixed fee for this participant.
-	FixedFee *MoneyInput `json:"fixedFee"`
+	FixedFee *MoneyInput `json:"fixedFee,omitempty"`
 	// The merchant-set percentage-of-rate fee for this participant.
-	PercentageOfRateFee *float64 `json:"percentageOfRateFee"`
+	PercentageOfRateFee *float64 `json:"percentageOfRateFee,omitempty"`
 	// Services offered by the participant and their active status.
-	ParticipantServices []*DeliveryParticipantServiceInput `json:"participantServices"`
+	ParticipantServices []*DeliveryParticipantServiceInput `json:"participantServices,omitempty"`
 	// Flag to indicate if new available services should be included.
-	AdaptToNewServices *bool `json:"adaptToNewServices"`
+	AdaptToNewServices *bool `json:"adaptToNewServices,omitempty"`
 }
 
 // A service provided by a participant.
@@ -1995,17 +1995,17 @@ type DeliveryParticipantService struct {
 // Input fields for a service provided by a participant.
 type DeliveryParticipantServiceInput struct {
 	// Name of the service.
-	Name string `json:"name"`
+	Name string `json:"name,omitempty"`
 	// If the service is active or not.
-	Active bool `json:"active"`
+	Active bool `json:"active,omitempty"`
 }
 
 // Input fields for the price-based conditions of a method definition.
 type DeliveryPriceConditionInput struct {
 	// The criteria for the price.
-	Criteria *MoneyInput `json:"criteria"`
+	Criteria *MoneyInput `json:"criteria,omitempty"`
 	// The operator to use for comparison.
-	Operator *DeliveryConditionOperator `json:"operator"`
+	Operator *DeliveryConditionOperator `json:"operator,omitempty"`
 }
 
 // How many product variants are in a profile. This count is capped at 500.
@@ -2065,25 +2065,25 @@ type DeliveryProfileEdge struct {
 // Input fields for a delivery profile.
 type DeliveryProfileInput struct {
 	// The name of the profile.
-	Name *string `json:"name"`
+	Name *string `json:"name,omitempty"`
 	// The location groups associated with the profile.
-	ProfileLocationGroups []*DeliveryProfileLocationGroupInput `json:"profileLocationGroups"`
+	ProfileLocationGroups []*DeliveryProfileLocationGroupInput `json:"profileLocationGroups,omitempty"`
 	// The location groups to be created in the profile.
-	LocationGroupsToCreate []*DeliveryProfileLocationGroupInput `json:"locationGroupsToCreate"`
+	LocationGroupsToCreate []*DeliveryProfileLocationGroupInput `json:"locationGroupsToCreate,omitempty"`
 	// The location groups to be updated in the profile.
-	LocationGroupsToUpdate []*DeliveryProfileLocationGroupInput `json:"locationGroupsToUpdate"`
+	LocationGroupsToUpdate []*DeliveryProfileLocationGroupInput `json:"locationGroupsToUpdate,omitempty"`
 	// The location groups to be deleted in the profile.
-	LocationGroupsToDelete []string `json:"locationGroupsToDelete"`
+	LocationGroupsToDelete []string `json:"locationGroupsToDelete,omitempty"`
 	// The product variant ids to be associated with this profile.
-	VariantsToAssociate []string `json:"variantsToAssociate"`
+	VariantsToAssociate []string `json:"variantsToAssociate,omitempty"`
 	// The product variant ids to be dissociated from this profile and returned to the default profile.
-	VariantsToDissociate []string `json:"variantsToDissociate"`
+	VariantsToDissociate []string `json:"variantsToDissociate,omitempty"`
 	// Zones to delete.
-	ZonesToDelete []string `json:"zonesToDelete"`
+	ZonesToDelete []string `json:"zonesToDelete,omitempty"`
 	// Method definitions to delete.
-	MethodDefinitionsToDelete []string `json:"methodDefinitionsToDelete"`
+	MethodDefinitionsToDelete []string `json:"methodDefinitionsToDelete,omitempty"`
 	// Conditions to delete.
-	ConditionsToDelete []string `json:"conditionsToDelete"`
+	ConditionsToDelete []string `json:"conditionsToDelete,omitempty"`
 }
 
 // A product and the subset of associated variants that are part of this delivery profile.
@@ -2121,13 +2121,13 @@ type DeliveryProfileLocationGroup struct {
 // Input fields for a delivery location group associated to a profile.
 type DeliveryProfileLocationGroupInput struct {
 	// Globally unique identifier of the LocationGroup.
-	ID *string `json:"id"`
+	ID *string `json:"id,omitempty"`
 	// The location ids of the locations to be moved to this location group.
-	Locations []string `json:"locations"`
+	Locations []string `json:"locations,omitempty"`
 	// Zones to create.
-	ZonesToCreate []*DeliveryLocationGroupZoneInput `json:"zonesToCreate"`
+	ZonesToCreate []*DeliveryLocationGroupZoneInput `json:"zonesToCreate,omitempty"`
 	// Zones to update.
-	ZonesToUpdate []*DeliveryLocationGroupZoneInput `json:"zonesToUpdate"`
+	ZonesToUpdate []*DeliveryLocationGroupZoneInput `json:"zonesToUpdate,omitempty"`
 }
 
 // A region that is used to define a zone.
@@ -2145,7 +2145,7 @@ func (DeliveryProvince) IsNode() {}
 // The input fields to specify a region.
 type DeliveryProvinceInput struct {
 	// The code of the region.
-	Code string `json:"code"`
+	Code string `json:"code,omitempty"`
 }
 
 // The merchant-defined rate of the DeliveryMethodDefinition.
@@ -2162,9 +2162,9 @@ func (DeliveryRateDefinition) IsDeliveryRateProvider() {}
 // Input fields for a rate definition.
 type DeliveryRateDefinitionInput struct {
 	// Globally unique identifier of the rate definition.
-	ID *string `json:"id"`
+	ID *string `json:"id,omitempty"`
 	// The price of the rate definition.
-	Price *MoneyInput `json:"price"`
+	Price *MoneyInput `json:"price,omitempty"`
 }
 
 // Delivery shop-level settings.
@@ -2178,7 +2178,7 @@ type DeliverySetting struct {
 // Input fields for shop-level delivery settings.
 type DeliverySettingInput struct {
 	// Enables legacy compatability mode for the multi-location delivery profiles feature.
-	LegacyModeProfiles *bool `json:"legacyModeProfiles"`
+	LegacyModeProfiles *bool `json:"legacyModeProfiles,omitempty"`
 }
 
 // Return type for `deliverySettingUpdate` mutation.
@@ -2198,23 +2198,23 @@ type DeliveryShippingOriginAssignPayload struct {
 // Input fields for updating the conditions of a method definition.
 type DeliveryUpdateConditionInput struct {
 	// Globally unique identifier of the condition.
-	ID string `json:"id"`
+	ID string `json:"id,omitempty"`
 	// The value of the criteria of the condition.
-	Criteria *float64 `json:"criteria"`
+	Criteria *float64 `json:"criteria,omitempty"`
 	// The unit of the criteria of the condition.
-	CriteriaUnit *string `json:"criteriaUnit"`
+	CriteriaUnit *string `json:"criteriaUnit,omitempty"`
 	// The field to use, either total_weight or total_price.
-	Field *DeliveryConditionField `json:"field"`
+	Field *DeliveryConditionField `json:"field,omitempty"`
 	// The operator to use for comparison.
-	Operator *DeliveryConditionOperator `json:"operator"`
+	Operator *DeliveryConditionOperator `json:"operator,omitempty"`
 }
 
 // Input fields for the weight-based conditions of a method definition.
 type DeliveryWeightConditionInput struct {
 	// The criteria for the weight.
-	Criteria *WeightInput `json:"criteria"`
+	Criteria *WeightInput `json:"criteria,omitempty"`
 	// The operator to use for comparison.
-	Operator *DeliveryConditionOperator `json:"operator"`
+	Operator *DeliveryConditionOperator `json:"operator,omitempty"`
 }
 
 // A zone is a geographical area that contains delivery methods within a delivery profile.
@@ -2253,9 +2253,9 @@ func (DiscountAmount) IsDiscountCustomerGetsValue() {}
 // Specifies the value of the discount and how it is applied.
 type DiscountAmountInput struct {
 	// The value of the discount.
-	Amount *string `json:"amount"`
+	Amount *string `json:"amount,omitempty"`
 	// If true, then the discount is applied to each of the entitled items. If false, then the amount is split across all of the entitled items.
-	AppliesOnEachItem *bool `json:"appliesOnEachItem"`
+	AppliesOnEachItem *bool `json:"appliesOnEachItem,omitempty"`
 }
 
 type DiscountApplicationConnection struct {
@@ -2317,15 +2317,15 @@ type DiscountAutomaticBasicCreatePayload struct {
 // Specifies input field to create or update automatic basic discount.
 type DiscountAutomaticBasicInput struct {
 	// The title of the discount.
-	Title *string `json:"title"`
+	Title *string `json:"title,omitempty"`
 	// The date and time when the discount starts.
-	StartsAt *string `json:"startsAt"`
+	StartsAt *string `json:"startsAt,omitempty"`
 	// The date and time when the discount ends. For open-ended discounts, use `null`.
-	EndsAt *string `json:"endsAt"`
+	EndsAt *string `json:"endsAt,omitempty"`
 	// The minimum subtotal or quantity that's required for the discount to be applied.
-	MinimumRequirement *DiscountMinimumRequirementInput `json:"minimumRequirement"`
+	MinimumRequirement *DiscountMinimumRequirementInput `json:"minimumRequirement,omitempty"`
 	// The qualifying items in an order, the quantity of each one, and the total value of the discount.
-	CustomerGets *DiscountCustomerGetsInput `json:"customerGets"`
+	CustomerGets *DiscountCustomerGetsInput `json:"customerGets,omitempty"`
 }
 
 // Return type for `discountAutomaticBasicUpdate` mutation.
@@ -2372,9 +2372,9 @@ type DiscountAutomaticBxgy struct {
 	UsesPerOrderLimit *int64 `json:"usesPerOrderLimit"`
 }
 
-func (DiscountAutomaticBxgy) IsDiscountAutomatic() {}
 func (DiscountAutomaticBxgy) IsNode()              {}
 func (DiscountAutomaticBxgy) IsHasEvents()         {}
+func (DiscountAutomaticBxgy) IsDiscountAutomatic() {}
 
 // Return type for `discountAutomaticBxgyCreate` mutation.
 type DiscountAutomaticBxgyCreatePayload struct {
@@ -2387,17 +2387,17 @@ type DiscountAutomaticBxgyCreatePayload struct {
 // Specifies input field to create or update automatic bogo discount.
 type DiscountAutomaticBxgyInput struct {
 	// The date and time when the discount starts.
-	StartsAt *string `json:"startsAt"`
+	StartsAt *string `json:"startsAt,omitempty"`
 	// The date and time when the discount ends. For open-ended discounts, use `null`.
-	EndsAt *string `json:"endsAt"`
+	EndsAt *string `json:"endsAt,omitempty"`
 	// The title of the discount.
-	Title *string `json:"title"`
+	Title *string `json:"title,omitempty"`
 	// The maximum number of times that the discount can be applied to an order.
-	UsesPerOrderLimit *string `json:"usesPerOrderLimit"`
+	UsesPerOrderLimit *string `json:"usesPerOrderLimit,omitempty"`
 	// The qualifying items and the quantity of each one that the customer has to buy to be eligible for the discount.
-	CustomerBuys *DiscountCustomerBuysInput `json:"customerBuys"`
+	CustomerBuys *DiscountCustomerBuysInput `json:"customerBuys,omitempty"`
 	// The qualifying items in an order, the quantity of each one, and the total value of the discount.
-	CustomerGets *DiscountCustomerGetsInput `json:"customerGets"`
+	CustomerGets *DiscountCustomerGetsInput `json:"customerGets,omitempty"`
 }
 
 // Return type for `discountAutomaticBxgyUpdate` mutation.
@@ -2542,23 +2542,23 @@ type DiscountCodeBasicCreatePayload struct {
 // Specifies input field to create or update code basic discount.
 type DiscountCodeBasicInput struct {
 	// The title of the discount.
-	Title *string `json:"title"`
+	Title *string `json:"title,omitempty"`
 	// The date and time when the discount starts.
-	StartsAt *string `json:"startsAt"`
+	StartsAt *string `json:"startsAt,omitempty"`
 	// The date and time when the discount ends. For open-ended discounts, use `null`.
-	EndsAt *string `json:"endsAt"`
+	EndsAt *string `json:"endsAt,omitempty"`
 	// The maximum number of times that the discount can be used. For open-ended discounts, use `null`.
-	UsageLimit *int64 `json:"usageLimit"`
+	UsageLimit *int64 `json:"usageLimit,omitempty"`
 	// Whether the discount can be applied only once per customer.
-	AppliesOncePerCustomer *bool `json:"appliesOncePerCustomer"`
+	AppliesOncePerCustomer *bool `json:"appliesOncePerCustomer,omitempty"`
 	// The minimum subtotal or quantity that's required for the discount to be applied.
-	MinimumRequirement *DiscountMinimumRequirementInput `json:"minimumRequirement"`
+	MinimumRequirement *DiscountMinimumRequirementInput `json:"minimumRequirement,omitempty"`
 	// The qualifying items in an order, the quantity of each one, and the total value of the discount.
-	CustomerGets *DiscountCustomerGetsInput `json:"customerGets"`
+	CustomerGets *DiscountCustomerGetsInput `json:"customerGets,omitempty"`
 	// The customers that can use the discount.
-	CustomerSelection *DiscountCustomerSelectionInput `json:"customerSelection"`
+	CustomerSelection *DiscountCustomerSelectionInput `json:"customerSelection,omitempty"`
 	// The code to use the discount.
-	Code *string `json:"code"`
+	Code *string `json:"code,omitempty"`
 }
 
 // Return type for `discountCodeBasicUpdate` mutation.
@@ -2616,25 +2616,25 @@ type DiscountCodeBxgyCreatePayload struct {
 // Specifies input field to create or update a BXGY code discount.
 type DiscountCodeBxgyInput struct {
 	// The title of the discount.
-	Title *string `json:"title"`
+	Title *string `json:"title,omitempty"`
 	// The date and time when the discount starts.
-	StartsAt *string `json:"startsAt"`
+	StartsAt *string `json:"startsAt,omitempty"`
 	// The date and time when the discount ends. For open-ended discounts, use `null`.
-	EndsAt *string `json:"endsAt"`
+	EndsAt *string `json:"endsAt,omitempty"`
 	// The qualifying items and the quantity of each one that the customer has to buy to be eligible for the discount.
-	CustomerBuys *DiscountCustomerBuysInput `json:"customerBuys"`
+	CustomerBuys *DiscountCustomerBuysInput `json:"customerBuys,omitempty"`
 	// The qualifying items in an order, the quantity of each one, and the total value of the discount.
-	CustomerGets *DiscountCustomerGetsInput `json:"customerGets"`
+	CustomerGets *DiscountCustomerGetsInput `json:"customerGets,omitempty"`
 	// The customers that can use the discount.
-	CustomerSelection *DiscountCustomerSelectionInput `json:"customerSelection"`
+	CustomerSelection *DiscountCustomerSelectionInput `json:"customerSelection,omitempty"`
 	// The code to use the discount.
-	Code *string `json:"code"`
+	Code *string `json:"code,omitempty"`
 	// The maximum number of times that the discount can be used. For open-ended discounts, use `null`.
-	UsageLimit *int64 `json:"usageLimit"`
+	UsageLimit *int64 `json:"usageLimit,omitempty"`
 	// The maximum number of times that the discount can be applied to an order.
-	UsesPerOrderLimit *int64 `json:"usesPerOrderLimit"`
+	UsesPerOrderLimit *int64 `json:"usesPerOrderLimit,omitempty"`
 	// Whether the discount can be applied only once per customer.
-	AppliesOncePerCustomer *bool `json:"appliesOncePerCustomer"`
+	AppliesOncePerCustomer *bool `json:"appliesOncePerCustomer,omitempty"`
 }
 
 // Return type for `discountCodeBxgyUpdate` mutation.
@@ -2708,23 +2708,23 @@ type DiscountCodeFreeShippingCreatePayload struct {
 // Specifies input field to create or update free shipping code discount.
 type DiscountCodeFreeShippingInput struct {
 	// The title of the discount.
-	Title *string `json:"title"`
+	Title *string `json:"title,omitempty"`
 	// The date and time when the discount starts.
-	StartsAt *string `json:"startsAt"`
+	StartsAt *string `json:"startsAt,omitempty"`
 	// The date and time when the discount ends. For open-ended discounts, use `null`.
-	EndsAt *string `json:"endsAt"`
+	EndsAt *string `json:"endsAt,omitempty"`
 	// The code to use the discount.
-	Code *string `json:"code"`
+	Code *string `json:"code,omitempty"`
 	// The maximum number of times that the discount can be used. For open-ended discounts, use `null`.
-	UsageLimit *int64 `json:"usageLimit"`
+	UsageLimit *int64 `json:"usageLimit,omitempty"`
 	// Whether the discount can be applied only once per customer.
-	AppliesOncePerCustomer *bool `json:"appliesOncePerCustomer"`
+	AppliesOncePerCustomer *bool `json:"appliesOncePerCustomer,omitempty"`
 	// The minimum subtotal or quantity that's required for the discount to be applied.
-	MinimumRequirement *DiscountMinimumRequirementInput `json:"minimumRequirement"`
+	MinimumRequirement *DiscountMinimumRequirementInput `json:"minimumRequirement,omitempty"`
 	// The customers that can use the discount.
-	CustomerSelection *DiscountCustomerSelectionInput `json:"customerSelection"`
+	CustomerSelection *DiscountCustomerSelectionInput `json:"customerSelection,omitempty"`
 	// A list of destinations where the discount will apply.
-	Destination *DiscountShippingDestinationSelectionInput `json:"destination"`
+	Destination *DiscountShippingDestinationSelectionInput `json:"destination,omitempty"`
 }
 
 // Return type for `discountCodeFreeShippingUpdate` mutation.
@@ -2773,9 +2773,9 @@ func (DiscountCollections) IsDiscountItems() {}
 // Specifies the collections attached to a discount.
 type DiscountCollectionsInput struct {
 	// Specifies list of collection ids to add.
-	Add []string `json:"add"`
+	Add []string `json:"add,omitempty"`
 	// Specifies list of collection ids to remove.
-	Remove []string `json:"remove"`
+	Remove []string `json:"remove,omitempty"`
 }
 
 // The shipping destination where the discount applies.
@@ -2791,11 +2791,11 @@ func (DiscountCountries) IsDiscountShippingDestinationSelection() {}
 // Specifies a list of countries to add or remove from the free shipping discount.
 type DiscountCountriesInput struct {
 	// The country codes to add to the list of countries where the discount applies.
-	Add []CountryCode `json:"add"`
+	Add []CountryCode `json:"add,omitempty"`
 	// The country codes to remove from the list of countries where the discount applies.
-	Remove []CountryCode `json:"remove"`
+	Remove []CountryCode `json:"remove,omitempty"`
 	// Whether the discount code is applicable to countries that have not been defined in the shop's shipping zones.
-	IncludeRestOfWorld *bool `json:"includeRestOfWorld"`
+	IncludeRestOfWorld *bool `json:"includeRestOfWorld,omitempty"`
 }
 
 // Whether the discount applies to all countries.
@@ -2825,17 +2825,17 @@ type DiscountCustomerBuys struct {
 // Specifies the prerequisite items and prerequisite quantity.
 type DiscountCustomerBuysInput struct {
 	// The quantity of prerequisite items.
-	Value *DiscountCustomerBuysValueInput `json:"value"`
+	Value *DiscountCustomerBuysValueInput `json:"value,omitempty"`
 	// The IDs of items that the customer buys. The items can be either collections or products.
-	Items *DiscountItemsInput `json:"items"`
+	Items *DiscountItemsInput `json:"items,omitempty"`
 }
 
 // Specifies the prerequisite quantity for the discount.
 type DiscountCustomerBuysValueInput struct {
 	// The quantity of prerequisite items.
-	Quantity *string `json:"quantity"`
+	Quantity *string `json:"quantity,omitempty"`
 	// The prerequisite purchase amount required for the discount to be applicable.
-	Amount *string `json:"amount"`
+	Amount *string `json:"amount,omitempty"`
 }
 
 // The qualifying items in an order, the quantity of each one, and the total value of the discount.
@@ -2849,19 +2849,19 @@ type DiscountCustomerGets struct {
 // Specifies the items that will be discounted, the quantity of items that will be discounted, and the value of discount.
 type DiscountCustomerGetsInput struct {
 	// The quantity of items discounted and the discount value.
-	Value *DiscountCustomerGetsValueInput `json:"value"`
+	Value *DiscountCustomerGetsValueInput `json:"value,omitempty"`
 	// The IDs of the items that the customer gets. The items can be either collections or products.
-	Items *DiscountItemsInput `json:"items"`
+	Items *DiscountItemsInput `json:"items,omitempty"`
 }
 
 // Specifies the quantity of items discounted and the discount value.
 type DiscountCustomerGetsValueInput struct {
 	// The quantity of the items that are discounted and the discount value.
-	DiscountOnQuantity *DiscountOnQuantityInput `json:"discountOnQuantity"`
+	DiscountOnQuantity *DiscountOnQuantityInput `json:"discountOnQuantity,omitempty"`
 	// The percentage value of the discount. Value must be between 0.00 - 1.00.
-	Percentage *float64 `json:"percentage"`
+	Percentage *float64 `json:"percentage,omitempty"`
 	// The value of the discount.
-	DiscountAmount *DiscountAmountInput `json:"discountAmount"`
+	DiscountAmount *DiscountAmountInput `json:"discountAmount,omitempty"`
 }
 
 // A list of customer saved searches that contain the customers to whom the discount applies.
@@ -2875,19 +2875,19 @@ func (DiscountCustomerSavedSearches) IsDiscountCustomerSelection() {}
 // Specifies which customer saved searches to add to or remove from the discount.
 type DiscountCustomerSavedSearchesInput struct {
 	// A list of customer saved searches to add to the current list of customer saved searches.
-	Add []string `json:"add"`
+	Add []string `json:"add,omitempty"`
 	// A list of customer saved searches to remove from the current list of customer saved searches.
-	Remove []string `json:"remove"`
+	Remove []string `json:"remove,omitempty"`
 }
 
 // Specifies the customers who can use this discount.
 type DiscountCustomerSelectionInput struct {
 	// Whether all customers can use this discount.
-	All *bool `json:"all"`
+	All *bool `json:"all,omitempty"`
 	// The list of customer IDs to add or remove from the list of customers.
-	Customers *DiscountCustomersInput `json:"customers"`
+	Customers *DiscountCustomersInput `json:"customers,omitempty"`
 	// The list of customer saved search IDs to add or remove from the list of customer saved searches.
-	CustomerSavedSearches *DiscountCustomerSavedSearchesInput `json:"customerSavedSearches"`
+	CustomerSavedSearches *DiscountCustomerSavedSearchesInput `json:"customerSavedSearches,omitempty"`
 }
 
 // A list of customers to whom the discount applies.
@@ -2901,25 +2901,25 @@ func (DiscountCustomers) IsDiscountCustomerSelection() {}
 // Specifies which customers to add to or remove from the discount.
 type DiscountCustomersInput struct {
 	// A list of customers to add to the current list of customers who can use the discount.
-	Add []string `json:"add"`
+	Add []string `json:"add,omitempty"`
 	// A list of customers to remove from the current list of customers who can use the discount.
-	Remove []string `json:"remove"`
+	Remove []string `json:"remove,omitempty"`
 }
 
 // Specifies how the discount will be applied. Currently, only percentage off is supported.
 type DiscountEffectInput struct {
 	// The percentage value of the discount. Value must be between 0.00 - 1.00.
-	Percentage *float64 `json:"percentage"`
+	Percentage *float64 `json:"percentage,omitempty"`
 }
 
 // Specifies the items attached to a discount.
 type DiscountItemsInput struct {
 	// The products and product variants that are attached to a discount.
-	Products *DiscountProductsInput `json:"products"`
+	Products *DiscountProductsInput `json:"products,omitempty"`
 	// The collections that are attached to a discount.
-	Collections *DiscountCollectionsInput `json:"collections"`
+	Collections *DiscountCollectionsInput `json:"collections,omitempty"`
 	// Whether all items should be selected.
-	All *bool `json:"all"`
+	All *bool `json:"all,omitempty"`
 }
 
 // The minimum quantity of items required for the discount to apply.
@@ -2933,15 +2933,15 @@ func (DiscountMinimumQuantity) IsDiscountMinimumRequirement() {}
 // Specifies the quantity minimum requirements for a discount.
 type DiscountMinimumQuantityInput struct {
 	// The minimum quantity of items that's required for the discount to be applied.
-	GreaterThanOrEqualToQuantity *string `json:"greaterThanOrEqualToQuantity"`
+	GreaterThanOrEqualToQuantity *string `json:"greaterThanOrEqualToQuantity,omitempty"`
 }
 
 // Specifies the quantity or subtotal minimum requirements for a discount.
 type DiscountMinimumRequirementInput struct {
 	// The minimum required quantity.
-	Quantity *DiscountMinimumQuantityInput `json:"quantity"`
+	Quantity *DiscountMinimumQuantityInput `json:"quantity,omitempty"`
 	// The minimum required subtotal.
-	Subtotal *DiscountMinimumSubtotalInput `json:"subtotal"`
+	Subtotal *DiscountMinimumSubtotalInput `json:"subtotal,omitempty"`
 }
 
 // The minimum subtotal required for the discount to apply.
@@ -2955,7 +2955,7 @@ func (DiscountMinimumSubtotal) IsDiscountMinimumRequirement() {}
 // Specifies the subtotal minimum requirements for a discount.
 type DiscountMinimumSubtotalInput struct {
 	// The minimum subtotal that's required for the discount to be applied.
-	GreaterThanOrEqualToSubtotal *string `json:"greaterThanOrEqualToSubtotal"`
+	GreaterThanOrEqualToSubtotal *string `json:"greaterThanOrEqualToSubtotal,omitempty"`
 }
 
 // The quantity of items discounted, the discount value, and how the discount will be applied.
@@ -2971,9 +2971,9 @@ func (DiscountOnQuantity) IsDiscountCustomerGetsValue() {}
 // Specifies the quantity of items discounted and the discount value.
 type DiscountOnQuantityInput struct {
 	// The quantity of items that are discounted.
-	Quantity *string `json:"quantity"`
+	Quantity *string `json:"quantity,omitempty"`
 	// The percentage value of the discount.
-	Effect *DiscountEffectInput `json:"effect"`
+	Effect *DiscountEffectInput `json:"effect,omitempty"`
 }
 
 // The percentage value of the discount.
@@ -2982,8 +2982,8 @@ type DiscountPercentage struct {
 	Percentage float64 `json:"percentage"`
 }
 
-func (DiscountPercentage) IsDiscountCustomerGetsValue() {}
 func (DiscountPercentage) IsDiscountEffect()            {}
+func (DiscountPercentage) IsDiscountCustomerGetsValue() {}
 
 // The entitled or prerequisite products and product variants for a discount.
 type DiscountProducts struct {
@@ -2998,13 +2998,13 @@ func (DiscountProducts) IsDiscountItems() {}
 // Specifies the products and product variants attached to a discount.
 type DiscountProductsInput struct {
 	// Specifies list of product ids to add.
-	ProductsToAdd []string `json:"productsToAdd"`
+	ProductsToAdd []string `json:"productsToAdd,omitempty"`
 	// Specifies list of product ids to remove.
-	ProductsToRemove []string `json:"productsToRemove"`
+	ProductsToRemove []string `json:"productsToRemove,omitempty"`
 	// Specifies list of product variant ids to add.
-	ProductVariantsToAdd []string `json:"productVariantsToAdd"`
+	ProductVariantsToAdd []string `json:"productVariantsToAdd,omitempty"`
 	// Specifies list of product variant ids to remove.
-	ProductVariantsToRemove []string `json:"productVariantsToRemove"`
+	ProductVariantsToRemove []string `json:"productVariantsToRemove,omitempty"`
 }
 
 // The prerequisite purchase amount required for the discount to be applicable.
@@ -3046,9 +3046,9 @@ type DiscountRedeemCodeEdge struct {
 // Specifies the destinations where the free shipping discount will be applied.
 type DiscountShippingDestinationSelectionInput struct {
 	// Whether the discount code applies to all countries.
-	All *bool `json:"all"`
+	All *bool `json:"all,omitempty"`
 	// A list of countries where the discount code will apply.
-	Countries *DiscountCountriesInput `json:"countries"`
+	Countries *DiscountCountriesInput `json:"countries,omitempty"`
 }
 
 // An error that occurs during the execution of a discount mutation.
@@ -3220,21 +3220,21 @@ type DraftOrderAppliedDiscount struct {
 type DraftOrderAppliedDiscountInput struct {
 	// The applied amount of the discount.
 	//
-	Amount *string `json:"amount"`
+	Amount *string `json:"amount,omitempty"`
 	// Reason for the discount.
 	//
-	Description *string `json:"description"`
+	Description *string `json:"description,omitempty"`
 	// Title of the discount.
 	//
-	Title *string `json:"title"`
+	Title *string `json:"title,omitempty"`
 	// The value of the discount.
 	// If the type of the discount is fixed amount, then this is a fixed dollar amount.
 	// If the type is percentage, then this is the percentage.
 	//
-	Value float64 `json:"value"`
+	Value float64 `json:"value,omitempty"`
 	// The type of discount.
 	//
-	ValueType DraftOrderAppliedDiscountType `json:"valueType"`
+	ValueType DraftOrderAppliedDiscountType `json:"valueType,omitempty"`
 }
 
 // Return type for `draftOrderCalculate` mutation.
@@ -3273,7 +3273,7 @@ type DraftOrderCreatePayload struct {
 type DraftOrderDeleteInput struct {
 	// The ID of the draft order to delete.
 	//
-	ID string `json:"id"`
+	ID string `json:"id,omitempty"`
 }
 
 // Return type for `draftOrderDelete` mutation.
@@ -3297,48 +3297,48 @@ type DraftOrderInput struct {
 	// The discount that will be applied to the draft order.
 	// A draft order line item can have one discount. A draft order can also have one order-level discount.
 	//
-	AppliedDiscount *DraftOrderAppliedDiscountInput `json:"appliedDiscount"`
+	AppliedDiscount *DraftOrderAppliedDiscountInput `json:"appliedDiscount,omitempty"`
 	// The mailing address associated with the payment method.
 	//
-	BillingAddress *MailingAddressInput `json:"billingAddress"`
+	BillingAddress *MailingAddressInput `json:"billingAddress,omitempty"`
 	// Customer associated with the draft order.
 	//
-	CustomerID *string `json:"customerId"`
+	CustomerID *string `json:"customerId,omitempty"`
 	// Extra information added to the customer.
 	//
-	CustomAttributes []*AttributeInput `json:"customAttributes"`
+	CustomAttributes []*AttributeInput `json:"customAttributes,omitempty"`
 	// The customer's email address.
 	//
-	Email *string `json:"email"`
+	Email *string `json:"email,omitempty"`
 	// Product variant line item or custom line item associated to the draft order.
 	// Each draft order must include at least one line item.
 	//
-	LineItems []*DraftOrderLineItemInput `json:"lineItems"`
+	LineItems []*DraftOrderLineItemInput `json:"lineItems,omitempty"`
 	// Metafields attached to the draft order.
 	//
-	Metafields []*MetafieldInput `json:"metafields"`
+	Metafields []*MetafieldInput `json:"metafields,omitempty"`
 	// The private metafields attached to the draft order.
-	PrivateMetafields []*PrivateMetafieldInput `json:"privateMetafields"`
+	PrivateMetafields []*PrivateMetafieldInput `json:"privateMetafields,omitempty"`
 	// The text of an optional note that a shop owner can attach to the draft order.
 	//
-	Note *string `json:"note"`
+	Note *string `json:"note,omitempty"`
 	// The mailing address to where the order will be shipped.
 	//
-	ShippingAddress *MailingAddressInput `json:"shippingAddress"`
+	ShippingAddress *MailingAddressInput `json:"shippingAddress,omitempty"`
 	// A shipping line object, which details the shipping method used.
 	//
-	ShippingLine *ShippingLineInput `json:"shippingLine"`
+	ShippingLine *ShippingLineInput `json:"shippingLine,omitempty"`
 	// A comma separated list of tags that have been added to the draft order.
 	//
-	Tags []string `json:"tags"`
+	Tags []string `json:"tags,omitempty"`
 	// Whether or not taxes are exempt for the draft order.
 	// If false, then Shopify will refer to the taxable field for each line item.
 	// If a customer is applied to the draft order, then Shopify will use the customer's tax exempt field instead.
 	//
-	TaxExempt *bool `json:"taxExempt"`
+	TaxExempt *bool `json:"taxExempt,omitempty"`
 	// Sent as part of a draft order object to load customer shipping information.
 	//
-	UseCustomerDefaultAddress *bool `json:"useCustomerDefaultAddress"`
+	UseCustomerDefaultAddress *bool `json:"useCustomerDefaultAddress,omitempty"`
 }
 
 // Return type for `draftOrderInvoicePreview` mutation.
@@ -3446,33 +3446,33 @@ type DraftOrderLineItemEdge struct {
 type DraftOrderLineItemInput struct {
 	// Discount which will be applied to the line item.
 	//
-	AppliedDiscount *DraftOrderAppliedDiscountInput `json:"appliedDiscount"`
+	AppliedDiscount *DraftOrderAppliedDiscountInput `json:"appliedDiscount,omitempty"`
 	// Represents a generic custom attribute using a key value pair.
 	//
-	CustomAttributes []*AttributeInput `json:"customAttributes"`
+	CustomAttributes []*AttributeInput `json:"customAttributes,omitempty"`
 	// Ignored when variant ID is provided. This argument is deprecated: Use `weight` instead.
-	Grams *int64 `json:"grams"`
+	Grams *int64 `json:"grams,omitempty"`
 	// Ignored when variant ID is provided.
-	OriginalUnitPrice *string `json:"originalUnitPrice"`
+	OriginalUnitPrice *string `json:"originalUnitPrice,omitempty"`
 	// The number of products that were purchased.
 	//
-	Quantity int64 `json:"quantity"`
+	Quantity int64 `json:"quantity,omitempty"`
 	// Ignored when variant ID is provided.
-	RequiresShipping *bool `json:"requiresShipping"`
+	RequiresShipping *bool `json:"requiresShipping,omitempty"`
 	// Ignored when variant ID is provided.
-	Sku *string `json:"sku"`
+	Sku *string `json:"sku,omitempty"`
 	// Ignored when variant ID is provided.
-	Taxable *bool `json:"taxable"`
+	Taxable *bool `json:"taxable,omitempty"`
 	// Ignored when variant ID is provided.
-	Title *string `json:"title"`
+	Title *string `json:"title,omitempty"`
 	// The ID of the product variant corresponding to the line item.
 	// Null if custom line item. Required if product variant line item.
 	//
-	VariantID *string `json:"variantId"`
+	VariantID *string `json:"variantId,omitempty"`
 	// Specifies the weight unit and value inputs.
 	// Ignored when variant ID is provided.
 	//
-	Weight *WeightInput `json:"weight"`
+	Weight *WeightInput `json:"weight,omitempty"`
 }
 
 // Return type for `draftOrderUpdate` mutation.
@@ -3510,17 +3510,17 @@ type EditableProperty struct {
 // Specifies the fields for an email.
 type EmailInput struct {
 	// Specifies the email subject.
-	Subject *string `json:"subject"`
+	Subject *string `json:"subject,omitempty"`
 	// Specifies the email recipient.
-	To *string `json:"to"`
+	To *string `json:"to,omitempty"`
 	// Specifies the email sender.
-	From *string `json:"from"`
+	From *string `json:"from,omitempty"`
 	// Specifies the email body.
-	Body *string `json:"body"`
+	Body *string `json:"body,omitempty"`
 	// Specifies any bcc recipients for the email.
-	Bcc []string `json:"bcc"`
+	Bcc []string `json:"bcc,omitempty"`
 	// Specifies a custom message to include in the email.
-	CustomMessage *string `json:"customMessage"`
+	CustomMessage *string `json:"customMessage,omitempty"`
 }
 
 // Return type for `eventBridgeWebhookSubscriptionCreate` mutation.
@@ -3535,13 +3535,13 @@ type EventBridgeWebhookSubscriptionCreatePayload struct {
 //
 type EventBridgeWebhookSubscriptionInput struct {
 	// ARN of the EventBridge event source.
-	Arn *string `json:"arn"`
+	Arn *string `json:"arn,omitempty"`
 	// The format in which the webhook subscription should send the data.
-	Format *WebhookSubscriptionFormat `json:"format"`
+	Format *WebhookSubscriptionFormat `json:"format,omitempty"`
 	// The list of fields to be included in the webhook subscription.
-	IncludeFields []string `json:"includeFields"`
+	IncludeFields []string `json:"includeFields,omitempty"`
 	// The list of namespaces for any metafields that should be included in the webhook subscription.
-	MetafieldNamespaces []string `json:"metafieldNamespaces"`
+	MetafieldNamespaces []string `json:"metafieldNamespaces,omitempty"`
 }
 
 // Return type for `eventBridgeWebhookSubscriptionUpdate` mutation.
@@ -3730,23 +3730,23 @@ type FulfillmentEventEdge struct {
 // The input fields used to create a fulfillment.
 type FulfillmentInput struct {
 	// The ID of the order to be fulfilled.
-	OrderID string `json:"orderId"`
+	OrderID string `json:"orderId,omitempty"`
 	// The line items to be fulfilled.
-	LineItems []*FulfillmentLineItemInput `json:"lineItems"`
+	LineItems []*FulfillmentLineItemInput `json:"lineItems,omitempty"`
 	// Tracking numbers associated with the fulfillment.
-	TrackingNumbers []string `json:"trackingNumbers"`
+	TrackingNumbers []string `json:"trackingNumbers,omitempty"`
 	// The URLs to track the fulfillment.
-	TrackingUrls []string `json:"trackingUrls"`
+	TrackingUrls []string `json:"trackingUrls,omitempty"`
 	// The name of the tracking company.
-	TrackingCompany *string `json:"trackingCompany"`
+	TrackingCompany *string `json:"trackingCompany,omitempty"`
 	// Whether the customer is notified.
 	// If set to true, a notification is sent when the fulfillment is created.
 	//
-	NotifyCustomer *bool `json:"notifyCustomer"`
+	NotifyCustomer *bool `json:"notifyCustomer,omitempty"`
 	// A reference to the shipping method, such as `Free Shipping`.
-	ShippingMethod *string `json:"shippingMethod"`
+	ShippingMethod *string `json:"shippingMethod,omitempty"`
 	// The ID of the location from which the items will be fulfilled.
-	LocationID string `json:"locationId"`
+	LocationID string `json:"locationId,omitempty"`
 }
 
 // Represents a line item from an order that's included in a fulfillment.
@@ -3786,9 +3786,9 @@ type FulfillmentLineItemEdge struct {
 // The input fields used to include a line item from an order in a fulfillment.
 type FulfillmentLineItemInput struct {
 	// The ID of the line item.
-	ID string `json:"id"`
+	ID string `json:"id,omitempty"`
 	// The quantity of the line item to be fulfilled.
-	Quantity *int64 `json:"quantity"`
+	Quantity *int64 `json:"quantity,omitempty"`
 }
 
 // Represents a fulfillment order. In Shopify, a fulfillment order represents a group of one or more items
@@ -3960,20 +3960,20 @@ type FulfillmentOrderLineItemEdge struct {
 // The input fields used to include a line item from a fulfillment order.
 type FulfillmentOrderLineItemInput struct {
 	// The ID of the fulfillment order line item.
-	ID string `json:"id"`
+	ID string `json:"id,omitempty"`
 	// The quantity of the fulfillment order line item.
-	Quantity int64 `json:"quantity"`
+	Quantity int64 `json:"quantity,omitempty"`
 }
 
 // The input fields used to include the line items of a specified fulfillment order that should be fulfilled.
 //
 type FulfillmentOrderLineItemsInput struct {
 	// The ID of the fulfillment order.
-	FulfillmentOrderID string `json:"fulfillmentOrderId"`
+	FulfillmentOrderID string `json:"fulfillmentOrderId,omitempty"`
 	// The fulfillment order line items to be fulfilled.
 	// If left blank, all line items of the fulfillment order will be fulfilled.
 	//
-	FulfillmentOrderLineItems []*FulfillmentOrderLineItemInput `json:"fulfillmentOrderLineItems"`
+	FulfillmentOrderLineItems []*FulfillmentOrderLineItemInput `json:"fulfillmentOrderLineItems,omitempty"`
 }
 
 // A location that a fulfillment order can potentially move to.
@@ -4184,11 +4184,11 @@ type FulfillmentTrackingInfoUpdateV2Payload struct {
 // The input fields used to specify all possible fields for tracking information.
 type FulfillmentTrackingInput struct {
 	// The tracking number of the fulfillment.
-	Number *string `json:"number"`
+	Number *string `json:"number,omitempty"`
 	// The URL to track the fulfillment.
-	URL *string `json:"url"`
+	URL *string `json:"url,omitempty"`
 	// The name of the tracking company.
-	Company *string `json:"company"`
+	Company *string `json:"company,omitempty"`
 }
 
 // The input fields used to create a fulfillment from fulfillment orders.
@@ -4196,17 +4196,17 @@ type FulfillmentV2Input struct {
 	// The fulfillment's tracking information, including a tracking URL, a tracking number,
 	// and the company associated with the fulfillment.
 	//
-	TrackingInfo *FulfillmentTrackingInput `json:"trackingInfo"`
+	TrackingInfo *FulfillmentTrackingInput `json:"trackingInfo,omitempty"`
 	// Whether the customer is notified.
 	// If set to true, a notification is sent when the fulfillment is created.
 	//
-	NotifyCustomer *bool `json:"notifyCustomer"`
+	NotifyCustomer *bool `json:"notifyCustomer,omitempty"`
 	// Pairs of `fulfillment_order_id` and `fulfillment_order_line_items` that represent the fulfillment
 	// order line items that have to be fulfilled for each fulfillment order.  For any given pair, if the
 	// fulfillment order line items are left blank then all the fulfillment order line items of the
 	// associated fulfillment order ID will be fulfilled.
 	//
-	LineItemsByFulfillmentOrder []*FulfillmentOrderLineItemsInput `json:"lineItemsByFulfillmentOrder"`
+	LineItemsByFulfillmentOrder []*FulfillmentOrderLineItemsInput `json:"lineItemsByFulfillmentOrder,omitempty"`
 }
 
 // Represents an image resource.
@@ -4257,11 +4257,11 @@ type ImageEdge struct {
 // Specifies the input fields for an image.
 type ImageInput struct {
 	// Globally unique identifier.
-	ID *string `json:"id"`
+	ID *string `json:"id,omitempty"`
 	// A word or phrase to share the nature or contents of an image.
-	AltText *string `json:"altText"`
+	AltText *string `json:"altText,omitempty"`
 	// The URL of the image. May be a signed upload URL.
-	Src *string `json:"src"`
+	Src *string `json:"src,omitempty"`
 }
 
 // Upload parameter of an image.
@@ -4283,17 +4283,17 @@ type InventoryActivatePayload struct {
 // Specifies the items and their adjustments.
 type InventoryAdjustItemInput struct {
 	// ID of the inventory item to adjust.
-	InventoryItemID string `json:"inventoryItemId"`
+	InventoryItemID string `json:"inventoryItemId,omitempty"`
 	// Count by which to adjust the available quantity.
-	AvailableDelta int64 `json:"availableDelta"`
+	AvailableDelta int64 `json:"availableDelta,omitempty"`
 }
 
 // Specifies the fields required to adjust the inventory quantity.
 type InventoryAdjustQuantityInput struct {
 	// ID of the inventory level to adjust.
-	InventoryLevelID string `json:"inventoryLevelId"`
+	InventoryLevelID string `json:"inventoryLevelId,omitempty"`
 	// Count by which to adjust the available quantity.
-	AvailableDelta int64 `json:"availableDelta"`
+	AvailableDelta int64 `json:"availableDelta,omitempty"`
 }
 
 // Return type for `inventoryAdjustQuantity` mutation.
@@ -4382,25 +4382,25 @@ type InventoryItemEdge struct {
 // Inventory items.
 type InventoryItemInput struct {
 	// Unit cost associated with the inventory item, the currency is the shop's default currency.
-	Cost *string `json:"cost"`
+	Cost *string `json:"cost,omitempty"`
 	// Whether the inventory item is tracked.
-	Tracked *bool `json:"tracked"`
+	Tracked *bool `json:"tracked,omitempty"`
 }
 
 // Inventory items.
 type InventoryItemUpdateInput struct {
 	// Unit cost associated with the inventory item, the currency is the shop's default currency.
-	Cost *string `json:"cost"`
+	Cost *string `json:"cost,omitempty"`
 	// Whether the inventory item is tracked.
-	Tracked *bool `json:"tracked"`
+	Tracked *bool `json:"tracked,omitempty"`
 	// The ISO code of the country of origin.
-	CountryCodeOfOrigin *CountryCode `json:"countryCodeOfOrigin"`
+	CountryCodeOfOrigin *CountryCode `json:"countryCodeOfOrigin,omitempty"`
 	// The ISO code of the province of origin.
-	ProvinceCodeOfOrigin *string `json:"provinceCodeOfOrigin"`
+	ProvinceCodeOfOrigin *string `json:"provinceCodeOfOrigin,omitempty"`
 	// The harmonized system code of the inventory item.
-	HarmonizedSystemCode *string `json:"harmonizedSystemCode"`
+	HarmonizedSystemCode *string `json:"harmonizedSystemCode,omitempty"`
 	// List of country-specific harmonized system codes.
-	CountryHarmonizedSystemCodes []*CountryHarmonizedSystemCodeInput `json:"countryHarmonizedSystemCodes"`
+	CountryHarmonizedSystemCodes []*CountryHarmonizedSystemCodeInput `json:"countryHarmonizedSystemCodes,omitempty"`
 }
 
 // Return type for `inventoryItemUpdate` mutation.
@@ -4455,9 +4455,9 @@ type InventoryLevelEdge struct {
 // Inventory quantity at a specific location.
 type InventoryLevelInput struct {
 	// Sets the quantity available at the location.
-	AvailableQuantity int64 `json:"availableQuantity"`
+	AvailableQuantity int64 `json:"availableQuantity,omitempty"`
 	// ID of the location.
-	LocationID string `json:"locationId"`
+	LocationID string `json:"locationId,omitempty"`
 }
 
 // A job corresponds to some long running task that the client should poll for status.
@@ -4927,39 +4927,39 @@ func (MailingAddress) IsNode() {}
 type MailingAddressInput struct {
 	// The first line of the address. Typically the street address or PO Box number.
 	//
-	Address1 *string `json:"address1"`
+	Address1 *string `json:"address1,omitempty"`
 	// The second line of the address. Typically the number of the apartment, suite, or unit.
 	//
-	Address2 *string `json:"address2"`
+	Address2 *string `json:"address2,omitempty"`
 	// The name of the city, district, village, or town.
 	//
-	City *string `json:"city"`
+	City *string `json:"city,omitempty"`
 	// The name of the customer's company or organization.
 	//
-	Company *string `json:"company"`
+	Company *string `json:"company,omitempty"`
 	// The name of the country. This argument is deprecated: Use `countryCode` instead.
-	Country *string `json:"country"`
+	Country *string `json:"country,omitempty"`
 	// The two-letter code for the country of the address.
-	CountryCode *CountryCode `json:"countryCode"`
+	CountryCode *CountryCode `json:"countryCode,omitempty"`
 	// The first name of the customer.
-	FirstName *string `json:"firstName"`
+	FirstName *string `json:"firstName,omitempty"`
 	// This argument is deprecated: Not needed for 90% of mutations, and provided separately where it is needed.
-	ID *string `json:"id"`
+	ID *string `json:"id,omitempty"`
 	// The last name of the customer.
-	LastName *string `json:"lastName"`
+	LastName *string `json:"lastName,omitempty"`
 	// A unique phone number for the customer.
 	//
 	// Formatted using E.164 standard. For example, _+16135551111_.
 	//
-	Phone *string `json:"phone"`
+	Phone *string `json:"phone,omitempty"`
 	// The region of the address, such as the province, state, or district. This argument is deprecated: Use `provinceCode` instead.
-	Province *string `json:"province"`
+	Province *string `json:"province,omitempty"`
 	// The code for the region of the address, such as the province, state, or district.
 	// For example QC for Quebec, Canada.
 	//
-	ProvinceCode *string `json:"provinceCode"`
+	ProvinceCode *string `json:"provinceCode,omitempty"`
 	// The zip or postal code of the address.
-	Zip *string `json:"zip"`
+	Zip *string `json:"zip,omitempty"`
 }
 
 // Manual discount applications capture the intentions of a discount that was manually created for an order.
@@ -5030,9 +5030,9 @@ func (MarketingActivity) IsNode() {}
 // This type combines budget amount and its marketing budget type.
 type MarketingActivityBudgetInput struct {
 	// Budget type for marketing activity.
-	BudgetType *MarketingBudgetBudgetType `json:"budgetType"`
+	BudgetType *MarketingBudgetBudgetType `json:"budgetType,omitempty"`
 	// Amount of budget for the marketing activity.
-	Total *MoneyInput `json:"total"`
+	Total *MoneyInput `json:"total,omitempty"`
 }
 
 type MarketingActivityConnection struct {
@@ -5060,32 +5060,32 @@ type MarketingActivityExtensionAppErrors struct {
 // Specifies the input fields required to update a marketing activity.
 type MarketingActivityUpdateInput struct {
 	// The id for this marketing activity.
-	ID string `json:"id"`
+	ID string `json:"id,omitempty"`
 	// The ID of the recommendation this marketing activity was created from, if one exists.
-	MarketingRecommendationID *string `json:"marketingRecommendationId"`
+	MarketingRecommendationID *string `json:"marketingRecommendationId,omitempty"`
 	// The title of this marketing activity.
-	Title *string `json:"title"`
+	Title *string `json:"title,omitempty"`
 	// The budget for this marketing activity.
-	Budget *MarketingActivityBudgetInput `json:"budget"`
+	Budget *MarketingActivityBudgetInput `json:"budget,omitempty"`
 	// The cumulative amount spent on this marketing activity. This argument is deprecated: Use `MarketingEngagementCreate.MarketingEngagementInput.adSpend` GraphQL to send the ad spend.
-	AdSpend *MoneyInput `json:"adSpend"`
+	AdSpend *MoneyInput `json:"adSpend,omitempty"`
 	// The current state of the marketing activity.
-	Status *MarketingActivityStatus `json:"status"`
+	Status *MarketingActivityStatus `json:"status,omitempty"`
 	// Specifies the
 	// [Urchin Traffic Module (UTM) parameters](https://en.wikipedia.org/wiki/UTM_parameters)
 	// that are associated with a related marketing campaign. UTMInput is required for all Marketing
 	// tactics except Storefront App. This utm param can be only set once and never modified.
 	//
-	Utm *UTMInput `json:"utm"`
+	Utm *UTMInput `json:"utm,omitempty"`
 	// A list of the items that were marketed in this marketing activity. Valid types for these items are:
 	// * `Product`
 	// * `Shop` (Must be your current shop).
 	//
-	MarketedResources []string `json:"marketedResources"`
+	MarketedResources []string `json:"marketedResources,omitempty"`
 	// Encoded context provided by Shopify during the update marketing activity callback. This argument is deprecated: This context is no longer needed by Shopify in the callback.
-	Context *string `json:"context"`
+	Context *string `json:"context,omitempty"`
 	// Error messages generated when app was trying to complete this activity.
-	Errors *string `json:"errors"`
+	Errors *string `json:"errors,omitempty"`
 }
 
 // Return type for `marketingActivityUpdate` mutation.
@@ -5156,39 +5156,39 @@ type MarketingEngagementCreatePayload struct {
 // This object represents marketing engagement input fields for a marketing engagement.
 type MarketingEngagementInput struct {
 	// The date that these engagements occurred on.
-	OccurredOn time.Time `json:"occurredOn"`
+	OccurredOn time.Time `json:"occurredOn,omitempty"`
 	// The total number of impressions for the day.
-	ImpressionsCount *int64 `json:"impressionsCount"`
+	ImpressionsCount *int64 `json:"impressionsCount,omitempty"`
 	// The total number of views for the day.
-	ViewsCount *int64 `json:"viewsCount"`
+	ViewsCount *int64 `json:"viewsCount,omitempty"`
 	// The total number of clicks on the marketing event for the day.
-	ClicksCount *int64 `json:"clicksCount"`
+	ClicksCount *int64 `json:"clicksCount,omitempty"`
 	// The total number of shares for the day.
-	SharesCount *int64 `json:"sharesCount"`
+	SharesCount *int64 `json:"sharesCount,omitempty"`
 	// The total number of favorites for the day.
-	FavoritesCount *int64 `json:"favoritesCount"`
+	FavoritesCount *int64 `json:"favoritesCount,omitempty"`
 	// The total number of comments for the day.
-	CommentsCount *int64 `json:"commentsCount"`
+	CommentsCount *int64 `json:"commentsCount,omitempty"`
 	// The total number of unsubscribes for the day.
-	UnsubscribesCount *int64 `json:"unsubscribesCount"`
+	UnsubscribesCount *int64 `json:"unsubscribesCount,omitempty"`
 	// The total number of complaints for the day.
-	ComplaintsCount *int64 `json:"complaintsCount"`
+	ComplaintsCount *int64 `json:"complaintsCount,omitempty"`
 	// The total number of fails for the day.
-	FailsCount *int64 `json:"failsCount"`
+	FailsCount *int64 `json:"failsCount,omitempty"`
 	// The total number of sends for the day.
-	SendsCount *int64 `json:"sendsCount"`
+	SendsCount *int64 `json:"sendsCount,omitempty"`
 	// The total number of unique views for the day.
-	UniqueViewsCount *int64 `json:"uniqueViewsCount"`
+	UniqueViewsCount *int64 `json:"uniqueViewsCount,omitempty"`
 	// The total number of unique clicks for the day.
-	UniqueClicksCount *int64 `json:"uniqueClicksCount"`
+	UniqueClicksCount *int64 `json:"uniqueClicksCount,omitempty"`
 	// The total ad spend for the day, if the marketing event is a paid ad with a daily spend.
-	AdSpend *MoneyInput `json:"adSpend"`
+	AdSpend *MoneyInput `json:"adSpend,omitempty"`
 	// Whether the engagements are reported as lifetime values rather than daily totals.
-	IsCumulative *bool `json:"isCumulative"`
+	IsCumulative *bool `json:"isCumulative,omitempty"`
 	// The UTC Offset that the app is using to determine which date to allocate spend to.
-	UtcOffset *string `json:"utcOffset"`
+	UtcOffset *string `json:"utcOffset,omitempty"`
 	// The date time at which the data was fetched.
-	FetchedAt *string `json:"fetchedAt"`
+	FetchedAt *string `json:"fetchedAt,omitempty"`
 }
 
 // Represents actions that market a merchant's store or products.
@@ -5357,7 +5357,7 @@ type MetafieldConnection struct {
 // Specifies the input fields to delete a metafield.
 type MetafieldDeleteInput struct {
 	// The ID of the metafield to delete.
-	ID string `json:"id"`
+	ID string `json:"id,omitempty"`
 }
 
 // Return type for `metafieldDelete` mutation.
@@ -5378,17 +5378,17 @@ type MetafieldEdge struct {
 // Specifies the input fields for a metafield.
 type MetafieldInput struct {
 	// The description of the metafield .
-	Description *string `json:"description"`
+	Description *string `json:"description,omitempty"`
 	// The unique ID of the metafield.
-	ID *string `json:"id"`
+	ID *string `json:"id,omitempty"`
 	// The key name of the metafield.
-	Key *string `json:"key"`
+	Key *string `json:"key,omitempty"`
 	// The namespace for a metafield.
-	Namespace *string `json:"namespace"`
+	Namespace *string `json:"namespace,omitempty"`
 	// The value of a metafield.
-	Value *string `json:"value"`
+	Value *string `json:"value,omitempty"`
 	// The value type of a metafield.
-	ValueType *MetafieldValueType `json:"valueType"`
+	ValueType *MetafieldValueType `json:"valueType,omitempty"`
 }
 
 // Represents an allowlist record that enables a metafield to be visible to the storefront.
@@ -5447,11 +5447,11 @@ type MetafieldStorefrontVisibilityEdge struct {
 //
 type MetafieldStorefrontVisibilityInput struct {
 	// The namespace of the metafield to be visible to the storefront api.
-	Namespace string `json:"namespace"`
+	Namespace string `json:"namespace,omitempty"`
 	// The key of the metafield to be visible to the storefront api.
-	Key string `json:"key"`
+	Key string `json:"key,omitempty"`
 	// The core resource ( e.g.: Product ) that owns this metafield.
-	OwnerType MetafieldOwnerType `json:"ownerType"`
+	OwnerType MetafieldOwnerType `json:"ownerType,omitempty"`
 }
 
 // Represents a Shopify hosted 3D model.
@@ -5505,9 +5505,9 @@ type MoneyBag struct {
 // Specifies the fields for a monetary value with currency.
 type MoneyInput struct {
 	// Decimal money amount.
-	Amount string `json:"amount"`
+	Amount string `json:"amount,omitempty"`
 	// Currency of the money.
-	CurrencyCode CurrencyCode `json:"currencyCode"`
+	CurrencyCode CurrencyCode `json:"currencyCode,omitempty"`
 }
 
 // A monetary value with currency.
@@ -5539,15 +5539,15 @@ type MoneyV2 struct {
 	CurrencyCode CurrencyCode `json:"currencyCode"`
 }
 
-func (MoneyV2) IsPricingValue()              {}
 func (MoneyV2) IsDeliveryConditionCriteria() {}
+func (MoneyV2) IsPricingValue()              {}
 
 // An individual move to perform of an object to a position.
 type MoveInput struct {
 	// The ID of the object to be moved.
-	ID string `json:"id"`
+	ID string `json:"id,omitempty"`
 	// The new position of the object in the set, using a 0 based index.
-	NewPosition string `json:"newPosition"`
+	NewPosition string `json:"newPosition,omitempty"`
 }
 
 // A signed upload parameter for uploading an asset to Shopify.
@@ -5894,13 +5894,13 @@ func (Order) IsHasLocalizationExtensions() {}
 // Specifies the authorized transaction to capture and the total amount to capture from it.
 type OrderCaptureInput struct {
 	// The ID of the order to capture.
-	ID string `json:"id"`
+	ID string `json:"id,omitempty"`
 	// The ID of the authorized transaction to capture.
-	ParentTransactionID string `json:"parentTransactionId"`
+	ParentTransactionID string `json:"parentTransactionId,omitempty"`
 	// The amount to capture.
-	Amount string `json:"amount"`
+	Amount string `json:"amount,omitempty"`
 	// The currency (in ISO format) that is used to capture the order. This must be the presentment currency (the currency used by the customer) and is a required field for orders where the currency and presentment currency differ.
-	Currency *CurrencyCode `json:"currency"`
+	Currency *CurrencyCode `json:"currency,omitempty"`
 }
 
 // Return type for `orderCapture` mutation.
@@ -5914,7 +5914,7 @@ type OrderCapturePayload struct {
 // Specifies an open order to close.
 type OrderCloseInput struct {
 	// The ID of the order to close.
-	ID string `json:"id"`
+	ID string `json:"id,omitempty"`
 }
 
 // Return type for `orderClose` mutation.
@@ -6000,26 +6000,26 @@ type OrderEditSetQuantityPayload struct {
 // Specifies the information to be updated on the requested order.
 type OrderInput struct {
 	// The email address associated with the order.
-	Email *string `json:"email"`
+	Email *string `json:"email,omitempty"`
 	// The ID of the order to update.
-	ID string `json:"id"`
+	ID string `json:"id,omitempty"`
 	// The order note.
-	Note *string `json:"note"`
+	Note *string `json:"note,omitempty"`
 	// A comma separated list of tags that have been added to the order.
-	Tags []string `json:"tags"`
+	Tags []string `json:"tags,omitempty"`
 	// The shipping address associated with the order.
-	ShippingAddress *MailingAddressInput `json:"shippingAddress"`
+	ShippingAddress *MailingAddressInput `json:"shippingAddress,omitempty"`
 	// Custom information to add to the order, represented as a key value pair. Also referred to as note attributes.
 	//
-	CustomAttributes []*AttributeInput `json:"customAttributes"`
+	CustomAttributes []*AttributeInput `json:"customAttributes,omitempty"`
 	// The metafields to associate with this order.
-	Metafields []*MetafieldInput `json:"metafields"`
+	Metafields []*MetafieldInput `json:"metafields,omitempty"`
 }
 
 // Specifies the order to mark as paid.
 type OrderMarkAsPaidInput struct {
 	// The ID of the order to mark as paid.
-	ID string `json:"id"`
+	ID string `json:"id,omitempty"`
 }
 
 // Return type for `orderMarkAsPaid` mutation.
@@ -6033,7 +6033,7 @@ type OrderMarkAsPaidPayload struct {
 // Specifies a closed order to open.
 type OrderOpenInput struct {
 	// The ID of the order to open.
-	ID string `json:"id"`
+	ID string `json:"id,omitempty"`
 }
 
 // Return type for `orderOpen` mutation.
@@ -6208,15 +6208,15 @@ type OrderTransactionEdge struct {
 // Specifies the information needed to create an order transaction.
 type OrderTransactionInput struct {
 	// The amount of money for this transaction.
-	Amount string `json:"amount"`
+	Amount string `json:"amount,omitempty"`
 	// The payment gateway to use for this transaction.
-	Gateway string `json:"gateway"`
+	Gateway string `json:"gateway,omitempty"`
 	// The kind of transaction.
-	Kind OrderTransactionKind `json:"kind"`
+	Kind OrderTransactionKind `json:"kind,omitempty"`
 	// The ID of the order associated with the transaction.
-	OrderID string `json:"orderId"`
+	OrderID string `json:"orderId,omitempty"`
 	// The ID of the optional parent transaction, for example the authorization of a capture.
-	ParentID *string `json:"parentId"`
+	ParentID *string `json:"parentId,omitempty"`
 }
 
 // Return type for `orderUpdate` mutation.
@@ -6362,13 +6362,13 @@ type PriceRuleCustomerSelection struct {
 // Specifies the input fields to update a price rule customer selection.
 type PriceRuleCustomerSelectionInput struct {
 	// Whether the price rule applies to all customers.
-	ForAllCustomers *bool `json:"forAllCustomers"`
+	ForAllCustomers *bool `json:"forAllCustomers,omitempty"`
 	// List of customer saved searches that contain the customers to whom the price rule applies. No single customer IDs may be present.
-	SavedSearchIds []string `json:"savedSearchIds"`
+	SavedSearchIds []string `json:"savedSearchIds,omitempty"`
 	// List of customers to add to the current list of customers to whom the price rule applies. `savedSearchIds` must be empty.
-	CustomerIdsToAdd []string `json:"customerIdsToAdd"`
+	CustomerIdsToAdd []string `json:"customerIdsToAdd,omitempty"`
 	// A list of customers to remove from the current list of customers to whom the price rule applies.
-	CustomerIdsToRemove []string `json:"customerIdsToRemove"`
+	CustomerIdsToRemove []string `json:"customerIdsToRemove,omitempty"`
 }
 
 // Return type for `priceRuleDeactivate` mutation.
@@ -6436,7 +6436,7 @@ type PriceRuleDiscountCodeEdge struct {
 // Specifies the input fields to manipulate a discount code.
 type PriceRuleDiscountCodeInput struct {
 	// The code to use the discount.
-	Code *string `json:"code"`
+	Code *string `json:"code,omitempty"`
 }
 
 // Return type for `priceRuleDiscountCodeUpdate` mutation.
@@ -6469,9 +6469,9 @@ type PriceRuleEntitlementToPrerequisiteQuantityRatio struct {
 // Specifies the quantity of prerequisite items required for the price rule to be applicable, compared to quantity of entitled items.
 type PriceRuleEntitlementToPrerequisiteQuantityRatioInput struct {
 	// The quantity of entitlements in the ratio.
-	EntitlementQuantity *int64 `json:"entitlementQuantity"`
+	EntitlementQuantity *int64 `json:"entitlementQuantity,omitempty"`
 	// The quantity of prerequisites in the ratio.
-	PrerequisiteQuantity *int64 `json:"prerequisiteQuantity"`
+	PrerequisiteQuantity *int64 `json:"prerequisiteQuantity,omitempty"`
 }
 
 // The value of a fixed amount price rule.
@@ -6485,39 +6485,39 @@ func (PriceRuleFixedAmountValue) IsPriceRuleValue() {}
 // Specifies the input fields to manipulate a price rule.
 type PriceRuleInput struct {
 	// PriceRuleValidityPeriod for the price rule.
-	ValidityPeriod *PriceRuleValidityPeriodInput `json:"validityPeriod"`
+	ValidityPeriod *PriceRuleValidityPeriodInput `json:"validityPeriod,omitempty"`
 	// Whether the price rule can be applied only once per customer.
-	OncePerCustomer *bool `json:"oncePerCustomer"`
+	OncePerCustomer *bool `json:"oncePerCustomer,omitempty"`
 	// The customers that can use this price rule.
-	CustomerSelection *PriceRuleCustomerSelectionInput `json:"customerSelection"`
+	CustomerSelection *PriceRuleCustomerSelectionInput `json:"customerSelection,omitempty"`
 	// The maximum number of times that the price rule can be used in total.
-	UsageLimit *int64 `json:"usageLimit"`
+	UsageLimit *int64 `json:"usageLimit,omitempty"`
 	// Title of the price rule.
-	Title *string `json:"title"`
+	Title *string `json:"title,omitempty"`
 	// The maximum number of times that the price rule can be allocated onto an order.
-	AllocationLimit *int64 `json:"allocationLimit"`
+	AllocationLimit *int64 `json:"allocationLimit,omitempty"`
 	// The method by which the price rule's value is allocated to its entitled items.
-	AllocationMethod *PriceRuleAllocationMethod `json:"allocationMethod"`
+	AllocationMethod *PriceRuleAllocationMethod `json:"allocationMethod,omitempty"`
 	// The value of the price rule.
-	Value *PriceRuleValueInput `json:"value"`
+	Value *PriceRuleValueInput `json:"value,omitempty"`
 	// The type of lines (line_item or shipping_line) to which the price rule applies.
-	Target *PriceRuleTarget `json:"target"`
+	Target *PriceRuleTarget `json:"target,omitempty"`
 	// The sum of the entitled items subtotal prices must fall within this range for the price rule to be applicable.
-	PrerequisiteSubtotalRange *PriceRuleMoneyRangeInput `json:"prerequisiteSubtotalRange"`
+	PrerequisiteSubtotalRange *PriceRuleMoneyRangeInput `json:"prerequisiteSubtotalRange,omitempty"`
 	// The number of the entitled items must fall within this range for the price rule to be applicable.
-	PrerequisiteQuantityRange *PriceRuleQuantityRangeInput `json:"prerequisiteQuantityRange"`
+	PrerequisiteQuantityRange *PriceRuleQuantityRangeInput `json:"prerequisiteQuantityRange,omitempty"`
 	// The shipping cost must fall within this range for the price rule to be applicable.
-	PrerequisiteShippingPriceRange *PriceRuleMoneyRangeInput `json:"prerequisiteShippingPriceRange"`
+	PrerequisiteShippingPriceRange *PriceRuleMoneyRangeInput `json:"prerequisiteShippingPriceRange,omitempty"`
 	// The items to which the price rule applies.
-	ItemEntitlements *PriceRuleItemEntitlementsInput `json:"itemEntitlements"`
+	ItemEntitlements *PriceRuleItemEntitlementsInput `json:"itemEntitlements,omitempty"`
 	// The items required for the price rule to be applicable.
-	ItemPrerequisites *PriceRuleItemPrerequisitesInput `json:"itemPrerequisites"`
+	ItemPrerequisites *PriceRuleItemPrerequisitesInput `json:"itemPrerequisites,omitempty"`
 	// The shipping lines to which the price rule applies.
-	ShippingEntitlements *PriceRuleShippingEntitlementsInput `json:"shippingEntitlements"`
+	ShippingEntitlements *PriceRuleShippingEntitlementsInput `json:"shippingEntitlements,omitempty"`
 	// Quantity of prerequisite items required for the price rule to be applicable, compared to quantity of entitled items. This argument is deprecated: Use `prerequisiteToEntitlementQuantityRatio` instead.
-	EntitlementToPrerequisiteQuantityRatio *PriceRuleEntitlementToPrerequisiteQuantityRatioInput `json:"entitlementToPrerequisiteQuantityRatio"`
+	EntitlementToPrerequisiteQuantityRatio *PriceRuleEntitlementToPrerequisiteQuantityRatioInput `json:"entitlementToPrerequisiteQuantityRatio,omitempty"`
 	// Quantity of prerequisite items required for the price rule to be applicable, compared to quantity of entitled items.
-	PrerequisiteToEntitlementQuantityRatio *PriceRulePrerequisiteToEntitlementQuantityRatioInput `json:"prerequisiteToEntitlementQuantityRatio"`
+	PrerequisiteToEntitlementQuantityRatio *PriceRulePrerequisiteToEntitlementQuantityRatioInput `json:"prerequisiteToEntitlementQuantityRatio,omitempty"`
 }
 
 // The items to which this price rule applies. This may be multiple products, product variants, collections or combinations of the aforementioned.
@@ -6535,23 +6535,23 @@ type PriceRuleItemEntitlements struct {
 // Specifies the input fields to update a price rule line item entitlement.
 type PriceRuleItemEntitlementsInput struct {
 	// Whether the price rule applies to all items.
-	TargetAllLineItems *bool `json:"targetAllLineItems"`
+	TargetAllLineItems *bool `json:"targetAllLineItems,omitempty"`
 	// The products to which the price rule applies.
-	ProductIds []string `json:"productIds"`
+	ProductIds []string `json:"productIds,omitempty"`
 	// The product variants to which the price rule applies.
-	ProductVariantIds []string `json:"productVariantIds"`
+	ProductVariantIds []string `json:"productVariantIds,omitempty"`
 	// The collections to which the price rule applies.
-	CollectionIds []string `json:"collectionIds"`
+	CollectionIds []string `json:"collectionIds,omitempty"`
 }
 
 // Specifies the input fields to update a price rule's item prerequisites.
 type PriceRuleItemPrerequisitesInput struct {
 	// The products needed for the price rule to be applied.
-	ProductIds []string `json:"productIds"`
+	ProductIds []string `json:"productIds,omitempty"`
 	// The product variants needed for the price rule to be applied.
-	ProductVariantIds []string `json:"productVariantIds"`
+	ProductVariantIds []string `json:"productVariantIds,omitempty"`
 	// The collections needed for the price rule to be applied.
-	CollectionIds []string `json:"collectionIds"`
+	CollectionIds []string `json:"collectionIds,omitempty"`
 }
 
 // Single or multiple line item products, product variants or collections required for the price rule to be applicable, can also be provided in combination.
@@ -6580,13 +6580,13 @@ type PriceRuleMoneyRange struct {
 //
 type PriceRuleMoneyRangeInput struct {
 	// The upper bound of the money range.
-	LessThan *string `json:"lessThan"`
+	LessThan *string `json:"lessThan,omitempty"`
 	// The upper or equal bound of the money range.
-	LessThanOrEqualTo *string `json:"lessThanOrEqualTo"`
+	LessThanOrEqualTo *string `json:"lessThanOrEqualTo,omitempty"`
 	// The lower bound of the money range.
-	GreaterThan *string `json:"greaterThan"`
+	GreaterThan *string `json:"greaterThan,omitempty"`
 	// The lower or equal bound of the money range.
-	GreaterThanOrEqualTo *string `json:"greaterThanOrEqualTo"`
+	GreaterThanOrEqualTo *string `json:"greaterThanOrEqualTo,omitempty"`
 }
 
 // The value of a percent price rule.
@@ -6608,9 +6608,9 @@ type PriceRulePrerequisiteToEntitlementQuantityRatio struct {
 // Specifies the quantity of prerequisite items required for the price rule to be applicable, compared to quantity of entitled items.
 type PriceRulePrerequisiteToEntitlementQuantityRatioInput struct {
 	// The quantity of entitlements in the ratio.
-	EntitlementQuantity *int64 `json:"entitlementQuantity"`
+	EntitlementQuantity *int64 `json:"entitlementQuantity,omitempty"`
 	// The quantity of prerequisites in the ratio.
-	PrerequisiteQuantity *int64 `json:"prerequisiteQuantity"`
+	PrerequisiteQuantity *int64 `json:"prerequisiteQuantity,omitempty"`
 }
 
 // A quantity range within which the price rule is applicable.
@@ -6629,13 +6629,13 @@ type PriceRuleQuantityRange struct {
 //
 type PriceRuleQuantityRangeInput struct {
 	// The upper bound of the quantity range.
-	LessThan *int64 `json:"lessThan"`
+	LessThan *int64 `json:"lessThan,omitempty"`
 	// The upper or equal bound of the quantity range.
-	LessThanOrEqualTo *int64 `json:"lessThanOrEqualTo"`
+	LessThanOrEqualTo *int64 `json:"lessThanOrEqualTo,omitempty"`
 	// The lower bound of the quantity range.
-	GreaterThan *int64 `json:"greaterThan"`
+	GreaterThan *int64 `json:"greaterThan,omitempty"`
 	// The lower or equal bound of the quantity range.
-	GreaterThanOrEqualTo *int64 `json:"greaterThanOrEqualTo"`
+	GreaterThanOrEqualTo *int64 `json:"greaterThanOrEqualTo,omitempty"`
 }
 
 // Shareable URL for the discount code associated with the price rule.
@@ -6653,11 +6653,11 @@ type PriceRuleShareableURL struct {
 // Specifies the input fields to update a price rule shipping entitlement.
 type PriceRuleShippingEntitlementsInput struct {
 	// Whether the price rule applies to all shipping lines.
-	TargetAllShippingLines *bool `json:"targetAllShippingLines"`
+	TargetAllShippingLines *bool `json:"targetAllShippingLines,omitempty"`
 	// The codes for the countries to which the price rule applies to.
-	CountryCodes []CountryCode `json:"countryCodes"`
+	CountryCodes []CountryCode `json:"countryCodes,omitempty"`
 	// Whether the price rule is applicable to countries that have not been defined in the shop's shipping zones.
-	IncludeRestOfWorld *bool `json:"includeRestOfWorld"`
+	IncludeRestOfWorld *bool `json:"includeRestOfWorld,omitempty"`
 }
 
 // The shipping lines to which the price rule applies to.
@@ -6705,17 +6705,17 @@ type PriceRuleValidityPeriod struct {
 // Specifies the input fields to update the validity period of a price rule.
 type PriceRuleValidityPeriodInput struct {
 	// The time after which the price rule is valid.
-	Start string `json:"start"`
+	Start string `json:"start,omitempty"`
 	// The time after which the price rule becomes invalid.
-	End *string `json:"end"`
+	End *string `json:"end,omitempty"`
 }
 
 // Specifies the input fields to update a price rule.
 type PriceRuleValueInput struct {
 	// The percentage value of the price rule.
-	PercentageValue *float64 `json:"percentageValue"`
+	PercentageValue *float64 `json:"percentageValue,omitempty"`
 	// The fixed amount value of the price rule.
-	FixedAmountValue *string `json:"fixedAmountValue"`
+	FixedAmountValue *string `json:"fixedAmountValue,omitempty"`
 }
 
 // The value of the percentage pricing object.
@@ -6759,11 +6759,11 @@ type PrivateMetafieldConnection struct {
 //
 type PrivateMetafieldDeleteInput struct {
 	// The ID of the owning resource.
-	Owner *string `json:"owner"`
+	Owner *string `json:"owner,omitempty"`
 	// The namespace for the private metafield.
-	Namespace string `json:"namespace"`
+	Namespace string `json:"namespace,omitempty"`
 	// The key for the private metafield.
-	Key string `json:"key"`
+	Key string `json:"key,omitempty"`
 }
 
 // Return type for `privateMetafieldDelete` mutation.
@@ -6785,13 +6785,13 @@ type PrivateMetafieldEdge struct {
 //
 type PrivateMetafieldInput struct {
 	// The owning resource.
-	Owner *string `json:"owner"`
+	Owner *string `json:"owner,omitempty"`
 	// The namespace for the private metafield.
-	Namespace string `json:"namespace"`
+	Namespace string `json:"namespace,omitempty"`
 	// The key for the private metafield.
-	Key string `json:"key"`
+	Key string `json:"key,omitempty"`
 	// The value and value type of the metafield, wrapped in a ValueInput object.
-	ValueInput *PrivateMetafieldValueInput `json:"valueInput"`
+	ValueInput *PrivateMetafieldValueInput `json:"valueInput,omitempty"`
 }
 
 // Return type for `privateMetafieldUpsert` mutation.
@@ -6806,9 +6806,9 @@ type PrivateMetafieldUpsertPayload struct {
 //
 type PrivateMetafieldValueInput struct {
 	// The value of a private metafield.
-	Value string `json:"value"`
+	Value string `json:"value,omitempty"`
 	// Represents the private metafield value type.
-	ValueType PrivateMetafieldValueType `json:"valueType"`
+	ValueType PrivateMetafieldValueType `json:"valueType,omitempty"`
 }
 
 // Represents a product, including information about related collections and product variants.
@@ -6930,6 +6930,7 @@ type Product struct {
 	Vendor string `json:"vendor"`
 }
 
+func (Product) IsCommentEventEmbed()        {}
 func (Product) IsNode()                     {}
 func (Product) IsNavigable()                {}
 func (Product) IsHasMetafields()            {}
@@ -6937,14 +6938,13 @@ func (Product) IsHasPublishedTranslations() {}
 func (Product) IsPublishable()              {}
 func (Product) IsOnlineStorePreviewable()   {}
 func (Product) IsLegacyInteroperability()   {}
-func (Product) IsCommentEventEmbed()        {}
 
 // Specifies product images to append.
 type ProductAppendImagesInput struct {
 	// The ID of the product.
-	ID string `json:"id"`
+	ID string `json:"id,omitempty"`
 	// The images to be appended to the product.
-	Images []*ImageInput `json:"images"`
+	Images []*ImageInput `json:"images,omitempty"`
 }
 
 // Return type for `productAppendImages` mutation.
@@ -6999,7 +6999,7 @@ type ProductDeleteImagesPayload struct {
 // Specifies the product to delete.
 type ProductDeleteInput struct {
 	// The ID of the product.
-	ID string `json:"id"`
+	ID string `json:"id,omitempty"`
 }
 
 // Return type for `productDeleteMedia` mutation.
@@ -7056,10 +7056,10 @@ type ProductImageUpdatePayload struct {
 // Specifies the input fields required to create a product.
 type ProductInput struct {
 	// The description of the product, complete with HTML formatting.
-	DescriptionHTML *string `json:"descriptionHtml"`
+	DescriptionHTML *string `json:"descriptionHtml,omitempty"`
 	// A unique human-friendly string for the product. Automatically generated from the product's title.
 	//
-	Handle *string `json:"handle"`
+	Handle *string `json:"handle,omitempty"`
 	// Whether a redirect is required after a new handle has been provided.
 	// If true, then the old handle is redirected to the new one automatically.
 	//
@@ -7087,7 +7087,7 @@ type ProductInput struct {
 	// The IDs of collections that will no longer include the product.
 	CollectionsToLeave []string `json:"collectionsToLeave,omitempty"`
 	// Specifies the product to update in productUpdate or creates a new product if absent in productCreate.
-	ID *string `json:"id"`
+	ID *string `json:"id,omitempty"`
 	// The images to associate with the product.
 	Images []*ImageInput `json:"images,omitempty"`
 	// The metafields to associate with this product.
@@ -7170,21 +7170,21 @@ type ProductPublicationEdge struct {
 // Specifies a publication to which a product will be published.
 type ProductPublicationInput struct {
 	// ID of the publication.
-	PublicationID *string `json:"publicationId"`
+	PublicationID *string `json:"publicationId,omitempty"`
 	// ID of the channel. This argument is deprecated: Use publicationId instead.
-	ChannelID *string `json:"channelId"`
+	ChannelID *string `json:"channelId,omitempty"`
 	// This argument is deprecated: Use publicationId instead.
-	ChannelHandle *string `json:"channelHandle"`
+	ChannelHandle *string `json:"channelHandle,omitempty"`
 	// The date and time that the product was (or will be) published.
-	PublishDate *string `json:"publishDate"`
+	PublishDate *string `json:"publishDate,omitempty"`
 }
 
 // Specifies a product to publish and the channels to publish it to.
 type ProductPublishInput struct {
 	// The product to create or update publications for.
-	ID string `json:"id"`
+	ID string `json:"id,omitempty"`
 	// The publication that the product is published to.
-	ProductPublications []*ProductPublicationInput `json:"productPublications"`
+	ProductPublications []*ProductPublicationInput `json:"productPublications,omitempty"`
 }
 
 // Return type for `productPublish` mutation.
@@ -7220,9 +7220,9 @@ type ProductReorderMediaPayload struct {
 // Specifies a product to unpublish from a channel and the sales channels to unpublish it from.
 type ProductUnpublishInput struct {
 	// The ID of the product to create or update publications for.
-	ID string `json:"id"`
+	ID string `json:"id,omitempty"`
 	// The channels to unpublish the product from.
-	ProductPublications []*ProductPublicationInput `json:"productPublications"`
+	ProductPublications []*ProductPublicationInput `json:"productPublications,omitempty"`
 }
 
 // Return type for `productUnpublish` mutation.
@@ -7336,12 +7336,12 @@ type ProductVariant struct {
 	WeightUnit WeightUnit `json:"weightUnit"`
 }
 
+func (ProductVariant) IsCommentEventEmbed()        {}
 func (ProductVariant) IsNode()                     {}
 func (ProductVariant) IsHasMetafields()            {}
 func (ProductVariant) IsHasPublishedTranslations() {}
 func (ProductVariant) IsNavigable()                {}
 func (ProductVariant) IsLegacyInteroperability()   {}
-func (ProductVariant) IsCommentEventEmbed()        {}
 
 type ProductVariantConnection struct {
 	// A list of edges.
@@ -7380,56 +7380,56 @@ type ProductVariantEdge struct {
 // Specifies a product variant to create or update.
 type ProductVariantInput struct {
 	// The value of the barcode associated with the product.
-	Barcode *string `json:"barcode"`
+	Barcode *string `json:"barcode,omitempty"`
 	// The compare-at price of the variant.
-	CompareAtPrice *string `json:"compareAtPrice"`
+	CompareAtPrice *string `json:"compareAtPrice,omitempty"`
 	// The ID of the fulfillment service associated with the variant.
-	FulfillmentServiceID *string `json:"fulfillmentServiceId"`
+	FulfillmentServiceID *string `json:"fulfillmentServiceId,omitempty"`
 	// The Harmonized System Code (or HS Tariff Code) for the variant.
-	HarmonizedSystemCode *string `json:"harmonizedSystemCode"`
+	HarmonizedSystemCode *string `json:"harmonizedSystemCode,omitempty"`
 	// Specifies the product variant to update or create a new variant if absent.
-	ID *string `json:"id"`
+	ID *string `json:"id,omitempty"`
 	// The ID of the image that's associated with the variant.
-	ImageID *string `json:"imageId"`
+	ImageID *string `json:"imageId,omitempty"`
 	// The URL of an image to associate with the variant.  This field can only be used through mutations that create product images and must match one of the URLs being created on the product.
 	//
-	ImageSrc *string `json:"imageSrc"`
+	ImageSrc *string `json:"imageSrc,omitempty"`
 	// The fulfillment service that tracks the number of items in stock for the product variant. If you track the inventory yourself using the admin, then set the value to `shopify`. Valid values: `shopify` or the handle of a fulfillment service that has inventory management enabled.
 	//  This argument is deprecated: Use tracked attribute on `inventoryItem` instead.
-	InventoryManagement *ProductVariantInventoryManagement `json:"inventoryManagement"`
+	InventoryManagement *ProductVariantInventoryManagement `json:"inventoryManagement,omitempty"`
 	// Whether customers are allowed to place an order for the product variant when it's out of stock.
-	InventoryPolicy *ProductVariantInventoryPolicy `json:"inventoryPolicy"`
+	InventoryPolicy *ProductVariantInventoryPolicy `json:"inventoryPolicy,omitempty"`
 	// Create only field. The inventory quantities at each location where the variant is stocked.
-	InventoryQuantities []*InventoryLevelInput `json:"inventoryQuantities"`
+	InventoryQuantities []*InventoryLevelInput `json:"inventoryQuantities,omitempty"`
 	// Inventory Item associated with the variant, used for unit cost.
-	InventoryItem *InventoryItemInput `json:"inventoryItem"`
+	InventoryItem *InventoryItemInput `json:"inventoryItem,omitempty"`
 	// Additional customizable information about the product variant.
-	Metafields []*MetafieldInput `json:"metafields"`
+	Metafields []*MetafieldInput `json:"metafields,omitempty"`
 	// The private metafields to associated with this product.
-	PrivateMetafields []*PrivateMetafieldInput `json:"privateMetafields"`
+	PrivateMetafields []*PrivateMetafieldInput `json:"privateMetafields,omitempty"`
 	// The custom properties that a shop owner uses to define product variants.
-	Options []string `json:"options"`
+	Options []string `json:"options,omitempty"`
 	// The order of the product variant in the list of product variants. The first position in the list is 1.
 	//
-	Position *int64 `json:"position"`
+	Position *int64 `json:"position,omitempty"`
 	// The price of the variant.
-	Price *string `json:"price"`
+	Price *string `json:"price,omitempty"`
 	// Create only required field. Specifies the product on which to create the variant.
-	ProductID *string `json:"productId"`
+	ProductID *string `json:"productId,omitempty"`
 	// Whether the variant requires shipping.
-	RequiresShipping *bool `json:"requiresShipping"`
+	RequiresShipping *bool `json:"requiresShipping,omitempty"`
 	// The SKU for the variant.
-	Sku *string `json:"sku"`
+	Sku *string `json:"sku,omitempty"`
 	// Whether the variant is taxable.
-	Taxable *bool `json:"taxable"`
+	Taxable *bool `json:"taxable,omitempty"`
 	// This argument is deprecated: Variant title is not a writable field; it is generated from the selected variant options.
-	Title *string `json:"title"`
+	Title *string `json:"title,omitempty"`
 	// The tax code associated with the variant.
-	TaxCode *string `json:"taxCode"`
+	TaxCode *string `json:"taxCode,omitempty"`
 	// The weight of the variant.
-	Weight *float64 `json:"weight"`
+	Weight *float64 `json:"weight,omitempty"`
 	// The unit of weight that's used to measure the variant.
-	WeightUnit *WeightUnit `json:"weightUnit"`
+	WeightUnit *WeightUnit `json:"weightUnit,omitempty"`
 }
 
 // The compare-at price and price of a variant sharing a currency.
@@ -7507,13 +7507,13 @@ type PublicationEdge struct {
 // Specifies the input fields required to publish a resource.
 type PublicationInput struct {
 	// ID of the channel. This argument is deprecated: Use publicationId instead.
-	ChannelID *string `json:"channelId"`
+	ChannelID *string `json:"channelId,omitempty"`
 	// ID of the publication.
-	PublicationID *string `json:"publicationId"`
+	PublicationID *string `json:"publicationId,omitempty"`
 	// The date and time that the resource was published. Setting this to a date in the future will schedule
 	// the resource to be published. Only online store channels support future publishing.
 	//
-	PublishDate *string `json:"publishDate"`
+	PublishDate *string `json:"publishDate,omitempty"`
 }
 
 // Return type for `publishablePublish` mutation.
@@ -7616,29 +7616,29 @@ type RefundDuty struct {
 // Specifies the fields required to return duties on a refund.
 type RefundDutyInput struct {
 	// The ID of the duty in the refund.
-	DutyID string `json:"dutyId"`
+	DutyID string `json:"dutyId,omitempty"`
 	// The type of refund for this duty.
-	RefundType *RefundDutyRefundType `json:"refundType"`
+	RefundType *RefundDutyRefundType `json:"refundType,omitempty"`
 }
 
 // Specifies the fields to create a refund.
 type RefundInput struct {
 	// The currency (in ISO format) that is used to refund the order. This must be the presentment currency (the currency used by the customer) and is a required field for orders where the currency and presentment currency differ.
-	Currency *CurrencyCode `json:"currency"`
+	Currency *CurrencyCode `json:"currency,omitempty"`
 	// Order ID for which the refund is created.
-	OrderID string `json:"orderId"`
+	OrderID string `json:"orderId,omitempty"`
 	// An optional note attached to a refund.
-	Note *string `json:"note"`
+	Note *string `json:"note,omitempty"`
 	// Whether to send a refund notification to the customer.
-	Notify *bool `json:"notify"`
+	Notify *bool `json:"notify,omitempty"`
 	// Specifies how much of the shipping cost to refund.
-	Shipping *ShippingRefundInput `json:"shipping"`
+	Shipping *ShippingRefundInput `json:"shipping,omitempty"`
 	// A list of line items to refund.
-	RefundLineItems []*RefundLineItemInput `json:"refundLineItems"`
+	RefundLineItems []*RefundLineItemInput `json:"refundLineItems,omitempty"`
 	// A list of duties to refund.
-	RefundDuties []*RefundDutyInput `json:"refundDuties"`
+	RefundDuties []*RefundDutyInput `json:"refundDuties,omitempty"`
 	// A list of transactions involved in the refund.
-	Transactions []*OrderTransactionInput `json:"transactions"`
+	Transactions []*OrderTransactionInput `json:"transactions,omitempty"`
 }
 
 // Represents the details about a refunded line item.
@@ -7686,13 +7686,13 @@ type RefundLineItemEdge struct {
 // Specifies the fields required to return line items on a refund.
 type RefundLineItemInput struct {
 	// The ID of the line item in the refund.
-	LineItemID string `json:"lineItemId"`
+	LineItemID string `json:"lineItemId,omitempty"`
 	// The quantity of the associated line item that was returned.
-	Quantity int64 `json:"quantity"`
+	Quantity int64 `json:"quantity,omitempty"`
 	// The type of restock for this line item.
-	RestockType *RefundLineItemRestockType `json:"restockType"`
+	RestockType *RefundLineItemRestockType `json:"restockType,omitempty"`
 	// The intended location for restocking if `refundType` is not `NO_RESTOCK`
-	LocationID *string `json:"locationId"`
+	LocationID *string `json:"locationId,omitempty"`
 }
 
 // Presents information or problems to merchants, with 1 or more actions that they can take.
@@ -7793,9 +7793,9 @@ type Seo struct {
 // SEO information.
 type SEOInput struct {
 	// SEO title of the product.
-	Title *string `json:"title"`
+	Title *string `json:"title,omitempty"`
 	// SEO description of the product.
-	Description *string `json:"description"`
+	Description *string `json:"description,omitempty"`
 }
 
 // A saved search is a representation of a search query saved in the admin.
@@ -7829,11 +7829,11 @@ type SavedSearchConnection struct {
 // Specifies the fields required to create a saved search.
 type SavedSearchCreateInput struct {
 	// The type of resouce this saved search is searching in.
-	ResourceType SearchResultType `json:"resourceType"`
+	ResourceType SearchResultType `json:"resourceType,omitempty"`
 	// A descriptive name of the saved search.
-	Name string `json:"name"`
+	Name string `json:"name,omitempty"`
 	// The query string of a saved search. This includes search terms and filters.
-	Query string `json:"query"`
+	Query string `json:"query,omitempty"`
 }
 
 // Return type for `savedSearchCreate` mutation.
@@ -7847,7 +7847,7 @@ type SavedSearchCreatePayload struct {
 // Specifies the fields to delete a saved search.
 type SavedSearchDeleteInput struct {
 	// ID of the saved search to delete.
-	ID string `json:"id"`
+	ID string `json:"id,omitempty"`
 }
 
 // Return type for `savedSearchDelete` mutation.
@@ -7870,11 +7870,11 @@ type SavedSearchEdge struct {
 // Specifies the fields required to update a saved search.
 type SavedSearchUpdateInput struct {
 	// ID of the saved search to update.
-	ID string `json:"id"`
+	ID string `json:"id,omitempty"`
 	// A descriptive name of the saved search.
-	Name *string `json:"name"`
+	Name *string `json:"name,omitempty"`
 	// The query string of a saved search. This included search terms and filters.
-	Query *string `json:"query"`
+	Query *string `json:"query,omitempty"`
 }
 
 // Return type for `savedSearchUpdate` mutation.
@@ -7963,9 +7963,9 @@ type ScriptTagEdge struct {
 //
 type ScriptTagInput struct {
 	// The URL of the remote script.
-	Src *string `json:"src"`
+	Src *string `json:"src,omitempty"`
 	// The page or pages on the online store where the script should be included.
-	DisplayScope *ScriptTagDisplayScope `json:"displayScope"`
+	DisplayScope *ScriptTagDisplayScope `json:"displayScope,omitempty"`
 }
 
 // Return type for `scriptTagUpdate` mutation.
@@ -8077,11 +8077,11 @@ type ShippingLine struct {
 // Specifies the shipping details for the order.
 type ShippingLineInput struct {
 	// Price of the shipping rate.
-	Price *string `json:"price"`
+	Price *string `json:"price,omitempty"`
 	// A unique identifier for the shipping rate.
-	ShippingRateHandle *string `json:"shippingRateHandle"`
+	ShippingRateHandle *string `json:"shippingRateHandle,omitempty"`
 	// Title of the shipping rate.
-	Title *string `json:"title"`
+	Title *string `json:"title,omitempty"`
 }
 
 // The shipping method for the delivery.
@@ -8143,9 +8143,9 @@ type ShippingRefund struct {
 // Specifies the fields required to return shipping costs on a Refund.
 type ShippingRefundInput struct {
 	// The monetary value of the shipping fees to be returned.
-	Amount *string `json:"amount"`
+	Amount *string `json:"amount,omitempty"`
 	// Whether a full refund is provided.
-	FullRefund *bool `json:"fullRefund"`
+	FullRefund *bool `json:"fullRefund,omitempty"`
 }
 
 // Represents the shop object.
@@ -8412,7 +8412,7 @@ type ShopLocaleEnablePayload struct {
 //
 type ShopLocaleInput struct {
 	// Specifies the publication state of the locale.
-	Published *bool `json:"published"`
+	Published *bool `json:"published,omitempty"`
 }
 
 // Return type for `shopLocaleUpdate` mutation.
@@ -8761,13 +8761,13 @@ type ShopifyPaymentsVerificationSubject struct {
 // Image to be uploaded.
 type StageImageInput struct {
 	// Image resource.
-	Resource StagedUploadTargetGenerateUploadResource `json:"resource"`
+	Resource StagedUploadTargetGenerateUploadResource `json:"resource,omitempty"`
 	// Image filename.
-	Filename string `json:"filename"`
+	Filename string `json:"filename,omitempty"`
 	// Image MIME type.
-	MimeType string `json:"mimeType"`
+	MimeType string `json:"mimeType,omitempty"`
 	// HTTP method to be used by the Staged Upload.
-	HTTPMethod *StagedUploadHTTPMethodType `json:"httpMethod"`
+	HTTPMethod *StagedUploadHTTPMethodType `json:"httpMethod,omitempty"`
 }
 
 // Staged media target information.
@@ -8783,15 +8783,15 @@ type StagedMediaUploadTarget struct {
 // Media to be uploaded.
 type StagedUploadInput struct {
 	// Media resource.
-	Resource StagedUploadTargetGenerateUploadResource `json:"resource"`
+	Resource StagedUploadTargetGenerateUploadResource `json:"resource,omitempty"`
 	// Media filename.
-	Filename string `json:"filename"`
+	Filename string `json:"filename,omitempty"`
 	// Media MIME type.
-	MimeType string `json:"mimeType"`
+	MimeType string `json:"mimeType,omitempty"`
 	// HTTP method to be used by the Staged Upload.
-	HTTPMethod *StagedUploadHTTPMethodType `json:"httpMethod"`
+	HTTPMethod *StagedUploadHTTPMethodType `json:"httpMethod,omitempty"`
 	// Size of the file to upload, in bytes. This is required for VIDEO and MODEL_3D resources.
-	FileSize *string `json:"fileSize"`
+	FileSize *string `json:"fileSize,omitempty"`
 }
 
 // Upload parameter of a Media.
@@ -8813,15 +8813,15 @@ type StagedUploadTarget struct {
 // Specifies the fields required to generate the URL and parameters needed to upload an asset to Shopify.
 type StagedUploadTargetGenerateInput struct {
 	// The resource type being uploaded.
-	Resource StagedUploadTargetGenerateUploadResource `json:"resource"`
+	Resource StagedUploadTargetGenerateUploadResource `json:"resource,omitempty"`
 	// The filename of the asset being uploaded.
-	Filename string `json:"filename"`
+	Filename string `json:"filename,omitempty"`
 	// The MIME type of the asset being uploaded.
-	MimeType string `json:"mimeType"`
+	MimeType string `json:"mimeType,omitempty"`
 	// The HTTP method to be used by the staged upload.
-	HTTPMethod *StagedUploadHTTPMethodType `json:"httpMethod"`
+	HTTPMethod *StagedUploadHTTPMethodType `json:"httpMethod,omitempty"`
 	// The size of the file to upload, in bytes.
-	FileSize *string `json:"fileSize"`
+	FileSize *string `json:"fileSize,omitempty"`
 }
 
 // Return type for `stagedUploadTargetGenerate` mutation.
@@ -8889,7 +8889,7 @@ type StorefrontAccessTokenCreatePayload struct {
 // Specifies the input fields to delete a storefront access token.
 type StorefrontAccessTokenDeleteInput struct {
 	// The ID of the storefront access token to delete.
-	ID string `json:"id"`
+	ID string `json:"id,omitempty"`
 }
 
 // Return type for `storefrontAccessTokenDelete` mutation.
@@ -8910,7 +8910,7 @@ type StorefrontAccessTokenEdge struct {
 // Specifies the input fields for a storefront access token.
 type StorefrontAccessTokenInput struct {
 	// A title for the storefront access token.
-	Title string `json:"title"`
+	Title string `json:"title,omitempty"`
 }
 
 type StringConnection struct {
@@ -9060,21 +9060,21 @@ type TenderTransactionEdge struct {
 // Specifies the fields for tracking information.
 type TrackingInfoInput struct {
 	// The tracking number of the fulfillment.
-	Number *string `json:"number"`
+	Number *string `json:"number,omitempty"`
 	// The URL to track the fulfillment.
-	URL *string `json:"url"`
+	URL *string `json:"url,omitempty"`
 }
 
 // Specifies all possible fields for updating tracking information.
 type TrackingInfoUpdateInput struct {
 	// Tracking information consisting of one or more tracking URLs and numbers associated with the fulfillment.
 	//
-	TrackingDetails []*TrackingInfoInput `json:"trackingDetails"`
+	TrackingDetails []*TrackingInfoInput `json:"trackingDetails,omitempty"`
 	// The name of the tracking company.
-	TrackingCompany *string `json:"trackingCompany"`
+	TrackingCompany *string `json:"trackingCompany,omitempty"`
 	// Indicates whether the customer will be notified of this update and future updates for this fulfillment.
 	//
-	NotifyCustomer *bool `json:"notifyCustomer"`
+	NotifyCustomer *bool `json:"notifyCustomer,omitempty"`
 }
 
 // Translatable content of a resource's field.
@@ -9128,13 +9128,13 @@ type Translation struct {
 // Provides the fields and values to use when creating or updating a translation.
 type TranslationInput struct {
 	// The locale of the translation.
-	Locale string `json:"locale"`
+	Locale string `json:"locale,omitempty"`
 	// The key of the translation.
-	Key string `json:"key"`
+	Key string `json:"key,omitempty"`
 	// The value of the translation.
-	Value string `json:"value"`
+	Value string `json:"value,omitempty"`
 	// The digest (hash) of the content being translated.
-	TranslatableContentDigest string `json:"translatableContentDigest"`
+	TranslatableContentDigest string `json:"translatableContentDigest,omitempty"`
 }
 
 // Represents an error that happens during the execution of a translation mutation.
@@ -9171,11 +9171,11 @@ type TranslationsRemovePayload struct {
 //
 type UTMInput struct {
 	// The name of the UTM campaign.
-	Campaign string `json:"campaign"`
+	Campaign string `json:"campaign,omitempty"`
 	// The name of the website or application where the referral link exists.
-	Source string `json:"source"`
+	Source string `json:"source,omitempty"`
 	// The UTM campaign medium.
-	Medium string `json:"medium"`
+	Medium string `json:"medium,omitempty"`
 }
 
 // Represents a set of UTM parameters.
@@ -9195,11 +9195,11 @@ type UTMParameters struct {
 // Specifies the input fields required to update a media object.
 type UpdateMediaInput struct {
 	// Specifies the media to update.
-	ID string `json:"id"`
+	ID string `json:"id,omitempty"`
 	// The source from which to update the media preview image. May be an external URL or signed upload URL.
-	PreviewImageSource *string `json:"previewImageSource"`
+	PreviewImageSource *string `json:"previewImageSource,omitempty"`
 	// The alt text associated to the media.
-	Alt *string `json:"alt"`
+	Alt *string `json:"alt,omitempty"`
 }
 
 // Represents an error in the input of a mutation.
@@ -9331,13 +9331,13 @@ type WebhookSubscriptionEdge struct {
 //
 type WebhookSubscriptionInput struct {
 	// URL where the webhook subscription should send the POST request when the event occurs.
-	CallbackURL *string `json:"callbackUrl"`
+	CallbackURL *string `json:"callbackUrl,omitempty"`
 	// The format in which the webhook subscription should send the data.
-	Format *WebhookSubscriptionFormat `json:"format"`
+	Format *WebhookSubscriptionFormat `json:"format,omitempty"`
 	// The list of fields to be included in the webhook subscription.
-	IncludeFields []string `json:"includeFields"`
+	IncludeFields []string `json:"includeFields,omitempty"`
 	// The list of namespaces for any metafields that should be included in the webhook subscription.
-	MetafieldNamespaces []string `json:"metafieldNamespaces"`
+	MetafieldNamespaces []string `json:"metafieldNamespaces,omitempty"`
 }
 
 // Return type for `webhookSubscriptionUpdate` mutation.
@@ -9362,9 +9362,9 @@ func (Weight) IsDeliveryConditionCriteria() {}
 //
 type WeightInput struct {
 	// The weight value using the unit system specified with `weight_unit`.
-	Value float64 `json:"value"`
+	Value float64 `json:"value,omitempty"`
 	// Unit of measurement for `value`.
-	Unit WeightUnit `json:"unit"`
+	Unit WeightUnit `json:"unit,omitempty"`
 }
 
 // Return type for `deliveryProfileCreate` mutation.
