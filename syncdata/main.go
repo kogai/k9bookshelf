@@ -11,7 +11,6 @@ import (
 	"path/filepath"
 	"strings"
 	"sync"
-	"time"
 
 	"github.com/Yamashou/gqlgenc/client"
 	shopify "github.com/bold-commerce/go-shopify"
@@ -22,7 +21,8 @@ import (
 	"github.com/vbauerster/mpb/decor"
 )
 
-var apiVersion string = "2020-10"
+const apiVersion string = "2020-10"
+
 var rootCmd = &cobra.Command{
 	Use:   "datakit",
 	Short: "datakit is a content management tool like theme-kit",
@@ -150,29 +150,6 @@ func dowloadContens(output string, contents *[]Content, bar *mpb.Bar) error {
 	return nil
 }
 
-// Article is documented at https://shopify.dev/docs/admin-api/rest/reference/online-store/article
-type Article struct {
-	ID                int64      `json:"id"`
-	Title             string     `json:"title"`
-	CreatedAt         *time.Time `json:"created_at"`
-	BodyHTML          string     `json:"body_html"`
-	BlogID            int64      `json:"blog_id"`
-	Author            string     `json:"author"`
-	UserID            int64      `json:"user_id"`
-	PublishedAt       *time.Time `json:"published_at"`
-	UpdatedAt         *time.Time `json:"updated_at"`
-	SummaryHTML       *string    `json:"summary_html"`
-	TemplateSuffix    *string    `json:"template_suffix"`
-	Handle            string     `json:"handle"`
-	Tags              string     `json:"tags"`
-	AdminGraphqlAPIID string     `json:"admin_graphql_api_id"`
-}
-
-// Articles is not documented yet.
-type Articles struct {
-	Articles []Article `json:"articles"`
-}
-
 func download(output string) error {
 	adminClient, ctx := gqlClient()
 	restClient := establishRestClient()
@@ -210,8 +187,7 @@ func download(output string) error {
 		contents := Contents{
 			kind: path.Join("blogs", blog.Handle),
 		}
-		articles := Articles{Articles: []Article{}}
-		err = restClient.Get(path.Join("admin", "api", apiVersion, "blogs", fmt.Sprint(blog.ID), "articles.json"), &articles, nil)
+		articles, err := NewArticleResource(restClient).List()
 		if err != nil {
 			return err
 		}

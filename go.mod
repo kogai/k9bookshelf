@@ -6,7 +6,7 @@ require (
 	github.com/99designs/gqlgen v0.13.0
 	github.com/VividCortex/ewma v1.1.1 // indirect
 	github.com/Yamashou/gqlgenc v0.0.0-20201118110422-c5e4e29019a7
-	github.com/bold-commerce/go-shopify v2.3.0+incompatible // indirect
+	github.com/bold-commerce/go-shopify v2.3.0+incompatible
 	github.com/gomarkdown/markdown v0.0.0-20201113031856-722100d81a8e
 	github.com/google/go-querystring v1.0.0 // indirect
 	github.com/mattn/godown v0.0.0-20201027140031-2c7783b24de7
