@@ -1,7 +1,6 @@
 package syncdata
 
 import (
-	"context"
 	"fmt"
 	"io/ioutil"
 	"k9bookshelf/generated"
@@ -14,20 +13,16 @@ import (
 	"github.com/vbauerster/mpb/decor"
 )
 
-func deployContents(ctx context.Context, input string, gqlClient *generated.Client, bar *mpb.Bar) error {
-	files, err := ioutil.ReadDir(input)
-	if err != nil {
-		return err
-	}
+func deployProducts(contents []Content, bar *mpb.Bar) error {
+	gqlClient, ctx := establishGqlClient()
 	wg := sync.WaitGroup{}
-
-	for _, file := range files {
+	for _, content := range contents {
 		wg.Add(1)
 		c := make(chan error)
-		filename := file.Name()
 
-		go func(handle, pathToFile string) {
+		go func(handle, html string) {
 			defer wg.Done()
+			fmt.Println("start", handle)
 			defer bar.Increment()
 
 			productByHandle, err := gqlClient.ProductByHandle(ctx, handle)
@@ -36,19 +31,12 @@ func deployContents(ctx context.Context, input string, gqlClient *generated.Clie
 				return
 			}
 
-			md, err := ioutil.ReadFile(pathToFile)
-			if err != nil {
-				c <- err
-				return
-			}
-			descriptionHTML := string(markdown.ToHTML(md, nil, nil))
-
 			res, err := gqlClient.Deploy(
 				ctx,
 				generated.ProductInput{
 					ID:              &productByHandle.ProductByHandle.ID,
 					Handle:          &handle,
-					DescriptionHTML: &descriptionHTML,
+					DescriptionHTML: &html,
 				},
 			)
 			if err != nil {
@@ -64,12 +52,9 @@ func deployContents(ctx context.Context, input string, gqlClient *generated.Clie
 				return
 			}
 			c <- nil
-		}(
-			filename[0:len(filename)-len(filepath.Ext(filename))],
-			path.Join(input, filename),
-		)
+		}(content.handle, content.html)
 
-		err = <-c
+		err := <-c
 		if err != nil {
 			return err
 		}
@@ -81,14 +66,33 @@ func deployContents(ctx context.Context, input string, gqlClient *generated.Clie
 
 // Deploy uploads contents to store
 func Deploy(input string) error {
-	files, err := ioutil.ReadDir(path.Join(input, "products"))
+	rawProducts, err := ioutil.ReadDir(path.Join(input, "products"))
 	if err != nil {
 		return err
 	}
-	gqlClient, ctx := establishGqlClient()
+	products := []Content{}
+	for _, file := range rawProducts {
+		filename := file.Name()
+		handle := filename[0 : len(filename)-len(filepath.Ext(filename))]
+		md, err := ioutil.ReadFile(path.Join(input, "products", filename))
+		if err != nil {
+			return err
+		}
+		html := string(markdown.ToHTML(md, nil, nil))
+		products = append(products, Content{
+			handle: handle,
+			html:   html,
+		})
+	}
+
+	// pages, err := ioutil.ReadDir(path.Join(input, "pages"))
+	// if err != nil {
+	// 	return err
+	// }
+
 	wg := sync.WaitGroup{}
 	p := mpb.New(mpb.WithWaitGroup(&wg))
-	bar := p.AddBar(int64(len(files)),
+	bar := p.AddBar(int64(len(products)),
 		mpb.PrependDecorators(
 			decor.Name(path.Join(input, "products")),
 			decor.Percentage(decor.WCSyncSpace),
@@ -100,59 +104,11 @@ func Deploy(input string) error {
 		),
 	)
 
-	for _, file := range files {
-		wg.Add(1)
-		c := make(chan error)
-		filename := file.Name()
-
-		go func(handle, pathToFile string) {
-			defer wg.Done()
-			defer bar.Increment()
-
-			productByHandle, err := gqlClient.ProductByHandle(ctx, handle)
-			if err != nil {
-				c <- err
-				return
-			}
-
-			md, err := ioutil.ReadFile(pathToFile)
-			if err != nil {
-				c <- err
-				return
-			}
-			descriptionHTML := string(markdown.ToHTML(md, nil, nil))
-
-			res, err := gqlClient.Deploy(
-				ctx,
-				generated.ProductInput{
-					ID:              &productByHandle.ProductByHandle.ID,
-					Handle:          &handle,
-					DescriptionHTML: &descriptionHTML,
-				},
-			)
-			if err != nil {
-				c <- err
-				return
-			}
-			if len(res.ProductUpdate.UserErrors) > 0 {
-				var errorBuf string
-				for _, userError := range res.ProductUpdate.UserErrors {
-					errorBuf += fmt.Sprintf("'%s': '%s'\n", userError.Field, userError.Message)
-				}
-				c <- fmt.Errorf("{\n%s}", errorBuf)
-				return
-			}
-			c <- nil
-		}(
-			filename[0:len(filename)-len(filepath.Ext(filename))],
-			path.Join(input, "products", filename),
-		)
-
-		err = <-c
-		if err != nil {
-			return err
-		}
+	err = deployProducts(products, bar)
+	if err != nil {
+		return err
 	}
+
 	p.Wait()
 	return nil
 }
