@@ -16,13 +16,12 @@ import (
 func deployProducts(contents []Content, bar *mpb.Bar) error {
 	gqlClient, ctx := establishGqlClient()
 	wg := sync.WaitGroup{}
+	c := make(chan error)
 	for _, content := range contents {
 		wg.Add(1)
-		c := make(chan error)
 
 		go func(handle, html string) {
 			defer wg.Done()
-			fmt.Println("start", handle)
 			defer bar.Increment()
 
 			productByHandle, err := gqlClient.ProductByHandle(ctx, handle)
@@ -51,17 +50,15 @@ func deployProducts(contents []Content, bar *mpb.Bar) error {
 				c <- fmt.Errorf("{\n%s}", errorBuf)
 				return
 			}
-			c <- nil
 		}(content.handle, content.html)
-
-		err := <-c
-		if err != nil {
-			return err
-		}
 	}
+	go func() {
+		wg.Wait()
+		c <- nil
+	}()
 
-	wg.Wait()
-	return nil
+	err := <-c
+	return err
 }
 
 // Deploy uploads contents to store
