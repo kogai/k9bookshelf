@@ -4,6 +4,9 @@ go_library(
     name = "go_default_library",
     srcs = [
         "article.go",
+        "client.go",
+        "deploy.go",
+        "download.go",
         "syncdata.go",
     ],
     importpath = "k9bookshelf/syncdata",
