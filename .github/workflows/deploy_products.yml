@@ -24,7 +24,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-
       - run: yarn install
-      - run: make deploy/products
+      - run: make deploy/contents
+        if: github.ref == 'refs/heads/master'
         env:
           MARKDOWN_APP_SECRET: ${{ secrets.MARKDOWN_APP_SECRET }}
           GRAPHQL_ADMIN_API_SECRET: ${{ secrets.GRAPHQL_ADMIN_API_SECRET }}
