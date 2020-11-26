@@ -122,6 +122,80 @@ func deployPages(contents []Content, bar *mpb.Bar) error {
 	return err
 }
 
+func deployBlogs(blogs map[string][]Content, bar *mpb.Bar) error {
+	var err error
+	adminClient := establishRestClient()
+	wg := sync.WaitGroup{}
+	c := make(chan error)
+
+	currentBlogs, err := adminClient.Blog.List(nil)
+	if err != nil {
+		return err
+	}
+
+	for _blogCategory, _blogContents := range blogs {
+		wg.Add(1)
+		var b *shopify.Blog
+		go func(blogCategory string, blogContents []Content) {
+			defer wg.Done()
+
+			for _, currentBlog := range currentBlogs {
+				if currentBlog.Handle == blogCategory {
+					b = &currentBlog
+					break
+				}
+			}
+			if b == nil {
+				c <- fmt.Errorf("blog category [%s] is not exist", blogCategory)
+				return
+			}
+
+			articles, err := NewArticleResource(adminClient).List(b.ID)
+			if err != nil {
+				c <- err
+				return
+			}
+
+			for _, _content := range blogContents {
+				wg.Add(1)
+				go func(content Content) {
+					defer wg.Done()
+					defer bar.Increment()
+
+					var article *Article
+					for _, a := range articles.Articles {
+						if content.handle == a.Handle {
+							article = &a
+						}
+					}
+					if article == nil {
+						c <- fmt.Errorf("blog article [%s] is not exist", content.handle)
+						return
+					}
+					_, err = NewArticleResource(adminClient).Put(Article{
+						ID:       article.ID,
+						BlogID:   article.BlogID,
+						Handle:   content.handle,
+						BodyHTML: content.html,
+					})
+					if err != nil {
+						c <- err
+						return
+					}
+				}(_content)
+			}
+		}(_blogCategory, _blogContents)
+
+	}
+	go func() {
+		wg.Wait()
+		c <- nil
+	}()
+
+	err = <-c
+	return err
+}
+
 func filesToContents(inputDir string, files []os.FileInfo) ([]Content, error) {
 	contents := []Content{}
 	for _, file := range files {
@@ -141,8 +215,8 @@ func filesToContents(inputDir string, files []os.FileInfo) ([]Content, error) {
 }
 
 type tmpIterable struct {
-	f        func(contents []Content, bar *mpb.Bar) error
-	contents []Content
+	f                func(bar *mpb.Bar) error
+	numberOfContents int
 }
 
 // Deploy uploads contents to store
@@ -162,26 +236,54 @@ func Deploy(input string) error {
 	}
 	pages, err := filesToContents(path.Join(input, "pages"), rawPages)
 
+	rawBlogs, err := ioutil.ReadDir(path.Join(input, "blogs"))
+	if err != nil {
+		return err
+	}
+
+	blogs := map[string][]Content{}
+	numberOfBlogs := 0
+	for _, b := range rawBlogs {
+		if b.IsDir() {
+			files, err := ioutil.ReadDir(path.Join(input, "blogs", b.Name()))
+			if err != nil {
+				return err
+			}
+			contents, err := filesToContents(path.Join(input, "blogs", b.Name()), files)
+			if err != nil {
+				return err
+			}
+			numberOfBlogs += len(contents)
+			blogs[b.Name()] = contents
+		}
+	}
+
 	wg := sync.WaitGroup{}
 	p := mpb.New(mpb.WithWaitGroup(&wg))
 
 	c := make(chan error)
 	for name, _f := range map[string]tmpIterable{
 		"products": {
-			f: func(contents []Content, bar *mpb.Bar) error {
+			f: func(bar *mpb.Bar) error {
 				return deployProducts(products, bar)
 			},
-			contents: products,
+			numberOfContents: len(products),
 		},
 		"pages": {
-			f: func(contents []Content, bar *mpb.Bar) error {
+			f: func(bar *mpb.Bar) error {
 				return deployPages(pages, bar)
 			},
-			contents: pages,
+			numberOfContents: len(pages),
+		},
+		"blogs": {
+			f: func(bar *mpb.Bar) error {
+				return deployBlogs(blogs, bar)
+			},
+			numberOfContents: numberOfBlogs,
 		},
 	} {
 		wg.Add(1)
-		bar := p.AddBar(int64(len(_f.contents)),
+		bar := p.AddBar(int64(_f.numberOfContents),
 			mpb.PrependDecorators(
 				decor.Name(path.Join(input, name)),
 				decor.Percentage(decor.WCSyncSpace),
@@ -192,9 +294,9 @@ func Deploy(input string) error {
 				),
 			),
 		)
-		go func(f func(contents []Content, bar *mpb.Bar) error) {
+		go func(f func(bar *mpb.Bar) error) {
 			defer wg.Done()
-			if err = f(pages, bar); err != nil {
+			if err = f(bar); err != nil {
 				c <- err
 				return
 			}
