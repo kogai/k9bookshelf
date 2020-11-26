@@ -38,6 +38,9 @@ bin/syncdata: $(GO_FILES) WORKSPACE
 	$(BZL) build //syncdata/cmd:all
 	cp -f $(BZL_BIN)/syncdata/cmd/cmd_/cmd bin/syncdata
 
+.PHONY: setup
+setup: WORKSPACE */BUILD.bazel GOPATH
+
 .PHONY: syncdata/BUILD.bazel gqlgenc/BUILD.bazel
 
 */BUILD.bazel: $(GO_FILES)
@@ -45,3 +48,8 @@ bin/syncdata: $(GO_FILES) WORKSPACE
 
 WORKSPACE: go.mod syncdata/BUILD.bazel
 	$(BZL) run //:gazelle -- update-repos -from_file=go.mod
+
+.PHONY: GOPATH
+
+GOPATH:
+	$(BZL) build //:gopath
