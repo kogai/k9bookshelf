@@ -3,7 +3,7 @@ package syncdata
 import (
 	"fmt"
 	"io/ioutil"
-	"k9bookshelf/generated"
+	"k9bookshelf/syncdata/generated"
 	"os"
 	"path"
 	"path/filepath"

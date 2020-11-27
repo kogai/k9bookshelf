@@ -12,7 +12,7 @@ go_library(
     importpath = "k9bookshelf/syncdata",
     visibility = ["//visibility:public"],
     deps = [
-        "//generated:go_default_library",
+        "//syncdata/generated:go_default_library",
         "@com_github_bold_commerce_go_shopify//:go_default_library",
         "@com_github_gomarkdown_markdown//:go_default_library",
         "@com_github_mattn_godown//:go_default_library",
@@ -21,3 +21,7 @@ go_library(
         "@com_github_yamashou_gqlgenc//client:go_default_library",
     ],
 )
+
+exports_files(glob([
+    "*.gql",
+]))
