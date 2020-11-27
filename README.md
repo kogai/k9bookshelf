@@ -6,8 +6,8 @@
 $ make deploy/theme
 ```
 
-## 商品詳細の更新
+## 商品本文、ページ、ブログの更新
 
 ```sh
-$ make deploy/products
+$ make deploy/contents
 ```

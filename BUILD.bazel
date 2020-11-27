@@ -33,3 +33,5 @@ alias(
         "//conditions:default": "@theme_darwin//file:downloaded",
     }),
 )
+
+exports_files([".gqlgenc.yml"])
