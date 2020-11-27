@@ -1521,12 +1521,12 @@ type Customer struct {
 	VerifiedEmail bool `json:"verifiedEmail"`
 }
 
+func (Customer) IsCommentEventEmbed()      {}
 func (Customer) IsNode()                   {}
 func (Customer) IsCommentEventSubject()    {}
 func (Customer) IsHasMetafields()          {}
 func (Customer) IsLegacyInteroperability() {}
 func (Customer) IsHasEvents()              {}
-func (Customer) IsCommentEventEmbed()      {}
 
 // Return type for `customerAddTaxExemptions` mutation.
 type CustomerAddTaxExemptionsPayload struct {
@@ -1965,8 +1965,8 @@ type DeliveryParticipant struct {
 	PercentageOfRateFee float64 `json:"percentageOfRateFee"`
 }
 
-func (DeliveryParticipant) IsNode()                 {}
 func (DeliveryParticipant) IsDeliveryRateProvider() {}
+func (DeliveryParticipant) IsNode()                 {}
 
 // Input fields for a participant.
 type DeliveryParticipantInput struct {
@@ -2156,8 +2156,8 @@ type DeliveryRateDefinition struct {
 	Price *MoneyV2 `json:"price"`
 }
 
-func (DeliveryRateDefinition) IsNode()                 {}
 func (DeliveryRateDefinition) IsDeliveryRateProvider() {}
+func (DeliveryRateDefinition) IsNode()                 {}
 
 // Input fields for a rate definition.
 type DeliveryRateDefinitionInput struct {

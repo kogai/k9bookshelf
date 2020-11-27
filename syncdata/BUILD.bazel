@@ -21,3 +21,7 @@ go_library(
         "@com_github_yamashou_gqlgenc//client:go_default_library",
     ],
 )
+
+exports_files(glob([
+    "*.gql",
+]))
