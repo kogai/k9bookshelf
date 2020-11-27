@@ -5,15 +5,15 @@ LINT := yarn theme-lint
 BZL := yarn bazelisk --
 BZL_BIN := $(shell npx bazelisk info bazel-bin)
 
-.PHONY: deploy/theme,deploy/products,watch,download/theme
+.PHONY: deploy/theme,deploy/contents,watch,download/theme
 
 deploy/theme:
 	$(TK) deploy --dir theme
 
-deploy/products: $(MD_FILES) bin/syncdata
+deploy/contents: $(MD_FILES) bin/syncdata
 	./bin/syncdata deploy --input $(PWD)/contents
 
-download/products: $(MD_FILES) bin/syncdata
+download/contents: $(MD_FILES) bin/syncdata
 	./bin/syncdata download --output $(PWD)/contents
 
 watch:
@@ -25,8 +25,9 @@ download/theme:
 lint:
 	$(LINT) ./theme
 
-generated/client.go: bin/gqlgenc syncdata/*.gql
-	./bin/gqlgenc
+syncdata/generated/client.go: syncdata/gqlgenc/main.go syncdata/*.gql
+	$(BZL) run syncdata/gqlgenc
+	cp -r $(BZL_BIN)/syncdata/gqlgenc/gqlgenc_/gqlgenc.runfiles/k9books/syncdata/generated $(CURDIR)/syncdata
 
 bin/*: $(GO_FILES) WORKSPACE
 	mkdir -p bin
