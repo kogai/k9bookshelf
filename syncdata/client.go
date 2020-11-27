@@ -3,7 +3,7 @@ package syncdata
 import (
 	"context"
 	"fmt"
-	"k9bookshelf/generated"
+	"k9bookshelf/syncdata/generated"
 	"net/http"
 
 	"github.com/Yamashou/gqlgenc/client"

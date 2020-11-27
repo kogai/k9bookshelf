@@ -6,7 +6,7 @@ go_library(
         "client.go",
         "model.go",
     ],
-    importpath = "k9bookshelf/generated",
+    importpath = "k9bookshelf/syncdata/generated",
     visibility = ["//visibility:public"],
     deps = ["@com_github_yamashou_gqlgenc//client:go_default_library"],
 )
