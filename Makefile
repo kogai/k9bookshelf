@@ -25,8 +25,9 @@ download/theme:
 lint:
 	$(LINT) ./theme
 
-generated/client.go: bin/gqlgenc syncdata/*.gql
-	./bin/gqlgenc
+generated/client.go: gqlgenc/main.go syncdata/*.gql
+	$(BZL) run gqlgenc
+	cp -r $(BZL_BIN)/gqlgenc/gqlgenc_/gqlgenc.runfiles/k9books/generated .
 
 bin/*: $(GO_FILES) WORKSPACE
 	mkdir -p bin

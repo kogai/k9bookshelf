@@ -1,0 +1,68 @@
+diff -urN codegen/BUILD.bazel codegen/BUILD.bazel
+--- codegen/BUILD.bazel
++++ codegen/BUILD.bazel
+@@ -1,6 +1,16 @@
+ load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+ go_library(
++    data = [
++        "directives.gotpl",
++        "args.gotpl",
++        "field.gotpl",
++        "type.gotpl",
++        "generated!.gotpl",
++        "interface.gotpl",
++        "input.gotpl",
++        "object.gotpl"
++    ],
+     name = "codegen",
+     srcs = [
+         "args.go",
+
+diff -urN plugin/modelgen/BUILD.bazel plugin/modelgen/BUILD.bazel
+--- plugin/modelgen/BUILD.bazel
++++ plugin/modelgen/BUILD.bazel
+@@ -1,6 +1,7 @@
+ load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+ go_library(
++    data = ["models.gotpl"],
+     name = "modelgen",
+     srcs = ["models.go"],
+     importpath = "github.com/99designs/gqlgen/plugin/modelgen",
+
+diff -urN plugin/modelgen/BUILD.bazel plugin/modelgen/BUILD.bazel
+--- plugin/modelgen/BUILD.bazel
++++ plugin/modelgen/BUILD.bazel
+@@ -31,3 +31,7 @@
+         "@com_github_stretchr_testify//require",
+     ],
+ )
++
++exports_files([
++    "models.gotpl",
++])
+
+diff -urN plugin/resolvergen/BUILD.bazel plugin/resolvergen/BUILD.bazel
+--- plugin/resolvergen/BUILD.bazel
++++ plugin/resolvergen/BUILD.bazel
+@@ -1,6 +1,7 @@
+ load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+ go_library(
++    data = ["resolver.gotpl"],
+     name = "resolvergen",
+     srcs = ["resolver.go"],
+     importpath = "github.com/99designs/gqlgen/plugin/resolvergen",
+
+diff -urN plugin/stubgen/BUILD.bazel plugin/stubgen/BUILD.bazel
+--- plugin/stubgen/BUILD.bazel
++++ plugin/stubgen/BUILD.bazel
+@@ -1,6 +1,7 @@
+ load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+ go_library(
++    data = ["stubs.gotpl"],
+     name = "stubgen",
+     srcs = ["stubs.go"],
+     importpath = "github.com/99designs/gqlgen/plugin/stubgen",

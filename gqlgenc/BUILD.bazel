@@ -16,6 +16,10 @@ go_library(
 
 go_binary(
     name = "gqlgenc",
+    data = [
+        "//:.gqlgenc.yml",
+        "@com_github_yamashou_gqlgenc//clientgen:template.gotpl",
+    ],
     embed = [":go_default_library"],
     visibility = ["//visibility:public"],
 )
