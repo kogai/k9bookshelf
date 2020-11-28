@@ -20,7 +20,7 @@ jobs:
           path: |
             ~/.npm
             ~/.cache/bazel
-          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-
       - run: yarn install

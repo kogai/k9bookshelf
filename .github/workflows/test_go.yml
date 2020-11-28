@@ -1,9 +1,7 @@
-name: deploy theme
+name: test go
 
 on:
-  push:
-    branches:
-      - main
+  push
 
 jobs:
   build:
@@ -24,9 +22,4 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-
       - run: yarn install
-      - run: make lint
-      - run: make deploy/theme
-        if: github.ref == 'refs/heads/main'
-        env:
-          THEME_APP_SECRET: ${{ secrets.THEME_APP_SECRET }}
-          THEME_ID: ${{ secrets.THEME_ID }}
+      - run: npx bazel //...
