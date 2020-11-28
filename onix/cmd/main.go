@@ -18,7 +18,7 @@ var rootCmd = &cobra.Command{
 		if input == "" {
 			log.Fatalln("[input] should be passed.")
 		}
-		if err := onix.Run(); err != nil {
+		if err := onix.Run(input); err != nil {
 			log.Fatalln(err)
 		}
 	},

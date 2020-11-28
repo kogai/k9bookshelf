@@ -21,12 +21,12 @@ type Productidentifier struct {
 
 // Price is not documented yet.
 type Price struct {
-	PriceTypeCode string `xml:"j148"`
-	DiscountCoded []struct {
+	PriceTypeCode  string `xml:"j148"`
+	DiscountCodeds []struct {
 		DiscountCodeType     string `xml:"j363"`
 		DiscountCodeTypeName string `xml:"j378"`
 		DiscountCode         string `xml:"j364"`
-	}
+	} `xml:"discountcoded"`
 	PriceAmount  float64 `xml:"j151"`
 	CurrencyCode string  `xml:"j152"`
 	CountryCode  string  `xml:"b251"`
@@ -40,7 +40,7 @@ type SupplyDetail struct {
 	ReturnsCode         string  `xml:"j269"`
 	ProductAvailability string  `xml:"j396"`
 	PackQuantity        string  `xml:"j145"`
-	Price               []Price `xml:"price"`
+	Prices              []Price `xml:"price"`
 }
 
 // Product is not documented yet.

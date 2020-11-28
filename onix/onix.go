@@ -20,8 +20,8 @@ func findPriceBy(prices []Price, currencyCode string) *Price {
 }
 
 // Run imports ONIX for Books 2.1 format file to Shopify.
-func Run() error {
-	file, err := ioutil.ReadFile("/Users/kogaishinichi/k9books/onix/14362217.onix")
+func Run(input string) error {
+	file, err := ioutil.ReadFile(input)
 	if err != nil {
 		return err
 	}
@@ -35,18 +35,18 @@ func Run() error {
 	if err := decoder.Decode(&data); err != nil {
 		return err
 	}
-	// fmt.Println("data=", data)
+
+	fmt.Println("======")
 	for _, d := range data.Products {
-		fmt.Println("Title", d.Title.TitleText)
-		fmt.Println("Subtitle", d.Title.Subtitle)
-		// fmt.Println("d=", d.SupplyDetail.Price)
-		for _, p := range d.SupplyDetail.Price {
-			fmt.Println("price", p.CurrencyCode, p.PriceAmount)
-		}
+		fmt.Println("Title", d.Title.TitleText, d.Title.Subtitle)
+
+		price := findPriceBy(d.SupplyDetail.Prices, "USD")
+		fmt.Println("price", price.PriceAmount, price.DiscountCodeds)
 		// d.PublishingStatus
 		// for _, t := range d.OtherText {
 		// 	fmt.Println("t=", t.Text)
 		// }
+		fmt.Println("======")
 	}
 	return nil
 }
