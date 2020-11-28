@@ -8,6 +8,17 @@ import (
 	"io/ioutil"
 )
 
+func findPriceBy(prices []Price, currencyCode string) *Price {
+	var price *Price
+	for _, p := range prices {
+		if p.CurrencyCode == currencyCode {
+			price = &p
+			break
+		}
+	}
+	return price
+}
+
 // Run imports ONIX for Books 2.1 format file to Shopify.
 func Run() error {
 	file, err := ioutil.ReadFile("/Users/kogaishinichi/k9books/onix/14362217.onix")
@@ -26,7 +37,12 @@ func Run() error {
 	}
 	// fmt.Println("data=", data)
 	for _, d := range data.Products {
-		fmt.Println("d=", d.PublishingStatus)
+		fmt.Println("Title", d.Title.TitleText)
+		fmt.Println("Subtitle", d.Title.Subtitle)
+		// fmt.Println("d=", d.SupplyDetail.Price)
+		for _, p := range d.SupplyDetail.Price {
+			fmt.Println("price", p.CurrencyCode, p.PriceAmount)
+		}
 		// d.PublishingStatus
 		// for _, t := range d.OtherText {
 		// 	fmt.Println("t=", t.Text)

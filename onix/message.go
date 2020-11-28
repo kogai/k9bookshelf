@@ -19,25 +19,28 @@ type Productidentifier struct {
 	IDValue       string `xml:"b244"`
 }
 
+// Price is not documented yet.
+type Price struct {
+	PriceTypeCode string `xml:"j148"`
+	DiscountCoded []struct {
+		DiscountCodeType     string `xml:"j363"`
+		DiscountCodeTypeName string `xml:"j378"`
+		DiscountCode         string `xml:"j364"`
+	}
+	PriceAmount  float64 `xml:"j151"`
+	CurrencyCode string  `xml:"j152"`
+	CountryCode  string  `xml:"b251"`
+}
+
 // SupplyDetail is not documented yet.
 type SupplyDetail struct {
-	SupplierName        string `xml:"j137"`
-	SupplierRole        string `xml:"j292"`
-	ReturnsCodeType     string `xml:"j268"`
-	ReturnsCode         string `xml:"j269"`
-	ProductAvailability string `xml:"j396"`
-	PackQuantity        string `xml:"j145"`
-	Price               []struct {
-		PriceTypeCode string `xml:"j148"`
-		DiscountCoded []struct {
-			DiscountCodeType     string `xml:"j363"`
-			DiscountCodeTypeName string `xml:"j378"`
-			DiscountCode         string `xml:"j364"`
-		} `xml:"discountcoded"`
-		PriceAmount  float32 `xml:"j151"`
-		CurrencyCode string  `xml:"j152"`
-		CountryCode  string  `xml:"b251"`
-	} `xml:"price"`
+	SupplierName        string  `xml:"j137"`
+	SupplierRole        string  `xml:"j292"`
+	ReturnsCodeType     string  `xml:"j268"`
+	ReturnsCode         string  `xml:"j269"`
+	ProductAvailability string  `xml:"j396"`
+	PackQuantity        string  `xml:"j145"`
+	Price               []Price `xml:"price"`
 }
 
 // Product is not documented yet.
@@ -57,7 +60,7 @@ type Product struct {
 		Language  string `xml:"language,attr"`
 		TitleType string `xml:"b202"`
 		TitleText string `xml:"b203"`
-		Subtitle  string `xml:"b029"`
+		Subtitle  string `xml:"b029,omitempty"`
 	} `xml:"title"`
 	Contributor struct {
 		ContributorRole  string `xml:"b035"`
