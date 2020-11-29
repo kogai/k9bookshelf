@@ -7,7 +7,7 @@ go_library(
         "gql.go",
         "model.go",
     ],
-    importpath = "k9bookshelf/gqlgenc/client",
+    importpath = "github.com/kogai/k9bookshelf/gqlgenc/client",
     visibility = ["//visibility:public"],
     deps = ["@com_github_yamashou_gqlgenc//client:go_default_library"],
 )
