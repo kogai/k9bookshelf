@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 )
 
+// TODO: Convert implementation to instance method.
 func findPriceBy(prices []Price, currencyCode string) *Price {
 	var price *Price
 	for _, p := range prices {
