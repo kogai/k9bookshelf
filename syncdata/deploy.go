@@ -3,7 +3,7 @@ package syncdata
 import (
 	"fmt"
 	"io/ioutil"
-	"k9bookshelf/syncdata/generated"
+	generated "k9bookshelf/gqlgenc/client"
 	"os"
 	"path"
 	"path/filepath"
