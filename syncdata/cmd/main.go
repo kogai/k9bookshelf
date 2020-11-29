@@ -11,10 +11,10 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "data-kit",
-	Short: "data-kit is a content management tool like theme-kit",
+	Use:   "content-kit",
+	Short: "content-kit is a content management tool like theme-kit which is theme management tool",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("Nothing to do without subcommand.")
+		log.Fatalln("Nothing to do without subcommand.")
 	},
 }
 
@@ -28,11 +28,11 @@ var deployCmd = &cobra.Command{
 		appSecret := cmd.Flag("secret").Value.String()
 		shopToken := cmd.Flag("token").Value.String()
 		if shopDomain == "" || appKey == "" || appSecret == "" || shopToken == "" {
-			log.Fatal(fmt.Sprintf("One of required parameter is empty, shopDomain='%s' appKey='%s' appSecret='%s' shopToken='%s'", shopDomain, appKey, appSecret, shopToken))
+			log.Fatalln(fmt.Sprintf("One of required parameter is empty, shopDomain='%s' appKey='%s' appSecret='%s' shopToken='%s'", shopDomain, appKey, appSecret, shopToken))
 		}
 		err := syncdata.Deploy(shopDomain, appKey, appSecret, shopToken, input)
 		if err != nil {
-			log.Fatal(err)
+			log.Fatalln(err)
 		}
 	},
 }
@@ -47,11 +47,11 @@ var downloadCmd = &cobra.Command{
 		appSecret := cmd.Flag("secret").Value.String()
 		shopToken := cmd.Flag("token").Value.String()
 		if shopDomain == "" || appKey == "" || appSecret == "" || shopToken == "" {
-			log.Fatal(fmt.Sprintf("One of required parameter is empty, shopDomain='%s' appKey='%s' appSecret='%s' shopToken='%s'", shopDomain, appKey, appSecret, shopToken))
+			log.Fatalln(fmt.Sprintf("One of required parameter is empty, shopDomain='%s' appKey='%s' appSecret='%s' shopToken='%s'", shopDomain, appKey, appSecret, shopToken))
 		}
 		err := syncdata.Download(shopDomain, appKey, appSecret, shopToken, output)
 		if err != nil {
-			log.Fatal(err)
+			log.Fatalln(err)
 		}
 	},
 }
@@ -59,7 +59,7 @@ var downloadCmd = &cobra.Command{
 func main() {
 	cwd, err := os.Getwd()
 	if err != nil {
-		panic(err)
+		log.Fatalln(err)
 	}
 
 	downloadCmd.PersistentFlags().StringP("output", "o", fmt.Sprintf("%s", cwd), "output directory")
@@ -78,6 +78,6 @@ func main() {
 	rootCmd.AddCommand(deployCmd)
 
 	if err := rootCmd.Execute(); err != nil {
-		log.Fatal(err)
+		log.Fatalln(err)
 	}
 }
