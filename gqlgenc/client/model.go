@@ -2138,8 +2138,8 @@ type DeliveryParticipant struct {
 	PercentageOfRateFee float64 `json:"percentageOfRateFee"`
 }
 
-func (DeliveryParticipant) IsDeliveryRateProvider() {}
 func (DeliveryParticipant) IsNode()                 {}
+func (DeliveryParticipant) IsDeliveryRateProvider() {}
 
 // Input fields for a participant.
 type DeliveryParticipantInput struct {
@@ -2549,9 +2549,9 @@ type DiscountAutomaticBxgy struct {
 	UsesPerOrderLimit *int64 `json:"usesPerOrderLimit"`
 }
 
-func (DiscountAutomaticBxgy) IsDiscountAutomatic() {}
 func (DiscountAutomaticBxgy) IsNode()              {}
 func (DiscountAutomaticBxgy) IsHasEvents()         {}
+func (DiscountAutomaticBxgy) IsDiscountAutomatic() {}
 
 // Return type for `discountAutomaticBxgyCreate` mutation.
 type DiscountAutomaticBxgyCreatePayload struct {
@@ -3213,8 +3213,8 @@ type DiscountPercentage struct {
 	Percentage float64 `json:"percentage"`
 }
 
-func (DiscountPercentage) IsDiscountCustomerGetsValue() {}
 func (DiscountPercentage) IsDiscountEffect()            {}
+func (DiscountPercentage) IsDiscountCustomerGetsValue() {}
 
 // The entitled or prerequisite products and product variants for a discount.
 type DiscountProducts struct {
@@ -5836,8 +5836,8 @@ type MoneyV2 struct {
 	CurrencyCode CurrencyCode `json:"currencyCode"`
 }
 
-func (MoneyV2) IsDeliveryConditionCriteria() {}
 func (MoneyV2) IsPricingValue()              {}
+func (MoneyV2) IsDeliveryConditionCriteria() {}
 
 // An individual move to perform of an object to a position.
 type MoveInput struct {
@@ -6204,13 +6204,13 @@ type Order struct {
 	UpdatedAt string `json:"updatedAt"`
 }
 
+func (Order) IsCommentEventEmbed()         {}
 func (Order) IsNode()                      {}
 func (Order) IsCommentEventSubject()       {}
 func (Order) IsHasMetafields()             {}
 func (Order) IsLegacyInteroperability()    {}
 func (Order) IsHasEvents()                 {}
 func (Order) IsHasLocalizationExtensions() {}
-func (Order) IsCommentEventEmbed()         {}
 
 // Specifies the authorized transaction to capture and the total amount to capture from it.
 type OrderCaptureInput struct {
@@ -7317,7 +7317,6 @@ type Product struct {
 	Vendor string `json:"vendor"`
 }
 
-func (Product) IsCommentEventEmbed()        {}
 func (Product) IsNode()                     {}
 func (Product) IsNavigable()                {}
 func (Product) IsHasMetafields()            {}
@@ -7325,6 +7324,7 @@ func (Product) IsHasPublishedTranslations() {}
 func (Product) IsPublishable()              {}
 func (Product) IsOnlineStorePreviewable()   {}
 func (Product) IsLegacyInteroperability()   {}
+func (Product) IsCommentEventEmbed()        {}
 
 // Specifies product images to append.
 type ProductAppendImagesInput struct {
@@ -7755,12 +7755,12 @@ type ProductVariant struct {
 	WeightUnit WeightUnit `json:"weightUnit"`
 }
 
-func (ProductVariant) IsCommentEventEmbed()        {}
 func (ProductVariant) IsNode()                     {}
 func (ProductVariant) IsHasMetafields()            {}
 func (ProductVariant) IsHasPublishedTranslations() {}
 func (ProductVariant) IsNavigable()                {}
 func (ProductVariant) IsLegacyInteroperability()   {}
+func (ProductVariant) IsCommentEventEmbed()        {}
 
 // Specifies the input fields required to append media to a single variant.
 type ProductVariantAppendMediaInput struct {

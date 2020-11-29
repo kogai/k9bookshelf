@@ -280,6 +280,26 @@ type ProductByHandle struct {
 		ID string "json:\"id\" graphql:\"id\""
 	} "json:\"productByHandle\" graphql:\"productByHandle\""
 }
+type ProductISBNs struct {
+	Products struct {
+		PageInfo struct {
+			HasNextPage bool "json:\"hasNextPage\" graphql:\"hasNextPage\""
+		} "json:\"pageInfo\" graphql:\"pageInfo\""
+		Edges []*struct {
+			Cursor string "json:\"cursor\" graphql:\"cursor\""
+			Node   struct {
+				ID       string "json:\"id\" graphql:\"id\""
+				Variants struct {
+					Edges []*struct {
+						Node struct {
+							Barcode *string "json:\"barcode\" graphql:\"barcode\""
+						} "json:\"node\" graphql:\"node\""
+					} "json:\"edges\" graphql:\"edges\""
+				} "json:\"variants\" graphql:\"variants\""
+			} "json:\"node\" graphql:\"node\""
+		} "json:\"edges\" graphql:\"edges\""
+	} "json:\"products\" graphql:\"products\""
+}
 type Products struct {
 	Products struct {
 		PageInfo struct {
@@ -336,6 +356,42 @@ func (c *Client) ProductByHandle(ctx context.Context, handle string, httpRequest
 
 	var res ProductByHandle
 	if err := c.Client.Post(ctx, ProductByHandleQuery, &res, vars, httpRequestOptions...); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+const ProductISBNsQuery = `query productISBNs ($first: Int!, $after: String) {
+	products(first: $first, after: $after) {
+		pageInfo {
+			hasNextPage
+		}
+		edges {
+			cursor
+			node {
+				id
+				variants(first: 1) {
+					edges {
+						node {
+							barcode
+						}
+					}
+				}
+			}
+		}
+	}
+}
+`
+
+func (c *Client) ProductISBNs(ctx context.Context, first int64, after *string, httpRequestOptions ...client.HTTPRequestOption) (*ProductISBNs, error) {
+	vars := map[string]interface{}{
+		"first": first,
+		"after": after,
+	}
+
+	var res ProductISBNs
+	if err := c.Client.Post(ctx, ProductISBNsQuery, &res, vars, httpRequestOptions...); err != nil {
 		return nil, err
 	}
 
