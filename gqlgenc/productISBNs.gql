@@ -1,0 +1,21 @@
+query productISBNs($first: Int!, $after: String) {
+  products(first: $first, after: $after) {
+    pageInfo {
+      hasNextPage
+    }
+    edges {
+      cursor
+      node {
+        id
+        title
+        variants(first: 1) {
+          edges {
+            node {
+              barcode
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -3,7 +3,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 go_library(
     name = "go_default_library",
     srcs = ["main.go"],
-    importpath = "k9bookshelf/syncdata/gqlgenc",
+    importpath = "k9bookshelf/gqlgenc",
     visibility = ["//visibility:private"],
     deps = [
         "@com_github_99designs_gqlgen//api:go_default_library",
@@ -18,11 +18,8 @@ go_binary(
     name = "gqlgenc",
     data = [
         "//:.gqlgenc.yml",
-        "//syncdata:deploy.gql",
-        "//syncdata:productByHandle.gql",
-        "//syncdata:products.gql",
         "@com_github_yamashou_gqlgenc//clientgen:template.gotpl",
-    ],
+    ] + glob(["*.gql"]),
     embed = [":go_default_library"],
     visibility = ["//visibility:public"],
 )

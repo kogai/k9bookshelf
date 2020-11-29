@@ -2,16 +2,16 @@
 
 WebAssembly fulfills the long-awaited promise of web technologies: fast code, type-safe at compile time, execution in the browser, on embedded devices, or anywhere else. Rust delivers the power of C in a language that strictly enforces type safety. Combine both languages and you can write for the web like never before! Learn how to integrate with JavaScript, run code on platforms other than the browser, and take a step into IoT. Discover the easy way to build cross-platform applications without sacrificing power, and change the way you write code for the web.
 
-WebAssembly is more than just a revolutionary new technology. It's reshaping how we build applications for the web and beyond. Where technologies like ActiveX and Flash have failed, you can now write code in whatever language you prefer and compile to WebAssembly for fast, type-safe code that runs in the browser, on mobile devices, embedded devices, and more. Combining WebAssembly's portable, high-performance modules with Rust's safety and power is a perfect development combination.
+WebAssembly is more than just a revolutionary new technology. It’s reshaping how we build applications for the web and beyond. Where technologies like ActiveX and Flash have failed, you can now write code in whatever language you prefer and compile to WebAssembly for fast, type-safe code that runs in the browser, on mobile devices, embedded devices, and more. Combining WebAssembly’s portable, high-performance modules with Rust’s safety and power is a perfect development combination.
 
-Learn how WebAssembly's stack machine architecture works, install low-level wasm tools, and discover the dark art of writing raw wast code. Build on that foundation and learn how to compile WebAssembly modules from Rust by implementing the logic for a checkers game. Create wasm modules in Rust to interoperate with JavaScript in many compelling ways. Apply your new skills to the world of non-web hosts, and create everything from an app running on a Raspberry Pi that controls a lighting system, to a fully-functioning online multiplayer game engine where developers upload their own arena-bound WebAssembly combat modules.
-Get started with WebAssembly today, and change the way you think about the web.
+Learn how WebAssembly’s stack machine architecture works, install low-level wasm tools, and discover the dark art of writing raw wast code. Build on that foundation and learn how to compile WebAssembly modules from Rust by implementing the logic for a checkers game. Create wasm modules in Rust to interoperate with JavaScript in many compelling ways. Apply your new skills to the world of non-web hosts, and create everything from an app running on a Raspberry Pi that controls a lighting system, to a fully-functioning online multiplayer game engine where developers upload their own arena-bound WebAssembly combat modules. Get started with WebAssembly today, and change the way you think about the web.
 
 **What You Need:**
 
-You'll need a Linux, Mac, or Windows workstation with an Internet connection. You'll need an up-to-date web browser that supports WebAssembly. To work with the sample code, you can use your favorite text editor or IDE. The book will guide you through installing the Rust and WebAssembly tools needed for each chapter.
+You’ll need a Linux, Mac, or Windows workstation with an Internet connection. You’ll need an up-to-date web browser that supports WebAssembly. To work with the sample code, you can use your favorite text editor or IDE. The book will guide you through installing the Rust and WebAssembly tools needed for each chapter.
 
-------
+
+---
 
 2020年末時点でもまだ珍しい、WebAssemblyをテーマに据えた本です。 WebAssemblyの背景・基礎から解説を始めて、Web環境での実行へと進めます。 ステップ・バイ・ステップのチュートリアル的な内容なので、初学者にオススメできます。ただしRustは普通に書ける程度が期待されているのでご注意を（特に難しい表現は出てきませんが）。
 

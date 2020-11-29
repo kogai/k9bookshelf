@@ -1,17 +1,17 @@
 model:
-  package: generated
-  filename: ./syncdata/generated/model.go # https://github.com/99designs/gqlgen/tree/master/plugin/modelgen
+  package: client
+  filename: ./gqlgenc/client/model.go # https://github.com/99designs/gqlgen/tree/master/plugin/modelgen
 client:
-  package: generated
-  filename: ./syncdata/generated/client.go # Where should any generated client go?
+  package: client
+  filename: ./gqlgenc/client/client.go # Where should any generated client go?
 models:
   Int:
     model: github.com/99designs/gqlgen/graphql.Int64
   Date:
     model: github.com/99designs/gqlgen/graphql.Time
 endpoint:
-  url: https://k9books.myshopify.com/admin/api/2020-07/graphql.json
+  url: https://k9books.myshopify.com/admin/api/2020-10/graphql.json
   headers:
     X-Shopify-Access-Token: ${GRAPHQL_ADMIN_API_SECRET}
 query:
-  - "./syncdata/*.gql"
+  - "./gqlgenc/**/*.gql"
