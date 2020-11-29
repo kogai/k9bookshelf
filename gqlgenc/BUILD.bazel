@@ -18,11 +18,8 @@ go_binary(
     name = "gqlgenc",
     data = [
         "//:.gqlgenc.yml",
-        "//syncdata:deploy.gql",
-        "//syncdata:productByHandle.gql",
-        "//syncdata:products.gql",
         "@com_github_yamashou_gqlgenc//clientgen:template.gotpl",
-    ],
+    ] + glob(["*.gql"]),
     embed = [":go_default_library"],
     visibility = ["//visibility:public"],
 )
