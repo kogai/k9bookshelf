@@ -10,16 +10,16 @@ BZL_BIN := $(shell npx bazelisk info bazel-bin)
 deploy/theme:
 	$(TK) deploy --dir theme
 
-deploy/contents: $(MD_FILES) bin/content
-	./bin/content deploy \
+deploy/contents: $(MD_FILES)
+	$(BZL) run //content/cmd/content -- deploy \
 		--input $(PWD)/contents \
 		--domain k9books.myshopify.com \
 		--key $(MARKDOWN_APP_KEY) \
 		--secret $(MARKDOWN_APP_SECRET) \
 		--token $(MARKDOWN_APP_SECRET)
 
-download/contents: $(MD_FILES) bin/content
-	./bin/content download \
+download/contents: $(MD_FILES)
+	$(BZL) run //content/cmd/content -- download \
 		--output $(PWD)/contents \
 		--domain k9books.myshopify.com \
 		--key $(MARKDOWN_APP_KEY) \
@@ -43,11 +43,6 @@ bin/*: $(GO_FILES) WORKSPACE
 	mkdir -p bin
 	$(BZL) build //$(@F):all
 	cp -f $(BZL_BIN)/$(@F)/$(@F)_/$(@F) bin/
-
-bin/content: $(GO_FILES) WORKSPACE
-	mkdir -p bin
-	$(BZL) build //content/cmd:all
-	cp -f $(BZL_BIN)/content/cmd/cmd_/cmd bin/content
 
 .PHONY: setup
 setup: WORKSPACE */BUILD.bazel GOPATH

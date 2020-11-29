@@ -8,7 +8,7 @@ go_path(
     name = "gopath",
     mode = "link",
     deps = [
-        "//content/cmd",
+        "//content/cmd/content",
     ],
 )
 
