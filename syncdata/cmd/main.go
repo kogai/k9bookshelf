@@ -10,11 +10,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
-const apiVersion string = "2020-10"
-
 var rootCmd = &cobra.Command{
-	Use:   "datakit",
-	Short: "datakit is a content management tool like theme-kit",
+	Use:   "data-kit",
+	Short: "data-kit is a content management tool like theme-kit",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("Nothing to do without subcommand.")
 	},

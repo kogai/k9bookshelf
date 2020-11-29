@@ -8,8 +8,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-const apiVersion string = "2020-10"
-
 var rootCmd = &cobra.Command{
 	Use:   "onix-kit",
 	Short: "onix-kit imports ONIX for Books 2.1 file to Shopify",

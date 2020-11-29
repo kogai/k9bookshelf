@@ -19,6 +19,12 @@ type AppPurchase interface {
 	IsAppPurchase()
 }
 
+// A discount application involved in order editing that might be newly added or have new changes applied.
+//
+type CalculatedDiscountApplication interface {
+	IsCalculatedDiscountApplication()
+}
+
 // The main embed of a comment event.
 type CommentEventEmbed interface {
 	IsCommentEventEmbed()
@@ -737,6 +743,77 @@ type BulkOperationRunQueryPayload struct {
 	UserErrors []*UserError `json:"userErrors"`
 }
 
+// Discount code applications capture the intentions of a discount code at
+// the time that it is applied onto an order.
+//
+type CalculatedAutomaticDiscountApplication struct {
+	// The method by which the discount's value is allocated to its entitled items.
+	AllocationMethod DiscountApplicationAllocationMethod `json:"allocationMethod"`
+	// The level at which the discount was applied.
+	//
+	AppliedTo DiscountApplicationLevel `json:"appliedTo"`
+	// The description of discount application. Indicates the reason why the discount was applied.
+	Description *string `json:"description"`
+	// Globally unique identifier.
+	ID string `json:"id"`
+	// How the discount amount is distributed on the discounted lines.
+	TargetSelection DiscountApplicationTargetSelection `json:"targetSelection"`
+	// Whether the discount is applied on line items or shipping lines.
+	TargetType DiscountApplicationTargetType `json:"targetType"`
+	// The value of the discount application.
+	Value PricingValue `json:"value"`
+}
+
+func (CalculatedAutomaticDiscountApplication) IsCalculatedDiscountApplication() {}
+
+// An amount discounting the line that has been allocated by an associated discount application.
+//
+type CalculatedDiscountAllocation struct {
+	// The money amount allocated by the discount application in shop and presentment currencies.
+	AllocatedAmountSet *MoneyBag `json:"allocatedAmountSet"`
+	// The discount that the allocated amount originated from.
+	DiscountApplication CalculatedDiscountApplication `json:"discountApplication"`
+}
+
+type CalculatedDiscountApplicationConnection struct {
+	// A list of edges.
+	Edges []*CalculatedDiscountApplicationEdge `json:"edges"`
+	// Information to aid in pagination.
+	PageInfo *PageInfo `json:"pageInfo"`
+}
+
+type CalculatedDiscountApplicationEdge struct {
+	// A cursor for use in pagination.
+	Cursor string `json:"cursor"`
+	// The item at the end of CalculatedDiscountApplicationEdge.
+	Node CalculatedDiscountApplication `json:"node"`
+}
+
+// Discount code applications capture the intentions of a discount code at
+// the time that it is applied onto an order.
+//
+type CalculatedDiscountCodeApplication struct {
+	// The method by which the discount's value is allocated to its entitled items.
+	AllocationMethod DiscountApplicationAllocationMethod `json:"allocationMethod"`
+	// The level at which the discount was applied.
+	//
+	AppliedTo DiscountApplicationLevel `json:"appliedTo"`
+	// The string identifying the discount code that was used at the time of application.
+	Code string `json:"code"`
+	// The description of discount application. Indicates the reason why the discount was applied.
+	Description *string `json:"description"`
+	// Globally unique identifier.
+	ID string `json:"id"`
+	// How the discount amount is distributed on the discounted lines.
+	TargetSelection DiscountApplicationTargetSelection `json:"targetSelection"`
+	// Whether the discount is applied on line items or shipping lines.
+	TargetType DiscountApplicationTargetType `json:"targetType"`
+	// The value of the discount application.
+	Value PricingValue `json:"value"`
+}
+
+func (CalculatedDiscountCodeApplication) IsCalculatedDiscountApplication() {}
+
 // The computed properties for a draft order.
 type CalculatedDraftOrder struct {
 	// Order-level discount applied to the draft order.
@@ -818,6 +895,8 @@ type CalculatedDraftOrderLineItem struct {
 // A line item involved in order editing that may be newly added or have new changes applied.
 //
 type CalculatedLineItem struct {
+	// The discounts that have been allocated onto the line item by discount applications.
+	CalculatedDiscountAllocations []*CalculatedDiscountAllocation `json:"calculatedDiscountAllocations"`
 	// List of additional information (metafields) about the line item.
 	CustomAttributes []*Attribute `json:"customAttributes"`
 	// The discounts that have been allocated onto the line item by discount applications.
@@ -830,6 +909,8 @@ type CalculatedLineItem struct {
 	EditableQuantityBeforeChanges int64 `json:"editableQuantityBeforeChanges"`
 	// The total price of editable lines in shop and presentment currencies.
 	EditableSubtotalSet *MoneyBag `json:"editableSubtotalSet"`
+	// Whether the calculated line item has a staged discount.
+	HasStagedLineItemDiscount bool `json:"hasStagedLineItemDiscount"`
 	// Globally unique identifier.
 	ID string `json:"id"`
 	// The Image object associated to the line item's variant.
@@ -872,9 +953,34 @@ type CalculatedLineItemEdge struct {
 	Node *CalculatedLineItem `json:"node"`
 }
 
+// Manual discount applications capture the intentions of a discount that was manually created for an order.
+//
+type CalculatedManualDiscountApplication struct {
+	// The method by which the discount's value is allocated to its entitled items.
+	AllocationMethod DiscountApplicationAllocationMethod `json:"allocationMethod"`
+	// The level at which the discount was applied.
+	//
+	AppliedTo DiscountApplicationLevel `json:"appliedTo"`
+	// The description of discount application. Indicates the reason why the discount was applied.
+	Description *string `json:"description"`
+	// Globally unique identifier.
+	ID string `json:"id"`
+	// How the discount amount is distributed on the discounted lines.
+	TargetSelection DiscountApplicationTargetSelection `json:"targetSelection"`
+	// Whether the discount is applied on line items or shipping lines.
+	TargetType DiscountApplicationTargetType `json:"targetType"`
+	// The value of the discount application.
+	Value PricingValue `json:"value"`
+}
+
+func (CalculatedManualDiscountApplication) IsCalculatedDiscountApplication() {}
+
 // An order with edits applied but not saved.
 //
 type CalculatedOrder struct {
+	// Returns only the new discount applications being added to the order.
+	//
+	AddedDiscountApplications *CalculatedDiscountApplicationConnection `json:"addedDiscountApplications"`
 	// Returns only the new line items being added to the order.
 	//
 	AddedLineItems *CalculatedLineItemConnection `json:"addedLineItems"`
@@ -913,6 +1019,29 @@ type CalculatedOrder struct {
 }
 
 func (CalculatedOrder) IsNode() {}
+
+// Discount code applications capture the intentions of a discount code at
+// the time that it is applied onto an order.
+//
+type CalculatedScriptDiscountApplication struct {
+	// The method by which the discount's value is allocated to its entitled items.
+	AllocationMethod DiscountApplicationAllocationMethod `json:"allocationMethod"`
+	// The level at which the discount was applied.
+	//
+	AppliedTo DiscountApplicationLevel `json:"appliedTo"`
+	// The description of discount application. Indicates the reason why the discount was applied.
+	Description *string `json:"description"`
+	// Globally unique identifier.
+	ID string `json:"id"`
+	// How the discount amount is distributed on the discounted lines.
+	TargetSelection DiscountApplicationTargetSelection `json:"targetSelection"`
+	// Whether the discount is applied on line items or shipping lines.
+	TargetType DiscountApplicationTargetType `json:"targetType"`
+	// The value of the discount application.
+	Value PricingValue `json:"value"`
+}
+
+func (CalculatedScriptDiscountApplication) IsCalculatedDiscountApplication() {}
 
 // A channel represents an app where you sell a group of products and collections.
 // A channel can be a platform or marketplace such as Facebook or Pinterest, an online store, or POS.
@@ -1009,6 +1138,8 @@ type Collection struct {
 	PublishedOnPublication bool `json:"publishedOnPublication"`
 	// The list of resources that are published to a publication.
 	ResourcePublications *ResourcePublicationConnection `json:"resourcePublications"`
+	// The list of resources that are either published or staged to be published to a publication.
+	ResourcePublicationsV2 *ResourcePublicationV2Connection `json:"resourcePublicationsV2"`
 	// The rules used to assign products to the collection. This applies only to smart collections.
 	//
 	RuleSet *CollectionRuleSet `json:"ruleSet"`
@@ -1521,12 +1652,12 @@ type Customer struct {
 	VerifiedEmail bool `json:"verifiedEmail"`
 }
 
-func (Customer) IsCommentEventEmbed()      {}
 func (Customer) IsNode()                   {}
 func (Customer) IsCommentEventSubject()    {}
 func (Customer) IsHasMetafields()          {}
 func (Customer) IsLegacyInteroperability() {}
 func (Customer) IsHasEvents()              {}
+func (Customer) IsCommentEventEmbed()      {}
 
 // Return type for `customerAddTaxExemptions` mutation.
 type CustomerAddTaxExemptionsPayload struct {
@@ -1634,6 +1765,38 @@ type CustomerJourney struct {
 	LastVisit *CustomerVisit `json:"lastVisit"`
 	// Events preceding a customer order, such as shop sessions.
 	Moments []CustomerMoment `json:"moments"`
+}
+
+// Represents a customer's activity on a shop's online store.
+type CustomerJourneySummary struct {
+	// The position of the current order within the customer's order history.
+	CustomerOrderIndex *int64 `json:"customerOrderIndex"`
+	// The number of days between the first session and the order creation date. The first session represents the first session since the last order, or the first session within the 30 day attribution window, if more than 30 days have passed since the last order.
+	DaysToConversion *int64 `json:"daysToConversion"`
+	// The customer's first session going into the shop.
+	FirstVisit *CustomerVisit `json:"firstVisit"`
+	// The last session before an order is made.
+	LastVisit *CustomerVisit `json:"lastVisit"`
+	// The events preceding a customer order, such as shop sessions.
+	Moments *CustomerMomentConnection `json:"moments"`
+	// The total number of customer moments associated with this order. Returns null if the order is still in the process of being attributed.
+	MomentsCount *int64 `json:"momentsCount"`
+	// Whether or not the attributed sessions for the order have been created yet.
+	Ready bool `json:"ready"`
+}
+
+type CustomerMomentConnection struct {
+	// A list of edges.
+	Edges []*CustomerMomentEdge `json:"edges"`
+	// Information to aid in pagination.
+	PageInfo *PageInfo `json:"pageInfo"`
+}
+
+type CustomerMomentEdge struct {
+	// A cursor for use in pagination.
+	Cursor string `json:"cursor"`
+	// The item at the end of CustomerMomentEdge.
+	Node CustomerMoment `json:"node"`
 }
 
 // Return type for `customerRemoveTaxExemptions` mutation.
@@ -1886,6 +2049,16 @@ type DeliveryLocationGroupZoneInput struct {
 	// Method definitions to update.
 	MethodDefinitionsToUpdate []*DeliveryMethodDefinitionInput `json:"methodDefinitionsToUpdate,omitempty"`
 }
+
+// Delivery method.
+type DeliveryMethod struct {
+	// Globally unique identifier.
+	ID string `json:"id"`
+	// The type of the delivery method.
+	MethodType DeliveryMethodType `json:"methodType"`
+}
+
+func (DeliveryMethod) IsNode() {}
 
 // A method definition describes the delivery rate and the conditions that must be met for the method to be applied.
 type DeliveryMethodDefinition struct {
@@ -2282,6 +2455,8 @@ type DiscountAutomaticActivatePayload struct {
 
 // An automatic basic discount.
 type DiscountAutomaticBasic struct {
+	// The number of times the discount has been used. This value is updated asynchronously and can be different than the actual usage count.
+	AsyncUsageCount int64 `json:"asyncUsageCount"`
 	// The date and time when the discount was created.
 	CreatedAt string `json:"createdAt"`
 	// The qualifying items in an order, the quantity of each one, and the total value of the discount.
@@ -2346,6 +2521,8 @@ type DiscountAutomaticBulkDeletePayload struct {
 
 // An automatic BXGY discount.
 type DiscountAutomaticBxgy struct {
+	// The number of times the discount has been used. This value is updated asynchronously and can be different than the actual usage count.
+	AsyncUsageCount int64 `json:"asyncUsageCount"`
 	// The date and time when the discount was created.
 	CreatedAt string `json:"createdAt"`
 	// The qualifying items and the quantity of each one that the customer has to buy to be eligible for the discount.
@@ -2372,9 +2549,9 @@ type DiscountAutomaticBxgy struct {
 	UsesPerOrderLimit *int64 `json:"usesPerOrderLimit"`
 }
 
+func (DiscountAutomaticBxgy) IsDiscountAutomatic() {}
 func (DiscountAutomaticBxgy) IsNode()              {}
 func (DiscountAutomaticBxgy) IsHasEvents()         {}
-func (DiscountAutomaticBxgy) IsDiscountAutomatic() {}
 
 // Return type for `discountAutomaticBxgyCreate` mutation.
 type DiscountAutomaticBxgyCreatePayload struct {
@@ -2513,8 +2690,12 @@ type DiscountCodeBasic struct {
 	CustomerSelection DiscountCustomerSelection `json:"customerSelection"`
 	// The date and time when the discount ends. For open-ended discounts, use `null`.
 	EndsAt *string `json:"endsAt"`
+	// Indicates whether there are any timeline comments on the discount.
+	HasTimelineComment bool `json:"hasTimelineComment"`
 	// The minimum subtotal or quantity that's required for the discount to be applied.
 	MinimumRequirement DiscountMinimumRequirement `json:"minimumRequirement"`
+	// URLs that can be used to share the discount.
+	ShareableUrls []*DiscountShareableURL `json:"shareableUrls"`
 	// A short summary of the discount.
 	ShortSummary string `json:"shortSummary"`
 	// The date and time when the discount starts.
@@ -2525,6 +2706,8 @@ type DiscountCodeBasic struct {
 	Summary string `json:"summary"`
 	// The title of the discount.
 	Title string `json:"title"`
+	// The total sales from orders where the discount was used.
+	TotalSales *MoneyV2 `json:"totalSales"`
 	// The maximum number of times that the discount can be used.
 	UsageLimit *int64 `json:"usageLimit"`
 }
@@ -2569,6 +2752,30 @@ type DiscountCodeBasicUpdatePayload struct {
 	UserErrors []*DiscountUserError `json:"userErrors"`
 }
 
+// Return type for `discountCodeBulkActivate` mutation.
+type DiscountCodeBulkActivatePayload struct {
+	// The asynchronous job that activates the code discounts.
+	Job *Job `json:"job"`
+	// List of errors that occurred executing the mutation.
+	UserErrors []*DiscountUserError `json:"userErrors"`
+}
+
+// Return type for `discountCodeBulkDeactivate` mutation.
+type DiscountCodeBulkDeactivatePayload struct {
+	// The asynchronous job that deactivates the code discounts.
+	Job *Job `json:"job"`
+	// List of errors that occurred executing the mutation.
+	UserErrors []*DiscountUserError `json:"userErrors"`
+}
+
+// Return type for `discountCodeBulkDelete` mutation.
+type DiscountCodeBulkDeletePayload struct {
+	// The asynchronous job that deletes the code discounts.
+	Job *Job `json:"job"`
+	// List of errors that occurred executing the mutation.
+	UserErrors []*DiscountUserError `json:"userErrors"`
+}
+
 // A BXGY code discount.
 type DiscountCodeBxgy struct {
 	// Whether the discount can be applied only once per customer.
@@ -2589,6 +2796,10 @@ type DiscountCodeBxgy struct {
 	CustomerSelection DiscountCustomerSelection `json:"customerSelection"`
 	// The date and time when the discount ends. For open-ended discounts, use `null`.
 	EndsAt *string `json:"endsAt"`
+	// Indicates whether there are any timeline comments on the discount.
+	HasTimelineComment bool `json:"hasTimelineComment"`
+	// URLs that can be used to share the discount.
+	ShareableUrls []*DiscountShareableURL `json:"shareableUrls"`
 	// The date and time when the discount starts.
 	StartsAt string `json:"startsAt"`
 	// The status of the discount.
@@ -2597,6 +2808,8 @@ type DiscountCodeBxgy struct {
 	Summary string `json:"summary"`
 	// The title of the discount.
 	Title string `json:"title"`
+	// The total sales from orders where the discount was used.
+	TotalSales *MoneyV2 `json:"totalSales"`
 	// The maximum number of times that the discount can be used.
 	UsageLimit *int64 `json:"usageLimit"`
 	// The maximum number of times that the discount can be applied to an order.
@@ -2679,8 +2892,14 @@ type DiscountCodeFreeShipping struct {
 	DestinationSelection DiscountShippingDestinationSelection `json:"destinationSelection"`
 	// The date and time when the discount ends. For open-ended discounts, use `null`.
 	EndsAt *string `json:"endsAt"`
+	// Indicates whether there are any timeline comments on the discount.
+	HasTimelineComment bool `json:"hasTimelineComment"`
+	// The maximum shipping price amount accepted to qualify for the discount.
+	MaximumShippingPrice *MoneyV2 `json:"maximumShippingPrice"`
 	// The minimum subtotal or quantity that's required for the discount to be applied.
 	MinimumRequirement DiscountMinimumRequirement `json:"minimumRequirement"`
+	// URLs that can be used to share the discount.
+	ShareableUrls []*DiscountShareableURL `json:"shareableUrls"`
 	// A short summary of the discount.
 	ShortSummary string `json:"shortSummary"`
 	// The date and time when the discount starts.
@@ -2691,6 +2910,8 @@ type DiscountCodeFreeShipping struct {
 	Summary string `json:"summary"`
 	// The title of the discount.
 	Title string `json:"title"`
+	// The total sales from orders where the discount was used.
+	TotalSales *MoneyV2 `json:"totalSales"`
 	// The maximum number of times that the discount can be used.
 	UsageLimit *int64 `json:"usageLimit"`
 }
@@ -2725,6 +2946,8 @@ type DiscountCodeFreeShippingInput struct {
 	CustomerSelection *DiscountCustomerSelectionInput `json:"customerSelection,omitempty"`
 	// A list of destinations where the discount will apply.
 	Destination *DiscountShippingDestinationSelectionInput `json:"destination,omitempty"`
+	// The maximum shipping price that qualifies for the discount.
+	MaximumShippingPrice *string `json:"maximumShippingPrice,omitempty"`
 }
 
 // Return type for `discountCodeFreeShippingUpdate` mutation.
@@ -2760,6 +2983,14 @@ type DiscountCodeNodeEdge struct {
 	Cursor string `json:"cursor"`
 	// The item at the end of DiscountCodeNodeEdge.
 	Node *DiscountCodeNode `json:"node"`
+}
+
+// Return type for `discountCodeRedeemCodeBulkDelete` mutation.
+type DiscountCodeRedeemCodeBulkDeletePayload struct {
+	// The asynchronous job that deletes the discount redeem codes.
+	Job *Job `json:"job"`
+	// List of errors that occurred executing the mutation.
+	UserErrors []*DiscountUserError `json:"userErrors"`
 }
 
 // A list of collections that the discount can have as a prerequisite or entitlement.
@@ -3025,8 +3256,14 @@ func (DiscountQuantity) IsDiscountCustomerBuysValue() {}
 
 // A redeem code for a code discount.
 type DiscountRedeemCode struct {
+	// The number of times the discount has been used. This value is updated asynchronously and can be different than the actual usage count.
+	AsyncUsageCount int64 `json:"asyncUsageCount"`
 	// The code of a discount.
 	Code string `json:"code"`
+	// The application that created the discount code.
+	CreatedBy *App `json:"createdBy"`
+	// Globally unique identifier of the discount redeem code.
+	ID string `json:"id"`
 }
 
 type DiscountRedeemCodeConnection struct {
@@ -3041,6 +3278,18 @@ type DiscountRedeemCodeEdge struct {
 	Cursor string `json:"cursor"`
 	// The item at the end of DiscountRedeemCodeEdge.
 	Node *DiscountRedeemCode `json:"node"`
+}
+
+// The shareable URL for the discount code.
+type DiscountShareableURL struct {
+	// The image URL of the item (product or collection) to which the discount applies.
+	TargetItemImage *Image `json:"targetItemImage"`
+	// The type of page that's associated with the URL.
+	TargetType DiscountShareableURLTargetType `json:"targetType"`
+	// The title of the page that's associated with the URL.
+	Title string `json:"title"`
+	// The URL for the discount code.
+	URL string `json:"url"`
 }
 
 // Specifies the destinations where the free shipping discount will be applied.
@@ -3798,6 +4047,8 @@ type FulfillmentLineItemInput struct {
 type FulfillmentOrder struct {
 	// The fulfillment order's assigned location. This is the location expected to perform fulfillment.
 	AssignedLocation *FulfillmentOrderAssignedLocation `json:"assignedLocation"`
+	// Delivery method of this fulfillment order.
+	DeliveryMethod *DeliveryMethod `json:"deliveryMethod"`
 	// The destination where the items should be sent.
 	Destination *FulfillmentOrderDestination `json:"destination"`
 	// A list of fulfillments for the fulfillment order.
@@ -4999,6 +5250,8 @@ type MarketingActivity struct {
 	Budget *MarketingBudget `json:"budget"`
 	// The date and time when the marketing activity was created.
 	CreatedAt string `json:"createdAt"`
+	// The form data of the marketing activity.
+	FormData *string `json:"formData"`
 	// Globally unique identifier.
 	ID string `json:"id"`
 	// The broad category of marketing, used for reporting aggregation.
@@ -5009,6 +5262,10 @@ type MarketingActivity struct {
 	SourceAndMedium string `json:"sourceAndMedium"`
 	// Status helps to identify if this marketing activity has been completed, queued, failed etc.
 	Status MarketingActivityStatus `json:"status"`
+	// StatusBadgeType helps to identify the color of the status badge.
+	StatusBadgeType *MarketingActivityStatusBadgeType `json:"statusBadgeType"`
+	// Status label to describe the status of the marketing activity.
+	StatusLabel string `json:"statusLabel"`
 	// The [date and time](
 	//           https://help.shopify.com/https://en.wikipedia.org/wiki/ISO_8601
 	//           ) when the activity's status last changed.
@@ -5042,6 +5299,38 @@ type MarketingActivityConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// Specifies the input fields required to create a marketing activity.
+type MarketingActivityCreateInput struct {
+	// The title of the marketing activity.
+	MarketingActivityTitle *string `json:"marketingActivityTitle,omitempty"`
+	// The form data in JSON serialized as a string.
+	FormData *string `json:"formData,omitempty"`
+	// The ID of the marketing activity extension.
+	MarketingActivityExtensionID string `json:"marketingActivityExtensionId,omitempty"`
+	// Encoded context containing marketing campaign id.
+	Context *string `json:"context,omitempty"`
+	// Specifies the
+	// [Urchin Traffic Module (UTM) parameters](https://en.wikipedia.org/wiki/UTM_parameters)
+	// that are associated with a related marketing campaign. UTMInput is required for all Marketing
+	// tactics except Storefront App.
+	//
+	Utm *UTMInput `json:"utm,omitempty"`
+	// The current state of the marketing activity.
+	Status MarketingActivityStatus `json:"status,omitempty"`
+	// The budget for this marketing activity.
+	Budget *MarketingActivityBudgetInput `json:"budget,omitempty"`
+}
+
+// Return type for `marketingActivityCreate` mutation.
+type MarketingActivityCreatePayload struct {
+	// The created marketing activity.
+	MarketingActivity *MarketingActivity `json:"marketingActivity"`
+	// The path to return back to shopify admin from embedded editor.
+	RedirectPath *string `json:"redirectPath"`
+	// List of errors that occurred executing the mutation.
+	UserErrors []*UserError `json:"userErrors"`
+}
+
 type MarketingActivityEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -5071,6 +5360,10 @@ type MarketingActivityUpdateInput struct {
 	AdSpend *MoneyInput `json:"adSpend,omitempty"`
 	// The current state of the marketing activity.
 	Status *MarketingActivityStatus `json:"status,omitempty"`
+	// The target state of the marketing activity.
+	TargetStatus *MarketingActivityStatus `json:"targetStatus,omitempty"`
+	// The form data of the marketing activity.
+	FormData *string `json:"formData,omitempty"`
 	// Specifies the
 	// [Urchin Traffic Module (UTM) parameters](https://en.wikipedia.org/wiki/UTM_parameters)
 	// that are associated with a related marketing campaign. UTMInput is required for all Marketing
@@ -5092,6 +5385,8 @@ type MarketingActivityUpdateInput struct {
 type MarketingActivityUpdatePayload struct {
 	// The updated marketing activity.
 	MarketingActivity *MarketingActivity `json:"marketingActivity"`
+	// The path to return back to shopify admin from embedded editor.
+	RedirectPath *string `json:"redirectPath"`
 	// List of errors that occurred executing the mutation.
 	UserErrors []*UserError `json:"userErrors"`
 }
@@ -5289,6 +5584,8 @@ type MediaImage struct {
 	MediaContentType MediaContentType `json:"mediaContentType"`
 	// Any errors which have occurred on the media.
 	MediaErrors []*MediaError `json:"mediaErrors"`
+	// The MIME type of the image.
+	MimeType *string `json:"mimeType"`
 	// The preview image for the media.
 	Preview *MediaPreviewImage `json:"preview"`
 	// Current status of the media.
@@ -5661,8 +5958,24 @@ type Order struct {
 	// If payment hasn't occurred, then this field is null.
 	//
 	CurrencyCode CurrencyCode `json:"currencyCode"`
+	// The amount of the order-level discount minus the amounts for line items that have been returned. This doesn't include line item discounts.
+	CurrentCartDiscountAmountSet *MoneyBag `json:"currentCartDiscountAmountSet"`
+	// The sum of the quantities for the line items that contribute to the order's subtotal.
+	CurrentSubtotalLineItemsQuantity int64 `json:"currentSubtotalLineItemsQuantity"`
+	// The subtotal of line items and their discounts minus the line items that have been returned. This includes order-level discounts, unless the argument with_cart_discount is set to false. This doesn't include shipping costs and shipping discounts. Taxes are not included unless the order is a taxes-included order.
+	CurrentSubtotalPriceSet *MoneyBag `json:"currentSubtotalPriceSet"`
+	// The taxes charged for the order minus the taxes for line items that have been returned.
+	CurrentTaxLines []*TaxLine `json:"currentTaxLines"`
+	// The total amount discounted from the order (including order-level and line item discounts) minus the amounts for items that have been returned.
+	CurrentTotalDiscountsSet *MoneyBag `json:"currentTotalDiscountsSet"`
 	// Total amount of duties for the order. If duties are not applicable, then this value is `null`.
 	CurrentTotalDutiesSet *MoneyBag `json:"currentTotalDutiesSet"`
+	// The total amount of the order (including taxes and discounts) minus the amounts for line items that have been returned.
+	CurrentTotalPriceSet *MoneyBag `json:"currentTotalPriceSet"`
+	// The total of all taxes applied to the order minus the taxes for line items that have been returned.
+	CurrentTotalTaxSet *MoneyBag `json:"currentTotalTaxSet"`
+	// The total weight (grams) of the order minus the weights for line items that have been returned.
+	CurrentTotalWeight string `json:"currentTotalWeight"`
 	// Custom information added to the order by your customer
 	// (Also referred to as note attributes).
 	//
@@ -5676,6 +5989,10 @@ type Order struct {
 	// Description of the customer's experience with the store leading up to the order.
 	//
 	CustomerJourney *CustomerJourney `json:"customerJourney"`
+	// Description of the customer's experience with the store leading up to the order.
+	// Loaded asynchronously, consumers should poll until the 'ready' field resolves to true.
+	//
+	CustomerJourneySummary *CustomerJourneySummary `json:"customerJourneySummary"`
 	// A two-letter or three-letter language code, optionally followed by a region modifier.
 	// Example values could be 'en', 'en-CA', 'en-PIRATE'.
 	//
@@ -5736,6 +6053,8 @@ type Order struct {
 	Location *string `json:"location"`
 	// Whether the order can be edited or not.
 	MerchantEditable bool `json:"merchantEditable"`
+	// A list of reasons of why the order cannot be edited.
+	MerchantEditableErrors []string `json:"merchantEditableErrors"`
 	// The metafield associated with the resource.
 	Metafield *Metafield `json:"metafield"`
 	// A paginated list of metafields associated with the resource.
@@ -5818,6 +6137,8 @@ type Order struct {
 	ShippingAddress *MailingAddress `json:"shippingAddress"`
 	// Line item that contains the shipping costs.
 	ShippingLine *ShippingLine `json:"shippingLine"`
+	// List of line items that contains the shipping costs.
+	ShippingLines *ShippingLineConnection `json:"shippingLines"`
 	// The sum of the quantities for the line items that contribute to the order's subtotal.
 	SubtotalLineItemsQuantity int64 `json:"subtotalLineItemsQuantity"`
 	// Subtotal of the line items and their discounts (does not contain shipping costs and shipping discounts).
@@ -5961,6 +6282,18 @@ type OrderEditAddCustomItemPayload struct {
 	UserErrors []*UserError `json:"userErrors"`
 }
 
+// Return type for `orderEditAddLineItemDiscount` mutation.
+type OrderEditAddLineItemDiscountPayload struct {
+	// The staged change produced by this mutation.
+	AddedDiscountStagedChange *OrderStagedChangeAddLineItemDiscount `json:"addedDiscountStagedChange"`
+	// The line item with the discount applied.
+	CalculatedLineItem *CalculatedLineItem `json:"calculatedLineItem"`
+	// An order with the edits calculated.
+	CalculatedOrder *CalculatedOrder `json:"calculatedOrder"`
+	// List of errors that occurred executing the mutation.
+	UserErrors []*UserError `json:"userErrors"`
+}
+
 // Return type for `orderEditAddVariant` mutation.
 type OrderEditAddVariantPayload struct {
 	// The added line item.
@@ -5969,6 +6302,16 @@ type OrderEditAddVariantPayload struct {
 	CalculatedOrder *CalculatedOrder `json:"calculatedOrder"`
 	// List of errors that occurred executing the mutation.
 	UserErrors []*UserError `json:"userErrors"`
+}
+
+// The input fields used to add a discount during an order edit.
+type OrderEditAppliedDiscountInput struct {
+	// The description of the discount.
+	Description *string `json:"description,omitempty"`
+	// The value of the discount as a fixed amount.
+	FixedValue *MoneyInput `json:"fixedValue,omitempty"`
+	// The value of the discount as a percentage.
+	PercentValue *float64 `json:"percentValue,omitempty"`
 }
 
 // Return type for `orderEditBegin` mutation.
@@ -5983,6 +6326,16 @@ type OrderEditBeginPayload struct {
 type OrderEditCommitPayload struct {
 	// The order with changes applied.
 	Order *Order `json:"order"`
+	// List of errors that occurred executing the mutation.
+	UserErrors []*UserError `json:"userErrors"`
+}
+
+// Return type for `orderEditRemoveLineItemDiscount` mutation.
+type OrderEditRemoveLineItemDiscountPayload struct {
+	// The line item with the discount removed.
+	CalculatedLineItem *CalculatedLineItem `json:"calculatedLineItem"`
+	// An order with the edits calculated.
+	CalculatedOrder *CalculatedOrder `json:"calculatedOrder"`
 	// List of errors that occurred executing the mutation.
 	UserErrors []*UserError `json:"userErrors"`
 }
@@ -6075,6 +6428,34 @@ type OrderStagedChangeAddCustomItem struct {
 }
 
 func (OrderStagedChangeAddCustomItem) IsOrderStagedChange() {}
+
+// A discount application added as part of an order edit.
+//
+type OrderStagedChangeAddLineItemDiscount struct {
+	// The description of the discount.
+	Description string `json:"description"`
+	// A globally unique identifier.
+	ID string `json:"id"`
+	// The amount of the discount.
+	Value PricingValue `json:"value"`
+}
+
+func (OrderStagedChangeAddLineItemDiscount) IsOrderStagedChange() {}
+
+// A new shipping line added as part of an order edit.
+//
+type OrderStagedChangeAddShippingLine struct {
+	// Shipping line phone number.
+	Phone *string `json:"phone"`
+	// The presentment title of the shipping line.
+	PresentmentTitle *string `json:"presentmentTitle"`
+	// Price of shipping line.
+	Price *MoneyV2 `json:"price"`
+	// The title of the shipping line.
+	Title *string `json:"title"`
+}
+
+func (OrderStagedChangeAddShippingLine) IsOrderStagedChange() {}
 
 // A new item created from an existing product variant.
 //
@@ -6874,6 +7255,8 @@ type Product struct {
 	Options []*ProductOption `json:"options"`
 	// The price range of the product.
 	PriceRange *ProductPriceRange `json:"priceRange"`
+	// The price range of the product with prices formatted as decimals.
+	PriceRangeV2 *ProductPriceRangeV2 `json:"priceRangeV2"`
 	// Returns a private metafield found by namespace and key.
 	PrivateMetafield *PrivateMetafield `json:"privateMetafield"`
 	// List of private metafields.
@@ -6899,8 +7282,12 @@ type Product struct {
 	PublishedOnPublication bool `json:"publishedOnPublication"`
 	// The list of resources that are published to a publication.
 	ResourcePublications *ResourcePublicationConnection `json:"resourcePublications"`
+	// The list of resources that are either published or staged to be published to a publication.
+	ResourcePublicationsV2 *ResourcePublicationV2Connection `json:"resourcePublicationsV2"`
 	// SEO information of the product.
 	Seo *Seo `json:"seo"`
+	// The product status. Product statuses aren't currently available to stores on the Shopify Plus plan.
+	Status ProductStatus `json:"status"`
 	// The storefront ID of the product.
 	StorefrontID string `json:"storefrontId"`
 	// A comma separated list of tags that have been added to the product.
@@ -6930,7 +7317,6 @@ type Product struct {
 	Vendor string `json:"vendor"`
 }
 
-func (Product) IsCommentEventEmbed()        {}
 func (Product) IsNode()                     {}
 func (Product) IsNavigable()                {}
 func (Product) IsHasMetafields()            {}
@@ -6938,6 +7324,7 @@ func (Product) IsHasPublishedTranslations() {}
 func (Product) IsPublishable()              {}
 func (Product) IsOnlineStorePreviewable()   {}
 func (Product) IsLegacyInteroperability()   {}
+func (Product) IsCommentEventEmbed()        {}
 
 // Specifies product images to append.
 type ProductAppendImagesInput struct {
@@ -6956,6 +7343,26 @@ type ProductAppendImagesPayload struct {
 	// List of errors that occurred executing the mutation.
 	UserErrors []*UserError `json:"userErrors"`
 }
+
+// Return type for `productChangeStatus` mutation.
+type ProductChangeStatusPayload struct {
+	// The product object.
+	Product *Product `json:"product"`
+	// List of errors that occurred executing the mutation.
+	UserErrors []*ProductChangeStatusUserError `json:"userErrors"`
+}
+
+// An error that occurs during the execution of ProductChangeStatus.
+type ProductChangeStatusUserError struct {
+	// Error code to uniquely identify the error.
+	Code *ProductChangeStatusUserErrorCode `json:"code"`
+	// Path to the input field which caused the error.
+	Field []string `json:"field"`
+	// The error message.
+	Message string `json:"message"`
+}
+
+func (ProductChangeStatusUserError) IsDisplayableError() {}
 
 type ProductConnection struct {
 	// A list of edges.
@@ -7110,6 +7517,8 @@ type ProductInput struct {
 	PublishedAt *string `json:"publishedAt,omitempty"`
 	// A list of variants associated with the product.
 	Variants []*ProductVariantInput `json:"variants,omitempty"`
+	// The status of the product.
+	Status *ProductStatus `json:"status,omitempty"`
 }
 
 // Custom product property names like "Size", "Color", and "Material".
@@ -7135,6 +7544,14 @@ func (ProductOption) IsHasPublishedTranslations() {}
 
 // The price range of the product.
 type ProductPriceRange struct {
+	// The highest variant's price.
+	MaxVariantPrice *MoneyV2 `json:"maxVariantPrice"`
+	// The lowest variant's price.
+	MinVariantPrice *MoneyV2 `json:"minVariantPrice"`
+}
+
+// The price range of the product.
+type ProductPriceRangeV2 struct {
 	// The highest variant's price.
 	MaxVariantPrice *MoneyV2 `json:"maxVariantPrice"`
 	// The lowest variant's price.
@@ -7291,6 +7708,8 @@ type ProductVariant struct {
 	InventoryQuantity *int64 `json:"inventoryQuantity"`
 	// The ID of the corresponding resource in the REST Admin API.
 	LegacyResourceID string `json:"legacyResourceId"`
+	// The media associated with the product variant.
+	Media *MediaConnection `json:"media"`
 	// The metafield associated with the resource.
 	Metafield *Metafield `json:"metafield"`
 	// A paginated list of metafields associated with the resource.
@@ -7343,6 +7762,24 @@ func (ProductVariant) IsHasPublishedTranslations() {}
 func (ProductVariant) IsNavigable()                {}
 func (ProductVariant) IsLegacyInteroperability()   {}
 
+// Specifies the input fields required to append media to a single variant.
+type ProductVariantAppendMediaInput struct {
+	// Specifies the variant to which media will be appended.
+	VariantID string `json:"variantId,omitempty"`
+	// Specifies the media to append to the variant.
+	MediaIds []string `json:"mediaIds,omitempty"`
+}
+
+// Return type for `productVariantAppendMedia` mutation.
+type ProductVariantAppendMediaPayload struct {
+	// The product associated with the variants and media.
+	Product *Product `json:"product"`
+	// The product variants that were updated.
+	ProductVariants []*ProductVariant `json:"productVariants"`
+	// List of errors that occurred executing the mutation.
+	UserErrors []*MediaUserError `json:"userErrors"`
+}
+
 type ProductVariantConnection struct {
 	// A list of edges.
 	Edges []*ProductVariantEdge `json:"edges"`
@@ -7370,6 +7807,24 @@ type ProductVariantDeletePayload struct {
 	UserErrors []*UserError `json:"userErrors"`
 }
 
+// Specifies the input fields required to detach media from a single variant.
+type ProductVariantDetachMediaInput struct {
+	// Specifies the variant from which media will be detached.
+	VariantID string `json:"variantId,omitempty"`
+	// Specifies the media to detach from the variant.
+	MediaIds []string `json:"mediaIds,omitempty"`
+}
+
+// Return type for `productVariantDetachMedia` mutation.
+type ProductVariantDetachMediaPayload struct {
+	// The product associated with the variants and media.
+	Product *Product `json:"product"`
+	// The product variants that were updated.
+	ProductVariants []*ProductVariant `json:"productVariants"`
+	// List of errors that occurred executing the mutation.
+	UserErrors []*MediaUserError `json:"userErrors"`
+}
+
 type ProductVariantEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -7394,6 +7849,8 @@ type ProductVariantInput struct {
 	// The URL of an image to associate with the variant.  This field can only be used through mutations that create product images and must match one of the URLs being created on the product.
 	//
 	ImageSrc *string `json:"imageSrc,omitempty"`
+	// The URL of the media to associate with the variant. This field can only be used in mutations that create media images and must match one of the URLs being created on the product. This field only accepts one value.
+	MediaSrc []string `json:"mediaSrc,omitempty"`
 	// The fulfillment service that tracks the number of items in stock for the product variant. If you track the inventory yourself using the admin, then set the value to `shopify`. Valid values: `shopify` or the handle of a fulfillment service that has inventory management enabled.
 	//  This argument is deprecated: Use tracked attribute on `inventoryItem` instead.
 	InventoryManagement *ProductVariantInventoryManagement `json:"inventoryManagement,omitempty"`
@@ -7578,10 +8035,10 @@ type Refund struct {
 	LegacyResourceID string `json:"legacyResourceId"`
 	// Note associated with the refund.
 	Note *string `json:"note"`
+	// The order associated with the refund.
+	Order *Order `json:"order"`
 	// The RefundLineItem resources attached to the refund.
 	RefundLineItems *RefundLineItemConnection `json:"refundLineItems"`
-	// Whether the RefundLineItem resources were restocked when the refund was created.
-	Restocked bool `json:"restocked"`
 	// Total amount refunded across all the transactions for this refund.
 	TotalRefunded *MoneyV2 `json:"totalRefunded"`
 	// Total amount refunded across all the transactions for this refund in shop and presentment currencies.
@@ -7653,8 +8110,6 @@ type RefundLineItem struct {
 	PriceSet *MoneyBag `json:"priceSet"`
 	// Returns the quantity of a refunded line item.
 	Quantity int64 `json:"quantity"`
-	// Represents the type of restock for the refunded line item.
-	RefundType RefundLineItemRefundType `json:"refundType"`
 	// Represents the type of restock for the refunded line item.
 	RestockType RefundLineItemRestockType `json:"restockType"`
 	// Whether the refunded line item was restocked. Not applicable in the context of a SuggestedRefund.
@@ -7780,6 +8235,35 @@ type ResourcePublicationEdge struct {
 	Cursor string `json:"cursor"`
 	// The item at the end of ResourcePublicationEdge.
 	Node *ResourcePublication `json:"node"`
+}
+
+// A resource publication represents that a resource either has been published or will be published to a publication.
+//
+type ResourcePublicationV2 struct {
+	// Whether the resource publication is published. If true, then the resource publication is published to the publication.
+	// If false, then the resource publication is staged to be published to the publication.
+	//
+	IsPublished bool `json:"isPublished"`
+	// The publication the resource publication is published to.
+	Publication *Publication `json:"publication"`
+	// The date that the resource publication was or is going to be published to the publication.
+	PublishDate *string `json:"publishDate"`
+	// The resource published to the publication.
+	Publishable Publishable `json:"publishable"`
+}
+
+type ResourcePublicationV2Connection struct {
+	// A list of edges.
+	Edges []*ResourcePublicationV2Edge `json:"edges"`
+	// Information to aid in pagination.
+	PageInfo *PageInfo `json:"pageInfo"`
+}
+
+type ResourcePublicationV2Edge struct {
+	// A cursor for use in pagination.
+	Cursor string `json:"cursor"`
+	// The item at the end of ResourcePublicationV2Edge.
+	Node *ResourcePublicationV2 `json:"node"`
 }
 
 // SEO information.
@@ -8074,6 +8558,20 @@ type ShippingLine struct {
 	Title string `json:"title"`
 }
 
+type ShippingLineConnection struct {
+	// A list of edges.
+	Edges []*ShippingLineEdge `json:"edges"`
+	// Information to aid in pagination.
+	PageInfo *PageInfo `json:"pageInfo"`
+}
+
+type ShippingLineEdge struct {
+	// A cursor for use in pagination.
+	Cursor string `json:"cursor"`
+	// The item at the end of ShippingLineEdge.
+	Node *ShippingLine `json:"node"`
+}
+
 // Specifies the shipping details for the order.
 type ShippingLineInput struct {
 	// Price of the shipping rate.
@@ -8295,6 +8793,8 @@ type Shop struct {
 	SetupRequired bool `json:"setupRequired"`
 	// Countries that the shop ships to.
 	ShipsToCountries []CountryCode `json:"shipsToCountries"`
+	// A list of all policies associated with a shop.
+	ShopPolicies []*ShopPolicy `json:"shopPolicies"`
 	// Shopify Payments account information, including balances and payouts.
 	ShopifyPaymentsAccount *ShopifyPaymentsAccount `json:"shopifyPaymentsAccount"`
 	// Storefront access token of a private application. Scoped per-application.
@@ -8364,6 +8864,8 @@ type ShopFeatures struct {
 	GiftCards bool `json:"giftCards"`
 	// Display Harmonized System codes on products.  Used for customs when shipping cross-border.
 	HarmonizedSystemCode bool `json:"harmonizedSystemCode"`
+	// Whether a shop can enable international domains.
+	InternationalDomains bool `json:"internationalDomains"`
 	// Whether to show the live view. Live view is hidden from merchants that are on a trial or don't have a storefront.
 	LiveView bool `json:"liveView"`
 	// Whether the multi-location functionality is enabled for this shop.
@@ -8433,6 +8935,51 @@ type ShopPlan struct {
 	// Whether the shop has a Shopify Plus subscription.
 	ShopifyPlus bool `json:"shopifyPlus"`
 }
+
+// Policy that a merchant has configured for their store, such as their refund or privacy policy.
+type ShopPolicy struct {
+	// The text of the policy. The maximum size is 512kb.
+	Body string `json:"body"`
+	// Globally unique identifier.
+	ID string `json:"id"`
+	// The translations associated with the resource.
+	Translations []*PublishedTranslation `json:"translations"`
+	// The shop policy type.
+	Type ShopPolicyType `json:"type"`
+	// The public URL of the policy.
+	URL string `json:"url"`
+}
+
+func (ShopPolicy) IsNode()                     {}
+func (ShopPolicy) IsHasPublishedTranslations() {}
+
+// Specifies the input fields required to update a policy.
+type ShopPolicyInput struct {
+	// The shop policy type.
+	Type ShopPolicyType `json:"type,omitempty"`
+	// Policy text, maximum size of 512kb.
+	Body string `json:"body,omitempty"`
+}
+
+// Return type for `shopPolicyUpdate` mutation.
+type ShopPolicyUpdatePayload struct {
+	// The shop policy that has been updated.
+	ShopPolicy *ShopPolicy `json:"shopPolicy"`
+	// List of errors that occurred executing the mutation.
+	UserErrors []*ShopPolicyUserError `json:"userErrors"`
+}
+
+// An error that occurs during the execution of a shop policy mutation.
+type ShopPolicyUserError struct {
+	// Error code to uniquely identify the error.
+	Code *ShopPolicyErrorCode `json:"code"`
+	// Path to the input field which caused the error.
+	Field []string `json:"field"`
+	// The error message.
+	Message string `json:"message"`
+}
+
+func (ShopPolicyUserError) IsDisplayableError() {}
 
 // Resource limits of a shop.
 type ShopResourceLimits struct {
@@ -11224,6 +11771,8 @@ const (
 	CurrencyCodeXcd CurrencyCode = "XCD"
 	// Egyptian Pound (EGP).
 	CurrencyCodeEgp CurrencyCode = "EGP"
+	// Eritrean Nakfa (ERN).
+	CurrencyCodeErn CurrencyCode = "ERN"
 	// Ethiopian Birr (ETB).
 	CurrencyCodeEtb CurrencyCode = "ETB"
 	// Falkland Islands Pounds (FKP).
@@ -11278,6 +11827,8 @@ const (
 	CurrencyCodeKzt CurrencyCode = "KZT"
 	// Kenyan Shilling (KES).
 	CurrencyCodeKes CurrencyCode = "KES"
+	// Kiribati Dollar (KID).
+	CurrencyCodeKid CurrencyCode = "KID"
 	// Kuwaiti Dinar (KWD).
 	CurrencyCodeKwd CurrencyCode = "KWD"
 	// Kyrgyzstani Som (KGS).
@@ -11306,6 +11857,8 @@ const (
 	CurrencyCodeMwk CurrencyCode = "MWK"
 	// Maldivian Rufiyaa (MVR).
 	CurrencyCodeMvr CurrencyCode = "MVR"
+	// Mauritanian Ouguiya (MRU).
+	CurrencyCodeMru CurrencyCode = "MRU"
 	// Mexican Pesos (MXN).
 	CurrencyCodeMxn CurrencyCode = "MXN"
 	// Malaysian Ringgits (MYR).
@@ -11376,6 +11929,8 @@ const (
 	CurrencyCodeSgd CurrencyCode = "SGD"
 	// Sudanese Pound (SDG).
 	CurrencyCodeSdg CurrencyCode = "SDG"
+	// Somali Shilling (SOS).
+	CurrencyCodeSos CurrencyCode = "SOS"
 	// Syrian Pound (SYP).
 	CurrencyCodeSyp CurrencyCode = "SYP"
 	// South African Rand (ZAR).
@@ -11428,6 +11983,8 @@ const (
 	CurrencyCodeVuv CurrencyCode = "VUV"
 	// Venezuelan Bolivares (VEF).
 	CurrencyCodeVef CurrencyCode = "VEF"
+	// Venezuelan Bolivares (VES).
+	CurrencyCodeVes CurrencyCode = "VES"
 	// Vietnamese đồng (VND).
 	CurrencyCodeVnd CurrencyCode = "VND"
 	// West African CFA franc (XOF).
@@ -11485,6 +12042,7 @@ var AllCurrencyCode = []CurrencyCode{
 	CurrencyCodeDop,
 	CurrencyCodeXcd,
 	CurrencyCodeEgp,
+	CurrencyCodeErn,
 	CurrencyCodeEtb,
 	CurrencyCodeFkp,
 	CurrencyCodeXpf,
@@ -11512,6 +12070,7 @@ var AllCurrencyCode = []CurrencyCode{
 	CurrencyCodeJod,
 	CurrencyCodeKzt,
 	CurrencyCodeKes,
+	CurrencyCodeKid,
 	CurrencyCodeKwd,
 	CurrencyCodeKgs,
 	CurrencyCodeLak,
@@ -11526,6 +12085,7 @@ var AllCurrencyCode = []CurrencyCode{
 	CurrencyCodeMop,
 	CurrencyCodeMwk,
 	CurrencyCodeMvr,
+	CurrencyCodeMru,
 	CurrencyCodeMxn,
 	CurrencyCodeMyr,
 	CurrencyCodeMur,
@@ -11561,6 +12121,7 @@ var AllCurrencyCode = []CurrencyCode{
 	CurrencyCodeSll,
 	CurrencyCodeSgd,
 	CurrencyCodeSdg,
+	CurrencyCodeSos,
 	CurrencyCodeSyp,
 	CurrencyCodeZar,
 	CurrencyCodeKrw,
@@ -11587,6 +12148,7 @@ var AllCurrencyCode = []CurrencyCode{
 	CurrencyCodeUzs,
 	CurrencyCodeVuv,
 	CurrencyCodeVef,
+	CurrencyCodeVes,
 	CurrencyCodeVnd,
 	CurrencyCodeXof,
 	CurrencyCodeYer,
@@ -11595,7 +12157,7 @@ var AllCurrencyCode = []CurrencyCode{
 
 func (e CurrencyCode) IsValid() bool {
 	switch e {
-	case CurrencyCodeUsd, CurrencyCodeEur, CurrencyCodeGbp, CurrencyCodeCad, CurrencyCodeAfn, CurrencyCodeAll, CurrencyCodeDzd, CurrencyCodeAoa, CurrencyCodeArs, CurrencyCodeAmd, CurrencyCodeAwg, CurrencyCodeAud, CurrencyCodeBbd, CurrencyCodeAzn, CurrencyCodeBdt, CurrencyCodeBsd, CurrencyCodeBhd, CurrencyCodeBif, CurrencyCodeByr, CurrencyCodeBzd, CurrencyCodeBmd, CurrencyCodeBtn, CurrencyCodeBam, CurrencyCodeBrl, CurrencyCodeBob, CurrencyCodeBwp, CurrencyCodeBnd, CurrencyCodeBgn, CurrencyCodeMmk, CurrencyCodeKhr, CurrencyCodeCve, CurrencyCodeKyd, CurrencyCodeXaf, CurrencyCodeClp, CurrencyCodeCny, CurrencyCodeCop, CurrencyCodeKmf, CurrencyCodeCdf, CurrencyCodeCrc, CurrencyCodeHrk, CurrencyCodeCzk, CurrencyCodeDkk, CurrencyCodeDjf, CurrencyCodeDop, CurrencyCodeXcd, CurrencyCodeEgp, CurrencyCodeEtb, CurrencyCodeFkp, CurrencyCodeXpf, CurrencyCodeFjd, CurrencyCodeGip, CurrencyCodeGmd, CurrencyCodeGhs, CurrencyCodeGtq, CurrencyCodeGyd, CurrencyCodeGel, CurrencyCodeGnf, CurrencyCodeHtg, CurrencyCodeHnl, CurrencyCodeHkd, CurrencyCodeHuf, CurrencyCodeIsk, CurrencyCodeInr, CurrencyCodeIDR, CurrencyCodeIls, CurrencyCodeIrr, CurrencyCodeIqd, CurrencyCodeJmd, CurrencyCodeJpy, CurrencyCodeJep, CurrencyCodeJod, CurrencyCodeKzt, CurrencyCodeKes, CurrencyCodeKwd, CurrencyCodeKgs, CurrencyCodeLak, CurrencyCodeLvl, CurrencyCodeLbp, CurrencyCodeLsl, CurrencyCodeLrd, CurrencyCodeLyd, CurrencyCodeLtl, CurrencyCodeMga, CurrencyCodeMkd, CurrencyCodeMop, CurrencyCodeMwk, CurrencyCodeMvr, CurrencyCodeMxn, CurrencyCodeMyr, CurrencyCodeMur, CurrencyCodeMdl, CurrencyCodeMad, CurrencyCodeMnt, CurrencyCodeMzn, CurrencyCodeNad, CurrencyCodeNpr, CurrencyCodeAng, CurrencyCodeNzd, CurrencyCodeNio, CurrencyCodeNgn, CurrencyCodeNok, CurrencyCodeOmr, CurrencyCodePab, CurrencyCodePkr, CurrencyCodePgk, CurrencyCodePyg, CurrencyCodePen, CurrencyCodePhp, CurrencyCodePln, CurrencyCodeQar, CurrencyCodeRon, CurrencyCodeRub, CurrencyCodeRwf, CurrencyCodeWst, CurrencyCodeShp, CurrencyCodeSar, CurrencyCodeStd, CurrencyCodeRsd, CurrencyCodeScr, CurrencyCodeSll, CurrencyCodeSgd, CurrencyCodeSdg, CurrencyCodeSyp, CurrencyCodeZar, CurrencyCodeKrw, CurrencyCodeSsp, CurrencyCodeSbd, CurrencyCodeLkr, CurrencyCodeSrd, CurrencyCodeSzl, CurrencyCodeSek, CurrencyCodeChf, CurrencyCodeTwd, CurrencyCodeThb, CurrencyCodeTjs, CurrencyCodeTzs, CurrencyCodeTop, CurrencyCodeTtd, CurrencyCodeTnd, CurrencyCodeTry, CurrencyCodeTmt, CurrencyCodeUgx, CurrencyCodeUah, CurrencyCodeAed, CurrencyCodeUyu, CurrencyCodeUzs, CurrencyCodeVuv, CurrencyCodeVef, CurrencyCodeVnd, CurrencyCodeXof, CurrencyCodeYer, CurrencyCodeZmw:
+	case CurrencyCodeUsd, CurrencyCodeEur, CurrencyCodeGbp, CurrencyCodeCad, CurrencyCodeAfn, CurrencyCodeAll, CurrencyCodeDzd, CurrencyCodeAoa, CurrencyCodeArs, CurrencyCodeAmd, CurrencyCodeAwg, CurrencyCodeAud, CurrencyCodeBbd, CurrencyCodeAzn, CurrencyCodeBdt, CurrencyCodeBsd, CurrencyCodeBhd, CurrencyCodeBif, CurrencyCodeByr, CurrencyCodeBzd, CurrencyCodeBmd, CurrencyCodeBtn, CurrencyCodeBam, CurrencyCodeBrl, CurrencyCodeBob, CurrencyCodeBwp, CurrencyCodeBnd, CurrencyCodeBgn, CurrencyCodeMmk, CurrencyCodeKhr, CurrencyCodeCve, CurrencyCodeKyd, CurrencyCodeXaf, CurrencyCodeClp, CurrencyCodeCny, CurrencyCodeCop, CurrencyCodeKmf, CurrencyCodeCdf, CurrencyCodeCrc, CurrencyCodeHrk, CurrencyCodeCzk, CurrencyCodeDkk, CurrencyCodeDjf, CurrencyCodeDop, CurrencyCodeXcd, CurrencyCodeEgp, CurrencyCodeErn, CurrencyCodeEtb, CurrencyCodeFkp, CurrencyCodeXpf, CurrencyCodeFjd, CurrencyCodeGip, CurrencyCodeGmd, CurrencyCodeGhs, CurrencyCodeGtq, CurrencyCodeGyd, CurrencyCodeGel, CurrencyCodeGnf, CurrencyCodeHtg, CurrencyCodeHnl, CurrencyCodeHkd, CurrencyCodeHuf, CurrencyCodeIsk, CurrencyCodeInr, CurrencyCodeIDR, CurrencyCodeIls, CurrencyCodeIrr, CurrencyCodeIqd, CurrencyCodeJmd, CurrencyCodeJpy, CurrencyCodeJep, CurrencyCodeJod, CurrencyCodeKzt, CurrencyCodeKes, CurrencyCodeKid, CurrencyCodeKwd, CurrencyCodeKgs, CurrencyCodeLak, CurrencyCodeLvl, CurrencyCodeLbp, CurrencyCodeLsl, CurrencyCodeLrd, CurrencyCodeLyd, CurrencyCodeLtl, CurrencyCodeMga, CurrencyCodeMkd, CurrencyCodeMop, CurrencyCodeMwk, CurrencyCodeMvr, CurrencyCodeMru, CurrencyCodeMxn, CurrencyCodeMyr, CurrencyCodeMur, CurrencyCodeMdl, CurrencyCodeMad, CurrencyCodeMnt, CurrencyCodeMzn, CurrencyCodeNad, CurrencyCodeNpr, CurrencyCodeAng, CurrencyCodeNzd, CurrencyCodeNio, CurrencyCodeNgn, CurrencyCodeNok, CurrencyCodeOmr, CurrencyCodePab, CurrencyCodePkr, CurrencyCodePgk, CurrencyCodePyg, CurrencyCodePen, CurrencyCodePhp, CurrencyCodePln, CurrencyCodeQar, CurrencyCodeRon, CurrencyCodeRub, CurrencyCodeRwf, CurrencyCodeWst, CurrencyCodeShp, CurrencyCodeSar, CurrencyCodeStd, CurrencyCodeRsd, CurrencyCodeScr, CurrencyCodeSll, CurrencyCodeSgd, CurrencyCodeSdg, CurrencyCodeSos, CurrencyCodeSyp, CurrencyCodeZar, CurrencyCodeKrw, CurrencyCodeSsp, CurrencyCodeSbd, CurrencyCodeLkr, CurrencyCodeSrd, CurrencyCodeSzl, CurrencyCodeSek, CurrencyCodeChf, CurrencyCodeTwd, CurrencyCodeThb, CurrencyCodeTjs, CurrencyCodeTzs, CurrencyCodeTop, CurrencyCodeTtd, CurrencyCodeTnd, CurrencyCodeTry, CurrencyCodeTmt, CurrencyCodeUgx, CurrencyCodeUah, CurrencyCodeAed, CurrencyCodeUyu, CurrencyCodeUzs, CurrencyCodeVuv, CurrencyCodeVef, CurrencyCodeVes, CurrencyCodeVnd, CurrencyCodeXof, CurrencyCodeYer, CurrencyCodeZmw:
 		return true
 	}
 	return false
@@ -12171,6 +12733,59 @@ func (e DeliveryMethodDefinitionType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
+// Possible method types that a delivery method can have.
+type DeliveryMethodType string
+
+const (
+	// Shipping delivery method.
+	DeliveryMethodTypeShipping DeliveryMethodType = "SHIPPING"
+	// Pick-up delivery method.
+	DeliveryMethodTypePickUp DeliveryMethodType = "PICK_UP"
+	// No delivery method.
+	DeliveryMethodTypeNone DeliveryMethodType = "NONE"
+	// Retail delivery method represents items delivered immediately in a retail store.
+	DeliveryMethodTypeRetail DeliveryMethodType = "RETAIL"
+	// Local delivery method.
+	DeliveryMethodTypeLocal DeliveryMethodType = "LOCAL"
+)
+
+var AllDeliveryMethodType = []DeliveryMethodType{
+	DeliveryMethodTypeShipping,
+	DeliveryMethodTypePickUp,
+	DeliveryMethodTypeNone,
+	DeliveryMethodTypeRetail,
+	DeliveryMethodTypeLocal,
+}
+
+func (e DeliveryMethodType) IsValid() bool {
+	switch e {
+	case DeliveryMethodTypeShipping, DeliveryMethodTypePickUp, DeliveryMethodTypeNone, DeliveryMethodTypeRetail, DeliveryMethodTypeLocal:
+		return true
+	}
+	return false
+}
+
+func (e DeliveryMethodType) String() string {
+	return string(e)
+}
+
+func (e *DeliveryMethodType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = DeliveryMethodType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid DeliveryMethodType", str)
+	}
+	return nil
+}
+
+func (e DeliveryMethodType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
 // Digital wallet, such as Apple Pay, which can be used for accelerated checkouts.
 type DigitalWallet string
 
@@ -12265,6 +12880,54 @@ func (e *DiscountApplicationAllocationMethod) UnmarshalGQL(v interface{}) error 
 }
 
 func (e DiscountApplicationAllocationMethod) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+// The method by which the discount's value is allocated onto its entitled lines.
+type DiscountApplicationLevel string
+
+const (
+	// The discount was applied at the order level.
+	// Order level discounts are not factored into the discountedUnitPriceSet on line items.
+	//
+	DiscountApplicationLevelOrder DiscountApplicationLevel = "ORDER"
+	// The discount was applied at the line level.
+	// Line level discounts are factored into the discountedUnitPriceSet on line items.
+	//
+	DiscountApplicationLevelLine DiscountApplicationLevel = "LINE"
+)
+
+var AllDiscountApplicationLevel = []DiscountApplicationLevel{
+	DiscountApplicationLevelOrder,
+	DiscountApplicationLevelLine,
+}
+
+func (e DiscountApplicationLevel) IsValid() bool {
+	switch e {
+	case DiscountApplicationLevelOrder, DiscountApplicationLevelLine:
+		return true
+	}
+	return false
+}
+
+func (e DiscountApplicationLevel) String() string {
+	return string(e)
+}
+
+func (e *DiscountApplicationLevel) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = DiscountApplicationLevel(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid DiscountApplicationLevel", str)
+	}
+	return nil
+}
+
+func (e DiscountApplicationLevel) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
@@ -12461,6 +13124,8 @@ const (
 	DiscountErrorCodeImplicitDuplicate DiscountErrorCode = "IMPLICIT_DUPLICATE"
 	// Input value is already present.
 	DiscountErrorCodeDuplicate DiscountErrorCode = "DUPLICATE"
+	// Input value is not included in the list.
+	DiscountErrorCodeInclusion DiscountErrorCode = "INCLUSION"
 )
 
 var AllDiscountErrorCode = []DiscountErrorCode{
@@ -12485,11 +13150,12 @@ var AllDiscountErrorCode = []DiscountErrorCode{
 	DiscountErrorCodeConflict,
 	DiscountErrorCodeImplicitDuplicate,
 	DiscountErrorCodeDuplicate,
+	DiscountErrorCodeInclusion,
 }
 
 func (e DiscountErrorCode) IsValid() bool {
 	switch e {
-	case DiscountErrorCodeBlank, DiscountErrorCodePresent, DiscountErrorCodeEqualTo, DiscountErrorCodeGreaterThan, DiscountErrorCodeGreaterThanOrEqualTo, DiscountErrorCodeInvalid, DiscountErrorCodeLessThanOrEqualTo, DiscountErrorCodeLessThan, DiscountErrorCodeTaken, DiscountErrorCodeTooLong, DiscountErrorCodeTooShort, DiscountErrorCodeInternalError, DiscountErrorCodeTooManyArguments, DiscountErrorCodeMissingArgument, DiscountErrorCodeValueOutsideRange, DiscountErrorCodeExceededMax, DiscountErrorCodeMinimumSubtotalAndQuantityRangeBothPresent, DiscountErrorCodeActivePeriodOverlap, DiscountErrorCodeConflict, DiscountErrorCodeImplicitDuplicate, DiscountErrorCodeDuplicate:
+	case DiscountErrorCodeBlank, DiscountErrorCodePresent, DiscountErrorCodeEqualTo, DiscountErrorCodeGreaterThan, DiscountErrorCodeGreaterThanOrEqualTo, DiscountErrorCodeInvalid, DiscountErrorCodeLessThanOrEqualTo, DiscountErrorCodeLessThan, DiscountErrorCodeTaken, DiscountErrorCodeTooLong, DiscountErrorCodeTooShort, DiscountErrorCodeInternalError, DiscountErrorCodeTooManyArguments, DiscountErrorCodeMissingArgument, DiscountErrorCodeValueOutsideRange, DiscountErrorCodeExceededMax, DiscountErrorCodeMinimumSubtotalAndQuantityRangeBothPresent, DiscountErrorCodeActivePeriodOverlap, DiscountErrorCodeConflict, DiscountErrorCodeImplicitDuplicate, DiscountErrorCodeDuplicate, DiscountErrorCodeInclusion:
 		return true
 	}
 	return false
@@ -12513,6 +13179,53 @@ func (e *DiscountErrorCode) UnmarshalGQL(v interface{}) error {
 }
 
 func (e DiscountErrorCode) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+// The page type where shareable URL lands.
+type DiscountShareableURLTargetType string
+
+const (
+	// The home page type.
+	DiscountShareableURLTargetTypeHome DiscountShareableURLTargetType = "HOME"
+	// The product page type.
+	DiscountShareableURLTargetTypeProduct DiscountShareableURLTargetType = "PRODUCT"
+	// The collection page type.
+	DiscountShareableURLTargetTypeCollection DiscountShareableURLTargetType = "COLLECTION"
+)
+
+var AllDiscountShareableURLTargetType = []DiscountShareableURLTargetType{
+	DiscountShareableURLTargetTypeHome,
+	DiscountShareableURLTargetTypeProduct,
+	DiscountShareableURLTargetTypeCollection,
+}
+
+func (e DiscountShareableURLTargetType) IsValid() bool {
+	switch e {
+	case DiscountShareableURLTargetTypeHome, DiscountShareableURLTargetTypeProduct, DiscountShareableURLTargetTypeCollection:
+		return true
+	}
+	return false
+}
+
+func (e DiscountShareableURLTargetType) String() string {
+	return string(e)
+}
+
+func (e *DiscountShareableURLTargetType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = DiscountShareableURLTargetType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid DiscountShareableUrlTargetType", str)
+	}
+	return nil
+}
+
+func (e DiscountShareableURLTargetType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
@@ -13785,6 +14498,8 @@ const (
 	MarketingActivityStatusDeletedExternally MarketingActivityStatus = "DELETED_EXTERNALLY"
 	// This marketing activity is disconnected and no longer editable.
 	MarketingActivityStatusDisconnected MarketingActivityStatus = "DISCONNECTED"
+	// This marketing activity is started but not yet created.
+	MarketingActivityStatusDraft MarketingActivityStatus = "DRAFT"
 	// This marketing activity is unable to run.
 	MarketingActivityStatusFailed MarketingActivityStatus = "FAILED"
 	// This marketing activity has completed running.
@@ -13804,6 +14519,7 @@ var AllMarketingActivityStatus = []MarketingActivityStatus{
 	MarketingActivityStatusDeleted,
 	MarketingActivityStatusDeletedExternally,
 	MarketingActivityStatusDisconnected,
+	MarketingActivityStatusDraft,
 	MarketingActivityStatusFailed,
 	MarketingActivityStatusInactive,
 	MarketingActivityStatusPaused,
@@ -13814,7 +14530,7 @@ var AllMarketingActivityStatus = []MarketingActivityStatus{
 
 func (e MarketingActivityStatus) IsValid() bool {
 	switch e {
-	case MarketingActivityStatusActive, MarketingActivityStatusDeleted, MarketingActivityStatusDeletedExternally, MarketingActivityStatusDisconnected, MarketingActivityStatusFailed, MarketingActivityStatusInactive, MarketingActivityStatusPaused, MarketingActivityStatusPending, MarketingActivityStatusScheduled, MarketingActivityStatusUndefined:
+	case MarketingActivityStatusActive, MarketingActivityStatusDeleted, MarketingActivityStatusDeletedExternally, MarketingActivityStatusDisconnected, MarketingActivityStatusDraft, MarketingActivityStatusFailed, MarketingActivityStatusInactive, MarketingActivityStatusPaused, MarketingActivityStatusPending, MarketingActivityStatusScheduled, MarketingActivityStatusUndefined:
 		return true
 	}
 	return false
@@ -13838,6 +14554,59 @@ func (e *MarketingActivityStatus) UnmarshalGQL(v interface{}) error {
 }
 
 func (e MarketingActivityStatus) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+// StatusBadgeType helps to identify the color of the status badge.
+type MarketingActivityStatusBadgeType string
+
+const (
+	// This status badge has type default.
+	MarketingActivityStatusBadgeTypeDefault MarketingActivityStatusBadgeType = "DEFAULT"
+	// This status badge has type success.
+	MarketingActivityStatusBadgeTypeSuccess MarketingActivityStatusBadgeType = "SUCCESS"
+	// This status badge has type attention.
+	MarketingActivityStatusBadgeTypeAttention MarketingActivityStatusBadgeType = "ATTENTION"
+	// This status badge has type warning.
+	MarketingActivityStatusBadgeTypeWarning MarketingActivityStatusBadgeType = "WARNING"
+	// This status badge has type info.
+	MarketingActivityStatusBadgeTypeInfo MarketingActivityStatusBadgeType = "INFO"
+)
+
+var AllMarketingActivityStatusBadgeType = []MarketingActivityStatusBadgeType{
+	MarketingActivityStatusBadgeTypeDefault,
+	MarketingActivityStatusBadgeTypeSuccess,
+	MarketingActivityStatusBadgeTypeAttention,
+	MarketingActivityStatusBadgeTypeWarning,
+	MarketingActivityStatusBadgeTypeInfo,
+}
+
+func (e MarketingActivityStatusBadgeType) IsValid() bool {
+	switch e {
+	case MarketingActivityStatusBadgeTypeDefault, MarketingActivityStatusBadgeTypeSuccess, MarketingActivityStatusBadgeTypeAttention, MarketingActivityStatusBadgeTypeWarning, MarketingActivityStatusBadgeTypeInfo:
+		return true
+	}
+	return false
+}
+
+func (e MarketingActivityStatusBadgeType) String() string {
+	return string(e)
+}
+
+func (e *MarketingActivityStatusBadgeType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = MarketingActivityStatusBadgeType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid MarketingActivityStatusBadgeType", str)
+	}
+	return nil
+}
+
+func (e MarketingActivityStatusBadgeType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
@@ -14151,10 +14920,36 @@ const (
 	MediaErrorCodeExternalVideoUnlisted MediaErrorCode = "EXTERNAL_VIDEO_UNLISTED"
 	// Media could not be created because the external video has an invalid aspect ratio.
 	MediaErrorCodeExternalVideoInvalidAspectRatio MediaErrorCode = "EXTERNAL_VIDEO_INVALID_ASPECT_RATIO"
+	// Media could not be created because the metadata could not be read.
+	MediaErrorCodeVideoMetadataReadError MediaErrorCode = "VIDEO_METADATA_READ_ERROR"
+	// Media could not be created because it has an invalid file type.
+	MediaErrorCodeVideoInvalidFiletypeError MediaErrorCode = "VIDEO_INVALID_FILETYPE_ERROR"
+	// Media could not be created because it does not meet the minimum width requirement.
+	MediaErrorCodeVideoMinWidthError MediaErrorCode = "VIDEO_MIN_WIDTH_ERROR"
+	// Media could not be created because it does not meet the maximum width requirement.
+	MediaErrorCodeVideoMaxWidthError MediaErrorCode = "VIDEO_MAX_WIDTH_ERROR"
+	// Media could not be created because it does not meet the minimum height requirement.
+	MediaErrorCodeVideoMinHeightError MediaErrorCode = "VIDEO_MIN_HEIGHT_ERROR"
+	// Media could not be created because it does not meet the maximum height requirement.
+	MediaErrorCodeVideoMaxHeightError MediaErrorCode = "VIDEO_MAX_HEIGHT_ERROR"
+	// Media could not be created because it does not meet the minimum duration requirement.
+	MediaErrorCodeVideoMinDurationError MediaErrorCode = "VIDEO_MIN_DURATION_ERROR"
+	// Media could not be created because it does not meet the maximum duration requirement.
+	MediaErrorCodeVideoMaxDurationError MediaErrorCode = "VIDEO_MAX_DURATION_ERROR"
 	// Video failed validation.
 	MediaErrorCodeVideoValidationError MediaErrorCode = "VIDEO_VALIDATION_ERROR"
 	// Model failed validation.
 	MediaErrorCodeModel3dValidationError MediaErrorCode = "MODEL3D_VALIDATION_ERROR"
+	// Media could not be created because the model's thumbnail generation failed.
+	MediaErrorCodeModel3dThumbnailGenerationError MediaErrorCode = "MODEL3D_THUMBNAIL_GENERATION_ERROR"
+	// Media could not be created because the model can't be converted to USDZ format.
+	MediaErrorCodeModel3dGlbToUsdzConversionError MediaErrorCode = "MODEL3D_GLB_TO_USDZ_CONVERSION_ERROR"
+	// Media could not be created because the model file failed processing.
+	MediaErrorCodeModel3dGlbOutputCreationError MediaErrorCode = "MODEL3D_GLB_OUTPUT_CREATION_ERROR"
+	// Media could not be created because the image is an unsupported file type.
+	MediaErrorCodeUnsupportedImageFileType MediaErrorCode = "UNSUPPORTED_IMAGE_FILE_TYPE"
+	// Media could not be created because the image size is too large.
+	MediaErrorCodeInvalidImageFileSize MediaErrorCode = "INVALID_IMAGE_FILE_SIZE"
 )
 
 var AllMediaErrorCode = []MediaErrorCode{
@@ -14166,13 +14961,26 @@ var AllMediaErrorCode = []MediaErrorCode{
 	MediaErrorCodeExternalVideoNotFound,
 	MediaErrorCodeExternalVideoUnlisted,
 	MediaErrorCodeExternalVideoInvalidAspectRatio,
+	MediaErrorCodeVideoMetadataReadError,
+	MediaErrorCodeVideoInvalidFiletypeError,
+	MediaErrorCodeVideoMinWidthError,
+	MediaErrorCodeVideoMaxWidthError,
+	MediaErrorCodeVideoMinHeightError,
+	MediaErrorCodeVideoMaxHeightError,
+	MediaErrorCodeVideoMinDurationError,
+	MediaErrorCodeVideoMaxDurationError,
 	MediaErrorCodeVideoValidationError,
 	MediaErrorCodeModel3dValidationError,
+	MediaErrorCodeModel3dThumbnailGenerationError,
+	MediaErrorCodeModel3dGlbToUsdzConversionError,
+	MediaErrorCodeModel3dGlbOutputCreationError,
+	MediaErrorCodeUnsupportedImageFileType,
+	MediaErrorCodeInvalidImageFileSize,
 }
 
 func (e MediaErrorCode) IsValid() bool {
 	switch e {
-	case MediaErrorCodeUnknown, MediaErrorCodeInvalidSignedURL, MediaErrorCodeImageDownloadFailure, MediaErrorCodeImageProcessingFailure, MediaErrorCodeMediaTimeoutError, MediaErrorCodeExternalVideoNotFound, MediaErrorCodeExternalVideoUnlisted, MediaErrorCodeExternalVideoInvalidAspectRatio, MediaErrorCodeVideoValidationError, MediaErrorCodeModel3dValidationError:
+	case MediaErrorCodeUnknown, MediaErrorCodeInvalidSignedURL, MediaErrorCodeImageDownloadFailure, MediaErrorCodeImageProcessingFailure, MediaErrorCodeMediaTimeoutError, MediaErrorCodeExternalVideoNotFound, MediaErrorCodeExternalVideoUnlisted, MediaErrorCodeExternalVideoInvalidAspectRatio, MediaErrorCodeVideoMetadataReadError, MediaErrorCodeVideoInvalidFiletypeError, MediaErrorCodeVideoMinWidthError, MediaErrorCodeVideoMaxWidthError, MediaErrorCodeVideoMinHeightError, MediaErrorCodeVideoMaxHeightError, MediaErrorCodeVideoMinDurationError, MediaErrorCodeVideoMaxDurationError, MediaErrorCodeVideoValidationError, MediaErrorCodeModel3dValidationError, MediaErrorCodeModel3dThumbnailGenerationError, MediaErrorCodeModel3dGlbToUsdzConversionError, MediaErrorCodeModel3dGlbOutputCreationError, MediaErrorCodeUnsupportedImageFileType, MediaErrorCodeInvalidImageFileSize:
 		return true
 	}
 	return false
@@ -14305,6 +15113,8 @@ type MediaUserErrorCode string
 const (
 	// Input value is invalid.
 	MediaUserErrorCodeInvalid MediaUserErrorCode = "INVALID"
+	// Input value is blank.
+	MediaUserErrorCodeBlank MediaUserErrorCode = "BLANK"
 	// Video validation failed.
 	MediaUserErrorCodeVideoValidationError MediaUserErrorCode = "VIDEO_VALIDATION_ERROR"
 	// Model validation failed.
@@ -14321,12 +15131,31 @@ const (
 	MediaUserErrorCodeProductDoesNotExist MediaUserErrorCode = "PRODUCT_DOES_NOT_EXIST"
 	// Media does not exist.
 	MediaUserErrorCodeMediaDoesNotExist MediaUserErrorCode = "MEDIA_DOES_NOT_EXIST"
+	// Media does not exist on the given product.
+	MediaUserErrorCodeMediaDoesNotExistOnProduct MediaUserErrorCode = "MEDIA_DOES_NOT_EXIST_ON_PRODUCT"
+	// Only one mediaId is allowed per variant-media input pair.
+	MediaUserErrorCodeTooManyMediaPerInputPair MediaUserErrorCode = "TOO_MANY_MEDIA_PER_INPUT_PAIR"
+	// Exceeded the maximum number of 100 variant-media pairs per mutation call.
+	MediaUserErrorCodeMaximumVariantMediaPairsExceeded MediaUserErrorCode = "MAXIMUM_VARIANT_MEDIA_PAIRS_EXCEEDED"
+	// Invalid media type.
+	MediaUserErrorCodeInvalidMediaType MediaUserErrorCode = "INVALID_MEDIA_TYPE"
+	// Variant specified in more than one pair.
+	MediaUserErrorCodeProductVariantSpecifiedMultipleTimes MediaUserErrorCode = "PRODUCT_VARIANT_SPECIFIED_MULTIPLE_TIMES"
+	// Variant does not exist on the given product.
+	MediaUserErrorCodeProductVariantDoesNotExistOnProduct MediaUserErrorCode = "PRODUCT_VARIANT_DOES_NOT_EXIST_ON_PRODUCT"
+	// Non-ready media are not supported.
+	MediaUserErrorCodeNonReadyMedia MediaUserErrorCode = "NON_READY_MEDIA"
+	// Product variant already has attached media.
+	MediaUserErrorCodeProductVariantAlreadyHasMedia MediaUserErrorCode = "PRODUCT_VARIANT_ALREADY_HAS_MEDIA"
+	// The specified media is not attached to the specified variant.
+	MediaUserErrorCodeMediaIsNotAttachedToVariant MediaUserErrorCode = "MEDIA_IS_NOT_ATTACHED_TO_VARIANT"
 	// Media cannot be modified. It is currently being modified by another operation.
 	MediaUserErrorCodeMediaCannotBeModified MediaUserErrorCode = "MEDIA_CANNOT_BE_MODIFIED"
 )
 
 var AllMediaUserErrorCode = []MediaUserErrorCode{
 	MediaUserErrorCodeInvalid,
+	MediaUserErrorCodeBlank,
 	MediaUserErrorCodeVideoValidationError,
 	MediaUserErrorCodeModel3dValidationError,
 	MediaUserErrorCodeVideoThrottleExceeded,
@@ -14335,12 +15164,21 @@ var AllMediaUserErrorCode = []MediaUserErrorCode{
 	MediaUserErrorCodeShopMediaLimitExceeded,
 	MediaUserErrorCodeProductDoesNotExist,
 	MediaUserErrorCodeMediaDoesNotExist,
+	MediaUserErrorCodeMediaDoesNotExistOnProduct,
+	MediaUserErrorCodeTooManyMediaPerInputPair,
+	MediaUserErrorCodeMaximumVariantMediaPairsExceeded,
+	MediaUserErrorCodeInvalidMediaType,
+	MediaUserErrorCodeProductVariantSpecifiedMultipleTimes,
+	MediaUserErrorCodeProductVariantDoesNotExistOnProduct,
+	MediaUserErrorCodeNonReadyMedia,
+	MediaUserErrorCodeProductVariantAlreadyHasMedia,
+	MediaUserErrorCodeMediaIsNotAttachedToVariant,
 	MediaUserErrorCodeMediaCannotBeModified,
 }
 
 func (e MediaUserErrorCode) IsValid() bool {
 	switch e {
-	case MediaUserErrorCodeInvalid, MediaUserErrorCodeVideoValidationError, MediaUserErrorCodeModel3dValidationError, MediaUserErrorCodeVideoThrottleExceeded, MediaUserErrorCodeModel3dThrottleExceeded, MediaUserErrorCodeProductMediaLimitExceeded, MediaUserErrorCodeShopMediaLimitExceeded, MediaUserErrorCodeProductDoesNotExist, MediaUserErrorCodeMediaDoesNotExist, MediaUserErrorCodeMediaCannotBeModified:
+	case MediaUserErrorCodeInvalid, MediaUserErrorCodeBlank, MediaUserErrorCodeVideoValidationError, MediaUserErrorCodeModel3dValidationError, MediaUserErrorCodeVideoThrottleExceeded, MediaUserErrorCodeModel3dThrottleExceeded, MediaUserErrorCodeProductMediaLimitExceeded, MediaUserErrorCodeShopMediaLimitExceeded, MediaUserErrorCodeProductDoesNotExist, MediaUserErrorCodeMediaDoesNotExist, MediaUserErrorCodeMediaDoesNotExistOnProduct, MediaUserErrorCodeTooManyMediaPerInputPair, MediaUserErrorCodeMaximumVariantMediaPairsExceeded, MediaUserErrorCodeInvalidMediaType, MediaUserErrorCodeProductVariantSpecifiedMultipleTimes, MediaUserErrorCodeProductVariantDoesNotExistOnProduct, MediaUserErrorCodeNonReadyMedia, MediaUserErrorCodeProductVariantAlreadyHasMedia, MediaUserErrorCodeMediaIsNotAttachedToVariant, MediaUserErrorCodeMediaCannotBeModified:
 		return true
 	}
 	return false
@@ -15716,6 +16554,47 @@ func (e PrivateMetafieldValueType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
+// Possible error codes that could be returned by ProductChangeStatusUserError.
+type ProductChangeStatusUserErrorCode string
+
+const (
+	// Product could not be found.
+	ProductChangeStatusUserErrorCodeProductNotFound ProductChangeStatusUserErrorCode = "PRODUCT_NOT_FOUND"
+)
+
+var AllProductChangeStatusUserErrorCode = []ProductChangeStatusUserErrorCode{
+	ProductChangeStatusUserErrorCodeProductNotFound,
+}
+
+func (e ProductChangeStatusUserErrorCode) IsValid() bool {
+	switch e {
+	case ProductChangeStatusUserErrorCodeProductNotFound:
+		return true
+	}
+	return false
+}
+
+func (e ProductChangeStatusUserErrorCode) String() string {
+	return string(e)
+}
+
+func (e *ProductChangeStatusUserErrorCode) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = ProductChangeStatusUserErrorCode(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid ProductChangeStatusUserErrorCode", str)
+	}
+	return nil
+}
+
+func (e ProductChangeStatusUserErrorCode) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
 // The set of valid sort keys for the ProductCollection query.
 type ProductCollectionSortKeys string
 
@@ -15949,6 +16828,53 @@ func (e *ProductSortKeys) UnmarshalGQL(v interface{}) error {
 }
 
 func (e ProductSortKeys) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+// The possible product statuses.
+type ProductStatus string
+
+const (
+	// The product is ready to sell and is available to customers on the online store, sales channels, and apps. By default, existing products are set to active.
+	ProductStatusActive ProductStatus = "ACTIVE"
+	// The product is no longer being sold and isn't available to customers on sales channels and apps.
+	ProductStatusArchived ProductStatus = "ARCHIVED"
+	// The product isn't ready to sell and is unavailable to customers on sales channels and apps. By default, duplicated and unarchived products are set to draft.
+	ProductStatusDraft ProductStatus = "DRAFT"
+)
+
+var AllProductStatus = []ProductStatus{
+	ProductStatusActive,
+	ProductStatusArchived,
+	ProductStatusDraft,
+}
+
+func (e ProductStatus) IsValid() bool {
+	switch e {
+	case ProductStatusActive, ProductStatusArchived, ProductStatusDraft:
+		return true
+	}
+	return false
+}
+
+func (e ProductStatus) String() string {
+	return string(e)
+}
+
+func (e *ProductStatus) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = ProductStatus(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid ProductStatus", str)
+	}
+	return nil
+}
+
+func (e ProductStatus) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
@@ -16236,56 +17162,6 @@ func (e RefundDutyRefundType) MarshalGQL(w io.Writer) {
 }
 
 // The type of restock performed for a particular refund line item.
-type RefundLineItemRefundType string
-
-const (
-	// Refund line item was returned.
-	RefundLineItemRefundTypeReturn RefundLineItemRefundType = "RETURN"
-	// Refund line item was canceled.
-	RefundLineItemRefundTypeCancel RefundLineItemRefundType = "CANCEL"
-	// Refund line item was restocked, without specifically being identified as a return or cancelation.
-	RefundLineItemRefundTypeLegacyRestock RefundLineItemRefundType = "LEGACY_RESTOCK"
-	// Refund line item was not restocked.
-	RefundLineItemRefundTypeNoRestock RefundLineItemRefundType = "NO_RESTOCK"
-)
-
-var AllRefundLineItemRefundType = []RefundLineItemRefundType{
-	RefundLineItemRefundTypeReturn,
-	RefundLineItemRefundTypeCancel,
-	RefundLineItemRefundTypeLegacyRestock,
-	RefundLineItemRefundTypeNoRestock,
-}
-
-func (e RefundLineItemRefundType) IsValid() bool {
-	switch e {
-	case RefundLineItemRefundTypeReturn, RefundLineItemRefundTypeCancel, RefundLineItemRefundTypeLegacyRestock, RefundLineItemRefundTypeNoRestock:
-		return true
-	}
-	return false
-}
-
-func (e RefundLineItemRefundType) String() string {
-	return string(e)
-}
-
-func (e *RefundLineItemRefundType) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = RefundLineItemRefundType(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid RefundLineItemRefundType", str)
-	}
-	return nil
-}
-
-func (e RefundLineItemRefundType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-// The type of restock performed for a particular refund line item.
 type RefundLineItemRestockType string
 
 const (
@@ -16495,6 +17371,8 @@ const (
 	SearchResultTypeCollection         SearchResultType = "COLLECTION"
 	SearchResultTypeDraftOrder         SearchResultType = "DRAFT_ORDER"
 	SearchResultTypePriceRule          SearchResultType = "PRICE_RULE"
+	// A code discount redeem code.
+	SearchResultTypeDiscountRedeemCode SearchResultType = "DISCOUNT_REDEEM_CODE"
 )
 
 var AllSearchResultType = []SearchResultType{
@@ -16507,11 +17385,12 @@ var AllSearchResultType = []SearchResultType{
 	SearchResultTypeCollection,
 	SearchResultTypeDraftOrder,
 	SearchResultTypePriceRule,
+	SearchResultTypeDiscountRedeemCode,
 }
 
 func (e SearchResultType) IsValid() bool {
 	switch e {
-	case SearchResultTypeOrder, SearchResultTypeCustomer, SearchResultTypeProduct, SearchResultTypeOnlineStorePage, SearchResultTypeOnlineStoreBlog, SearchResultTypeOnlineStoreArticle, SearchResultTypeCollection, SearchResultTypeDraftOrder, SearchResultTypePriceRule:
+	case SearchResultTypeOrder, SearchResultTypeCustomer, SearchResultTypeProduct, SearchResultTypeOnlineStorePage, SearchResultTypeOnlineStoreBlog, SearchResultTypeOnlineStoreArticle, SearchResultTypeCollection, SearchResultTypeDraftOrder, SearchResultTypePriceRule, SearchResultTypeDiscountRedeemCode:
 		return true
 	}
 	return false
@@ -16682,6 +17561,103 @@ func (e *ShopImageSortKeys) UnmarshalGQL(v interface{}) error {
 }
 
 func (e ShopImageSortKeys) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+// Possible error codes that could be returned by ShopPolicyUserError.
+type ShopPolicyErrorCode string
+
+const (
+	// Input value is too big.
+	ShopPolicyErrorCodeTooBig ShopPolicyErrorCode = "TOO_BIG"
+)
+
+var AllShopPolicyErrorCode = []ShopPolicyErrorCode{
+	ShopPolicyErrorCodeTooBig,
+}
+
+func (e ShopPolicyErrorCode) IsValid() bool {
+	switch e {
+	case ShopPolicyErrorCodeTooBig:
+		return true
+	}
+	return false
+}
+
+func (e ShopPolicyErrorCode) String() string {
+	return string(e)
+}
+
+func (e *ShopPolicyErrorCode) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = ShopPolicyErrorCode(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid ShopPolicyErrorCode", str)
+	}
+	return nil
+}
+
+func (e ShopPolicyErrorCode) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+// Available shop policy types.
+type ShopPolicyType string
+
+const (
+	// The Refund policy.
+	ShopPolicyTypeRefundPolicy ShopPolicyType = "REFUND_POLICY"
+	// The Shipping policy.
+	ShopPolicyTypeShippingPolicy ShopPolicyType = "SHIPPING_POLICY"
+	// The Privacy policy.
+	ShopPolicyTypePrivacyPolicy ShopPolicyType = "PRIVACY_POLICY"
+	// The Terms of service.
+	ShopPolicyTypeTermsOfService ShopPolicyType = "TERMS_OF_SERVICE"
+	// The Terms of sale.
+	ShopPolicyTypeTermsOfSale ShopPolicyType = "TERMS_OF_SALE"
+	// The Legal notice.
+	ShopPolicyTypeLegalNotice ShopPolicyType = "LEGAL_NOTICE"
+)
+
+var AllShopPolicyType = []ShopPolicyType{
+	ShopPolicyTypeRefundPolicy,
+	ShopPolicyTypeShippingPolicy,
+	ShopPolicyTypePrivacyPolicy,
+	ShopPolicyTypeTermsOfService,
+	ShopPolicyTypeTermsOfSale,
+	ShopPolicyTypeLegalNotice,
+}
+
+func (e ShopPolicyType) IsValid() bool {
+	switch e {
+	case ShopPolicyTypeRefundPolicy, ShopPolicyTypeShippingPolicy, ShopPolicyTypePrivacyPolicy, ShopPolicyTypeTermsOfService, ShopPolicyTypeTermsOfSale, ShopPolicyTypeLegalNotice:
+		return true
+	}
+	return false
+}
+
+func (e ShopPolicyType) String() string {
+	return string(e)
+}
+
+func (e *ShopPolicyType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = ShopPolicyType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid ShopPolicyType", str)
+	}
+	return nil
+}
+
+func (e ShopPolicyType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
@@ -17801,6 +18777,12 @@ const (
 	WebhookSubscriptionTopicDomainsUpdate WebhookSubscriptionTopic = "DOMAINS_UPDATE"
 	// The webhook topic for `domains/destroy` events.
 	WebhookSubscriptionTopicDomainsDestroy WebhookSubscriptionTopic = "DOMAINS_DESTROY"
+	// The webhook topic for `profiles/create` events.
+	WebhookSubscriptionTopicProfilesCreate WebhookSubscriptionTopic = "PROFILES_CREATE"
+	// The webhook topic for `profiles/update` events.
+	WebhookSubscriptionTopicProfilesUpdate WebhookSubscriptionTopic = "PROFILES_UPDATE"
+	// The webhook topic for `profiles/delete` events.
+	WebhookSubscriptionTopicProfilesDelete WebhookSubscriptionTopic = "PROFILES_DELETE"
 )
 
 var AllWebhookSubscriptionTopic = []WebhookSubscriptionTopic{
@@ -17887,11 +18869,14 @@ var AllWebhookSubscriptionTopic = []WebhookSubscriptionTopic{
 	WebhookSubscriptionTopicDomainsCreate,
 	WebhookSubscriptionTopicDomainsUpdate,
 	WebhookSubscriptionTopicDomainsDestroy,
+	WebhookSubscriptionTopicProfilesCreate,
+	WebhookSubscriptionTopicProfilesUpdate,
+	WebhookSubscriptionTopicProfilesDelete,
 }
 
 func (e WebhookSubscriptionTopic) IsValid() bool {
 	switch e {
-	case WebhookSubscriptionTopicAppUninstalled, WebhookSubscriptionTopicCartsCreate, WebhookSubscriptionTopicCartsUpdate, WebhookSubscriptionTopicChannelsDelete, WebhookSubscriptionTopicCheckoutsCreate, WebhookSubscriptionTopicCheckoutsDelete, WebhookSubscriptionTopicCheckoutsUpdate, WebhookSubscriptionTopicCollectionListingsAdd, WebhookSubscriptionTopicCollectionListingsRemove, WebhookSubscriptionTopicCollectionListingsUpdate, WebhookSubscriptionTopicCollectionPublicationsCreate, WebhookSubscriptionTopicCollectionPublicationsDelete, WebhookSubscriptionTopicCollectionPublicationsUpdate, WebhookSubscriptionTopicCollectionsCreate, WebhookSubscriptionTopicCollectionsDelete, WebhookSubscriptionTopicCollectionsUpdate, WebhookSubscriptionTopicCustomerGroupsCreate, WebhookSubscriptionTopicCustomerGroupsDelete, WebhookSubscriptionTopicCustomerGroupsUpdate, WebhookSubscriptionTopicCustomersCreate, WebhookSubscriptionTopicCustomersDelete, WebhookSubscriptionTopicCustomersDisable, WebhookSubscriptionTopicCustomersEnable, WebhookSubscriptionTopicCustomersUpdate, WebhookSubscriptionTopicDisputesCreate, WebhookSubscriptionTopicDisputesUpdate, WebhookSubscriptionTopicDraftOrdersCreate, WebhookSubscriptionTopicDraftOrdersDelete, WebhookSubscriptionTopicDraftOrdersUpdate, WebhookSubscriptionTopicFulfillmentEventsCreate, WebhookSubscriptionTopicFulfillmentEventsDelete, WebhookSubscriptionTopicFulfillmentsCreate, WebhookSubscriptionTopicFulfillmentsUpdate, WebhookSubscriptionTopicAttributedSessionsFirst, WebhookSubscriptionTopicAttributedSessionsLast, WebhookSubscriptionTopicOrderTransactionsCreate, WebhookSubscriptionTopicOrdersCancelled, WebhookSubscriptionTopicOrdersCreate, WebhookSubscriptionTopicOrdersDelete, WebhookSubscriptionTopicOrdersEdited, WebhookSubscriptionTopicOrdersFulfilled, WebhookSubscriptionTopicOrdersPaid, WebhookSubscriptionTopicOrdersPartiallyFulfilled, WebhookSubscriptionTopicOrdersUpdated, WebhookSubscriptionTopicProductListingsAdd, WebhookSubscriptionTopicProductListingsRemove, WebhookSubscriptionTopicProductListingsUpdate, WebhookSubscriptionTopicProductPublicationsCreate, WebhookSubscriptionTopicProductPublicationsDelete, WebhookSubscriptionTopicProductPublicationsUpdate, WebhookSubscriptionTopicProductsCreate, WebhookSubscriptionTopicProductsDelete, WebhookSubscriptionTopicProductsUpdate, WebhookSubscriptionTopicRefundsCreate, WebhookSubscriptionTopicShippingAddressesCreate, WebhookSubscriptionTopicShippingAddressesUpdate, WebhookSubscriptionTopicShopUpdate, WebhookSubscriptionTopicTaxServicesCreate, WebhookSubscriptionTopicTaxServicesUpdate, WebhookSubscriptionTopicThemesCreate, WebhookSubscriptionTopicThemesDelete, WebhookSubscriptionTopicThemesPublish, WebhookSubscriptionTopicThemesUpdate, WebhookSubscriptionTopicVariantsInStock, WebhookSubscriptionTopicVariantsOutOfStock, WebhookSubscriptionTopicInventoryLevelsConnect, WebhookSubscriptionTopicInventoryLevelsUpdate, WebhookSubscriptionTopicInventoryLevelsDisconnect, WebhookSubscriptionTopicAttributionRisk, WebhookSubscriptionTopicInventoryItemsCreate, WebhookSubscriptionTopicInventoryItemsUpdate, WebhookSubscriptionTopicInventoryItemsDelete, WebhookSubscriptionTopicLocationsCreate, WebhookSubscriptionTopicLocationsUpdate, WebhookSubscriptionTopicLocationsDelete, WebhookSubscriptionTopicTenderTransactionsCreate, WebhookSubscriptionTopicAppPurchasesOneTimeUpdate, WebhookSubscriptionTopicAppSubscriptionsUpdate, WebhookSubscriptionTopicLocalesCreate, WebhookSubscriptionTopicLocalesUpdate, WebhookSubscriptionTopicDomainsCreate, WebhookSubscriptionTopicDomainsUpdate, WebhookSubscriptionTopicDomainsDestroy:
+	case WebhookSubscriptionTopicAppUninstalled, WebhookSubscriptionTopicCartsCreate, WebhookSubscriptionTopicCartsUpdate, WebhookSubscriptionTopicChannelsDelete, WebhookSubscriptionTopicCheckoutsCreate, WebhookSubscriptionTopicCheckoutsDelete, WebhookSubscriptionTopicCheckoutsUpdate, WebhookSubscriptionTopicCollectionListingsAdd, WebhookSubscriptionTopicCollectionListingsRemove, WebhookSubscriptionTopicCollectionListingsUpdate, WebhookSubscriptionTopicCollectionPublicationsCreate, WebhookSubscriptionTopicCollectionPublicationsDelete, WebhookSubscriptionTopicCollectionPublicationsUpdate, WebhookSubscriptionTopicCollectionsCreate, WebhookSubscriptionTopicCollectionsDelete, WebhookSubscriptionTopicCollectionsUpdate, WebhookSubscriptionTopicCustomerGroupsCreate, WebhookSubscriptionTopicCustomerGroupsDelete, WebhookSubscriptionTopicCustomerGroupsUpdate, WebhookSubscriptionTopicCustomersCreate, WebhookSubscriptionTopicCustomersDelete, WebhookSubscriptionTopicCustomersDisable, WebhookSubscriptionTopicCustomersEnable, WebhookSubscriptionTopicCustomersUpdate, WebhookSubscriptionTopicDisputesCreate, WebhookSubscriptionTopicDisputesUpdate, WebhookSubscriptionTopicDraftOrdersCreate, WebhookSubscriptionTopicDraftOrdersDelete, WebhookSubscriptionTopicDraftOrdersUpdate, WebhookSubscriptionTopicFulfillmentEventsCreate, WebhookSubscriptionTopicFulfillmentEventsDelete, WebhookSubscriptionTopicFulfillmentsCreate, WebhookSubscriptionTopicFulfillmentsUpdate, WebhookSubscriptionTopicAttributedSessionsFirst, WebhookSubscriptionTopicAttributedSessionsLast, WebhookSubscriptionTopicOrderTransactionsCreate, WebhookSubscriptionTopicOrdersCancelled, WebhookSubscriptionTopicOrdersCreate, WebhookSubscriptionTopicOrdersDelete, WebhookSubscriptionTopicOrdersEdited, WebhookSubscriptionTopicOrdersFulfilled, WebhookSubscriptionTopicOrdersPaid, WebhookSubscriptionTopicOrdersPartiallyFulfilled, WebhookSubscriptionTopicOrdersUpdated, WebhookSubscriptionTopicProductListingsAdd, WebhookSubscriptionTopicProductListingsRemove, WebhookSubscriptionTopicProductListingsUpdate, WebhookSubscriptionTopicProductPublicationsCreate, WebhookSubscriptionTopicProductPublicationsDelete, WebhookSubscriptionTopicProductPublicationsUpdate, WebhookSubscriptionTopicProductsCreate, WebhookSubscriptionTopicProductsDelete, WebhookSubscriptionTopicProductsUpdate, WebhookSubscriptionTopicRefundsCreate, WebhookSubscriptionTopicShippingAddressesCreate, WebhookSubscriptionTopicShippingAddressesUpdate, WebhookSubscriptionTopicShopUpdate, WebhookSubscriptionTopicTaxServicesCreate, WebhookSubscriptionTopicTaxServicesUpdate, WebhookSubscriptionTopicThemesCreate, WebhookSubscriptionTopicThemesDelete, WebhookSubscriptionTopicThemesPublish, WebhookSubscriptionTopicThemesUpdate, WebhookSubscriptionTopicVariantsInStock, WebhookSubscriptionTopicVariantsOutOfStock, WebhookSubscriptionTopicInventoryLevelsConnect, WebhookSubscriptionTopicInventoryLevelsUpdate, WebhookSubscriptionTopicInventoryLevelsDisconnect, WebhookSubscriptionTopicAttributionRisk, WebhookSubscriptionTopicInventoryItemsCreate, WebhookSubscriptionTopicInventoryItemsUpdate, WebhookSubscriptionTopicInventoryItemsDelete, WebhookSubscriptionTopicLocationsCreate, WebhookSubscriptionTopicLocationsUpdate, WebhookSubscriptionTopicLocationsDelete, WebhookSubscriptionTopicTenderTransactionsCreate, WebhookSubscriptionTopicAppPurchasesOneTimeUpdate, WebhookSubscriptionTopicAppSubscriptionsUpdate, WebhookSubscriptionTopicLocalesCreate, WebhookSubscriptionTopicLocalesUpdate, WebhookSubscriptionTopicDomainsCreate, WebhookSubscriptionTopicDomainsUpdate, WebhookSubscriptionTopicDomainsDestroy, WebhookSubscriptionTopicProfilesCreate, WebhookSubscriptionTopicProfilesUpdate, WebhookSubscriptionTopicProfilesDelete:
 		return true
 	}
 	return false
