@@ -3,7 +3,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 go_library(
     name = "go_default_library",
     srcs = ["main.go"],
-    importpath = "k9bookshelf/syncdata/gqlgenc",
+    importpath = "k9bookshelf/gqlgenc",
     visibility = ["//visibility:private"],
     deps = [
         "@com_github_99designs_gqlgen//api:go_default_library",
