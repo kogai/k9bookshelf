@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"k9bookshelf/content"
+	"github.com/kogai/k9bookshelf/content"
 
 	"github.com/spf13/cobra"
 )

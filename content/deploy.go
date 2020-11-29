@@ -3,11 +3,12 @@ package content
 import (
 	"fmt"
 	"io/ioutil"
-	generated "k9bookshelf/gqlgenc/client"
 	"os"
 	"path"
 	"path/filepath"
 	"sync"
+
+	generated "github.com/kogai/k9bookshelf/gqlgenc/client"
 
 	shopify "github.com/bold-commerce/go-shopify"
 	"github.com/gomarkdown/markdown"

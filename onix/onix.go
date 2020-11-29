@@ -7,8 +7,9 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"k9bookshelf/gqlgenc/client"
 	"os"
+
+	"github.com/kogai/k9bookshelf/gqlgenc/client"
 )
 
 const apiVersion string = "2020-10"

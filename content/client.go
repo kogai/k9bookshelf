@@ -3,8 +3,9 @@ package content
 import (
 	"context"
 	"fmt"
-	generated "k9bookshelf/gqlgenc/client"
 	"net/http"
+
+	generated "github.com/kogai/k9bookshelf/gqlgenc/client"
 
 	"github.com/Yamashou/gqlgenc/client"
 	shopify "github.com/bold-commerce/go-shopify"

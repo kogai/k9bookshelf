@@ -1,7 +1,7 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_path")
 load("@bazel_gazelle//:def.bzl", "gazelle")
 
-# gazelle:prefix k9bookshelf
+# gazelle:prefix github.com/kogai/k9bookshelf
 gazelle(name = "gazelle")
 
 go_path(
