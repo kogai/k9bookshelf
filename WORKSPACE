@@ -1385,6 +1385,13 @@ go_repository(
     version = "v1.2.0",
 )
 
+go_repository(
+    name = "in_gopkg_go_playground_assert_v1",
+    importpath = "gopkg.in/go-playground/assert.v1",
+    sum = "h1:xoYuJVE7KT85PYWrN730RguIQO0ePzVRfFMXadIrXTM=",
+    version = "v1.2.1",
+)
+
 go_rules_dependencies()
 
 go_register_toolchains()
