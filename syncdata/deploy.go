@@ -15,8 +15,8 @@ import (
 	"github.com/vbauerster/mpb/decor"
 )
 
-func deployProducts(contents []Content, bar *mpb.Bar) error {
-	gqlClient, ctx := establishGqlClient()
+func deployProducts(shopDomain, shopToken string, contents []Content, bar *mpb.Bar) error {
+	gqlClient, ctx := establishGqlClient(shopDomain, shopToken)
 	wg := sync.WaitGroup{}
 	c := make(chan error)
 	for _, content := range contents {
@@ -63,9 +63,9 @@ func deployProducts(contents []Content, bar *mpb.Bar) error {
 	return err
 }
 
-func deployPages(contents []Content, bar *mpb.Bar) error {
+func deployPages(shopDomain, appKey, appSecret string, contents []Content, bar *mpb.Bar) error {
 	var err error
-	adminClient := establishRestClient()
+	adminClient := establishRestClient(shopDomain, appKey, appSecret)
 	wg := sync.WaitGroup{}
 	c := make(chan error)
 	for _, content := range contents {
@@ -122,9 +122,9 @@ func deployPages(contents []Content, bar *mpb.Bar) error {
 	return err
 }
 
-func deployBlogs(blogs map[string][]Content, bar *mpb.Bar) error {
+func deployBlogs(shopDomain, appKey, appSecret string, blogs map[string][]Content, bar *mpb.Bar) error {
 	var err error
-	adminClient := establishRestClient()
+	adminClient := establishRestClient(shopDomain, appKey, appSecret)
 	wg := sync.WaitGroup{}
 	c := make(chan error)
 
@@ -220,7 +220,7 @@ type tmpIterable struct {
 }
 
 // Deploy uploads contents to store
-func Deploy(input string) error {
+func Deploy(shopDomain, appKey, appSecret, shopToken, input string) error {
 	rawProducts, err := ioutil.ReadDir(path.Join(input, "products"))
 	if err != nil {
 		return err
@@ -265,19 +265,19 @@ func Deploy(input string) error {
 	for name, _f := range map[string]tmpIterable{
 		"products": {
 			f: func(bar *mpb.Bar) error {
-				return deployProducts(products, bar)
+				return deployProducts(shopDomain, shopToken, products, bar)
 			},
 			numberOfContents: len(products),
 		},
 		"pages": {
 			f: func(bar *mpb.Bar) error {
-				return deployPages(pages, bar)
+				return deployPages(shopDomain, appKey, appSecret, pages, bar)
 			},
 			numberOfContents: len(pages),
 		},
 		"blogs": {
 			f: func(bar *mpb.Bar) error {
-				return deployBlogs(blogs, bar)
+				return deployBlogs(shopDomain, appKey, appSecret, blogs, bar)
 			},
 			numberOfContents: numberOfBlogs,
 		},

@@ -10,9 +10,9 @@ import (
 	shopify "github.com/bold-commerce/go-shopify"
 )
 
-func establishGqlClient() (*generated.Client, context.Context) {
+func establishGqlClient(shopDomain, shopToken string) (*generated.Client, context.Context) {
 	authHeader := func(req *http.Request) {
-		req.Header.Set("X-Shopify-Access-Token", appSecret)
+		req.Header.Set("X-Shopify-Access-Token", shopToken)
 	}
 
 	return &generated.Client{
@@ -22,7 +22,7 @@ func establishGqlClient() (*generated.Client, context.Context) {
 	}, context.Background()
 }
 
-func establishRestClient() *shopify.Client {
+func establishRestClient(shopDomain, appKey, appSecret string) *shopify.Client {
 	app := shopify.App{
 		ApiKey:    appKey,
 		ApiSecret: appSecret,

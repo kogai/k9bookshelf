@@ -22,7 +22,15 @@ var deployCmd = &cobra.Command{
 	Use:   "deploy",
 	Short: "Upload contents to store",
 	Run: func(cmd *cobra.Command, args []string) {
-		err := syncdata.Deploy(cmd.Flag("input").Value.String())
+		input := cmd.Flag("input").Value.String()
+		shopDomain := cmd.Flag("domain").Value.String()
+		appKey := cmd.Flag("key").Value.String()
+		appSecret := cmd.Flag("secret").Value.String()
+		shopToken := cmd.Flag("token").Value.String()
+		if shopDomain == "" || appKey == "" || appSecret == "" || shopToken == "" {
+			log.Fatal(fmt.Sprintf("One of required parameter is empty, shopDomain='%s' appKey='%s' appSecret='%s' shopToken='%s'", shopDomain, appKey, appSecret, shopToken))
+		}
+		err := syncdata.Deploy(shopDomain, appKey, appSecret, shopToken, input)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -33,7 +41,15 @@ var downloadCmd = &cobra.Command{
 	Use:   "download",
 	Short: "Download contents from store",
 	Run: func(cmd *cobra.Command, args []string) {
-		err := syncdata.Download(cmd.Flag("output").Value.String())
+		output := cmd.Flag("output").Value.String()
+		shopDomain := cmd.Flag("domain").Value.String()
+		appKey := cmd.Flag("key").Value.String()
+		appSecret := cmd.Flag("secret").Value.String()
+		shopToken := cmd.Flag("token").Value.String()
+		if shopDomain == "" || appKey == "" || appSecret == "" || shopToken == "" {
+			log.Fatal(fmt.Sprintf("One of required parameter is empty, shopDomain='%s' appKey='%s' appSecret='%s' shopToken='%s'", shopDomain, appKey, appSecret, shopToken))
+		}
+		err := syncdata.Download(shopDomain, appKey, appSecret, shopToken, output)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -47,7 +63,17 @@ func main() {
 	}
 
 	downloadCmd.PersistentFlags().StringP("output", "o", fmt.Sprintf("%s", cwd), "output directory")
+	downloadCmd.PersistentFlags().String("domain", "", "ShopDomain of your shop ex:your-shop.myshopify.com")
+	downloadCmd.PersistentFlags().String("key", "", "Key of Admin API")
+	downloadCmd.PersistentFlags().String("secret", "", "Secret of Admin API")
+	downloadCmd.PersistentFlags().String("token", "", "AccessToken for Admin API generally same as secret if using Private App.")
+
 	deployCmd.PersistentFlags().StringP("input", "i", fmt.Sprintf("%s", cwd), "input directory")
+	deployCmd.PersistentFlags().String("domain", "", "ShopDomain of your shop ex:your-shop.myshopify.com")
+	deployCmd.PersistentFlags().String("key", "", "Key of Admin API")
+	deployCmd.PersistentFlags().String("secret", "", "Secret of Admin API")
+	deployCmd.PersistentFlags().String("token", "", "AccessToken for Admin API generally same as secret if using Private App.")
+
 	rootCmd.AddCommand(downloadCmd)
 	rootCmd.AddCommand(deployCmd)
 

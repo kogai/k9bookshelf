@@ -11,10 +11,20 @@ deploy/theme:
 	$(TK) deploy --dir theme
 
 deploy/contents: $(MD_FILES) bin/syncdata
-	./bin/syncdata deploy --input $(PWD)/contents
+	./bin/syncdata deploy \
+		--input $(PWD)/contents \
+		--domain k9books.myshopify.com \
+		--key $(MARKDOWN_APP_KEY) \
+		--secret $(MARKDOWN_APP_SECRET) \
+		--token $(MARKDOWN_APP_SECRET)
 
 download/contents: $(MD_FILES) bin/syncdata
-	./bin/syncdata download --output $(PWD)/contents
+	./bin/syncdata download \
+		--output $(PWD)/contents \
+		--domain k9books.myshopify.com \
+		--key $(MARKDOWN_APP_KEY) \
+		--secret $(MARKDOWN_APP_SECRET) \
+		--token $(MARKDOWN_APP_SECRET)
 
 watch:
 	$(TK) watch --dir theme
