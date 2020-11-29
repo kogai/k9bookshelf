@@ -27,5 +27,6 @@ jobs:
       - run: make -s deploy/contents
         if: github.ref == 'refs/heads/main'
         env:
+          MARKDOWN_APP_KEY: ${{ secrets.MARKDOWN_APP_KEY }}
           MARKDOWN_APP_SECRET: ${{ secrets.MARKDOWN_APP_SECRET }}
           GRAPHQL_ADMIN_API_SECRET: ${{ secrets.GRAPHQL_ADMIN_API_SECRET }}
