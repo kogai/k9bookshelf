@@ -8,6 +8,7 @@ go_library(
     ],
     importpath = "k9bookshelf/onix",
     visibility = ["//visibility:public"],
+    deps = ["//gqlgenc/client:go_default_library"],
 )
 
 go_test(

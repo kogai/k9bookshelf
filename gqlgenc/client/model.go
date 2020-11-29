@@ -1652,12 +1652,12 @@ type Customer struct {
 	VerifiedEmail bool `json:"verifiedEmail"`
 }
 
+func (Customer) IsCommentEventEmbed()      {}
 func (Customer) IsNode()                   {}
 func (Customer) IsCommentEventSubject()    {}
 func (Customer) IsHasMetafields()          {}
 func (Customer) IsLegacyInteroperability() {}
 func (Customer) IsHasEvents()              {}
-func (Customer) IsCommentEventEmbed()      {}
 
 // Return type for `customerAddTaxExemptions` mutation.
 type CustomerAddTaxExemptionsPayload struct {
@@ -2138,8 +2138,8 @@ type DeliveryParticipant struct {
 	PercentageOfRateFee float64 `json:"percentageOfRateFee"`
 }
 
-func (DeliveryParticipant) IsNode()                 {}
 func (DeliveryParticipant) IsDeliveryRateProvider() {}
+func (DeliveryParticipant) IsNode()                 {}
 
 // Input fields for a participant.
 type DeliveryParticipantInput struct {
@@ -3213,8 +3213,8 @@ type DiscountPercentage struct {
 	Percentage float64 `json:"percentage"`
 }
 
-func (DiscountPercentage) IsDiscountEffect()            {}
 func (DiscountPercentage) IsDiscountCustomerGetsValue() {}
+func (DiscountPercentage) IsDiscountEffect()            {}
 
 // The entitled or prerequisite products and product variants for a discount.
 type DiscountProducts struct {
@@ -5836,8 +5836,8 @@ type MoneyV2 struct {
 	CurrencyCode CurrencyCode `json:"currencyCode"`
 }
 
-func (MoneyV2) IsPricingValue()              {}
 func (MoneyV2) IsDeliveryConditionCriteria() {}
+func (MoneyV2) IsPricingValue()              {}
 
 // An individual move to perform of an object to a position.
 type MoveInput struct {
@@ -6204,13 +6204,13 @@ type Order struct {
 	UpdatedAt string `json:"updatedAt"`
 }
 
-func (Order) IsCommentEventEmbed()         {}
 func (Order) IsNode()                      {}
 func (Order) IsCommentEventSubject()       {}
 func (Order) IsHasMetafields()             {}
 func (Order) IsLegacyInteroperability()    {}
 func (Order) IsHasEvents()                 {}
 func (Order) IsHasLocalizationExtensions() {}
+func (Order) IsCommentEventEmbed()         {}
 
 // Specifies the authorized transaction to capture and the total amount to capture from it.
 type OrderCaptureInput struct {
@@ -7317,6 +7317,7 @@ type Product struct {
 	Vendor string `json:"vendor"`
 }
 
+func (Product) IsCommentEventEmbed()        {}
 func (Product) IsNode()                     {}
 func (Product) IsNavigable()                {}
 func (Product) IsHasMetafields()            {}
@@ -7324,7 +7325,6 @@ func (Product) IsHasPublishedTranslations() {}
 func (Product) IsPublishable()              {}
 func (Product) IsOnlineStorePreviewable()   {}
 func (Product) IsLegacyInteroperability()   {}
-func (Product) IsCommentEventEmbed()        {}
 
 // Specifies product images to append.
 type ProductAppendImagesInput struct {

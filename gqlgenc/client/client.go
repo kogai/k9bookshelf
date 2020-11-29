@@ -289,6 +289,7 @@ type ProductISBNs struct {
 			Cursor string "json:\"cursor\" graphql:\"cursor\""
 			Node   struct {
 				ID       string "json:\"id\" graphql:\"id\""
+				Title    string "json:\"title\" graphql:\"title\""
 				Variants struct {
 					Edges []*struct {
 						Node struct {
@@ -371,6 +372,7 @@ const ProductISBNsQuery = `query productISBNs ($first: Int!, $after: String) {
 			cursor
 			node {
 				id
+				title
 				variants(first: 1) {
 					edges {
 						node {

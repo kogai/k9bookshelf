@@ -4,6 +4,7 @@ go_library(
     name = "go_default_library",
     srcs = [
         "client.go",
+        "gql.go",
         "model.go",
     ],
     importpath = "k9bookshelf/gqlgenc/client",
