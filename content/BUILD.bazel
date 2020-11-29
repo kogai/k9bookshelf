@@ -9,7 +9,7 @@ go_library(
         "download.go",
         "syncdata.go",
     ],
-    importpath = "k9bookshelf/syncdata",
+    importpath = "k9bookshelf/content",
     visibility = ["//visibility:public"],
     deps = [
         "//gqlgenc/client:go_default_library",

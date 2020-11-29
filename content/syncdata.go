@@ -1,4 +1,4 @@
-package syncdata
+package content
 
 const apiVersion string = "2020-10"
 

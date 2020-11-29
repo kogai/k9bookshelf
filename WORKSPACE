@@ -35,7 +35,7 @@ go_repository(
 go_repository(
     name = "com_github_99designs_gqlgen",
     importpath = "github.com/99designs/gqlgen",
-    patches = ["//syncdata:com_github_99designs_gqlgen.patch"],
+    patches = ["//content:com_github_99designs_gqlgen.patch"],
     sum = "h1:haLTcUp3Vwp80xMVEg5KRNwzfUrgFdRmtBY8fuB8scA=",
     version = "v0.13.0",
 )
@@ -1065,7 +1065,7 @@ go_repository(
 go_repository(
     name = "com_github_yamashou_gqlgenc",
     importpath = "github.com/Yamashou/gqlgenc",
-    patches = ["//syncdata:com_github_yamashou_gqlgenc.patch"],
+    patches = ["//content:com_github_yamashou_gqlgenc.patch"],
     sum = "h1:VDHpRaUiijHN8s1KbD8ntf1MBofbp84gCEH+cYrQ/uA=",
     version = "v0.0.0-20201118110422-c5e4e29019a7",
 )

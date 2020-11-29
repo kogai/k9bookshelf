@@ -1,4 +1,4 @@
-package syncdata
+package content
 
 import (
 	"context"

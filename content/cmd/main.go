@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"k9bookshelf/syncdata"
+	"k9bookshelf/content"
 
 	"github.com/spf13/cobra"
 )
@@ -30,7 +30,7 @@ var deployCmd = &cobra.Command{
 		if shopDomain == "" || appKey == "" || appSecret == "" || shopToken == "" {
 			log.Fatalln(fmt.Sprintf("One of required parameter is empty, shopDomain='%s' appKey='%s' appSecret='%s' shopToken='%s'", shopDomain, appKey, appSecret, shopToken))
 		}
-		err := syncdata.Deploy(shopDomain, appKey, appSecret, shopToken, input)
+		err := content.Deploy(shopDomain, appKey, appSecret, shopToken, input)
 		if err != nil {
 			log.Fatalln(err)
 		}
@@ -49,7 +49,7 @@ var downloadCmd = &cobra.Command{
 		if shopDomain == "" || appKey == "" || appSecret == "" || shopToken == "" {
 			log.Fatalln(fmt.Sprintf("One of required parameter is empty, shopDomain='%s' appKey='%s' appSecret='%s' shopToken='%s'", shopDomain, appKey, appSecret, shopToken))
 		}
-		err := syncdata.Download(shopDomain, appKey, appSecret, shopToken, output)
+		err := content.Download(shopDomain, appKey, appSecret, shopToken, output)
 		if err != nil {
 			log.Fatalln(err)
 		}
