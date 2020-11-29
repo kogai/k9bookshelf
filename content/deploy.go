@@ -260,7 +260,6 @@ func Deploy(shopDomain, appKey, appSecret, shopToken, input string) error {
 
 	wg := sync.WaitGroup{}
 	p := mpb.New(mpb.WithWaitGroup(&wg))
-
 	c := make(chan error)
 	for name, _f := range map[string]tmpIterable{
 		"products": {
