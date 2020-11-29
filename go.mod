@@ -1,4 +1,4 @@
-module k9bookshelf
+module github.com/kogai/k9bookshelf
 
 go 1.14
 

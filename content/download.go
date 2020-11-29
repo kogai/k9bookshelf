@@ -1,4 +1,4 @@
-package syncdata
+package content
 
 import (
 	"os"
@@ -49,9 +49,9 @@ func dowloadContens(output string, contents *[]Content, bar *mpb.Bar) error {
 }
 
 // Download downloads contents from store
-func Download(output string) error {
-	adminClient, ctx := establishGqlClient()
-	restClient := establishRestClient()
+func Download(shopDomain, appKey, appSecret, shopToken, output string) error {
+	adminClient, ctx := establishGqlClient(shopDomain, shopToken)
+	restClient := establishRestClient(shopDomain, appKey, appSecret)
 
 	res, err := fetchProducts(ctx, adminClient)
 	if err != nil {

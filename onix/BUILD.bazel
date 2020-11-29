@@ -6,7 +6,7 @@ go_library(
         "message.go",
         "onix.go",
     ],
-    importpath = "k9bookshelf/onix",
+    importpath = "github.com/kogai/k9bookshelf/onix",
     visibility = ["//visibility:public"],
     deps = ["//gqlgenc/client:go_default_library"],
 )

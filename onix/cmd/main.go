@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"k9bookshelf/onix"
+	"github.com/kogai/k9bookshelf/onix"
 
 	"github.com/spf13/cobra"
 )
