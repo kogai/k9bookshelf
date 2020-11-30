@@ -22,5 +22,3 @@ You’ll need a Linux, Mac, or Windows workstation with an Internet connection. 
 特にWebアプリケーションの文脈では、高負荷な計算をクライアントで行う必然性は、プライバシーへの配慮などのケースを除けばあまり強くないとも言えます。 そういう意味では、Non-Web HostsはWebAssemblyの実行環境として傍流と言うことにはならず、そこに紙幅を割いた本書の内容は一読に値するものと思います。
 
 なお、前述の awsome-wasm-runtimeには[このサイトの運営者作の実行環境もある](https://github.com/appcypher/awesome-wasm-runtimes#wasmvm-top-1)ので、良ければ見てみて下さい。
-
-
