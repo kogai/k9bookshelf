@@ -3,10 +3,8 @@ package content
 import (
 	"os"
 	"path"
-	"strings"
 	"sync"
 
-	"github.com/mattn/godown"
 	"github.com/vbauerster/mpb"
 	"github.com/vbauerster/mpb/decor"
 )
@@ -31,7 +29,13 @@ func dowloadContens(output string, contents *[]Content, bar *mpb.Bar) error {
 				c <- err
 				return
 			}
-			err = godown.Convert(file, strings.NewReader(descriptionHTML), nil)
+			md, err := htmlToMarkdown(descriptionHTML)
+			if err != nil {
+				c <- err
+				return
+			}
+
+			_, err = file.WriteString(md)
 			if err != nil {
 				c <- err
 				return
