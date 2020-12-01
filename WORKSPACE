@@ -1283,8 +1283,8 @@ go_repository(
 go_repository(
     name = "org_golang_x_net",
     importpath = "golang.org/x/net",
-    sum = "h1:IX6qOQeG5uLjB/hjjwjedwfjND0hgjPMMyO1RoIXQNI=",
-    version = "v0.0.0-20201021035429-f5854403a974",
+    sum = "h1:uwuIcX0g4Yl1NC5XAz37xsr2lTtcqevgzYNVt49waME=",
+    version = "v0.0.0-20201110031124-69a78807bb2b",
 )
 
 go_repository(
@@ -1390,6 +1390,34 @@ go_repository(
     importpath = "gopkg.in/go-playground/assert.v1",
     sum = "h1:xoYuJVE7KT85PYWrN730RguIQO0ePzVRfFMXadIrXTM=",
     version = "v1.2.1",
+)
+
+go_repository(
+    name = "com_github_andybalholm_cascadia",
+    importpath = "github.com/andybalholm/cascadia",
+    sum = "h1:vuRCkM5Ozh/BfmsaTm26kbjm0mIOM3yS5Ek/F5h18aE=",
+    version = "v1.2.0",
+)
+
+go_repository(
+    name = "com_github_johanneskaufmann_html_to_markdown",
+    importpath = "github.com/JohannesKaufmann/html-to-markdown",
+    sum = "h1:UGTGZeFq6ljcd6CSxLW+CzUXQQDMJMzQIQ4lVexFCOk=",
+    version = "v1.2.0",
+)
+
+go_repository(
+    name = "com_github_puerkitobio_goquery",
+    importpath = "github.com/PuerkitoBio/goquery",
+    sum = "h1:j7taAbelrdcsOlGeMenZxc2AWXD5fieT1/znArdnx94=",
+    version = "v1.6.0",
+)
+
+go_repository(
+    name = "com_github_sebdah_goldie_v2",
+    importpath = "github.com/sebdah/goldie/v2",
+    sum = "h1:hh70HvG4n3T3MNRJN2z/baxPR8xutxo7JVxyi2svl+s=",
+    version = "v2.5.1",
 )
 
 go_rules_dependencies()
