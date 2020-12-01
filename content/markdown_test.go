@@ -14,12 +14,22 @@ func TestHtmlToMarkdown(t *testing.T) {
 `, md)
 }
 
+func TestHtmlToMarkdownList(t *testing.T) {
+	t.Parallel()
+	md, err := htmlToMarkdown(`<ul><li>abc</li></ul><p>def</p>`)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, `- abc
+
+def
+`, md)
+}
+
 func TestHtmlToMarkdownListAndBold(t *testing.T) {
 	t.Parallel()
 	md, err := htmlToMarkdown(`<ul><li>abc</li></ul><b>def</b>`)
 	assert.Equal(t, nil, err)
-	assert.Equal(t, `* abc
+	assert.Equal(t, `- abc
 
-**def**
+ **def**
 `, md)
 }

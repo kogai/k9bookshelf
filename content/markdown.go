@@ -1,22 +1,18 @@
 package content
 
 import (
-	"bytes"
-	"strings"
-
-	"github.com/mattn/godown"
+	md "github.com/JohannesKaufmann/html-to-markdown"
 )
 
-// type CustomRule interface {
-// 	Rule(next WalkFunc) (tagName string, customRule WalkFunc)
-// }
-
 func htmlToMarkdown(html string) (string, error) {
-	var buf bytes.Buffer
-	err := godown.Convert(&buf, strings.NewReader(html), nil)
+	opt := &md.Options{
+		HorizontalRule: "---",
+	}
+
+	converter := md.NewConverter("", true, opt)
+	markdownStr, err := converter.ConvertString(html)
 	if err != nil {
 		return "", err
 	}
-	s := buf.String()
-	return strings.TrimRight(s, "\n") + "\n", nil
+	return markdownStr + "\n", nil
 }
