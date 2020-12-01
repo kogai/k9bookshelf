@@ -12,12 +12,11 @@ For anyone from the budding maker to the keen hobbyist, The Maker’s Guide to t
 
 **Uses the Arduino Uno board and Raspberry Pi Model B+ or Model 2**
 
-
 ---
 
-フィクションのジャンルに[ポスト・アポカリプス物](https://en.wikipedia.org/wiki/Apocalyptic_and_post-apocalyptic_fiction)というのがありまして、 災害や戦争などで文明社会が壊滅的な被害を受けて、文明の連続性が失われた世界で起こる事件を追う、といったものです。
+フィクションのジャンルに [ポスト・アポカリプス物](https://en.wikipedia.org/wiki/Apocalyptic_and_post-apocalyptic_fiction) というのがありまして、 災害や戦争などで文明社会が壊滅的な被害を受けて、文明の連続性が失われた世界で起こる事件を追う、といったものです。
 
-ポスト・アポカリプス物の原因イベントの中でも特に人気のあるのがゾンビの大量発生ですが、この本はそんな状況で[メーカー](https://en.wikipedia.org/wiki/Maker_culture)（ピッタリな訳語が思いつかないのですが、電子機器を組わせて何かしら機能性のあるものを作ることを趣味とする人）が取りうる対策を色々挙げています。
+ポスト・アポカリプス物の原因イベントの中でも特に人気のあるのがゾンビの大量発生ですが、この本はそんな状況で [メーカー](https://en.wikipedia.org/wiki/Maker_culture)（ピッタリな訳語が思いつかないのですが、電子機器を組わせて何かしら機能性のあるものを作ることを趣味とする人）が取りうる対策を色々挙げています。
 
 Arduinoを使った早期警戒システムや、Raspberry Piとカメラを組み合わせた監視システムなど、ゾンビで溢れる世界で逞しく生きるためのツールのアイディアを色々提案してくれるので、平時であれば楽しめる内容です。 もっとも、いくつかのアイディアは文明社会と国際物流が生きていないと入手すら困難なアイテムがいくつもあるので、本書で指摘されているように、今のうちに用意を始めておいた方が良いかも知れません。
 
