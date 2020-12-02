@@ -4,4 +4,4 @@ A CLI tool which to edit contents of Shopify's store through Admin API that insp
 
 ## Usage
 
-Download from [here]().
+Download from [latest release](https://github.com/kogai/k9bookshelf/releases).
