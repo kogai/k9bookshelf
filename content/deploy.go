@@ -176,9 +176,9 @@ func deployBlogs(shopDomain, appKey, appSecret string, blogs map[string][]Conten
 					_, err = NewArticleResource(adminClient).Put(Article{
 						ID:       article.ID,
 						BlogID:   article.BlogID,
-						Handle:   content.handle,
 						BodyHTML: content.html,
 					})
+
 					if err != nil {
 						c <- err
 						return
