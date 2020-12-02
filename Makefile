@@ -41,6 +41,7 @@ gqlgenc/client/client.go: gqlgenc/main.go gqlgenc/*.gql
 	cp -r $(BZL_BIN)/gqlgenc/gqlgenc_/gqlgenc.runfiles/k9books/gqlgenc/client $(CURDIR)/gqlgenc
 
 bin/content: $(GO_FILES) WORKSPACE
+	mkdir -p bin
 	for target in darwin_amd64 linux_amd64 ; do \
 		$(BZL) build --platforms=@io_bazel_rules_go//go/toolchain:$$target //content/cmd/content ; \
 		cp -f $(BZL_BIN)/content/cmd/content/content_/content bin/$(VERSION)-content.$$target ; \
