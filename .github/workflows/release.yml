@@ -13,10 +13,26 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.2
+        with:
+          node-version: 15.x
+      - name: Restore caches
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.npm
+            ~/.cache/bazel
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-
+      - run: yarn install
       - name: Build project
         run: |
           make -s bin/content
           tar zcvf assets.tar.gz ./bin/*
+        env:
+          GRAPHQL_ADMIN_API_SECRET: ${{ secrets.GRAPHQL_ADMIN_API_SECRET }}
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
