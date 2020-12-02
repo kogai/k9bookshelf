@@ -40,11 +40,11 @@ gqlgenc/client/client.go: gqlgenc/main.go gqlgenc/*.gql
 	$(BZL) run gqlgenc
 	cp -r $(BZL_BIN)/gqlgenc/gqlgenc_/gqlgenc.runfiles/k9books/gqlgenc/client $(CURDIR)/gqlgenc
 
-bin/content: $(GO_FILES) WORKSPACE
-	mkdir -p bin
+k9bookshelf/content: $(GO_FILES) WORKSPACE
+	mkdir -p k9bookshelf
 	for target in darwin_amd64 linux_amd64 ; do \
 		$(BZL) build --platforms=@io_bazel_rules_go//go/toolchain:$$target //content/cmd/content ; \
-		cp -f $(BZL_BIN)/content/cmd/content/content_/content bin/$(VERSION)-content.$$target ; \
+		cp -f $(BZL_BIN)/content/cmd/content/content_/content k9bookshelf/$(VERSION)-content.$$target ; \
 	done
 
 .PHONY: release
