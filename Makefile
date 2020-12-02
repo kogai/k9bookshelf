@@ -4,6 +4,7 @@ TK := npx bazelisk run //:theme --
 LINT := yarn theme-lint
 BZL := yarn bazelisk --
 BZL_BIN := $(shell npx bazelisk info bazel-bin)
+VERSION := $(shell cat content/.version | tr -d '\n')
 
 .PHONY: deploy/theme,deploy/contents,watch,download/theme
 
@@ -39,10 +40,16 @@ gqlgenc/client/client.go: gqlgenc/main.go gqlgenc/*.gql
 	$(BZL) run gqlgenc
 	cp -r $(BZL_BIN)/gqlgenc/gqlgenc_/gqlgenc.runfiles/k9books/gqlgenc/client $(CURDIR)/gqlgenc
 
-bin/*: $(GO_FILES) WORKSPACE
-	mkdir -p bin
-	$(BZL) build //$(@F):all
-	cp -f $(BZL_BIN)/$(@F)/$(@F)_/$(@F) bin/
+k9bookshelf/content: $(GO_FILES) WORKSPACE
+	mkdir -p k9bookshelf
+	for target in darwin_amd64 linux_amd64 ; do \
+		$(BZL) build --platforms=@io_bazel_rules_go//go/toolchain:$$target //content/cmd/content ; \
+		cp -f $(BZL_BIN)/content/cmd/content/content_/content k9bookshelf/$(VERSION)-content.$$target ; \
+	done
+
+.PHONY: release
+release:
+	git tag -af "$(VERSION)" -m ""
 
 .PHONY: setup
 setup: WORKSPACE */BUILD.bazel GOPATH
