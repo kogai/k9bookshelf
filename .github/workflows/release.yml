@@ -29,8 +29,8 @@ jobs:
       - run: yarn install
       - name: Build project
         run: |
-          make -s bin/content
-          tar zcvf assets.tar.gz ./bin/*
+          make -s k9bookshelf/content
+          tar zcvf assets.tar.gz ./k9bookshelf/*
         env:
           GRAPHQL_ADMIN_API_SECRET: ${{ secrets.GRAPHQL_ADMIN_API_SECRET }}
       - name: Create Release
