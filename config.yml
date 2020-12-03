@@ -7,5 +7,4 @@ content:
   key: ${MARKDOWN_APP_KEY}
   secret: ${MARKDOWN_APP_SECRET}
   token: ${MARKDOWN_APP_SECRET}
-  input: ${PWD}/contents
-  output: ${PWD}/contents
+  dir: ${PWD}/contents

@@ -26,8 +26,7 @@ type configTy struct {
 		Key    *string `yaml:"key,omitempty"`
 		Secret *string `yaml:"secret,omitempty"`
 		Token  *string `yaml:"token,omitempty"`
-		Input  *string `yaml:"input,omitempty"`
-		Output *string `yaml:"output,omitempty"`
+		Dir    *string `yaml:"dir,omitempty"`
 	} `yaml:"content,omitempty"`
 }
 
@@ -70,17 +69,17 @@ var deployCmd = &cobra.Command{
 			} else {
 				shopToken = cmd.Flag("token").Value.String()
 			}
-			if conf.Content.Input != nil {
-				input = *conf.Content.Input
+			if conf.Content.Dir != nil {
+				input = *conf.Content.Dir
 			} else {
-				input = cmd.Flag("input").Value.String()
+				input = cmd.Flag("dir").Value.String()
 			}
 		} else {
 			shopDomain = cmd.Flag("domain").Value.String()
 			appKey = cmd.Flag("key").Value.String()
 			appSecret = cmd.Flag("secret").Value.String()
 			shopToken = cmd.Flag("token").Value.String()
-			input = cmd.Flag("input").Value.String()
+			input = cmd.Flag("dir").Value.String()
 		}
 
 		if shopDomain == "" || appKey == "" || appSecret == "" || shopToken == "" {
@@ -132,17 +131,17 @@ var downloadCmd = &cobra.Command{
 			} else {
 				shopToken = cmd.Flag("token").Value.String()
 			}
-			if conf.Content.Output != nil {
-				output = *conf.Content.Output
+			if conf.Content.Dir != nil {
+				output = *conf.Content.Dir
 			} else {
-				output = cmd.Flag("input").Value.String()
+				output = cmd.Flag("dir").Value.String()
 			}
 		} else {
 			shopDomain = cmd.Flag("domain").Value.String()
 			appKey = cmd.Flag("key").Value.String()
 			appSecret = cmd.Flag("secret").Value.String()
 			shopToken = cmd.Flag("token").Value.String()
-			output = cmd.Flag("output").Value.String()
+			output = cmd.Flag("dir").Value.String()
 		}
 
 		if shopDomain == "" || appKey == "" || appSecret == "" || shopToken == "" {
@@ -161,14 +160,14 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	downloadCmd.PersistentFlags().StringP("output", "o", fmt.Sprintf("%s", cwd), "output directory")
+	downloadCmd.PersistentFlags().StringP("dir", "d", fmt.Sprintf("%s", cwd), "directory where contents exists")
 	downloadCmd.PersistentFlags().String("domain", "", "ShopDomain of your shop ex:your-shop.myshopify.com")
 	downloadCmd.PersistentFlags().String("key", "", "Key of Admin API")
 	downloadCmd.PersistentFlags().String("secret", "", "Secret of Admin API")
 	downloadCmd.PersistentFlags().String("token", "", "AccessToken for Admin API generally same as secret if using Private App.")
 	downloadCmd.PersistentFlags().String("config", "", "configuration file which includes api key and so on")
 
-	deployCmd.PersistentFlags().StringP("input", "i", fmt.Sprintf("%s", cwd), "input directory")
+	deployCmd.PersistentFlags().StringP("dir", "d", fmt.Sprintf("%s", cwd), "directory where contents exists")
 	deployCmd.PersistentFlags().String("domain", "", "ShopDomain of your shop ex:your-shop.myshopify.com")
 	deployCmd.PersistentFlags().String("key", "", "Key of Admin API")
 	deployCmd.PersistentFlags().String("secret", "", "Secret of Admin API")
