@@ -59,7 +59,8 @@ func (a *ArticleResource) List(blogID int64) (*Articles, error) {
 // Put update article
 func (a *ArticleResource) Put(article Article) (*Article, error) {
 	var response Article
-	err := a.client.Put(path.Join("admin", "api", apiVersion, "blogs", fmt.Sprint(article.BlogID), "articles", fmt.Sprintf("%d.json", article.ID)), ArticlePayload{Article: article}, &response)
+	p := path.Join("admin", "api", apiVersion, "blogs", fmt.Sprint(article.BlogID), "articles", fmt.Sprintf("%d.json", article.ID))
+	err := a.client.Put(p, ArticlePayload{Article: article}, &response)
 	if err != nil {
 		return nil, err
 	}

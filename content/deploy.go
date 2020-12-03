@@ -159,20 +159,22 @@ func deployBlogs(shopDomain, appKey, appSecret string, blogs map[string][]Conten
 
 			for _, _content := range blogContents {
 				wg.Add(1)
-				go func(content Content) {
+				var _article Article
+				for _, a := range articles.Articles {
+					if _content.handle == a.Handle {
+						_article = a
+					}
+				}
+
+				if _article.ID == 0 {
+					c <- fmt.Errorf("blog article [%s] is not exist", _content.handle)
+					return
+				}
+
+				go func(content Content, article Article) {
 					defer wg.Done()
 					defer bar.Increment()
 
-					var article *Article
-					for _, a := range articles.Articles {
-						if content.handle == a.Handle {
-							article = &a
-						}
-					}
-					if article == nil {
-						c <- fmt.Errorf("blog article [%s] is not exist", content.handle)
-						return
-					}
 					_, err = NewArticleResource(adminClient).Put(Article{
 						ID:       article.ID,
 						BlogID:   article.BlogID,
@@ -183,7 +185,7 @@ func deployBlogs(shopDomain, appKey, appSecret string, blogs map[string][]Conten
 						c <- err
 						return
 					}
-				}(_content)
+				}(_content, _article)
 			}
 		}(_blogCategory, _blogContents)
 
