@@ -12,7 +12,7 @@
 
 手元でコマンドを実行すると、ショップの管理画面のコンテンツが更新されている様子です。
 
-<img src="https://cdn.shopify.com/s/files/1/0512/0091/7703/files/2020-12-03_20.37.21_480x480.gif?v=1606995566" alt="デモ動画" />
+![デモ動画](https://cdn.shopify.com/s/files/1/0512/0091/7703/files/2020-12-03_20.37.21_480x480.gif?v=1606995566)
 
 ## Shopifyでのコンテンツの編集について
 
@@ -84,7 +84,7 @@ Shopify関係ないですね。
 
 バイナリを [Releaseページ](https://github.com/kogai/k9bookshelf/releases) に置いておくので、良かったら試してみて下さい。
 
-------
+---
 
 次回は [ShoheiTai](https://qiita.com/ShoheiTai) さんの「Shopifyアプリの選定・運用ノウハウとか」です。
 お楽しみに！

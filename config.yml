@@ -2,3 +2,10 @@ development:
   password: ${THEME_APP_SECRET}
   theme_id: ${THEME_ID}
   store: k9books.myshopify.com
+content:
+  domain: k9books.myshopify.com
+  key: ${MARKDOWN_APP_KEY}
+  secret: ${MARKDOWN_APP_SECRET}
+  token: ${MARKDOWN_APP_SECRET}
+  input: ${PWD}/contents
+  output: ${PWD}/contents
