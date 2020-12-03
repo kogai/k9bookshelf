@@ -1136,6 +1136,8 @@ ol {
 /*====== RTE ======*/
 
 .rte {
+  line-height: 2;
+
   img {
     height: auto;
   }
@@ -1162,6 +1164,10 @@ ol {
         list-style-type: square;
       }
     }
+  }
+
+  li ul {
+    margin-left: 1rem;
   }
 }
 
@@ -3543,7 +3549,7 @@ select::-ms-expand {
 .collection__image {
   display: block;
   width: 100%;
-  
+
   .supports-js & {
     position: absolute;
     top: 0;
