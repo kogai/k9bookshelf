@@ -45,3 +45,27 @@ func TestExtractID(t *testing.T) {
 	assert.Equal(t, nil, err)
 	assert.Equal(t, id, 6080250872007)
 }
+
+func TestExtractTags(t *testing.T) {
+	t.Parallel()
+	tags := extractTags(&Product{
+		Subjects: []Subject{{
+			SubjectSchemeIdentifier: "BISAC Subject Heading",
+			SubjectCode:             "COM074000",
+			SubjectHeadingText:      "Computers/Hardware - Cell Phones & Devices",
+		}, {
+			SubjectSchemeIdentifier: "BISAC Subject Heading",
+			SubjectCode:             "TEC034000",
+			SubjectHeadingText:      "Technology & Engineering/Radio",
+		}, {
+			SubjectSchemeIdentifier: "Keywords",
+			SubjectHeadingText:      "SDR; antenna; ham radio; police band; radio; satellite; shortwave; wireless",
+		}, {
+			SubjectSchemeIdentifier: "Proprietary subject scheme",
+			SubjectSchemeName:       "INGRAM SUBJECT",
+			SubjectCode:             "XG",
+			SubjectHeadingText:      "Computers / General Information",
+		}},
+	})
+	assert.Equal(t, tags, []string{"SDR", "antenna", "ham radio", "police band", "radio", "satellite", "shortwave", "wireless"})
+}
