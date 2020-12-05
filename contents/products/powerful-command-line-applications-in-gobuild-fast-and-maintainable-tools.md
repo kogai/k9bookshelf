@@ -1,0 +1,9 @@
+Whether you want to automate tasks, analyze data, parse logs, talk to network services, or address other systems requirements, writing your own command-line tool may be the fastest - and perhaps the most fun - way to do it. The Go programming language is a great choice for developing tools that are fast, reliable, and cross-platform. Create command-line tools that work with files, connect to services, and even manage external processes, all while using tests and benchmarks to ensure your programs are fast and correct.
+
+When you want to develop cross platform command-line tools that are fast and reliable, use Go, a modern programming language that combines the reliability of compiled languages with the ease of use and flexibility of dynamic typed languages. Work through practical examples to develop elegant and efficient tools by applying Go's rich standard library, its built in support for concurrency, and its expressive syntax. Use Go's integrated testing capabilities to automatically test your tools, ensuring they work reliably even across code refactoring.
+
+Develop CLI tools that interact with your users by using common input/output patterns, including environment variables and flags. Handle files to read or persist data, and manipulate paths consistently in cross-platform scenarios. Control processes and handle signals, and use a benchmark driven approach and Go's concurrency primitives to create tools that perform well. Use powerful external libraries such as Cobra to create modern and flexible tools that handle subcommands, and develop tools that interact with databases, APIs, and network services. Finally, leverage what you learned by tackling additional challenges at the end of each chapter.
+
+**What You Need:**
+
+Go 1.8 or higher, an internet connection to download the example files and additional libraries, and a text editor to write your programs.

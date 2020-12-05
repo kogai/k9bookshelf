@@ -27,6 +27,8 @@ func (c *ProductIDType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 		*c = "Proprietary"
 	case "02":
 		*c = "ISBN-10"
+
+	// NOTE: GS1 Global Trade Item Number, formerly known as EAN article number (13 digits)
 	case "03":
 		*c = "GTIN-13"
 	case "04":
@@ -74,7 +76,7 @@ func (c *ProductIDType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 // Productidentifier is not documented yet.
 type Productidentifier struct {
 	ProductIDType ProductIDType `xml:"b221"`
-	IDValue       string        `xml:"b244"`
+	IDValue       string        `xml:"b244"` // EAN
 }
 
 // Productidentifiers is not documented yet.
@@ -130,15 +132,28 @@ type Price struct {
 	CountryCode  string  `xml:"b251"`
 }
 
+// Prices is not documented yet.
+type Prices []Price
+
+// FindByType findx identifier by id-type.
+func (c *Prices) FindByType(ty string) *Price {
+	for _, p := range *c {
+		if p.CurrencyCode == ty {
+			return &p
+		}
+	}
+	return nil
+}
+
 // SupplyDetail is not documented yet.
 type SupplyDetail struct {
-	SupplierName        string  `xml:"j137"`
-	SupplierRole        string  `xml:"j292"`
-	ReturnsCodeType     string  `xml:"j268"`
-	ReturnsCode         string  `xml:"j269"`
-	ProductAvailability string  `xml:"j396"`
-	PackQuantity        int     `xml:"j145"`
-	Prices              []Price `xml:"price"`
+	SupplierName        string `xml:"j137"`
+	SupplierRole        string `xml:"j292"`
+	ReturnsCodeType     string `xml:"j268"`
+	ReturnsCode         string `xml:"j269"`
+	ProductAvailability string `xml:"j396"`
+	PackQuantity        int    `xml:"j145"`
+	Prices              Prices `xml:"price"`
 }
 
 // MeasureTypeCode is not documented yet.
@@ -394,6 +409,106 @@ func (c *OtherTexts) FindByType(ty TextTypeCode) *OtherText {
 	return nil
 }
 
+// SubjectSchemeIdentifier is Main subject scheme identifier code.
+type SubjectSchemeIdentifier string
+
+// UnmarshalXMLAttr is not documented yet.
+func (c *SubjectSchemeIdentifier) UnmarshalXMLAttr(d xml.Attr) error {
+	switch d.Value {
+	// TODO: Define as enum
+	case "01":
+		*c = "Dewey"
+	case "02":
+		*c = "Abridged Dewey"
+	case "03":
+		*c = "LC classification"
+	case "04":
+		*c = "LC subject heading"
+	case "05":
+		*c = "NLM classification"
+	case "06":
+		*c = "MeSH heading"
+	case "07":
+		*c = "NAL subject heading"
+	case "08":
+		*c = "AAT"
+	case "09":
+		*c = "UDC"
+	case "10":
+		*c = "BISAC Subject Heading"
+	case "11":
+		*c = "BISAC region code"
+	case "12":
+		*c = "BIC subject category"
+	case "13":
+		*c = "BIC geographical qualifier"
+	case "14":
+		*c = "BIC language qualifier (language as subject)"
+	case "15":
+		*c = "BIC time period qualifier"
+	case "16":
+		*c = "BIC educational purpose qualifier"
+	case "17":
+		*c = "BIC reading level and special interest qualifier"
+	case "18":
+		*c = "DDC-Sachgruppen der Deutschen Nationalbibliografie"
+	case "19":
+		*c = "LC fiction genre heading"
+	case "20":
+		*c = "Keywords"
+	case "21":
+		*c = "BIC children’s book marketing category"
+	case "22":
+		*c = "BISAC Merchandising Theme"
+	case "23":
+		*c = "Publisher’s own category code"
+	case "24":
+		*c = "Proprietary subject scheme"
+	case "25":
+		*c = "Tabla de materias ISBN"
+	case "26":
+		*c = "Warengruppen-Systematik des deutschen Buchhandels"
+	case "27":
+		*c = "SWD"
+	//
+	default:
+		return fmt.Errorf("undefined code has been passed, got [%s]. See ONIX_for_Books_Release2-1_rev03_docs+codes_Issue_36/codelists/onix-codelist-26.htm", d.Value)
+	}
+	return nil
+}
+
+// Subject is not documented yet.
+type Subject struct {
+	SubjectSchemeIdentifier SubjectSchemeIdentifier `xml:"b067"`
+	SubjectSchemeName       string                  `xml:"b171"`
+	SubjectCode             *string                 `xml:"b069,omitempty"`
+	SubjectHeadingText      *string                 `xml:"b070,omitempty"`
+}
+
+// Subjects is not documented yet.
+type Subjects []Subject
+
+// FindByIDType findx identifier by id-type.
+func (c *Subjects) FindByIDType(idType SubjectSchemeIdentifier) *Subject {
+	for _, p := range *c {
+		if p.SubjectSchemeIdentifier == idType {
+			return &p
+		}
+	}
+	return nil
+}
+
+// Imprint is not documented yet.
+type Imprint struct {
+	NameCodeType     string `xml:"b241"`
+	NameCodeTypeName string `xml:"b242"`
+	NameCodeValue    string `xml:"b243"`
+	ImprintName      string `xml:"b079"`
+}
+
+// Imprints is not documented yet.
+type Imprints = []Imprint
+
 // Product is not documented yet.
 type Product struct {
 	RecordReference       string             `xml:"a001"`
@@ -430,21 +545,11 @@ type Product struct {
 		SubjectCode                 string `xml:"b069"`
 		SubjectHeadingText          string `xml:"b070"`
 	} `xml:"mainsubject"`
-	Subject []struct {
-		SubjectSchemeIdentifier int     `xml:"b067"`
-		SubjectSchemeName       string  `xml:"b171"`
-		SubjectCode             *string `xml:"b069,omitempty"`
-		SubjectHeadingText      *string `xml:"b070,omitempty"`
-	} `xml:"subject"`
+	Subject      Subjects   `xml:"subject"`
 	AudienceCode string     `xml:"b073"`
 	OtherTexts   OtherTexts `xml:"othertext"`
-	Imprints     []struct {
-		NameCodeType     string `xml:"b241"`
-		NameCodeTypeName string `xml:"b242"`
-		NameCodeValue    string `xml:"b243"`
-		ImprintName      string `xml:"b079"`
-	} `xml:"imprint"`
-	Publisher struct {
+	Imprints     Imprints   `xml:"imprint"`
+	Publisher    struct {
 		PublishingRole string `xml:"b291"`
 		PublisherName  string `xml:"b081"`
 	} `xml:"publisher"`
