@@ -4,9 +4,9 @@ Property-based testing helps you create better, more solid tests with little cod
 
 Most tests only demonstrate that the code behaves how the developer expected it to behave, and therefore carry the same blind spots as their authors when special conditions or edge cases show up. Learn how to see things differently with property tests written in PropEr.
 
-Start with the basics of property tests, such as writing stateless properties, and using the default generators to generate test cases automatically. More importantly, learn how to think in properties. Improve your properties, write custom data generators, and discover what your code can or cannot do. Learn when to use property tests and when to stick with example tests with real-world sample projects. Explore various testing approaches to find the one that's best for your code. Shrink failing test cases to their simpler expression to highlight exactly what breaks in your code, and generate highly relevant data through targeted properties. Uncover the trickiest bugs you can think of with nearly no code at all with two special types of properties based on state transitions and finite state machines.
+Start with the basics of property tests, such as writing stateless properties, and using the default generators to generate test cases automatically. More importantly, learn how to think in properties. Improve your properties, write custom data generators, and discover what your code can or cannot do. Learn when to use property tests and when to stick with example tests with real-world sample projects. Explore various testing approaches to find the one that’s best for your code. Shrink failing test cases to their simpler expression to highlight exactly what breaks in your code, and generate highly relevant data through targeted properties. Uncover the trickiest bugs you can think of with nearly no code at all with two special types of properties based on state transitions and finite state machines.
 
-Write Erlang and Elixir properties that generate the most effective tests you'll see, whether they are unit tests or complex integration and system tests.
+Write Erlang and Elixir properties that generate the most effective tests you’ll see, whether they are unit tests or complex integration and system tests.
 
 **What You Need**
 
@@ -26,7 +26,7 @@ Write Erlang and Elixir properties that generate the most effective tests you'll
 
 ErlangとElixirのプロパティを書いて、ユニットテストでも複雑な統合テストやシステムテストでも、最も効果的なテストを生成しましょう。
 
-**必要なもの
+**必要なもの**
 
 - Erlangの基本的な知識（オプションでElixirも可
 - Erlangテストの場合。Erlang/OTP >= 20.0, Rebar >= 3.4.0でのテスト

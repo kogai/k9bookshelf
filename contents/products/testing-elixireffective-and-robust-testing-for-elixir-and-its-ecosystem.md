@@ -1,8 +1,8 @@
 ## 出版社より
 
-Elixir offers new paradigms, and challenges you to test in unconventional ways. Start with ExUnit: almost everything you need to write tests covering all levels of detail, from unit to integration, but only if you know how to use it to the fullest - we'll show you how. Explore testing Elixir-specific challenges such as OTP-based modules, asynchronous code, Ecto-based applications, and Phoenix applications. Explore new tools like Mox for mocks and StreamData for property-based testing. Armed with this knowledge, you can create test suites that add value to your production cycle and guard you from regressions.
+Elixir offers new paradigms, and challenges you to test in unconventional ways. Start with ExUnit: almost everything you need to write tests covering all levels of detail, from unit to integration, but only if you know how to use it to the fullest - we’ll show you how. Explore testing Elixir-specific challenges such as OTP-based modules, asynchronous code, Ecto-based applications, and Phoenix applications. Explore new tools like Mox for mocks and StreamData for property-based testing. Armed with this knowledge, you can create test suites that add value to your production cycle and guard you from regressions.
 
-Write Elixir tests that you can be proud of. Dive into Elixir's test philosophy and gain mastery over the terminology and concepts that underlie good tests. Create and structure a comprehensive ExUnit test suite, starting from the basics, and build comprehensive test coverage that will provide safety for refactoring and confidence that your code performs as designed. Use tests to make your software more reliable and fault tolerant.
+Write Elixir tests that you can be proud of. Dive into Elixir’s test philosophy and gain mastery over the terminology and concepts that underlie good tests. Create and structure a comprehensive ExUnit test suite, starting from the basics, and build comprehensive test coverage that will provide safety for refactoring and confidence that your code performs as designed. Use tests to make your software more reliable and fault tolerant.
 
 Explore the basic tool set provided by ExUnit and Mix to write and organize your test suite. Test code built around different OTP functionality. Isolate your code through dependency injection and by using Mox. Write comprehensive tests for Ecto projects, covering Ecto as a database tool as well as a standalone data validation tool. Test Phoenix channels from end to end, including authentication and joining topics. Write Phoenix controller tests and understand the concepts of integration testing in Elixir. Learn property-based testing with StreamData from the author who wrote the library.
 
@@ -24,6 +24,6 @@ ExUnit と Mix が提供する基本的なツールセットを使ってテス�
 
 テストスイートを最大限に活用し、コードをテストすることが楽しく、開発サイクルの貴重な一部となるような適切なツールを使用して、自信を持ってコードを書くことができます。
 
-**必要なもの：***。
+**必要なもの：**
 
 この本を最大限に活用するためには、Elixir 1.8以降とErlang/OTP 21以降がインストールされている必要があります。関連する章を完成させるためには、Ecto 3.1以降、EctoSQL 3.1以降、Phoenix 1.3以降も必要です。
