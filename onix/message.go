@@ -412,9 +412,11 @@ func (c *OtherTexts) FindByType(ty TextTypeCode) *OtherText {
 // SubjectSchemeIdentifier is Main subject scheme identifier code.
 type SubjectSchemeIdentifier string
 
-// UnmarshalXMLAttr is not documented yet.
-func (c *SubjectSchemeIdentifier) UnmarshalXMLAttr(d xml.Attr) error {
-	switch d.Value {
+// UnmarshalXML is not documented yet.
+func (c *SubjectSchemeIdentifier) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	var v string
+	d.DecodeElement(&v, &start)
+	switch v {
 	// TODO: Define as enum
 	case "01":
 		*c = "Dewey"
@@ -470,9 +472,10 @@ func (c *SubjectSchemeIdentifier) UnmarshalXMLAttr(d xml.Attr) error {
 		*c = "Warengruppen-Systematik des deutschen Buchhandels"
 	case "27":
 		*c = "SWD"
-	//
+	case "93":
+		*c = "Thema subject category"
 	default:
-		return fmt.Errorf("undefined code has been passed, got [%s]. See ONIX_for_Books_Release2-1_rev03_docs+codes_Issue_36/codelists/onix-codelist-26.htm", d.Value)
+		return fmt.Errorf("undefined code has been passed, got [%s]. See ONIX_for_Books_Release2-1_rev03_docs+codes_Issue_36/codelists/onix-codelist-26.htm", v)
 	}
 	return nil
 }
@@ -480,9 +483,9 @@ func (c *SubjectSchemeIdentifier) UnmarshalXMLAttr(d xml.Attr) error {
 // Subject is not documented yet.
 type Subject struct {
 	SubjectSchemeIdentifier SubjectSchemeIdentifier `xml:"b067"`
-	SubjectSchemeName       string                  `xml:"b171"`
-	SubjectCode             *string                 `xml:"b069,omitempty"`
-	SubjectHeadingText      *string                 `xml:"b070,omitempty"`
+	SubjectSchemeName       string                  `xml:"b171,omitempty"`
+	SubjectCode             string                  `xml:"b069,omitempty"`
+	SubjectHeadingText      string                  `xml:"b070,omitempty"`
 }
 
 // Subjects is not documented yet.
@@ -545,7 +548,7 @@ type Product struct {
 		SubjectCode                 string `xml:"b069"`
 		SubjectHeadingText          string `xml:"b070"`
 	} `xml:"mainsubject"`
-	Subject      Subjects   `xml:"subject"`
+	Subjects     Subjects   `xml:"subject"`
 	AudienceCode string     `xml:"b073"`
 	OtherTexts   OtherTexts `xml:"othertext"`
 	Imprints     Imprints   `xml:"imprint"`
