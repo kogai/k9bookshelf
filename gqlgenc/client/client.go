@@ -280,6 +280,17 @@ type ProductByHandle struct {
 		ID string "json:\"id\" graphql:\"id\""
 	} "json:\"productByHandle\" graphql:\"productByHandle\""
 }
+type ProductCreateDoPayload struct {
+	ProductCreate *struct {
+		Product *struct {
+			ID string "json:\"id\" graphql:\"id\""
+		} "json:\"product\" graphql:\"product\""
+		UserErrors []*struct {
+			Field   []string "json:\"field\" graphql:\"field\""
+			Message string   "json:\"message\" graphql:\"message\""
+		} "json:\"userErrors\" graphql:\"userErrors\""
+	} "json:\"productCreate\" graphql:\"productCreate\""
+}
 type ProductISBNs struct {
 	Products struct {
 		PageInfo struct {
@@ -300,6 +311,14 @@ type ProductISBNs struct {
 			} "json:\"node\" graphql:\"node\""
 		} "json:\"edges\" graphql:\"edges\""
 	} "json:\"products\" graphql:\"products\""
+}
+type ProductUpdateDoPayload struct {
+	ProductUpdate *struct {
+		UserErrors []*struct {
+			Field   []string "json:\"field\" graphql:\"field\""
+			Message string   "json:\"message\" graphql:\"message\""
+		} "json:\"userErrors\" graphql:\"userErrors\""
+	} "json:\"productUpdate\" graphql:\"productUpdate\""
 }
 type Products struct {
 	Products struct {
@@ -363,6 +382,32 @@ func (c *Client) ProductByHandle(ctx context.Context, handle string, httpRequest
 	return &res, nil
 }
 
+const ProductCreateDoQuery = `mutation productCreateDo ($input: ProductInput!) {
+	productCreate(input: $input) {
+		product {
+			id
+		}
+		userErrors {
+			field
+			message
+		}
+	}
+}
+`
+
+func (c *Client) ProductCreateDo(ctx context.Context, input ProductInput, httpRequestOptions ...client.HTTPRequestOption) (*ProductCreateDoPayload, error) {
+	vars := map[string]interface{}{
+		"input": input,
+	}
+
+	var res ProductCreateDoPayload
+	if err := c.Client.Post(ctx, ProductCreateDoQuery, &res, vars, httpRequestOptions...); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
 const ProductISBNsQuery = `query productISBNs ($first: Int!, $after: String) {
 	products(first: $first, after: $after) {
 		pageInfo {
@@ -394,6 +439,29 @@ func (c *Client) ProductISBNs(ctx context.Context, first int64, after *string, h
 
 	var res ProductISBNs
 	if err := c.Client.Post(ctx, ProductISBNsQuery, &res, vars, httpRequestOptions...); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+const ProductUpdateDoQuery = `mutation productUpdateDo ($input: ProductInput!) {
+	productUpdate(input: $input) {
+		userErrors {
+			field
+			message
+		}
+	}
+}
+`
+
+func (c *Client) ProductUpdateDo(ctx context.Context, input ProductInput, httpRequestOptions ...client.HTTPRequestOption) (*ProductUpdateDoPayload, error) {
+	vars := map[string]interface{}{
+		"input": input,
+	}
+
+	var res ProductUpdateDoPayload
+	if err := c.Client.Post(ctx, ProductUpdateDoQuery, &res, vars, httpRequestOptions...); err != nil {
 		return nil, err
 	}
 
