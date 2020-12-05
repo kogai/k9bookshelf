@@ -12,7 +12,6 @@
   {%- assign featured_image = current_variant.featured_image | default: product.featured_image -%}
 
   <div class="grid product-single">
-
     <div class="grid__item medium-up--one-half">
       {% for image in product.images %}
         {% capture img_id %}ProductImage-{{ image.id }}{% endcapture %}
@@ -79,9 +78,7 @@
       <div class="product-single__meta small--text-center">
         <h1 class="product-single__title" itemprop="name">{{ product.title }}</h1>
 
-        {% if section.settings.vendor_show %}
-          <p class="product-single__vendor" itemprop="brand">{{ product.vendor }}</p>
-        {% endif %}
+        <p class="product-single__vendor" itemprop="brand">{{ product.vendor | link_to_vendor }}</p>
 
         <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
           <meta itemprop="priceCurrency" content="{{ cart.currency.iso_code }}">

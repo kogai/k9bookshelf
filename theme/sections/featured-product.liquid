@@ -62,9 +62,7 @@
       <div class="product-single__meta small--text-center">
         <h1 class="product-single__title" itemprop="name">{{ title }}</h1>
 
-        {% if section.settings.vendor_show %}
-          <p class="product-single__vendor" itemprop="brand">{{ vendor }}</p>
-        {% endif %}
+        <p class="product-single__vendor" itemprop="brand">{{ vendor }}</p>
 
         <p class="product-single__prices">
           {% if compare_at_price > price %}
