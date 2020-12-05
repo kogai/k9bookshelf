@@ -11,3 +11,19 @@ Discover the fun of this growing hobby and then open your ears to the hidden sig
 **What You Need:**
 
 You will need a relatively recent computer or laptop, running either Windows or Ubuntu Linux. You can also use a Raspberry Pi. All of the software necessary is free and open-source, and the book describes in detail where to get it and how to install it, depending on your operating system.
+
+## DeepL粗訳
+
+あなたは、あなたのコンピュータ、古いテレビアンテナ、および20ドルのUSBスティックだけで何も使用して衛星画像を受信することができるようにしたいですか？今、あなたはすることができます。最後に、技術は、スーパーラジオ受信機にあなたのコンピュータを回すために存在し、FM、短波、アマチュアの "ハム "にチューニングすることが可能であり、さらには衛星の周波数は、世界中で、それの上に。クリアとエンコードの両方で、警察、消防、航空機の信号を聞く。また、本書の高度なアンテナ設計により、受信できる信号に制限はありません。
+
+デスクトップやラップトップコンピュータと簡単に見つけられるSDR（Software Defined Radio）機器を組み合わせて、広範囲の信号をあっという間に聴取しましょう。そして、Raspberry Piを自分専用のSDRデバイスに変換することで、さらに一歩進んでみましょう。
+
+SDR USBドングルは、通常、高精細デジタルテレビ放送を受信し、デコードするように設計されています, しかし、SDRの人気の高まりは、特にのために作られているこれらのデバイスのいくつかにつながっている - とに販売 - ソフトウェアラジオの群衆. ステップバイステップの手順では、WindowsとLinuxの両方ですべてのものを起動して実行することに問題はありません。
+
+アンテナは、SDRのパズルの最後のピースです：あなたはどのアンテナを使用していますか？どのアンテナを使うか？大きさは？また、どこに向けるのか？必要なすべての答えを得て、アンテナを選んだり構築したりする際に何が可能なのかを学びましょう。あなたが特に便利ではない場合は、心配しないでください。あまり手を加えずに、昔ながらのウサギの耳アンテナのセットを使うことができます。
+
+この成長する趣味の楽しさを発見し、あなたを囲む隠された信号にあなたの耳を開きます。
+
+**あなたが必要とするもの：**
+
+あなたは、WindowsまたはUbuntu Linuxのいずれかを実行している、比較的最近のコンピュータまたはラップトップが必要になります。また、Raspberry Piを使用することもできます。必要なソフトウェアはすべて無料でオープンソースのもので、お使いのオペレーティングシステムに応じて、どこで入手できるのか、どのようにインストールするのかが詳しく説明されています。

@@ -84,6 +84,15 @@ func extractID(graphqlID string) (int, error) {
 	return strconv.Atoi(result[len(result)-1])
 }
 
+func extractTags(p *Product) []string {
+	var tags []string
+	subject := p.Subjects.FindByIDType("Keywords")
+	if subject != nil {
+		tags = strings.Split(subject.SubjectHeadingText, "; ")
+	}
+	return tags
+}
+
 // Run imports ONIX for Books 2.1 format file to Shopify.
 func Run(input string) error {
 	file, err := ioutil.ReadFile(input)
@@ -108,9 +117,6 @@ func Run(input string) error {
 		return err
 	}
 
-	fmt.Println(products.Products.Edges)
-	fmt.Println("======")
-
 	for _, d := range data.Products {
 		isbn := d.Productidentifiers.FindByIDType("ISBN-13")
 		if isbn == nil {
@@ -121,53 +127,54 @@ func Run(input string) error {
 			fmt.Println("Update", d.Title.TitleText, d.Title.Subtitle)
 
 			currentProduct := products.Products.Edges[idx]
-			var descriptionHTML string = ""
-			otherText := d.OtherTexts.FindByType("Long description")
-			if otherText != nil {
-				descriptionHTML = otherText.Text.Body
-			}
+			// var descriptionHTML string = ""
+			// otherText := d.OtherTexts.FindByType("Long description")
+			// if otherText != nil {
+			// 	descriptionHTML = otherText.Text.Body
+			// }
 
-			var tags []string
-			subject := d.Subject.FindByIDType("Keywords")
-			if subject != nil {
-				tags = strings.Split(*subject.SubjectHeadingText, "; ")
-			}
-			title := d.Title.TitleText + " " + d.Title.Subtitle
-			inventoryPolicy := client.ProductVariantInventoryPolicyContinue
+			// var tags []string
+			// subject := d.Subjects.FindByIDType("Keywords")
+			// if subject != nil {
+			// 	tags = strings.Split(*subject.SubjectHeadingText, "; ")
+			// }
+			// title := d.Title.TitleText + " " + d.Title.Subtitle
+			// inventoryPolicy := client.ProductVariantInventoryPolicyContinue
 
-			var weight *float64
-			measure := d.Measures.FindByType("Unit weight")
-			weightUnit := client.WeightUnitKilograms
-			if measure != nil {
-				w, err := measure.ToKg()
-				if err != nil {
-					return err
-				}
-				weight = &w
-			}
+			// var weight *float64
+			// measure := d.Measures.FindByType("Unit weight")
+			// weightUnit := client.WeightUnitKilograms
+			// if measure != nil {
+			// 	w, err := measure.ToKg()
+			// 	if err != nil {
+			// 		return err
+			// 	}
+			// 	weight = &w
+			// }
 
-			var price *string
-			_price := d.SupplyDetail.Prices.FindByType("USD")
-			if _price != nil {
-				p := fmt.Sprintf("%f", _price.PriceAmount)
-				price = &p
-			}
+			// var price *string
+			// _price := d.SupplyDetail.Prices.FindByType("USD")
+			// if _price != nil {
+			// 	p := fmt.Sprintf("%f", _price.PriceAmount)
+			// 	price = &p
+			// }
 
+			tags := extractTags(&d)
 			res, err := gqlClient.ProductUpdateDo(context.Background(), client.ProductInput{
-				ID:              &currentProduct.Node.ID,
-				DescriptionHTML: &descriptionHTML,
-				Variants: []*client.ProductVariantInput{
-					{
-						InventoryPolicy: &inventoryPolicy,
-						Weight:          weight,
-						WeightUnit:      &weightUnit,
-						Price:           price,
-						Barcode:         isbn,
-					},
-				},
-				Tags:   tags,
-				Title:  &title,
-				Vendor: &d.Publisher.PublisherName,
+				ID: &currentProduct.Node.ID,
+				// 	DescriptionHTML: &descriptionHTML,
+				// 	Variants: []*client.ProductVariantInput{
+				// 		{
+				// 			InventoryPolicy: &inventoryPolicy,
+				// 			Weight:          weight,
+				// 			WeightUnit:      &weightUnit,
+				// 			Price:           price,
+				// 			Barcode:         isbn,
+				// 		},
+				// 	},
+				Tags: tags,
+				// 	Title:  &title,
+				// 	Vendor: &d.Publisher.PublisherName,
 			})
 			if err != nil {
 				return err
@@ -187,11 +194,7 @@ func Run(input string) error {
 				descriptionHTML = otherText.Text.Body
 			}
 
-			var tags []string
-			subject := d.Subject.FindByIDType("Keywords")
-			if subject != nil {
-				tags = strings.Split(*subject.SubjectHeadingText, "; ")
-			}
+			tags := extractTags(&d)
 			title := d.Title.TitleText + " " + d.Title.Subtitle
 			inventoryPolicy := client.ProductVariantInventoryPolicyContinue
 
