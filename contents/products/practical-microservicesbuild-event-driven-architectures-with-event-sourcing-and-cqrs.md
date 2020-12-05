@@ -11,3 +11,18 @@ Add the responsiveness and flexibility of microservices to your project, no matt
 **What You Need:**
 
 While the principles of this book transcend programming language, the code examples are in Node.js because JavaScript, for better or worse, is widely read. You'll use PostgreSQL for data storage, so familiarity with it is a plus. The books does provide Docker images to make working with PostgreSQL a bit easier, but extensive Docker knowledge is not required.
+
+---
+## DeepL粗訳
+
+MVC と CRUD はソフトウェアを書きやすくしますが、変更するのは難しくなります。マイクロサービスベースのアーキテクチャは、どんなに小さなプロジェクトでも長期的にアジャイルな状態を維持するのに役立ちますが、ほとんどのチュートリアルでは、理論的に蛇行していたり、マイクロサービスベースであることの意味を完全に見落としていたりします。実際のプロジェクトに袖を通し、イベント型アーキテクチャの最も重要な概念を学びましょう。あなた自身のデプロイ可能でテスト可能なプロジェクトと、次に進むべき方向性を手に入れることができるでしょう。
+
+マイクロサービスの話題では多くの情報が飛び交っていますが、ここに書かれているものはすべて、何がシステムをモノリスにしているのかを正確に特定したり、マイクロサービスとは何かを定義したり、完全な実用的な例を示したりすることはできませんでした。マイクロサービスベースのアーキテクチャの恩恵を受けるには、GoogleやFacebookの規模である必要はありません。マイクロサービスは、システムの各部分に焦点を当てて分離することで、中小規模のチームでも生産性を維持することができます。
+
+メッセージベースのアーキテクチャの基本を発見し、同じ状態をタスクに合わせて異なる形でレンダリングし、何がモノリスになるのかを学びます（デプロイ先のマシンの数とは関係ありません）。マイクロサービスでバックグラウンドジョブを実行することでリソースを節約する。登録、認証、支払い処理、電子メールなどに特化したマイクロサービスをデプロイします。適切なサービス境界を定義することで、サービスを調整します。継続的な統合のために、サービスを効果的に展開します。異なるサービス間で動作するデバッグ技術を習得します。デプロイ可能なシステムと、現在のプロジェクトに適用できるスキルを身につけて終了します。
+
+規模や複雑さに関係なく、マイクロサービスの応答性と柔軟性をプロジェクトに加えることができます。
+
+**必要なもの
+
+本書の原則はプログラミング言語を超えていますが、JavaScriptは良くも悪くも広く読まれているため、コード例はNode.jsで書かれています。データストレージにはPostgreSQLを使用するので、PostgreSQLに精通していることはプラスになります。この本ではPostgreSQLでの作業を少し簡単にするためのDockerイメージが提供されていますが、Dockerの幅広い知識は必要ありません。
