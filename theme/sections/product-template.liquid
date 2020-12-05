@@ -80,6 +80,12 @@
 
         <p class="product-single__vendor" itemprop="brand">{{ product.vendor | link_to_vendor }}</p>
 
+        <ul class="product-single__tags">
+          {% for tag in product.tags %}
+            <li><a href="/collections/all/{{ tag | handleize }}">{{ tag }}</a></li>
+          {% endfor %}
+        </ul>
+
         <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
           <meta itemprop="priceCurrency" content="{{ cart.currency.iso_code }}">
 
