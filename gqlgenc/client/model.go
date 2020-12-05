@@ -1652,12 +1652,12 @@ type Customer struct {
 	VerifiedEmail bool `json:"verifiedEmail"`
 }
 
-func (Customer) IsCommentEventEmbed()      {}
 func (Customer) IsNode()                   {}
 func (Customer) IsCommentEventSubject()    {}
 func (Customer) IsHasMetafields()          {}
 func (Customer) IsLegacyInteroperability() {}
 func (Customer) IsHasEvents()              {}
+func (Customer) IsCommentEventEmbed()      {}
 
 // Return type for `customerAddTaxExemptions` mutation.
 type CustomerAddTaxExemptionsPayload struct {
@@ -2138,8 +2138,8 @@ type DeliveryParticipant struct {
 	PercentageOfRateFee float64 `json:"percentageOfRateFee"`
 }
 
-func (DeliveryParticipant) IsDeliveryRateProvider() {}
 func (DeliveryParticipant) IsNode()                 {}
+func (DeliveryParticipant) IsDeliveryRateProvider() {}
 
 // Input fields for a participant.
 type DeliveryParticipantInput struct {
@@ -2329,8 +2329,8 @@ type DeliveryRateDefinition struct {
 	Price *MoneyV2 `json:"price"`
 }
 
-func (DeliveryRateDefinition) IsDeliveryRateProvider() {}
 func (DeliveryRateDefinition) IsNode()                 {}
+func (DeliveryRateDefinition) IsDeliveryRateProvider() {}
 
 // Input fields for a rate definition.
 type DeliveryRateDefinitionInput struct {
@@ -3440,12 +3440,12 @@ type DraftOrder struct {
 	UpdatedAt string `json:"updatedAt"`
 }
 
+func (DraftOrder) IsCommentEventEmbed()      {}
 func (DraftOrder) IsNode()                   {}
 func (DraftOrder) IsHasMetafields()          {}
 func (DraftOrder) IsCommentEventSubject()    {}
 func (DraftOrder) IsLegacyInteroperability() {}
 func (DraftOrder) IsHasEvents()              {}
-func (DraftOrder) IsCommentEventEmbed()      {}
 
 // The order-level discount applied to a draft order.
 type DraftOrderAppliedDiscount struct {
@@ -6204,13 +6204,13 @@ type Order struct {
 	UpdatedAt string `json:"updatedAt"`
 }
 
+func (Order) IsCommentEventEmbed()         {}
 func (Order) IsNode()                      {}
 func (Order) IsCommentEventSubject()       {}
 func (Order) IsHasMetafields()             {}
 func (Order) IsLegacyInteroperability()    {}
 func (Order) IsHasEvents()                 {}
 func (Order) IsHasLocalizationExtensions() {}
-func (Order) IsCommentEventEmbed()         {}
 
 // Specifies the authorized transaction to capture and the total amount to capture from it.
 type OrderCaptureInput struct {
@@ -7317,7 +7317,6 @@ type Product struct {
 	Vendor string `json:"vendor"`
 }
 
-func (Product) IsCommentEventEmbed()        {}
 func (Product) IsNode()                     {}
 func (Product) IsNavigable()                {}
 func (Product) IsHasMetafields()            {}
@@ -7325,6 +7324,7 @@ func (Product) IsHasPublishedTranslations() {}
 func (Product) IsPublishable()              {}
 func (Product) IsOnlineStorePreviewable()   {}
 func (Product) IsLegacyInteroperability()   {}
+func (Product) IsCommentEventEmbed()        {}
 
 // Specifies product images to append.
 type ProductAppendImagesInput struct {
@@ -8687,7 +8687,7 @@ type Shop struct {
 	CustomerAccounts ShopCustomerAccountsSetting `json:"customerAccounts"`
 	// List of the shop's customer saved searches.
 	CustomerSavedSearches *SavedSearchConnection `json:"customerSavedSearches"`
-	// A comma separated list of tags that have been added to customer accounts.
+	// A list of tags that have been added to customer accounts.
 	CustomerTags *StringConnection `json:"customerTags"`
 	// Customer accounts associated to the shop.
 	Customers *CustomerConnection `json:"customers"`
@@ -8697,7 +8697,7 @@ type Shop struct {
 	Domains []*Domain `json:"domains"`
 	// List of the shop's draft order saved searches.
 	DraftOrderSavedSearches *SavedSearchConnection `json:"draftOrderSavedSearches"`
-	// A comma separated list of tags that have been added to draft orders.
+	// A list of tags that have been added to draft orders.
 	DraftOrderTags *StringConnection `json:"draftOrderTags"`
 	// List of saved draft orders on the shop.
 	DraftOrders *DraftOrderConnection `json:"draftOrders"`
@@ -8743,7 +8743,7 @@ type Shop struct {
 	OrderNumberFormatSuffix string `json:"orderNumberFormatSuffix"`
 	// List of the shop's order saved searches.
 	OrderSavedSearches *SavedSearchConnection `json:"orderSavedSearches"`
-	// A comma separated list of tags that have been added to orders.
+	// A list of tags that have been added to orders.
 	OrderTags *StringConnection `json:"orderTags"`
 	// List of orders placed on the shop.
 	Orders *OrderConnection `json:"orders"`
@@ -8769,7 +8769,7 @@ type Shop struct {
 	ProductImages *ImageConnection `json:"productImages"`
 	// List of the shop's product saved searches.
 	ProductSavedSearches *SavedSearchConnection `json:"productSavedSearches"`
-	// A comma separated list of tags that have been added to products.
+	// A list of tags that have been added to products.
 	ProductTags *StringConnection `json:"productTags"`
 	// Types added to products.
 	ProductTypes *StringConnection `json:"productTypes"`
@@ -13110,12 +13110,12 @@ const (
 	DiscountErrorCodeTooManyArguments DiscountErrorCode = "TOO_MANY_ARGUMENTS"
 	// Missing a required argument.
 	DiscountErrorCodeMissingArgument DiscountErrorCode = "MISSING_ARGUMENT"
+	// Cannot have both minimum subtotal and quantity present.
+	DiscountErrorCodeMinimumSubtotalAndQuantityRangeBothPresent DiscountErrorCode = "MINIMUM_SUBTOTAL_AND_QUANTITY_RANGE_BOTH_PRESENT"
 	// Value is outside allowed range.
 	DiscountErrorCodeValueOutsideRange DiscountErrorCode = "VALUE_OUTSIDE_RANGE"
 	// Exceeded maximum allowed value.
 	DiscountErrorCodeExceededMax DiscountErrorCode = "EXCEEDED_MAX"
-	// Cannot have both minimum subtotal and quantity present.
-	DiscountErrorCodeMinimumSubtotalAndQuantityRangeBothPresent DiscountErrorCode = "MINIMUM_SUBTOTAL_AND_QUANTITY_RANGE_BOTH_PRESENT"
 	// Active period overlaps with other automatic discounts. At any given time, only one automatic discount can be active.
 	DiscountErrorCodeActivePeriodOverlap DiscountErrorCode = "ACTIVE_PERIOD_OVERLAP"
 	// Attribute selection contains conflicting settings.
@@ -13143,9 +13143,9 @@ var AllDiscountErrorCode = []DiscountErrorCode{
 	DiscountErrorCodeInternalError,
 	DiscountErrorCodeTooManyArguments,
 	DiscountErrorCodeMissingArgument,
+	DiscountErrorCodeMinimumSubtotalAndQuantityRangeBothPresent,
 	DiscountErrorCodeValueOutsideRange,
 	DiscountErrorCodeExceededMax,
-	DiscountErrorCodeMinimumSubtotalAndQuantityRangeBothPresent,
 	DiscountErrorCodeActivePeriodOverlap,
 	DiscountErrorCodeConflict,
 	DiscountErrorCodeImplicitDuplicate,
@@ -13155,7 +13155,7 @@ var AllDiscountErrorCode = []DiscountErrorCode{
 
 func (e DiscountErrorCode) IsValid() bool {
 	switch e {
-	case DiscountErrorCodeBlank, DiscountErrorCodePresent, DiscountErrorCodeEqualTo, DiscountErrorCodeGreaterThan, DiscountErrorCodeGreaterThanOrEqualTo, DiscountErrorCodeInvalid, DiscountErrorCodeLessThanOrEqualTo, DiscountErrorCodeLessThan, DiscountErrorCodeTaken, DiscountErrorCodeTooLong, DiscountErrorCodeTooShort, DiscountErrorCodeInternalError, DiscountErrorCodeTooManyArguments, DiscountErrorCodeMissingArgument, DiscountErrorCodeValueOutsideRange, DiscountErrorCodeExceededMax, DiscountErrorCodeMinimumSubtotalAndQuantityRangeBothPresent, DiscountErrorCodeActivePeriodOverlap, DiscountErrorCodeConflict, DiscountErrorCodeImplicitDuplicate, DiscountErrorCodeDuplicate, DiscountErrorCodeInclusion:
+	case DiscountErrorCodeBlank, DiscountErrorCodePresent, DiscountErrorCodeEqualTo, DiscountErrorCodeGreaterThan, DiscountErrorCodeGreaterThanOrEqualTo, DiscountErrorCodeInvalid, DiscountErrorCodeLessThanOrEqualTo, DiscountErrorCodeLessThan, DiscountErrorCodeTaken, DiscountErrorCodeTooLong, DiscountErrorCodeTooShort, DiscountErrorCodeInternalError, DiscountErrorCodeTooManyArguments, DiscountErrorCodeMissingArgument, DiscountErrorCodeMinimumSubtotalAndQuantityRangeBothPresent, DiscountErrorCodeValueOutsideRange, DiscountErrorCodeExceededMax, DiscountErrorCodeActivePeriodOverlap, DiscountErrorCodeConflict, DiscountErrorCodeImplicitDuplicate, DiscountErrorCodeDuplicate, DiscountErrorCodeInclusion:
 		return true
 	}
 	return false
