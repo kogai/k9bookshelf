@@ -1,0 +1,8 @@
+mutation productUpdateDo($input: ProductInput!) {
+  productUpdate(input: $input) {
+    userErrors {
+      field
+      message
+    }
+  }
+}

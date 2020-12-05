@@ -1,0 +1,89 @@
+{
+  "products": {
+    "pageInfo": {
+      "hasNextPage": true
+    },
+    "edges": [
+      {
+        "cursor": "eyJsYXN0X2lkIjo2MDc5MDMyOTE4MjE1LCJsYXN0X3ZhbHVlIjoiNjA3OTAzMjkxODIxNSJ9",
+        "node": {
+          "id": "gid://shopify/Product/6079032918215",
+          "title": "Programming Webassembly with Rust: Unified Development for Web, Mobile, and Embedded Applications (1ST ed.)",
+          "variants": {
+            "edges": [
+              {
+                "node": {
+                  "barcode": "9781680506365"
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "cursor": "eyJsYXN0X2lkIjo2MDgwMjUwODcyMDA3LCJsYXN0X3ZhbHVlIjoiNjA4MDI1MDg3MjAwNyJ9",
+        "node": {
+          "id": "gid://shopify/Product/6080250872007",
+          "title": "Node.js Design Patterns - Third edition: Design and implement production-grade Node.js applications using proven patterns and techniques",
+          "variants": {
+            "edges": [
+              {
+                "node": {
+                  "barcode": "9781839214110"
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "cursor": "eyJsYXN0X2lkIjo2MDgxMjE5NDk0MDg3LCJsYXN0X3ZhbHVlIjoiNjA4MTIxOTQ5NDA4NyJ9",
+        "node": {
+          "id": "gid://shopify/Product/6081219494087",
+          "title": "An Introduction to Functional Programming Through Lambda Calculus ( Dover Books on Mathematics )",
+          "variants": {
+            "edges": [
+              {
+                "node": {
+                  "barcode": "9780486478838"
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "cursor": "eyJsYXN0X2lkIjo2MDgxMjIxNDYwMTY3LCJsYXN0X3ZhbHVlIjoiNjA4MTIyMTQ2MDE2NyJ9",
+        "node": {
+          "id": "gid://shopify/Product/6081221460167",
+          "title": "The Maker's Guide to the Zombie Apocalypse: Defend Your Base with Simple Circuits, Arduino, and Raspberry Pi",
+          "variants": {
+            "edges": [
+              {
+                "node": {
+                  "barcode": "9781593276676"
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "cursor": "eyJsYXN0X2lkIjo2MDgxMjIxNDkyOTM1LCJsYXN0X3ZhbHVlIjoiNjA4MTIyMTQ5MjkzNSJ9",
+        "node": {
+          "id": "gid://shopify/Product/6081221492935",
+          "title": "Blood, Sweat, and Pixels: The Triumphant, Turbulent Stories Behind How Video Games Are Made",
+          "variants": {
+            "edges": [
+              {
+                "node": {
+                  "barcode": "9780062651235"
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}
