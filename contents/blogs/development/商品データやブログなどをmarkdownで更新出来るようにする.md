@@ -1,6 +1,6 @@
 こんにちは。
 
-趣味で[マーチャント](https://k9bookshelf.com)をやっているものです。
+趣味で [マーチャント](https://k9bookshelf.com) をやっているものです。
 
 この記事は [Shopify開発を盛り上げる（Liquid, React, Node.js, Graph QL） Advent Calendar 2020](https://qiita.com/advent-calendar/2020/shopify-liquid) の11日目の記事です。
 
@@ -54,11 +54,11 @@ Shopifyで編集したテーマファイルをダウンロードしたり手元�
 - [Private App](https://help.shopify.com/en/manual/apps/app-types#private-apps) でショップへのアクセス権限を取得
 - [Admin API](https://shopify.dev/docs/admin-api)
 - [GraphQL API](https://shopify.dev/docs/admin-api/graphql/reference/common-objects/queryroot/index)
-  - GraphQLのクエリファイルから以下のツールでクライアントを生成
+    - GraphQLのクエリファイルから以下のツールでクライアントを生成
     - [https://github.com/Yamashou/gqlgenc](https://github.com/Yamashou/gqlgenc)
     - [https://github.com/99designs/gqlgen](https://github.com/99designs/gqlgen)
 - [REST API](https://shopify.dev/docs/admin-api/rest/reference)
-  - ページとブログの更新はGraphQL APIでサポートされていないのでREST APIも併用
+    - ページとブログの更新はGraphQL APIでサポートされていないのでREST APIも併用
 
 Shopifyはドキュメントが非常に充実していて、 [GraphiQLアプリ](https://shopify.dev/tools/graphiql-admin-api) によるインタラクティブな試行環境もあるので、
 特に詰まることもなく開発出来ました。
@@ -77,7 +77,6 @@ Shopify関係ないですね。
 
 (bazelのgo系ルールには依存解決時にパッチを当てる仕組みがあるようで、 [パッチを書くことで](https://github.com/kogai/k9bookshelf/blob/b7bb804c0ad45b5eed5215d1b62a9c434c4cc6aa/content/com_github_yamashou_gqlgenc.patch#L1-L25) 解決出来ました)
 
-
 ## まとめ
 
 どうしてもリッチエディタに慣れなくてついカッとなって作ってしまいました。
@@ -91,7 +90,7 @@ Shopify関係ないですね。
 
 (HTMLとMarkdownの相互変換で微細な差異が生じることがあります)
 
-------
+---
 
 次回は [ShoheiTai](https://qiita.com/ShoheiTai) さんの「Shopifyアプリの選定・運用ノウハウとか」です。
 お楽しみに！

@@ -11,7 +11,6 @@ import (
 	generated "github.com/kogai/k9bookshelf/gqlgenc/client"
 
 	shopify "github.com/bold-commerce/go-shopify"
-	"github.com/gomarkdown/markdown"
 	"github.com/vbauerster/mpb"
 	"github.com/vbauerster/mpb/decor"
 )
@@ -208,7 +207,10 @@ func filesToContents(inputDir string, files []os.FileInfo) ([]Content, error) {
 		if err != nil {
 			return nil, err
 		}
-		html := string(markdown.ToHTML(md, nil, nil))
+		html, err := markdownToHTML(string(md))
+		if err != nil {
+			return nil, err
+		}
 		contents = append(contents, Content{
 			handle: handle,
 			html:   html,

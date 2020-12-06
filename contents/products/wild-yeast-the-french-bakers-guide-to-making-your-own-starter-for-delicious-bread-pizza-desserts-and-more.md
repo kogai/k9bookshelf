@@ -1,4 +1,4 @@
-**Learn to make your own sourdough starter--and delicious breads and other baked goods! No instant or active yeast required!**
+**Learn to make your own sourdough starter −−and delicious breads and other baked goods! No instant or active yeast required!**
 
 What if the secret to authentic, natural, and delicious bread comes from making your own starter--the agent that incorporates wild yeast and bacteria into your bread, bringing it to life and giving it rich and robust flavor? With years of culinary experience and training, French baker Mouni Abdelli invites you to discover the joy and satisfaction of making your own natural sourdough starter, which offers unrivaled flavor and releases the full nutritional and digestive benefits of the bread you bake. Unlike mass-produced and unwholesome industrially made bread, making your own homemade baked bread is a return to natural, nourishing ingredients, and an invitation to slow down and return to the simple and magical process of breadmaking.
 
