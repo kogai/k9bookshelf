@@ -49,6 +49,7 @@ k9bookshelf/content: $(GO_FILES) WORKSPACE
 
 .PHONY: release
 release:
+	git cm -a -m "bump version"
 	git tag -af "$(VERSION)" -m ""
 
 .PHONY: setup
