@@ -89,6 +89,11 @@ func TestMarkdownToHtml(t *testing.T) {
 			`<p>iconic as <em>Star Wars</em> and <em>Lord of the Rings</em> –even as it nearly ripped their studio apart.</p>
 `,
 		},
+		{
+			`**Learn to make your own sourdough starter −−and delicious breads and other baked goods! No instant or active yeast required!**`,
+			`<p><strong>Learn to make your own sourdough starter −−and delicious breads and other baked goods! No instant or active yeast required!</strong></p>
+`,
+		},
 	}
 	for _, tt := range testcases {
 		t.Run(tt.in, func(t *testing.T) {
