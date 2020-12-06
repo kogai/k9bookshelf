@@ -37,21 +37,24 @@ func TestHtmlToMarkdownListAndBold(t *testing.T) {
 func TestHtmlToMarkdownNestedList(t *testing.T) {
 	t.Parallel()
 	md, err := htmlToMarkdown(`<ul>
-	<li><a href="https://help.shopify.com/en/manual/apps/app-types#private-apps">Private App</a> でショップへのアクセス権限を取得</li>
+	<li>
+	<a href="https://help.shopify.com/en/manual/apps/app-types#private-apps">Private App</a> でショップへのアクセス権限を取得</li>
 	<li><a href="https://shopify.dev/docs/admin-api">Admin API</a></li>
-	<li><a href="https://shopify.dev/docs/admin-api/graphql/reference/common-objects/queryroot/index">GraphQL API</a>
-		<ul>
-			<li>GraphQLのクエリファイルから以下のツールでクライアントを生成</li>
-			<li><a href="https://github.com/Yamashou/gqlgenc">https://github.com/Yamashou/gqlgenc</a></li>
-			<li><a href="https://github.com/99designs/gqlgen">https://github.com/99designs/gqlgen</a></li>
-		</ul>
+	<li>
+	<a href="https://shopify.dev/docs/admin-api/graphql/reference/common-objects/queryroot/index">GraphQL API</a>
+	<ul>
+	<li>GraphQLのクエリファイルから以下のツールでクライアントを生成</li>
+	<li><a href="https://github.com/Yamashou/gqlgenc">https://github.com/Yamashou/gqlgenc</a></li>
+	<li><a href="https://github.com/99designs/gqlgen">https://github.com/99designs/gqlgen</a></li>
+	</ul>
 	</li>
-	<li><a href="https://shopify.dev/docs/admin-api/rest/reference">REST API</a>
-		<ul>
-			<li>ページとブログの更新はGraphQL APIでサポートされていないのでREST APIも併用</li>
-		</ul>
+	<li>
+	<a href="https://shopify.dev/docs/admin-api/rest/reference">REST API</a>
+	<ul>
+	<li>ページとブログの更新はGraphQL APIでサポートされていないのでREST APIも併用</li>
+	</ul>
 	</li>
-</ul>`)
+	</ul>`)
 	assert.Equal(t, nil, err)
 	assert.Equal(t, `- [Private App](https://help.shopify.com/en/manual/apps/app-types#private-apps) でショップへのアクセス権限を取得
 - [Admin API](https://shopify.dev/docs/admin-api)

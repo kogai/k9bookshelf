@@ -17,6 +17,8 @@ go_library(
         "@com_github_bold_commerce_go_shopify//:go_default_library",
         "@com_github_gomarkdown_markdown//:go_default_library",
         "@com_github_johanneskaufmann_html_to_markdown//:go_default_library",
+        "@com_github_tdewolff_minify_v2//:go_default_library",
+        "@com_github_tdewolff_minify_v2//html:go_default_library",
         "@com_github_vbauerster_mpb//:go_default_library",
         "@com_github_vbauerster_mpb//decor:go_default_library",
         "@com_github_yamashou_gqlgenc//client:go_default_library",

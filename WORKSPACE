@@ -225,8 +225,8 @@ go_repository(
 go_repository(
     name = "com_github_fsnotify_fsnotify",
     importpath = "github.com/fsnotify/fsnotify",
-    sum = "h1:IXs+QLmnXW2CcXuY+8Mzv/fWEsPGWxqefPtCP5CnV9I=",
-    version = "v1.4.7",
+    sum = "h1:hsms1Qyu0jgnwNXIxa+/V/PDsU6CfLf6CNO8H7IWoS4=",
+    version = "v1.4.9",
 )
 
 go_repository(
@@ -1418,6 +1418,48 @@ go_repository(
     importpath = "github.com/sebdah/goldie/v2",
     sum = "h1:hh70HvG4n3T3MNRJN2z/baxPR8xutxo7JVxyi2svl+s=",
     version = "v2.5.1",
+)
+
+go_repository(
+    name = "com_github_cheekybits_is",
+    importpath = "github.com/cheekybits/is",
+    sum = "h1:SKI1/fuSdodxmNNyVBR8d7X/HuLnRpvvFO0AgyQk764=",
+    version = "v0.0.0-20150225183255-68e9c0620927",
+)
+
+go_repository(
+    name = "com_github_dustin_go_humanize",
+    importpath = "github.com/dustin/go-humanize",
+    sum = "h1:VSnTsYCnlFHaM2/igO1h6X3HA71jcobQuxemgkq4zYo=",
+    version = "v1.0.0",
+)
+
+go_repository(
+    name = "com_github_matryer_try",
+    importpath = "github.com/matryer/try",
+    sum = "h1:JAEbJn3j/FrhdWA9jW8B5ajsLIjeuEHLi8xE4fk997o=",
+    version = "v0.0.0-20161228173917-9ac251b645a2",
+)
+
+go_repository(
+    name = "com_github_tdewolff_minify_v2",
+    importpath = "github.com/tdewolff/minify/v2",
+    sum = "h1:p+ifTTl+JMFFLDYNAm7nxQ9XuCG10HTW00wlPAZ7aoE=",
+    version = "v2.9.10",
+)
+
+go_repository(
+    name = "com_github_tdewolff_parse_v2",
+    importpath = "github.com/tdewolff/parse/v2",
+    sum = "h1:b7ICJa4I/54JQGEGgTte8DiyJPKcC5g8V773QMzkeUM=",
+    version = "v2.5.5",
+)
+
+go_repository(
+    name = "com_github_tdewolff_test",
+    importpath = "github.com/tdewolff/test",
+    sum = "h1:76mzYJQ83Op284kMT+63iCNCI7NEERsIN8dLM+RiKr4=",
+    version = "v1.0.6",
 )
 
 go_rules_dependencies()
