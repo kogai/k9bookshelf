@@ -13,19 +13,11 @@ deploy/theme:
 
 deploy/contents: $(MD_FILES)
 	$(BZL) run //content/cmd/content -- deploy \
-		--dir $(PWD)/contents \
-		--domain k9books.myshopify.com \
-		--key $(MARKDOWN_APP_KEY) \
-		--secret $(MARKDOWN_APP_SECRET) \
-		--token $(MARKDOWN_APP_SECRET)
+		--config $(PWD)/config.yml
 
 download/contents: $(MD_FILES)
 	$(BZL) run //content/cmd/content -- download \
-		--dir $(PWD)/contents \
-		--domain k9books.myshopify.com \
-		--key $(MARKDOWN_APP_KEY) \
-		--secret $(MARKDOWN_APP_SECRET) \
-		--token $(MARKDOWN_APP_SECRET)
+		--config $(PWD)/config.yml
 
 watch:
 	$(TK) watch --dir theme
