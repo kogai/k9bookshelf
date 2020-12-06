@@ -13,10 +13,12 @@ deploy/theme:
 
 deploy/contents: $(MD_FILES)
 	$(BZL) run //content/cmd/content -- deploy \
+		--dir $(PWD)/contents \
 		--config $(PWD)/config.yml
 
 download/contents: $(MD_FILES)
 	$(BZL) run //content/cmd/content -- download \
+		--dir $(PWD)/contents \
 		--config $(PWD)/config.yml
 
 watch:
