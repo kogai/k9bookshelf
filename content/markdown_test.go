@@ -72,3 +72,29 @@ func TestHtmlToMarkdown(t *testing.T) {
 		})
 	}
 }
+
+func TestMarkdownToHtml(t *testing.T) {
+	t.Parallel()
+	testcases := []struct {
+		in  string
+		out string
+	}{
+		{
+			`abc`,
+			`<p>abc</p>
+`,
+		},
+		{
+			`iconic as _Star Wars_ and _Lord of the Rings_ –even as it nearly ripped their studio apart.`,
+			`<p>iconic as <em>Star Wars</em> and <em>Lord of the Rings</em> –even as it nearly ripped their studio apart.</p>
+`,
+		},
+	}
+	for _, tt := range testcases {
+		t.Run(tt.in, func(t *testing.T) {
+			actual, err := markdownToHTML(tt.in)
+			assert.Equal(t, nil, err)
+			assert.Equal(t, tt.out, actual)
+		})
+	}
+}
