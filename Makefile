@@ -21,6 +21,9 @@ download/contents: $(MD_FILES)
 		--dir $(PWD)/contents \
 		--config $(PWD)/config.yml
 
+import: $(GO_FILES)
+	$(BZL) run //onix/cmd -- --input $(PWD)/onix/20201208.onix
+
 watch:
 	$(TK) watch --dir theme
 
