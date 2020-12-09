@@ -60,7 +60,7 @@
   },
   "blogs": {
     "article": {
-      "author_on_date_html": "投稿者 ： {{ author }} on {{ date }}",
+      "author_on_date_html": "投稿日: {{ date }}",
       "tags": "タグ",
       "comment_meta_html": "{{ author }} on {{ date }}",
       "view_all": "すべてを見る",
