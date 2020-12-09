@@ -11,6 +11,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 
 	shopify "github.com/bold-commerce/go-shopify"
 	"github.com/kogai/k9bookshelf/gqlgenc/client"
@@ -60,6 +61,7 @@ func fetchProducts(ctx context.Context, adminClient *client.Client) (*client.Pro
 }
 
 func hasSameISBN13(isbn string, products *client.ProductISBNs) (bool, int) {
+	fmt.Println(isbn)
 	for i, p := range products.Products.Edges {
 		for _, v := range p.Node.Variants.Edges {
 			if isbn == *v.Node.Barcode {
@@ -91,6 +93,11 @@ func extractTags(p *Product) []string {
 		tags = strings.Split(subject.SubjectHeadingText, "; ")
 	}
 	return tags
+}
+
+func extractDatetime(date string) (time.Time, error) {
+	const shortForm = "20060102"
+	return time.Parse(shortForm, date)
 }
 
 // Run imports ONIX for Books 2.1 format file to Shopify.
@@ -138,7 +145,6 @@ func Run(input string) error {
 			// if subject != nil {
 			// 	tags = strings.Split(*subject.SubjectHeadingText, "; ")
 			// }
-			// title := d.Title.TitleText + " " + d.Title.Subtitle
 			// inventoryPolicy := client.ProductVariantInventoryPolicyContinue
 
 			// var weight *float64
@@ -158,10 +164,30 @@ func Run(input string) error {
 			// 	p := fmt.Sprintf("%f", _price.PriceAmount)
 			// 	price = &p
 			// }
-
+			title := d.Title.TitleText
 			tags := extractTags(&d)
+			date, err := extractDatetime(d.PublicationDate)
+			if err != nil {
+				return err
+			}
+			namespace := "k9bookshelf"
+			key := "published_at"
+			value := date.String()
+			valueType := client.MetafieldValueTypeString
+			subtitleKey := "subtitle"
 			res, err := gqlClient.ProductUpdateDo(context.Background(), client.ProductInput{
 				ID: &currentProduct.Node.ID,
+				Metafields: []*client.MetafieldInput{{
+					Key:       &key,
+					Namespace: &namespace,
+					Value:     &value,
+					ValueType: &valueType,
+				}, {
+					Value:     &d.Title.Subtitle,
+					Key:       &subtitleKey,
+					Namespace: &namespace,
+					ValueType: &valueType,
+				}},
 				// 	DescriptionHTML: &descriptionHTML,
 				// 	Variants: []*client.ProductVariantInput{
 				// 		{
@@ -172,8 +198,8 @@ func Run(input string) error {
 				// 			Barcode:         isbn,
 				// 		},
 				// 	},
-				Tags: tags,
-				// 	Title:  &title,
+				Tags:  tags,
+				Title: &title,
 				// 	Vendor: &d.Publisher.PublisherName,
 			})
 			if err != nil {
@@ -195,7 +221,7 @@ func Run(input string) error {
 			}
 
 			tags := extractTags(&d)
-			title := d.Title.TitleText + " " + d.Title.Subtitle
+			title := d.Title.TitleText
 			inventoryPolicy := client.ProductVariantInventoryPolicyContinue
 
 			var weight *float64
@@ -223,9 +249,29 @@ func Run(input string) error {
 			// chatID := "gid://shopify/Publication/68864934087"
 			// buyButtonID := "gid://shopify/Publication/68977950919"
 			// published := true
+			date, err := extractDatetime(d.PublicationDate)
+			if err != nil {
+				return err
+			}
+			namespace := "k9bookshelf"
+			key := "published_at"
+			value := date.String()
+			valueType := client.MetafieldValueTypeString
+			subtitleKey := "subtitle"
 			res, err := gqlClient.ProductCreateDo(context.Background(), client.ProductInput{
 				CollectionsToJoin: []string{"gid://shopify/Collection/236195152071"},
 				DescriptionHTML:   &descriptionHTML,
+				Metafields: []*client.MetafieldInput{{
+					Key:       &key,
+					Namespace: &namespace,
+					Value:     &value,
+					ValueType: &valueType,
+				}, {
+					Value:     &d.Title.Subtitle,
+					Key:       &subtitleKey,
+					Namespace: &namespace,
+					ValueType: &valueType,
+				}},
 				Variants: []*client.ProductVariantInput{
 					{
 						InventoryPolicy: &inventoryPolicy,

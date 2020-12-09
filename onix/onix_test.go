@@ -69,3 +69,10 @@ func TestExtractTags(t *testing.T) {
 	})
 	assert.Equal(t, tags, []string{"SDR", "antenna", "ham radio", "police band", "radio", "satellite", "shortwave", "wireless"})
 }
+
+func TestExtractPublishedAt(t *testing.T) {
+	t.Parallel()
+	tt, err := extractDatetime("20130203")
+	assert.Equal(t, err, nil)
+	assert.Equal(t, tt.String(), "2013-02-03 00:00:00 +0000 UTC")
+}
