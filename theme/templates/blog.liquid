@@ -18,12 +18,13 @@
       {% capture date %}<time datetime="{{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' }}">{{ article.published_at | date: format: 'date' }}</time>{% endcapture %}
       <p class="txt--minor">{{ 'blogs.article.author_on_date_html' | t: author: author, date: date }}</p>
 
+<div style="display:flex;">
       {% if article.image %}
         {%- assign img_url = article.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
         {%- capture wrapper_id -%}ArticleImageWrapper--{{ article.image.id }}{%- endcapture -%}
         {%- capture img_id -%}ArticleImage--{{ article.image.id }}{%- endcapture -%}
-        {% include 'image-style' with image: article.image, width: 970, height: 1024, small_style: false, wrapper_id: wrapper_id, img_id: img_id %}
-        <div id="{{ wrapper_id }}" class="supports-js">
+        {% include 'image-style' with image: article.image, width: 242, height: 256, small_style: false, wrapper_id: wrapper_id, img_id: img_id %}
+        <div id="{{ wrapper_id }}" class="supports-js" style="width:100%;margin-right:1rem;">
           <a class="article__image-wrapper" href="{{ article.url }}" style="padding-top:{{ 1 | divided_by: article.image.aspect_ratio | times: 100}}%;">
             <img id="{{ img_id }}"
                  class="article__image lazyload"
@@ -39,7 +40,7 @@
 
         <noscript>
           <a class="article__image" href="{{ article.url }}">
-            {{ article | img_url: '1024x1024' | img_tag: article.title }}
+            {{ article | img_url: '240x240' | img_tag: article.title }}
           </a>
         </noscript>
       {% endif %}
@@ -48,9 +49,10 @@
         {% if article.excerpt.size > 0 %}
           {{ article.excerpt }}
         {% else %}
-          <p>{{ article.content | strip_html | truncatewords: 100 }}</p>
+          <p>{{ article.content | strip_html | truncate: 150 }}</p>
         {% endif %}
       </div>
+</div>
 
       {% if blog.comments_enabled? or article.tags.size > 0 %}
         <ul class="list--inline txt--minor">

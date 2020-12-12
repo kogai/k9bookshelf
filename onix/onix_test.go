@@ -9,6 +9,27 @@ import (
 	"gopkg.in/go-playground/assert.v1"
 )
 
+func TestFindMetaFieldIDBy(t *testing.T) {
+	t.Parallel()
+	metaFieldID, err := findMetaFieldIDBy(&client.Product{
+		Metafields: &client.MetafieldConnection{
+			Edges: []*client.MetafieldEdge{{
+				Node: &client.Metafield{
+					ID:  "1",
+					Key: "a",
+				},
+			}, {
+				Node: &client.Metafield{
+					ID:  "2",
+					Key: "b",
+				},
+			}},
+		},
+	}, "a")
+	assert.Equal(t, err, nil)
+	assert.Equal(t, *metaFieldID, "1")
+}
+
 func TestFindPriceBy(t *testing.T) {
 	t.Parallel()
 	price := findPriceBy([]Price{{
@@ -68,4 +89,11 @@ func TestExtractTags(t *testing.T) {
 		}},
 	})
 	assert.Equal(t, tags, []string{"SDR", "antenna", "ham radio", "police band", "radio", "satellite", "shortwave", "wireless"})
+}
+
+func TestExtractPublishedAt(t *testing.T) {
+	t.Parallel()
+	tt, err := extractDatetime("20130203")
+	assert.Equal(t, err, nil)
+	assert.Equal(t, tt.String(), "2013-02-03 00:00:00 +0000 UTC")
 }

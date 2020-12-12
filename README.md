@@ -11,3 +11,9 @@ $ make deploy/theme
 ```sh
 $ make deploy/contents
 ```
+
+## 商品情報のインポート
+
+```sh
+$ make ONIX_FILE=20201208.onix import
+```

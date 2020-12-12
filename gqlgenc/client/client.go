@@ -299,8 +299,17 @@ type ProductISBNs struct {
 		Edges []*struct {
 			Cursor string "json:\"cursor\" graphql:\"cursor\""
 			Node   struct {
-				ID       string "json:\"id\" graphql:\"id\""
-				Title    string "json:\"title\" graphql:\"title\""
+				ID         string "json:\"id\" graphql:\"id\""
+				Title      string "json:\"title\" graphql:\"title\""
+				Metafields struct {
+					Edges []*struct {
+						Node struct {
+							ID        string "json:\"id\" graphql:\"id\""
+							Namespace string "json:\"namespace\" graphql:\"namespace\""
+							Key       string "json:\"key\" graphql:\"key\""
+						} "json:\"node\" graphql:\"node\""
+					} "json:\"edges\" graphql:\"edges\""
+				} "json:\"metafields\" graphql:\"metafields\""
 				Variants struct {
 					Edges []*struct {
 						Node struct {
@@ -418,6 +427,15 @@ const ProductISBNsQuery = `query productISBNs ($first: Int!, $after: String) {
 			node {
 				id
 				title
+				metafields(first: 10) {
+					edges {
+						node {
+							id
+							namespace
+							key
+						}
+					}
+				}
 				variants(first: 1) {
 					edges {
 						node {
