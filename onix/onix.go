@@ -20,6 +20,10 @@ import (
 const apiVersion string = "2020-10"
 const shopDomain string = "k9books.myshopify.com"
 
+var metaFieldNamespace string = "k9bookshelf"
+var metaFieldKeyPublishedAt string = "published_at"
+var metaFieldKeySubTitle string = "subtitle"
+
 var appKey string = os.Getenv("INGRAM_CONTENT_IMPORTER_APP_KEY")
 var appSecret string = os.Getenv("INGRAM_CONTENT_IMPORTER_APP_SECRET")
 
@@ -95,6 +99,19 @@ func extractTags(p *Product) []string {
 	return tags
 }
 
+func findMetaFieldIDBy(_p interface{}, key string) (*string, error) {
+	p, ok := _p.(*client.Product)
+	if !ok {
+		return nil, fmt.Errorf("invalid type casting, got =[%v]", _p)
+	}
+	for _, edge := range p.Metafields.Edges {
+		if edge.Node.Key == key {
+			return &edge.Node.ID, nil
+		}
+	}
+	return nil, nil
+}
+
 func extractDatetime(date string) (time.Time, error) {
 	const shortForm = "20060102"
 	return time.Parse(shortForm, date)
@@ -164,28 +181,43 @@ func Run(input string) error {
 			// 	p := fmt.Sprintf("%f", _price.PriceAmount)
 			// 	price = &p
 			// }
+
 			title := d.Title.TitleText
 			tags := extractTags(&d)
 			date, err := extractDatetime(d.PublicationDate)
 			if err != nil {
 				return err
 			}
-			namespace := "k9bookshelf"
-			key := "published_at"
 			value := date.String()
 			valueType := client.MetafieldValueTypeString
-			subtitleKey := "subtitle"
+			var publishedAtID *string
+			var subTitleID *string
+			for _, edge := range currentProduct.Node.Metafields.Edges {
+				if edge.Node.Key == metaFieldKeyPublishedAt {
+					publishedAtID = &edge.Node.ID
+					break
+				}
+			}
+			for _, edge := range currentProduct.Node.Metafields.Edges {
+				if edge.Node.Key == metaFieldKeySubTitle {
+					subTitleID = &edge.Node.ID
+					break
+				}
+			}
+
 			res, err := gqlClient.ProductUpdateDo(context.Background(), client.ProductInput{
 				ID: &currentProduct.Node.ID,
 				Metafields: []*client.MetafieldInput{{
-					Key:       &key,
-					Namespace: &namespace,
+					ID:        publishedAtID,
+					Key:       &metaFieldKeyPublishedAt,
+					Namespace: &metaFieldNamespace,
 					Value:     &value,
 					ValueType: &valueType,
 				}, {
+					ID:        subTitleID,
 					Value:     &d.Title.Subtitle,
-					Key:       &subtitleKey,
-					Namespace: &namespace,
+					Key:       &metaFieldKeySubTitle,
+					Namespace: &metaFieldNamespace,
 					ValueType: &valueType,
 				}},
 				// 	DescriptionHTML: &descriptionHTML,
@@ -253,23 +285,20 @@ func Run(input string) error {
 			if err != nil {
 				return err
 			}
-			namespace := "k9bookshelf"
-			key := "published_at"
 			value := date.String()
 			valueType := client.MetafieldValueTypeString
-			subtitleKey := "subtitle"
 			res, err := gqlClient.ProductCreateDo(context.Background(), client.ProductInput{
 				CollectionsToJoin: []string{"gid://shopify/Collection/236195152071"},
 				DescriptionHTML:   &descriptionHTML,
 				Metafields: []*client.MetafieldInput{{
-					Key:       &key,
-					Namespace: &namespace,
+					Key:       &metaFieldKeyPublishedAt,
+					Namespace: &metaFieldNamespace,
 					Value:     &value,
 					ValueType: &valueType,
 				}, {
 					Value:     &d.Title.Subtitle,
-					Key:       &subtitleKey,
-					Namespace: &namespace,
+					Key:       &metaFieldKeySubTitle,
+					Namespace: &metaFieldNamespace,
 					ValueType: &valueType,
 				}},
 				Variants: []*client.ProductVariantInput{
