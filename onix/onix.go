@@ -11,6 +11,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 
 	shopify "github.com/bold-commerce/go-shopify"
 	"github.com/kogai/k9bookshelf/gqlgenc/client"
@@ -18,6 +19,10 @@ import (
 
 const apiVersion string = "2020-10"
 const shopDomain string = "k9books.myshopify.com"
+
+var metaFieldNamespace string = "k9bookshelf"
+var metaFieldKeyPublishedAt string = "published_at"
+var metaFieldKeySubTitle string = "subtitle"
 
 var appKey string = os.Getenv("INGRAM_CONTENT_IMPORTER_APP_KEY")
 var appSecret string = os.Getenv("INGRAM_CONTENT_IMPORTER_APP_SECRET")
@@ -60,6 +65,7 @@ func fetchProducts(ctx context.Context, adminClient *client.Client) (*client.Pro
 }
 
 func hasSameISBN13(isbn string, products *client.ProductISBNs) (bool, int) {
+	fmt.Println(isbn)
 	for i, p := range products.Products.Edges {
 		for _, v := range p.Node.Variants.Edges {
 			if isbn == *v.Node.Barcode {
@@ -91,6 +97,24 @@ func extractTags(p *Product) []string {
 		tags = strings.Split(subject.SubjectHeadingText, "; ")
 	}
 	return tags
+}
+
+func findMetaFieldIDBy(_p interface{}, key string) (*string, error) {
+	p, ok := _p.(*client.Product)
+	if !ok {
+		return nil, fmt.Errorf("invalid type casting, got =[%v]", _p)
+	}
+	for _, edge := range p.Metafields.Edges {
+		if edge.Node.Key == key {
+			return &edge.Node.ID, nil
+		}
+	}
+	return nil, nil
+}
+
+func extractDatetime(date string) (time.Time, error) {
+	const shortForm = "20060102"
+	return time.Parse(shortForm, date)
 }
 
 // Run imports ONIX for Books 2.1 format file to Shopify.
@@ -138,7 +162,6 @@ func Run(input string) error {
 			// if subject != nil {
 			// 	tags = strings.Split(*subject.SubjectHeadingText, "; ")
 			// }
-			// title := d.Title.TitleText + " " + d.Title.Subtitle
 			// inventoryPolicy := client.ProductVariantInventoryPolicyContinue
 
 			// var weight *float64
@@ -159,10 +182,45 @@ func Run(input string) error {
 			// 	price = &p
 			// }
 
-			tags := extractTags(&d)
+			title := d.Title.TitleText
+			date, err := extractDatetime(d.PublicationDate)
+			if err != nil {
+				return err
+			}
+			value := date.String()
+			valueType := client.MetafieldValueTypeString
+			var publishedAtID *string
+			var subTitleID *string
+			for _, edge := range currentProduct.Node.Metafields.Edges {
+				if edge.Node.Key == metaFieldKeyPublishedAt {
+					publishedAtID = &edge.Node.ID
+					break
+				}
+			}
+			for _, edge := range currentProduct.Node.Metafields.Edges {
+				if edge.Node.Key == metaFieldKeySubTitle {
+					subTitleID = &edge.Node.ID
+					break
+				}
+			}
+
+			// NOTE: DescriptionHTML and Tags are possible to edit manually,
+			// So we should touch only at create-time.
 			res, err := gqlClient.ProductUpdateDo(context.Background(), client.ProductInput{
 				ID: &currentProduct.Node.ID,
-				// 	DescriptionHTML: &descriptionHTML,
+				Metafields: []*client.MetafieldInput{{
+					ID:        publishedAtID,
+					Key:       &metaFieldKeyPublishedAt,
+					Namespace: &metaFieldNamespace,
+					Value:     &value,
+					ValueType: &valueType,
+				}, {
+					ID:        subTitleID,
+					Value:     &d.Title.Subtitle,
+					Key:       &metaFieldKeySubTitle,
+					Namespace: &metaFieldNamespace,
+					ValueType: &valueType,
+				}},
 				// 	Variants: []*client.ProductVariantInput{
 				// 		{
 				// 			InventoryPolicy: &inventoryPolicy,
@@ -172,9 +230,7 @@ func Run(input string) error {
 				// 			Barcode:         isbn,
 				// 		},
 				// 	},
-				Tags: tags,
-				// 	Title:  &title,
-				// 	Vendor: &d.Publisher.PublisherName,
+				Title: &title,
 			})
 			if err != nil {
 				return err
@@ -195,7 +251,7 @@ func Run(input string) error {
 			}
 
 			tags := extractTags(&d)
-			title := d.Title.TitleText + " " + d.Title.Subtitle
+			title := d.Title.TitleText
 			inventoryPolicy := client.ProductVariantInventoryPolicyContinue
 
 			var weight *float64
@@ -223,9 +279,26 @@ func Run(input string) error {
 			// chatID := "gid://shopify/Publication/68864934087"
 			// buyButtonID := "gid://shopify/Publication/68977950919"
 			// published := true
+			date, err := extractDatetime(d.PublicationDate)
+			if err != nil {
+				return err
+			}
+			value := date.String()
+			valueType := client.MetafieldValueTypeString
 			res, err := gqlClient.ProductCreateDo(context.Background(), client.ProductInput{
 				CollectionsToJoin: []string{"gid://shopify/Collection/236195152071"},
 				DescriptionHTML:   &descriptionHTML,
+				Metafields: []*client.MetafieldInput{{
+					Key:       &metaFieldKeyPublishedAt,
+					Namespace: &metaFieldNamespace,
+					Value:     &value,
+					ValueType: &valueType,
+				}, {
+					Value:     &d.Title.Subtitle,
+					Key:       &metaFieldKeySubTitle,
+					Namespace: &metaFieldNamespace,
+					ValueType: &valueType,
+				}},
 				Variants: []*client.ProductVariantInput{
 					{
 						InventoryPolicy: &inventoryPolicy,

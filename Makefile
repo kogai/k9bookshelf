@@ -5,6 +5,7 @@ LINT := yarn theme-lint
 BZL := yarn bazelisk --
 BZL_BIN := $(shell npx bazelisk info bazel-bin)
 VERSION := $(shell cat content/.version | tr -d '\n')
+ONIX_FILE := ""
 
 .PHONY: deploy/theme,deploy/contents,watch,download/theme
 
@@ -22,7 +23,7 @@ download/contents: $(MD_FILES)
 		--config $(PWD)/config.yml
 
 import: $(GO_FILES)
-	$(BZL) run //onix/cmd -- --input $(PWD)/onix/20201208.onix
+	$(BZL) run //onix/cmd -- --input $(PWD)/onix/$(ONIX_FILE)
 
 watch:
 	$(TK) watch --dir theme
