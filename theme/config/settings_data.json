@@ -9,7 +9,7 @@
     "color_form": "#f4f4f4",
     "color_image_overlay_text": "#fff",
     "color_image_overlay": "#333333",
-    "image_overlay_opacity": "25",
+    "image_overlay_opacity": 25,
     "type_header_font": "times_new_roman_n4",
     "type_header_base_size": "28px",
     "type_base_font": "helvetica_n4",
@@ -24,12 +24,18 @@
       "featured-products": {
         "type": "featured-products",
         "settings": {
-          "home_page_featured_products": "frontpage"
+          "title": "特集コレクション",
+          "home_page_featured_products": "frontpage",
+          "home_featured_products_row_num": 2
         }
       },
       "featured-content": {
         "type": "featured-content",
-        "settings": {}
+        "settings": {
+          "section_title": "プログラミング関連の洋書販売",
+          "text": "<p><a href=\"https:\/\/github.com\/kogai\" target=\"_blank\">現役のWebエンジニア<\/a>が業務やプライベートで読んだ技術関連の書籍を、未邦訳のものを中心に感想を交えてご紹介しています。<\/p>",
+          "text_size": "medium"
+        }
       },
       "footer": {
         "type": "footer",
@@ -37,6 +43,7 @@
           "footer-0": {
             "type": "menu",
             "settings": {
+              "title": "リンク",
               "menu": "footer"
             }
           }
@@ -44,7 +51,25 @@
         "block_order": [
           "footer-0"
         ],
-        "settings": {}
+        "settings": {
+          "show_payment_icons": true
+        }
+      },
+      "header": {
+        "type": "header",
+        "settings": {
+          "logo_max_width": 150,
+          "show_announcement": false,
+          "home_page_only": true,
+          "announcement_text": "ここで告知してください",
+          "tagline": ""
+        }
+      },
+      "sidebar": {
+        "type": "sidebar",
+        "settings": {
+          "main_menu_link_list": "main-menu"
+        }
       }
     },
     "content_for_index": [
