@@ -1,12 +1,12 @@
 こんにちは。
 
-趣味で [マーチャント](https://k9bookshelf.com) をやっているものです。
+[趣味でマーチャントをやっている](https://k9bookshelf.com/blogs/development/how-and-why-running-bookstore) ものです。
 
 この記事は [Shopify開発を盛り上げる（Liquid, React, Node.js, Graph QL） Advent Calendar 2020](https://qiita.com/advent-calendar/2020/shopify-liquid) の11日目の記事です。
 
-昨日は [benzookapi](https://qiita.com/benzookapi) さんの[placeholder]でした。
+昨日は [benzookapi](https://qiita.com/benzookapi) さんの [Shopifyアプリ公開パーフェクトガイド：アプリエコシステムに上手に参加する方法](https://www.shopify.jp/blog/partner-app-store-publishing-guide) でした。
 
-12月4日にも社内ブログで書いた記事を載せて頂きましたが、枠がまだ空いているようですので、今日はプライベートで作ったShopifyアプリについてお話したいと思っています。
+[12月4日にも社内ブログで書いた記事を載せて頂きました](https://developer.feedforce.jp/entry/2020/12/04/100000) が、枠がまだ空いているようですので、今日はプライベートで作ったShopifyアプリについてお話したいと思っています。
 
 ## この記事でお話するツール
 
@@ -32,8 +32,7 @@
 
 また本業のプログラマーという職業柄、文章を書くには使い慣れたテキストエディタを使いたいという気持ちもあります。
 
-Shopifyではテーマ開発用ツールとして [theme-kit](https://github.com/Shopify/themekit) が提供されており、
-Shopifyで編集したテーマファイルをダウンロードしたり手元のエディタで編集したものをアップロードすることが出来ます。
+Shopifyではテーマ開発用ツールとして [theme-kit](https://github.com/Shopify/themekit) が提供されており、 Shopifyで編集したテーマファイルをダウンロードしたり手元のエディタで編集したものをアップロードすることが出来ます。
 
 これに近い体験が、コンテンツの管理でも出来ないものでしょうか？
 
@@ -41,11 +40,9 @@ Shopifyで編集したテーマファイルをダウンロードしたり手元�
 
 コミュニティを [検索してみると](https://community.shopify.com/c/forums/searchpage/tab/message?advanced=false&allow_punctuation=false&filter=location&location=category:en&q=markdown)、markdownで編集出来るようなアプリをリリースしたというコメントは散見されるものの、デッドリンクとなっているなど、2020年時点でも使える解決策は見つかりませんでした。
 
-幸いShopifyには [Admin API](https://shopify.dev/docs/admin-api) を始めとする、多種多様なAPIが公開されています。
-また、リッチエディタで保存された文言は、内部的にはHTMLで保存されているようです。
+幸いShopifyには [Admin API](https://shopify.dev/docs/admin-api) を始めとする、多種多様なAPIが公開されています。 また、リッチエディタで保存された文言は、内部的にはHTMLで保存されているようです。
 
-商品情報編集やページ・ブログ記事の更新までAPI経由で操作が可能なので、theme-kitよろしくcontent-kitのようなツールが書けそうです。
-(と言うか、この記事は [content-kitと名付けたその自作ツール](https://github.com/kogai/k9bookshelf/blob/main/content/README.md) で更新しています)
+商品情報編集やページ・ブログ記事の更新までAPI経由で操作が可能なので、theme-kitよろしくcontent-kitのようなツールが書けそうです。 (と言うか、この記事は [content-kitと名付けたその自作ツール](https://github.com/kogai/k9bookshelf/blob/main/content/README.md) で更新しています)
 
 ## ツールの構成
 
@@ -54,24 +51,21 @@ Shopifyで編集したテーマファイルをダウンロードしたり手元�
 - [Private App](https://help.shopify.com/en/manual/apps/app-types#private-apps) でショップへのアクセス権限を取得
 - [Admin API](https://shopify.dev/docs/admin-api)
 - [GraphQL API](https://shopify.dev/docs/admin-api/graphql/reference/common-objects/queryroot/index)
-    - GraphQLのクエリファイルから以下のツールでクライアントを生成
+    - GraphQLのクエリファイルから以下のツールでAPIクライアントを自動生成
     - [https://github.com/Yamashou/gqlgenc](https://github.com/Yamashou/gqlgenc)
     - [https://github.com/99designs/gqlgen](https://github.com/99designs/gqlgen)
 - [REST API](https://shopify.dev/docs/admin-api/rest/reference)
     - ページとブログの更新はGraphQL APIでサポートされていないのでREST APIも併用
 
-Shopifyはドキュメントが非常に充実していて、 [GraphiQLアプリ](https://shopify.dev/tools/graphiql-admin-api) によるインタラクティブな試行環境もあるので、
-特に詰まることもなく開発出来ました。
+Shopifyはドキュメントが非常に充実していて、 [GraphiQLアプリ](https://shopify.dev/tools/graphiql-admin-api) によるインタラクティブな試行環境もあるので、 特に詰まることもなく開発出来ました。
 
-ページやブログはREST APIの [Goクライアントライブラリ](https://github.com/bold-commerce/go-shopify) でサポートされていませんでした。
-この辺りはShopifyアプリではあまり取り扱われないリソースなのかも知れません。
+ページやブログはREST APIの [Goクライアントライブラリ](https://github.com/bold-commerce/go-shopify) でサポートされていませんでした。 この辺りはShopifyアプリではあまり取り扱われないリソースなのかも知れません。
 
 ### 困ったこと
 
-基本的に開発のための環境は揃いきっているので、困ったことはそれほどありませんでした。
+Shopifyには開発のための環境は揃いきっているので、困ったことはそれほどありませんでした。
 
-唯一困ったのは、テーマファイルや他のツール(テーマや書誌情報の規格化されたデータファイルの取り込みツールなど)を同じレポジトリで管理している都合上、
-[bazel](https://bazel.build/) でビルドをしているのですが、GraphQLクライアントの生成ツールが依存している `*.gotpl` などのファイルの依存関係が自動生成できなかったことです。
+唯一困ったのは、テーマファイルや他のツール(テーマや書誌情報の規格化されたデータファイルの取り込みツールなど)を同じレポジトリで管理している都合上、 [bazel](https://bazel.build/) でビルドをしているのですが、GraphQLクライアントの生成ツールが依存している `*.gotpl` などのファイルの依存関係が自動生成できなかったことです。
 
 Shopify関係ないですね。
 
@@ -83,8 +77,7 @@ Shopify関係ないですね。
 
 マーチャントとしてPrivate Appで好きにカスタムしながらショップを運営するのは結構楽しいです。
 
-アプリストアに出品されないような一般化しづらい要望を(自分で)すくえるのがいいですね。
-流行りのノーコードとは真逆の使い方ですが。。。
+アプリストアに出品されないような一般化しづらい要望を(自分で)すくえるのがいいですね。 流行りのノーコードとは真逆の使い方ですが。。。
 
 バイナリを [Releaseページ](https://github.com/kogai/k9bookshelf/releases) に置いておくので、良かったら試してみて下さい。
 
@@ -92,5 +85,4 @@ Shopify関係ないですね。
 
 ---
 
-次回は [ShoheiTai](https://qiita.com/ShoheiTai) さんの「Shopifyアプリの選定・運用ノウハウとか」です。
-お楽しみに！
+明日は [kskinaba](https://qiita.com/kskinaba) さんの「Ruby：Shopify GraphQL Admin API の使い方」です。 お楽しみに！
