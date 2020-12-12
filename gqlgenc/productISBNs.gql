@@ -8,6 +8,15 @@ query productISBNs($first: Int!, $after: String) {
       node {
         id
         title
+        metafields(first: 10) {
+          edges {
+            node {
+              id
+              namespace
+              key
+            }
+          }
+        }
         variants(first: 1) {
           edges {
             node {
