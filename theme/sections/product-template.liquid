@@ -80,7 +80,7 @@
         <h2 class="product-single__title" itemprop="name">{{ product.metafields.k9bookshelf.subtitle }}</h1>
 
         <p class="product-single__vendor" itemprop="brand">{{ product.vendor | link_to_vendor }}</p>
-        {% comment %} <p class="product-single__vendor">発売日: {{product.metafields.k9bookshelf.published_at | date: "%Y/%m/%d" }}</p> {% endcomment %}
+        <p class="product-single__vendor">発売日: {{product.metafields.k9bookshelf.published_at | date: "%Y/%m/%d" }}</p>
 
         <ul class="product-single__tags">
           {% for tag in product.tags %}

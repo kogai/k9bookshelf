@@ -183,7 +183,6 @@ func Run(input string) error {
 			// }
 
 			title := d.Title.TitleText
-			tags := extractTags(&d)
 			date, err := extractDatetime(d.PublicationDate)
 			if err != nil {
 				return err
@@ -205,6 +204,8 @@ func Run(input string) error {
 				}
 			}
 
+			// NOTE: DescriptionHTML and Tags are possible to edit manually,
+			// So we should touch only at create-time.
 			res, err := gqlClient.ProductUpdateDo(context.Background(), client.ProductInput{
 				ID: &currentProduct.Node.ID,
 				Metafields: []*client.MetafieldInput{{
@@ -220,7 +221,6 @@ func Run(input string) error {
 					Namespace: &metaFieldNamespace,
 					ValueType: &valueType,
 				}},
-				// 	DescriptionHTML: &descriptionHTML,
 				// 	Variants: []*client.ProductVariantInput{
 				// 		{
 				// 			InventoryPolicy: &inventoryPolicy,
@@ -230,9 +230,7 @@ func Run(input string) error {
 				// 			Barcode:         isbn,
 				// 		},
 				// 	},
-				Tags:  tags,
 				Title: &title,
-				// 	Vendor: &d.Publisher.PublisherName,
 			})
 			if err != nil {
 				return err
