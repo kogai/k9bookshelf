@@ -31,6 +31,10 @@ func deployProducts(shopDomain, shopToken string, contents []Content, bar *mpb.B
 				c <- err
 				return
 			}
+			if productByHandle.ProductByHandle == nil {
+				c <- fmt.Errorf("Product '%s' is not exist on admin", handle)
+				return
+			}
 
 			res, err := gqlClient.Deploy(
 				ctx,
