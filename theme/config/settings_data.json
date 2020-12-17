@@ -25,7 +25,7 @@
         "type": "featured-products",
         "settings": {
           "title": "特集コレクション",
-          "home_page_featured_products": "frontpage",
+          "home_page_featured_products": "new",
           "home_featured_products_row_num": 2
         }
       },
