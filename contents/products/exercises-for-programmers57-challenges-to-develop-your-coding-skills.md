@@ -7,7 +7,7 @@ https://pragprog.com/titles/bhwb が案内されていたのですが、それ�
 
 2015年発刊なので、Pragmatic Bookshelfのサイト構造が変わってしまったからかも。(アカウントの作り変えを要するような改修をしているようなので)
 
-`57 Challenges to Develop Your Coding Skills` で検索すると、挑戦した人たちの回答Git Repositoryがいくつかヒットします。
+`57 Challenges to Develop Your Coding Skills` で[検索すると](https://www.google.com/search?q=57+Challenges+to+Develop+Your+Coding+Skills)、挑戦した人たちの回答Git Repositoryがいくつかヒットします。
 
 最終章のWebアプリ形式の課題だけ、ちょっと難易度が飛躍しているような気もしますが。。。
 
