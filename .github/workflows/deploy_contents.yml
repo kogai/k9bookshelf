@@ -10,10 +10,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.4
         with:
-          # https://github.com/peter-evans/create-pull-request/blob/master/docs/concepts-guidelines.md#pull-request-events
-          ref: ${{ github.head_ref }}
-      - uses: ./.github/actions/setup-bazel
+          node-version: 15.x
+      - name: Restore caches
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.npm
+            ~/.cache/bazel
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-
+      - run: yarn install
       - run: make -s deploy/contents
         if: github.ref == 'refs/heads/main'
         env:
