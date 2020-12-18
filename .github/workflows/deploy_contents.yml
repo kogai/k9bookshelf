@@ -9,6 +9,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+        with:
+          # https://github.com/peter-evans/create-pull-request/blob/master/docs/concepts-guidelines.md#pull-request-events
+          ref: ${{ github.head_ref }}
       - uses: ./.github/actions/setup-bazel
       - run: make -s deploy/contents
         if: github.ref == 'refs/heads/main'

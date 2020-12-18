@@ -5,10 +5,6 @@ description: 'setting up bazel using bazelisk via Node.js'
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@v2
-      with:
-        # https://github.com/peter-evans/create-pull-request/blob/master/docs/concepts-guidelines.md#pull-request-events
-        ref: ${{ github.head_ref }}
     - name: Setup Node.js environment
       uses: actions/setup-node@v2.1.3
       with:
