@@ -1,6 +1,6 @@
-Your Groundbreaking Framework for Measurement and Reporting Most people find measurement, analytics, and reporting daunting--and L&D professionals are no different.
+Your Groundbreaking Framework for Measurement and Reporting Most people find measurement, analytics, and reporting daunting–and L&D professionals are no different.
 
-As these practices have become critically important for organizations' efforts to improve performance, talent development professionals have often been slow to embrace them for many reasons, including the seeming complexity and challenge of the practices.
+As these practices have become critically important for organizations’ efforts to improve performance, talent development professionals have often been slow to embrace them for many reasons, including the seeming complexity and challenge of the practices.
 
 Few organizations have a well-thought-out measurement and reporting strategy, and there are often scant resources, limited time, and imperfect data to work with when organizations do attempt to create one.
 
