@@ -1,22 +1,22 @@
 **Summary**
 
- _Building Ethereum Dapps_ introduces you to decentralized applications based on the Ethereum blockchain platform. In this book, you'll learn the principles of Dapps development by rolling up your sleeves and actually building a few!
+_Building Ethereum Dapps_ introduces you to decentralized applications based on the Ethereum blockchain platform. In this book, you’ll learn the principles of Dapps development by rolling up your sleeves and actually building a few!
 
 Foreword by Thomas Bertani.
 
 Purchase of the print book includes a free eBook in PDF, Kindle, and ePub formats from Manning Publications.
 
- **About the Technology**
+**About the Technology**
 
 Imagine unbreakably secure applications that handle personal and business transactions without any central agency controlling the process. Decentralized applications, or Dapps, do just this, shifting power to users. The Ethereum blockchain platform provides the tools you need to build Dapps, including an innovative smart contracts model and Solidity, a Dapp-aware JavaScript-like programming language.
 
- **About the Book**
+**About the Book**
 
- _Building Ethereum Dapps_ teaches Dapps development on the Ethereum blockchain platform. You'll begin with a mental model of how Dapps operate, and then dive into designing and implementing smart contracts in Ethereum's Solidity language. You'll explore Ethereum smart contract development tools, like Truffle and Web3, and pick up best practices for design and security. Practical exercises throughout give you valuable hands-on experience.
+_Building Ethereum Dapps_ teaches Dapps development on the Ethereum blockchain platform. You’ll begin with a mental model of how Dapps operate, and then dive into designing and implementing smart contracts in Ethereum’s Solidity language. You’ll explore Ethereum smart contract development tools, like Truffle and Web3, and pick up best practices for design and security. Practical exercises throughout give you valuable hands-on experience.
 
- **What's inside**
+**What’s inside**
 
-- Ethereum's key components
+- Ethereum’s key components
 - Implementing smart contracts in Solidity
 - Communicating with a smart contract in Web3
 - Developing Dapps with Truffle
@@ -26,11 +26,11 @@ Imagine unbreakably secure applications that handle personal and business transa
 
 For developers with intermediate experience in JavaScript or an OO language. Familiarity with blockchain concepts is helpful.
 
- **About the Author**
+**About the Author**
 
- **Roberto Infante** is a software development consultant who specializes in finance. He currently works on financial risk management systems and on blockchain technology.
+**Roberto Infante** is a software development consultant who specializes in finance. He currently works on financial risk management systems and on blockchain technology.
 
- **Table of Contents**
+**Table of Contents**
 
 PART 11. A first look at decentralized applications
 2. Understanding the blockchain
@@ -49,25 +49,26 @@ PART 11. A first look at decentralized applications
 15. Conclusions
 
 ---
+
 ## DeepL粗訳
 
 **サマリー**
 
- _Building Ethereum Dapps_ は、Ethereumブロックチェーンプラットフォームをベースにした分散型アプリケーションを紹介しています。この本では、袖をまくって実際にいくつかのアプリケーションを構築することで、Dapps開発の原則を学ぶことができます。
+_Building Ethereum Dapps_ は、Ethereumブロックチェーンプラットフォームをベースにした分散型アプリケーションを紹介しています。この本では、袖をまくって実際にいくつかのアプリケーションを構築することで、Dapps開発の原則を学ぶことができます。
 
 Thomas Bertaniによる序文。
 
 印刷版の書籍を購入すると、マニング出版からPDF、Kindle、ePub形式の電子書籍が無料で提供されます。
 
- **技術について**
+**技術について**
 
 中央機関がプロセスを制御することなく、個人やビジネスのトランザクションを処理する、壊れない安全なアプリケーションを想像してみてください。分散型アプリケーション（Dapps）は、まさにこれを実現し、力をユーザーにシフトさせます。Ethereumブロックチェーンプラットフォームは、革新的なスマートコントラクトモデルや、Dappsを意識したJavaScriptライクなプログラミング言語であるSolidityなど、Dappsを構築するために必要なツールを提供します。
 
- **この本について**
+**この本について**
 
- _Building Ethereum Dapps_では、Ethereumブロックチェーンプラットフォーム上でのDapps開発について学びます。Dappsがどのように動作するかのメンタルモデルから始め、次にEthereumのSolidity言語でスマートコントラクトを設計し実装することに飛び込みます。TruffleやWeb3のようなEthereumスマートコントラクト開発ツールを探求し、デザインとセキュリティのベストプラクティスを紹介します。実践的な演習では、貴重な実践的な経験を積むことができます。
+\_Building Ethereum Dapps\_では、Ethereumブロックチェーンプラットフォーム上でのDapps開発について学びます。Dappsがどのように動作するかのメンタルモデルから始め、次にEthereumのSolidity言語でスマートコントラクトを設計し実装することに飛び込みます。TruffleやWeb3のようなEthereumスマートコントラクト開発ツールを探求し、デザインとセキュリティのベストプラクティスを紹介します。実践的な演習では、貴重な実践的な経験を積むことができます。
 
- **中身は？**
+**中身は？**
 
 - Ethereumの主要な構成要素
 - Solidity でのスマートコントラクトの実装
@@ -79,9 +80,9 @@ Thomas Bertaniによる序文。
 
 JavaScriptまたはOO言語での中級者の経験がある開発者向け。ブロックチェーンの概念に精通していると助かります。
 
- **著者について**
+**著者について**
 
- **ロベルト・インファンテ** は、金融を専門とするソフトウェア開発コンサルタントです。現在は財務リスク管理システムとブロックチェーン技術に取り組んでいる。
+**ロベルト・インファンテ** は、金融を専門とするソフトウェア開発コンサルタントです。現在は財務リスク管理システムとブロックチェーン技術に取り組んでいる。
 
 **目次**
 

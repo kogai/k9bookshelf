@@ -4,7 +4,7 @@ The author includes many OSINT resources that can be used by intelligence agenci
 
 _Open Source Intelligence Methods and Tools_ takes a practical approach and lists hundreds of OSINT resources that can be used to gather intelligence from online public sources. The book also covers how to anonymize your digital identity online so you can conduct your searching activities without revealing your identity.
 
-**What You'll Learn**
+**What You’ll Learn**
 
 - Identify intelligence needs and leverage a broad range of tools and sources to improve data collection, analysis, and decision making in your organization
 - Use OSINT resources to protect individuals and enterprises by discovering data that is online, exposed, and sensitive and hide the data before it is revealed by outside attackers
@@ -22,7 +22,7 @@ Penetration testers, digital forensics investigators, intelligence services, mil
 
 著者は、諜報機関だけでなく、企業がグローバルレベルのトレンドを監視し、リスクを特定し、競合他社の情報を収集して、より効果的な意思決定を行うために使用できる多くのOSINTリソースを掲載しています。ハッカーやペネトレーションテスターがオンラインで特定のターゲットに関する情報を収集するために同じように使用するテクニック、方法、ツールを発見することができます。また、ソーシャルエンジニアリング攻撃を行う際にOSINTのリソースがどのように使用されるかを知ることができます。
 
- また、オンラインでデジタル ID を匿名化して、身元を明かさずに検索活動ができるようにする方法についても解説しています。
+また、オンラインでデジタル ID を匿名化して、身元を明かさずに検索活動ができるようにする方法についても解説しています。
 
 **何を学ぶか**
 

@@ -3,11 +3,11 @@
 promptから入力を受け付けて文字列に組み合わせて出力する、みたいな本当に基本的なところから、認証フリーのパブリックなAPIを呼び出すような問題まで、順々に難易度を上げていく構成になっています。
 
 回答集のようなものは付いていませんが、公式のforumに回答を投稿出来るとのこと。
-https://pragprog.com/titles/bhwb が案内されていたのですが、それらしいコンテンツは見当たりませんでした。
+[https://pragprog.com/titles/bhwb](https://pragprog.com/titles/bhwb) が案内されていたのですが、それらしいコンテンツは見当たりませんでした。
 
 2015年発刊なので、Pragmatic Bookshelfのサイト構造が変わってしまったからかも。(アカウントの作り変えを要するような改修をしているようなので)
 
-`57 Challenges to Develop Your Coding Skills` で[検索すると](https://www.google.com/search?q=57+Challenges+to+Develop+Your+Coding+Skills)、挑戦した人たちの回答Git Repositoryがいくつかヒットします。
+`57 Challenges to Develop Your Coding Skills` で [検索すると](https://www.google.com/search?q=57+Challenges+to+Develop+Your+Coding+Skills)、挑戦した人たちの回答Git Repositoryがいくつかヒットします。
 
 最終章のWebアプリ形式の課題だけ、ちょっと難易度が飛躍しているような気もしますが。。。
 
