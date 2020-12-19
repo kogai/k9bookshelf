@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
 const TerserJSPlugin = require('terser-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: './storefront/index.ts',
@@ -28,7 +27,6 @@ module.exports = {
     filename: 'app.min.js',
   },
   plugins: [
-    new CleanWebpackPlugin(),
     new webpack.DefinePlugin({
       'process.env.BACKEND_ROOT': JSON.stringify(process.env.LOGROCKET_APP_NAME)
     }),
