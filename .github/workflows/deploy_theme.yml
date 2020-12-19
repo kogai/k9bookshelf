@@ -20,6 +20,7 @@ jobs:
           path: |
             ~/.npm
             ~/.cache/bazel
+            **/node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-
@@ -30,3 +31,4 @@ jobs:
         env:
           THEME_APP_SECRET: ${{ secrets.THEME_APP_SECRET }}
           THEME_ID: ${{ secrets.THEME_ID }}
+          LOGROCKET_APP_NAME: ${{ secrets.LOGROCKET_APP_NAME }}
