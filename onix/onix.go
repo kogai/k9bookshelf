@@ -23,6 +23,7 @@ const shopDomain string = "k9books.myshopify.com"
 var metaFieldNamespace string = "k9bookshelf"
 var metaFieldKeyPublishedAt string = "published_at"
 var metaFieldKeySubTitle string = "subtitle"
+var metaFieldKeyNumberOfPages string = "number_of_pages"
 
 var appKey string = os.Getenv("INGRAM_CONTENT_IMPORTER_APP_KEY")
 var appSecret string = os.Getenv("INGRAM_CONTENT_IMPORTER_APP_SECRET")
@@ -183,6 +184,7 @@ func Run(input string) error {
 			// }
 
 			title := d.Title.TitleText
+			numberOfPages := fmt.Sprintf("%d", d.NumberOfPages)
 			date, err := extractDatetime(d.PublicationDate)
 			if err != nil {
 				return err
@@ -191,6 +193,7 @@ func Run(input string) error {
 			valueType := client.MetafieldValueTypeString
 			var publishedAtID *string
 			var subTitleID *string
+			var numberOfPagesID *string
 			for _, edge := range currentProduct.Node.Metafields.Edges {
 				if edge.Node.Key == metaFieldKeyPublishedAt {
 					publishedAtID = &edge.Node.ID
@@ -200,6 +203,12 @@ func Run(input string) error {
 			for _, edge := range currentProduct.Node.Metafields.Edges {
 				if edge.Node.Key == metaFieldKeySubTitle {
 					subTitleID = &edge.Node.ID
+					break
+				}
+			}
+			for _, edge := range currentProduct.Node.Metafields.Edges {
+				if edge.Node.Key == metaFieldKeyNumberOfPages {
+					numberOfPagesID = &edge.Node.ID
 					break
 				}
 			}
@@ -218,6 +227,12 @@ func Run(input string) error {
 					ID:        subTitleID,
 					Value:     &d.Title.Subtitle,
 					Key:       &metaFieldKeySubTitle,
+					Namespace: &metaFieldNamespace,
+					ValueType: &valueType,
+				}, {
+					ID:        numberOfPagesID,
+					Value:     &numberOfPages,
+					Key:       &metaFieldKeyNumberOfPages,
 					Namespace: &metaFieldNamespace,
 					ValueType: &valueType,
 				}},
@@ -283,6 +298,7 @@ func Run(input string) error {
 			if err != nil {
 				return err
 			}
+			numberOfPages := fmt.Sprintf("%d", d.NumberOfPages)
 			value := date.String()
 			valueType := client.MetafieldValueTypeString
 			res, err := gqlClient.ProductCreateDo(context.Background(), client.ProductInput{
@@ -296,6 +312,11 @@ func Run(input string) error {
 				}, {
 					Value:     &d.Title.Subtitle,
 					Key:       &metaFieldKeySubTitle,
+					Namespace: &metaFieldNamespace,
+					ValueType: &valueType,
+				}, {
+					Value:     &numberOfPages,
+					Key:       &metaFieldKeyNumberOfPages,
 					Namespace: &metaFieldNamespace,
 					ValueType: &valueType,
 				}},

@@ -81,6 +81,7 @@
 
         <p class="product-single__vendor" itemprop="brand">{{ product.vendor | link_to_vendor }}</p>
         <p class="product-single__vendor">発売日: {{product.metafields.k9bookshelf.published_at | date: "%Y/%m/%d" }}</p>
+        <p class="product-single__vendor">ページ数: {{product.metafields.k9bookshelf.number_of_pages }}</p>
 
         <ul class="product-single__tags">
           {% for tag in product.tags %}
