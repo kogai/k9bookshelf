@@ -2,6 +2,7 @@ MD_FILES := $(shell find ./ -type f -name '*.md')
 GO_FILES := $(shell find ./ -type f -name '*.go' | grep -v "generated")
 TK := npx bazelisk run //:theme --
 LINT := yarn theme-lint
+WP := yarn webpack
 BZL := yarn bazelisk --
 BZL_BIN := $(shell npx bazelisk info bazel-bin)
 VERSION := $(shell cat content/.version | tr -d '\n')
@@ -10,6 +11,7 @@ ONIX_FILE := ""
 .PHONY: deploy/theme,deploy/contents,watch,download/theme
 
 deploy/theme:
+	$(WP)
 	$(TK) deploy --dir theme
 
 deploy/contents: $(MD_FILES)
