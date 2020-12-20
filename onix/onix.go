@@ -19,6 +19,7 @@ import (
 
 const apiVersion string = "2020-10"
 const shopDomain string = "k9books.myshopify.com"
+const fixedExchangeRate float64 = 110
 
 var metaFieldNamespace string = "k9bookshelf"
 var metaFieldKeyPublishedAt string = "published_at"
@@ -261,8 +262,16 @@ func Run(input string) error {
 			fmt.Println("Create", d.Title.TitleText, d.Title.Subtitle)
 			var descriptionHTML string = "<h2>出版社より</h2><br />"
 			otherText := d.OtherTexts.FindByType("Long description")
+			translated, err := Translate(otherText.Text.Body)
+			if err != nil {
+				return err
+			}
 			if otherText != nil {
-				descriptionHTML = otherText.Text.Body
+				descriptionHTML = fmt.Sprintf(`<h2>出版社より</h2>
+%s
+<hr/>
+<h2>DeepL 粗訳</h2>
+%s`, otherText.Text.Body, *translated)
 			}
 
 			tags := extractTags(&d)
@@ -283,7 +292,7 @@ func Run(input string) error {
 			var price *string
 			_price := d.SupplyDetail.Prices.FindByType("USD")
 			if _price != nil {
-				p := fmt.Sprintf("%f", _price.PriceAmount)
+				p := fmt.Sprintf("%f", _price.PriceAmount*fixedExchangeRate)
 				price = &p
 			}
 
