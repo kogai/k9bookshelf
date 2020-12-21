@@ -17,10 +17,7 @@ go_library(
 
 go_test(
     name = "go_default_test",
-    srcs = [
-        "deepl_test.go",
-        "onix_test.go",
-    ],
+    srcs = ["onix_test.go"],
     data = glob(["fixtures/*"]),
     embed = [":go_default_library"],
     deps = [
