@@ -3,3 +3,4 @@
 /bin
 /onix/*.onix
 /theme/assets/app.min.*
+/secrets.json
