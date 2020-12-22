@@ -22,11 +22,17 @@ jobs:
         with:
           path: |
             ~/.npm
-            ~/.cache/bazel
-          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**/go.sum') }}
+            ./node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-
       - run: yarn install
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: "k9bookshelf-bazel-cache"
+          service_account_key: ${{ secrets.GCP_BAZEL_CACHE_KEY }}
+          export_default_credentials: true
       - name: Build project
         run: |
           make -s k9bookshelf/content
