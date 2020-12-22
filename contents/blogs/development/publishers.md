@@ -1,0 +1,8 @@
+- ![:@kogai:](https://img.esa.io/uploads/production/members/56785/icon/emoji_b8d544fc11b7e88894a145059bc181f5384a3cb4) 英語の技術書を出している出版社の話がEC Boosterで出たので自分が思いついた会社を挙げておきます。
+    - [Packt Publishing](https://www.packtpub.com/) 全体的にWAFの使い方系の本が多い印象。Webinerにも注力してる。あと稀に毎日一冊どれかが無料みたいな無茶なセールをやる。 [Node.js Design Pattern](https://www.packtpub.com/web-development/nodejs-design-patterns-second-edition) はJS系の本で珍しくV8の中身にちゃんと触れているので良い（ちなみにデザパタ本ではない）
+    - [Pragmatic Bookshelf](https://pragprog.com) 結構マニアックな題材を取扱っているけど、全体的なクオリティは高い（自分の読んだ範囲では）1~2年前まではRxJSの本を出しているのはここくらいしかなかった気がする。Clojureの本も良かった。
+    - [Manning Publications](https://www.manning.com/) テーマ的にはマニアックなものからメジャーなものまで幅広い。とにかく出版物がダラダラと長くて、ちゃんと編集者入ってるのかな？と疑いを持ってる。Progressive Web Appsの本が良かった。さり気なく和訳されているケースもある（装丁やタイトルがガッツリ変わることがあるので分かりづらい）技術書棚にある [JavaScript Ninjaの本](https://amzn.to/2Fs8OuE) とか
+    - [no starch press](https://nostarch.com/) 買ったことないのでよくわからない。検討候補に上がってくることがたまにある。技術書だけの出版社じゃないっぽい。ハードウェアハッキングとかPythonの本が多い印象。
+    - [Leanpub](https://leanpub.com/) これは知ってる人多いと思う。自費出版に近いモデルなのかな？テーマがマニアックというか、同人感がある。AngularのRouterの本とか、Coding Dojoの本などが良かった
+    - StripePress
+    - 決済代行のStripeが運営している出版社。自身が有数のテックカンパニーだけあって刊行物のクオリティは高い。装丁が凝っている。国内で直販しているサイトはないかも（国外配送していないので）
