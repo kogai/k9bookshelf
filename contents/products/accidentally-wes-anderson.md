@@ -1,10 +1,10 @@
 ## 出版社より
 
- **THE _NEW YORK TIMES_ BESTSELLER
+**THE _NEW YORK TIMES_ BESTSELLER**
 
-A visual adventure of Wes Anderson proportions, authorized by the legendary filmmaker himself: stunning photographs of real-life places that seem plucked from the just-so world of his films, presented with fascinating human stories behind each fa�ade.**
+A visual adventure of Wes Anderson proportions, authorized by the legendary filmmaker himself: stunning photographs of real-life places that seem plucked from the just-so world of his films, presented with fascinating human stories behind each facade.\*\*
 
-Accidentally Wes Anderson began as a personal travel bucket list, a catalog of visually striking and historically unique destinations that capture the imagined worlds of Wes Anderson. Now, inspired by a community of more than one million Adventurers, _Accidentally Wes Anderson_ tells the stories behind more than 200 of the most beautiful, idiosyncratic, and interesting places on Earth. This book, authorized by Wes Anderson himself, travels to every continent and into your own backyard to identify quirky landmarks and undiscovered gems: places you may have passed by, some you always wanted to explore, and many you never knew existed. Fueled by a vision for distinctive design, stunning photography, and unexpected narratives, _Accidentally Wes Anderson_ is a passport to inspiration and adventure. Perfect for modern travelers and fans of Wes Anderson's distinctive aesthetic, this is an invitation to look at your world through a different lens.
+Accidentally Wes Anderson began as a personal travel bucket list, a catalog of visually striking and historically unique destinations that capture the imagined worlds of Wes Anderson. Now, inspired by a community of more than one million Adventurers, _Accidentally Wes Anderson_ tells the stories behind more than 200 of the most beautiful, idiosyncratic, and interesting places on Earth. This book, authorized by Wes Anderson himself, travels to every continent and into your own backyard to identify quirky landmarks and undiscovered gems: places you may have passed by, some you always wanted to explore, and many you never knew existed. Fueled by a vision for distinctive design, stunning photography, and unexpected narratives, _Accidentally Wes Anderson_ is a passport to inspiration and adventure. Perfect for modern travelers and fans of Wes Anderson’s distinctive aesthetic, this is an invitation to look at your world through a different lens.
 
 ---
 
