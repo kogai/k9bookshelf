@@ -86,12 +86,33 @@
           </tr>
           <tr>
             <th style="width: 30%;">発売日</th>
-            <td itemprop="brand">{{product.metafields.k9bookshelf.published_at | date: "%Y/%m/%d" }}</td>
+            <td>{{product.metafields.k9bookshelf.published_at | date: "%Y/%m/%d" }}</td>
           </tr>
           <tr>
             <th style="width: 30%;">ページ数</th>
-            <td itemprop="brand">{{product.metafields.k9bookshelf.number_of_pages }}</td>
+            <td>{{product.metafields.k9bookshelf.number_of_pages }}</td>
           </tr>
+          <tr>
+            <th style="width: 30%;">ISBN-13</th>
+            <td >{{ current_variant.barcode }}</td>
+          </tr>
+
+          {% assign day_sec = 86400 %}
+          {% assign week_sec = day_sec | times: 7 %}
+          {% assign today_sec = "now" | date: '%s' | plus: 0 %}
+          {% if current_variant.inventory_policy == "deny" and current_variant.inventory_quantity > 0 %}
+            <tr>
+              <th style="width: 30%;">お届け日</th>
+              <td>通常 {{ today_sec | plus: day_sec | date: "%m月%d日" }}~{{ today_sec | plus: day_sec | plus: day_sec | plus: day_sec | date: "%m月%d日" }}</td>
+            </tr>
+          {% else %}
+            <tr>
+              <th style="width: 30%;">お届け日</th>
+              <td>
+                通常 {{ today_sec | plus: week_sec| plus: week_sec | date: "%m月%d日" }}~{{ today_sec | plus: week_sec| plus: week_sec | plus: week_sec | date: "%m月%d日" }}
+              </td>
+            </tr>
+          {% endif %}
         </table>
 
         <ul class="product-single__tags">
