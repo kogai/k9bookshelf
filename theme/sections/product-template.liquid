@@ -79,9 +79,20 @@
         <h1 class="product-single__title" itemprop="name">{{ product.title }}</h1>
         <h2 class="product-single__title" itemprop="name">{{ product.metafields.k9bookshelf.subtitle }}</h1>
 
-        <p class="product-single__vendor" itemprop="brand">{{ product.vendor | link_to_vendor }}</p>
-        <p class="product-single__vendor">発売日: {{product.metafields.k9bookshelf.published_at | date: "%Y/%m/%d" }}</p>
-        <p class="product-single__vendor">ページ数: {{product.metafields.k9bookshelf.number_of_pages }}</p>
+        <table style="margin:1rem 0; width:100%;">
+          <tr>
+            <th style="width: 30%;">出版社</th>
+            <td itemprop="brand">{{ product.vendor | link_to_vendor | replace: 'title=', 'class="text-link" title=' }}</td>
+          </tr>
+          <tr>
+            <th style="width: 30%;">発売日</th>
+            <td itemprop="brand">{{product.metafields.k9bookshelf.published_at | date: "%Y/%m/%d" }}</td>
+          </tr>
+          <tr>
+            <th style="width: 30%;">ページ数</th>
+            <td itemprop="brand">{{product.metafields.k9bookshelf.number_of_pages }}</td>
+          </tr>
+        </table>
 
         <ul class="product-single__tags">
           {% for tag in product.tags %}
