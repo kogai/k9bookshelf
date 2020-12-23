@@ -1,3 +1,5 @@
+try-import %workspace%/dev.bazelrc
+
 run --verbose_failures --remote_cache=https://storage.googleapis.com/k9bookshelf-bazel-cache --google_default_credentials
 build --verbose_failures --remote_cache=https://storage.googleapis.com/k9bookshelf-bazel-cache --google_default_credentials
 test --test_output=all --verbose_failures --remote_cache=https://storage.googleapis.com/k9bookshelf-bazel-cache --google_default_credentials

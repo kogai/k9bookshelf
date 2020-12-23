@@ -10,6 +10,19 @@ The pattern implementations use Java, but the patterns themselves are completely
 
 You’ll learn to create configuration file readers, data readers, model-driven code generators, source-to-source translators, source analyzers, and interpreters. Each chapter groups related design patterns and, in each pattern, you’ll get hands-on experience by building a complete sample implementation. By the time you finish the book, you’ll know how to solve most common language implementation problems.
 
+## DeepL粗訳
+
+
+設定ファイルリーダ、データリーダ、モデル駆動型コードジェネレータ、ソースからソースへのトランスレータ、ソースアナライザ、インタプリタの構築を学ぶことができます。コンピュータサイエンスのバックグラウンドは必要ありません。ANTLRの作成者であるTerence Parr氏は、言語の実装を最も一般的な設計パターンに分解することで、言語の実装を理解します。パターンごとに、独自のコンピュータ言語を実装するために必要な主要なスキルを学ぶことができます。
+
+ドメイン固有言語(DSL)の作成方法を知ることで、生産性を大幅に向上させることができる。汎用プログラミング言語でコードを書くのではなく、特定のドメインで効率的に動作するようにカスタマイズされたカスタム言語を最初に構築することができます。
+
+重要なのは、言語の実装で見られる共通のパターンを理解することです。Language Design Patterns』では、最も一般的なデザイン・パターンを特定して凝縮し、それぞれの実装サンプルを提供しています。
+
+パターンの実装はJavaを使用していますが、パターン自体は完全に一般的なものです。いくつかの実装では、よく知られているANTLRパーサジェネレータを使用しているので、読者は本書がANTLRのサンプルの優れた情報源であることに気づくでしょう。しかし、この本は、言語実装に興味がある人であれば、どんなツールを使っているかに関わらず、誰にでも役立つでしょう。他の言語実装の本では、日常生活ではほとんど必要のないコンパイラに焦点を当てています。その代わりに、この本では、あらゆる種類の言語アプリケーションに使えるパターンを紹介しています。
+
+設定ファイル・リーダ、データ・リーダ、モデル駆動型コード・ジェネレータ、ソース・ツー・ソース・トランスレータ、ソース・アナライザ、インタプリタの作成方法を学ぶことができます。各章では、関連する設計パターンをグループ化し、各パターンでは、完全なサンプル実装を構築することで実践的な経験を得ることができます。この本を読み終える頃には、ほとんどの一般的な言語実装の問題を解決する方法がわかるようになっています。
+
 ---
 
 表題の通り、言語実装のデザインパターンを色々紹介していく本です。 いくつかのパートに分けて言語解析器、インタープリタ、コンパイラ(Translator&Generatorとして紹介)の内部に現れるパターンを紹介していきます。
