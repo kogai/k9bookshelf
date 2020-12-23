@@ -1,10 +1,10 @@
 ## 出版社より
 
-This book is the "Hello, World" tutorial for building products, technologies, and teams in a startup environment. It's based on the experiences of the author, Yevgeniy (Jim) Brikman, as well as interviews with programmers from some of the most successful startups of the last decade, including Google, Facebook, LinkedIn, Twitter, GitHub, Stripe, Instagram, AdMob, Pinterest, and many others.
+This book is the “Hello, World” tutorial for building products, technologies, and teams in a startup environment. It’s based on the experiences of the author, Yevgeniy (Jim) Brikman, as well as interviews with programmers from some of the most successful startups of the last decade, including Google, Facebook, LinkedIn, Twitter, GitHub, Stripe, Instagram, AdMob, Pinterest, and many others.
 
 _Hello, Startup_ is a practical, how-to guide that consists of three parts: Products, Technologies, and Teams. Although at its core, this is a book for programmers, by programmers, only Part II (Technologies) is significantly technical, while the rest should be accessible to technical and non-technical audiences alike.
 
-If you're at all interested in startups--whether you're a programmer at the beginning of your career, a seasoned developer bored with large company politics, or a manager looking to motivate your engineers--this book is for you.
+If you’re at all interested in startups–whether you’re a programmer at the beginning of your career, a seasoned developer bored with large company politics, or a manager looking to motivate your engineers–this book is for you.
 
 ---
 

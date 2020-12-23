@@ -1,6 +1,6 @@
 ## 出版社より
 
- **See the animal kingdom in all its glory, from jellyfish to polar bears, with up-close details of their unique features from head to toe.**
+**See the animal kingdom in all its glory, from jellyfish to polar bears, with up-close details of their unique features from head to toe.**
 
 Filled with magnificent photographs that were specially commissioned for this book and cannot be seen anywhere else. Written in association with the Smithsonian Institution.
 
@@ -8,17 +8,17 @@ This visual reference book starts with the question what is an animal? and takes
 
 This visual encyclopedia is filled with clear and fascinating information on everything about the social lives of animals. Read exciting stories like how animals communicate, defend their territories, and attract mates.
 
-Learn how evolution has helped wildlife to adapt to their unique environments, whether it's the ability to live in difficult habitats, adjust to specific diets, or how they work physically.
+Learn how evolution has helped wildlife to adapt to their unique environments, whether it’s the ability to live in difficult habitats, adjust to specific diets, or how they work physically.
 
 Humans have drawn and painted animals for thousands of years. _Zoology_ has included some of these, like early rock art that depicts our awe of the animal kingdom or natural history artworks like those commissioned by the Mughal Courts in the 1600s.
 
 **Dramatic Wildlife Photography**
 
-Spectacular, never-before-seen photographs that will bring you close to many of the world's most captivating and intriguing inhabitants. This book offers an extraordinary introduction to the animal world by taking you through chapters that details their diversity.
+Spectacular, never-before-seen photographs that will bring you close to many of the world’s most captivating and intriguing inhabitants. This book offers an extraordinary introduction to the animal world by taking you through chapters that details their diversity.
 
 Go from head to toe in _Zoology_
 
- **-** The animal kingdom
+**-** The animal kingdom
 
 **-** Shape and size
 
@@ -42,7 +42,7 @@ Go from head to toe in _Zoology_
 
 ## DeepL 粗訳
 
- **クラゲからホッキョクグマまで、頭の先から足の先までのユニークな特徴を間近で見ることができます。**
+**クラゲからホッキョクグマまで、頭の先から足の先までのユニークな特徴を間近で見ることができます。**
 
 この本のために特別に依頼された、他では見ることのできない素晴らしい写真でいっぱいです。スミソニアン博物館との提携で書かれています。
 
@@ -54,7 +54,7 @@ Go from head to toe in _Zoology_
 
 人間は何千年も前から動物の絵を描いてきました。この本では、動物の多様性についての詳細な章を通して、動物の世界を紹介しています。
 
- **-** 動物界
+**-** 動物界
 
 **-** 形と大きさ
 

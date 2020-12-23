@@ -1,20 +1,20 @@
 ## 出版社より
 
- **Discover the heartwarming true story of a life-changing friendship between a man and his rescue cat, Nala, as they adventure together on a bike journey around the world -- from the Instagram phenomenon @1bike1world.**
+**Discover the heartwarming true story of a life-changing friendship between a man and his rescue cat, Nala, as they adventure together on a bike journey around the world – from the Instagram phenomenon @1bike1world.**
 
-When 30-year-old Dean Nicholson set off from Scotland to cycle around the world, his aim was to learn as much as he could about our troubled planet. But he hadn't bargained on the lessons he'd learn from his unlikely companion.
+When 30-year-old Dean Nicholson set off from Scotland to cycle around the world, his aim was to learn as much as he could about our troubled planet. But he hadn’t bargained on the lessons he’d learn from his unlikely companion.
 
-Three months after leaving home, on a remote road in the mountains between Montenegro and Bosnia, he came across an abandoned kitten. Something about the piercing eyes and plaintive meowing of the bedraggled little cat proved irresistible. He couldn't leave her to her fate, so he put her on his bike and then, with the help of local vets, nursed her back to health.
+Three months after leaving home, on a remote road in the mountains between Montenegro and Bosnia, he came across an abandoned kitten. Something about the piercing eyes and plaintive meowing of the bedraggled little cat proved irresistible. He couldn’t leave her to her fate, so he put her on his bike and then, with the help of local vets, nursed her back to health.
 
-Soon on his travels with the cat he named Nala, they forged an unbreakable bond -- both curious, independent, resilient and adventurous. The video of how they met has had 20 million views and their Instagram has grown to almost 750k followers -- and still counting!
+Soon on his travels with the cat he named Nala, they forged an unbreakable bond – both curious, independent, resilient and adventurous. The video of how they met has had 20 million views and their Instagram has grown to almost 750k followers – and still counting!
 
-Experiencing the kindness of strangers, visiting refugee camps, rescuing animals through Europe and Asia, Dean and Nala have already learned that the unexpected can be pretty amazing. Together with Garry Jenkins, writer with James Bowen of the bestselling _A Street Cat Named Bob_, Dean shares the extraordinary tale of his and Nala's inspiring and heart-warming adventure together.
+Experiencing the kindness of strangers, visiting refugee camps, rescuing animals through Europe and Asia, Dean and Nala have already learned that the unexpected can be pretty amazing. Together with Garry Jenkins, writer with James Bowen of the bestselling _A Street Cat Named Bob_, Dean shares the extraordinary tale of his and Nala’s inspiring and heart-warming adventure together.
 
 ---
 
 ## DeepL 粗訳
 
- **インスタグラム現象の @1bike1world から、一人の男性と彼の救助猫、ナラの人生を変えた友情の心温まる実話を紹介します。**
+**インスタグラム現象の @1bike1world から、一人の男性と彼の救助猫、ナラの人生を変えた友情の心温まる実話を紹介します。**
 
 30歳のディーン・ニコルソンが世界一周サイクリングにスコットランドから出発したとき、彼の目的は、私たちの問題を抱えた地球について彼ができるだけ多くを学ぶことでした。しかし、彼は、彼の思いがけない仲間から学ぶであろう教訓については、交渉に応じていませんでした。
 

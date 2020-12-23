@@ -1,12 +1,12 @@
 ## 出版社より
 
-**A guidebook to the wild world of communist minimalism in Tito's Yugoslavia**
+**A guidebook to the wild world of communist minimalism in Tito’s Yugoslavia**
 
-Spomenik--the Serbo-Croat/Slovenian word for monument--refers to the memorials built in Tito's Republic of Yugoslavia from the 1960s to the 1980s, marking the horror of the occupation and the defeat of Axis forces during World War II. Hundreds were built across the country, from coastal resorts to remote mountains. Through these imaginative forms of concrete and steel, a classless, forward-looking socialist society, free of ethnic tensions, was envisaged. Instead of looking to the ideologically aligned Soviet Union for artistic inspiration, Tito turned to the West and works of abstract expressionism and minimalism. This allowed Yugoslavia to develop its own distinct identity through the monuments, turning them into political tools, articulating Tito's personal vision of a new tomorrow.
+Spomenik–the Serbo-Croat/Slovenian word for monument–refers to the memorials built in Tito’s Republic of Yugoslavia from the 1960s to the 1980s, marking the horror of the occupation and the defeat of Axis forces during World War II. Hundreds were built across the country, from coastal resorts to remote mountains. Through these imaginative forms of concrete and steel, a classless, forward-looking socialist society, free of ethnic tensions, was envisaged. Instead of looking to the ideologically aligned Soviet Union for artistic inspiration, Tito turned to the West and works of abstract expressionism and minimalism. This allowed Yugoslavia to develop its own distinct identity through the monuments, turning them into political tools, articulating Tito’s personal vision of a new tomorrow.
 
 Today, following the breakup of the country and the subsequent Yugoslav Wars of the 1990s, some have been destroyed or abandoned. Many have suffered the consequences of ethnic tensions: once viewed as symbols of hope, they are now the focus of resentment and anger.
 
-This book brings together the largest collection of spomeniks published to date. Each has been extensively photographed and researched by the author, making this book the most comprehensive survey of this obscure and fascinating architectural phenomenon. The inside of the book's dust jacket opens out as a map, giving the exact geographic coordinates for each monument.
+This book brings together the largest collection of spomeniks published to date. Each has been extensively photographed and researched by the author, making this book the most comprehensive survey of this obscure and fascinating architectural phenomenon. The inside of the book’s dust jacket opens out as a map, giving the exact geographic coordinates for each monument.
 
 ---
 

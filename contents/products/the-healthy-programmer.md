@@ -2,17 +2,17 @@
 
 **Printed in full color.**
 
-To keep doing what you love, you need to maintain your own systems, not just the ones you write code for. Regular exercise and proper nutrition help you learn, remember, concentrate, and be creative--skills critical to doing your job well. Learn how to change your work habits, master exercises that make working at a computer more comfortable, and develop a plan to keep fit, healthy, and sharp for years to come.
+To keep doing what you love, you need to maintain your own systems, not just the ones you write code for. Regular exercise and proper nutrition help you learn, remember, concentrate, and be creative–skills critical to doing your job well. Learn how to change your work habits, master exercises that make working at a computer more comfortable, and develop a plan to keep fit, healthy, and sharp for years to come.
 
-Small changes to your habits can improve your health--without getting in the way of your work. _The Healthy Programmer_ gives you a daily plan of action that's incremental and iterative just like the software development processes you're used to. Every tip, trick, and best practice is backed up by the advice of doctors, scientists, therapists, nutritionists, and numerous fitness experts.
+Small changes to your habits can improve your health–without getting in the way of your work. _The Healthy Programmer_ gives you a daily plan of action that’s incremental and iterative just like the software development processes you’re used to. Every tip, trick, and best practice is backed up by the advice of doctors, scientists, therapists, nutritionists, and numerous fitness experts.
 
-We'll review the latest scientific research to understand how being healthy is good for your body and mind. You'll start by adding a small amount of simple activity to your day--no trips to the gym needed. You'll learn how to mitigate back pain, carpal tunnel syndrome, headaches, and many other common sources of pain.
+We’ll review the latest scientific research to understand how being healthy is good for your body and mind. You’ll start by adding a small amount of simple activity to your day–no trips to the gym needed. You’ll learn how to mitigate back pain, carpal tunnel syndrome, headaches, and many other common sources of pain.
 
-You'll also learn how to refactor your diet to properly fuel your body without gaining weight or feeling hungry. Then, you'll turn the exercises and activities into a pragmatic workout methodology that doesn't interfere with the demands of your job and may actually improve your cognitive skills.
+You’ll also learn how to refactor your diet to properly fuel your body without gaining weight or feeling hungry. Then, you’ll turn the exercises and activities into a pragmatic workout methodology that doesn’t interfere with the demands of your job and may actually improve your cognitive skills.
 
-You'll also learn the secrets of prominent figures in the software community who turned their health around by making diet and exercise changes. Throughout, you'll track your progress with a "companion iPhone app".
+You’ll also learn the secrets of prominent figures in the software community who turned their health around by making diet and exercise changes. Throughout, you’ll track your progress with a “companion iPhone app”.
 
-Finally, you'll learn how to make your healthy lifestyle pragmatic, attainable, and fun. If you're going to live well, you should enjoy it.
+Finally, you’ll learn how to make your healthy lifestyle pragmatic, attainable, and fun. If you’re going to live well, you should enjoy it.
 
 **Disclaimer**
 
