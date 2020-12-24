@@ -10,6 +10,20 @@ Taking some of the most popular, bestselling recent games, Schreier immerses rea
 
 Documenting the round-the-clock crunches, buggy-eyed burnout, and last-minute saves, _Blood, Sweat, and Pixels_ is a journey through development hell–and ultimately a tribute to the dedicated diehards and unsung heroes who scale mountains of obstacles in their quests to create the best games imaginable.
 
+## DeepL粗訳
+
+## 出版社より
+
+タイトル Blood, Sweat, and Pixels The Triumphant, Turbulent Stories Behind How How Video Games are Made
+
+ナショナルベストセラー
+
+ビデオゲームの開発-英雄の旅か、それとも愚か者の使い道か？今日最もホットなゲームを作るために行われる創造的で技術的な物流は、ゲームそのものよりも辛く複雑なものであり、しばしば終わりのない迷路や底なしの奈落の底のように思えることがあります。血と汗とピクセル』では、Jason Schreier氏がビデオゲーム開発の舞台裏に潜む魅力的な冒険に読者を連れて行きます。芸術的な挑戦、技術的な不可能性、市場の要求、そしてドンキーコングサイズのモンキーレンチが企業から作品に投げ込まれたことを探る『血と汗とピクセル』は、どんなゲームでも完成させることがいかにシサイプシー以上のものであり、それは奇跡に他ならないかを明らかにする。
+
+最近の最も人気のあるベストセラーゲームをいくつか取り上げ、Schreier氏は、RPGスタジオBiowareが不可能なスケジュールを破り、無数の技術的悪夢を克服して『Dragon Age. インディーデベロッパーのEric Barone氏は、田舎暮らしのRPG『Stardew Valley』を一人の人間のビジョンから数百万ドル規模のフランチャイズへと成長させるために独力で奮闘しました。
+
+四六時中の作業、バグに目を奪われたバーンアウト、土壇場でのセーブなどを記録した「_Blood, Sweat, and Pixels_」は、開発地獄の旅であり、最終的には、想像を絶する最高のゲームを作るために困難の山を乗り越えてきた献身的なダイハードと無名のヒーローたちへのオマージュとなるものである。
+
 ---
 
 この何年かの著名なゲーム開発プロジェクトの顛末を辿ったノンフィクションです。 Witcher 3、スターデューバレー、Destiny、Diablo3など、錚々たるゲームの開発秘話が語られますが、ほとんどのプロジェクトが大炎上しており、開発者たちは週末を返上しての長期間残業を強いられています。
