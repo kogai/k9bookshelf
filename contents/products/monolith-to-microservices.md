@@ -1,8 +1,8 @@
 ## 出版社より
 
-How do you detangle a monolithic system and migrate it to a microservice architecture? How do you do it while maintaining business-as-usual? As a companion to Sam Newman's extremely popular _Building Microservices_, this new book details a proven method for transitioning an existing monolithic system to a microservice architecture.
+How do you detangle a monolithic system and migrate it to a microservice architecture? How do you do it while maintaining business-as-usual? As a companion to Sam Newman’s extremely popular _Building Microservices_, this new book details a proven method for transitioning an existing monolithic system to a microservice architecture.
 
-With many illustrative examples, insightful migration patterns, and a bevy of practical advice to transition your monolith enterprise into a microservice operation, this practical guide covers multiple scenarios and strategies for a successful migration, from initial planning all the way through application and database decomposition. You'll learn several tried and tested patterns and techniques that you can use as you migrate your existing architecture.
+With many illustrative examples, insightful migration patterns, and a bevy of practical advice to transition your monolith enterprise into a microservice operation, this practical guide covers multiple scenarios and strategies for a successful migration, from initial planning all the way through application and database decomposition. You’ll learn several tried and tested patterns and techniques that you can use as you migrate your existing architecture.
 
 - Ideal for organizations looking to transition to microservices, rather than rebuild
 - Helps companies determine whether to migrate, when to migrate, and where to begin
