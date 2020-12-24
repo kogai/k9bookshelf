@@ -1,8 +1,8 @@
 ## 出版社より
 
-Salary surveys worldwide regularly place software architect in the top 10 best jobs, yet no real guide exists to help developers become architects. Until now. This book provides the first comprehensive overview of software architecture's many aspects. Aspiring and existing architects alike will examine architectural characteristics, architectural patterns, component determination, diagramming and presenting architecture, evolutionary architecture, and many other topics.
+Salary surveys worldwide regularly place software architect in the top 10 best jobs, yet no real guide exists to help developers become architects. Until now. This book provides the first comprehensive overview of software architecture’s many aspects. Aspiring and existing architects alike will examine architectural characteristics, architectural patterns, component determination, diagramming and presenting architecture, evolutionary architecture, and many other topics.
 
-Mark Richards and Neal Ford--hands-on practitioners who have taught software architecture classes professionally for years--focus on architecture principles that apply across all technology stacks. You'll explore software architecture in a modern light, taking into account all the innovations of the past decade.
+Mark Richards and Neal Ford–hands-on practitioners who have taught software architecture classes professionally for years–focus on architecture principles that apply across all technology stacks. You’ll explore software architecture in a modern light, taking into account all the innovations of the past decade.
 
 This book examines:
 
