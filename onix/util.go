@@ -84,20 +84,24 @@ func extractTags(p *Product) []string {
 	return tags
 }
 
-func findMetaFieldIDBy(_p interface{}, key string) (*string, error) {
-	p, ok := _p.(*client.Product)
-	if !ok {
-		return nil, fmt.Errorf("invalid type casting, got =[%v]", _p)
-	}
-	for _, edge := range p.Metafields.Edges {
-		if edge.Node.Key == key {
-			return &edge.Node.ID, nil
-		}
-	}
-	return nil, nil
-}
-
 func extractDatetime(date string) (time.Time, error) {
 	const shortForm = "20060102"
 	return time.Parse(shortForm, date)
+}
+
+func generateDescription(onixProduct *Product) (*string, error) {
+	var descriptionHTML string = ""
+	otherText := onixProduct.OtherTexts.FindByType("Long description")
+	translated, err := Translate(otherText.Text.Body)
+	if err != nil {
+		return nil, err
+	}
+	if otherText != nil {
+		descriptionHTML = fmt.Sprintf(`<h2>出版社より</h2>
+%s
+<hr/>
+<h2>DeepL 粗訳</h2>
+%s`, otherText.Text.Body, *translated)
+	}
+	return &descriptionHTML, nil
 }

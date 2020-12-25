@@ -11,6 +11,69 @@ import (
 	"github.com/kogai/k9bookshelf/gqlgenc/client"
 )
 
+func findMetaFieldIDBy(fetchedProducts *client.ProductISBNs, idx int, key string) *string {
+	currentProduct := fetchedProducts.Products.Edges[idx]
+	for _, edge := range currentProduct.Node.Metafields.Edges {
+		if edge.Node.Key == key {
+			return &edge.Node.ID
+		}
+	}
+	return nil
+}
+
+func metaFieldInput(onixProduct *Product, fetchedProducts *client.ProductISBNs, idx int) ([]*client.MetafieldInput, error) {
+	numberOfPages := fmt.Sprintf("%d", onixProduct.NumberOfPages)
+	date, err := extractDatetime(onixProduct.PublicationDate)
+	if err != nil {
+		return nil, err
+	}
+
+	value := date.String()
+	valueType := client.MetafieldValueTypeString
+	publishedAtID := findMetaFieldIDBy(fetchedProducts, idx, metaFieldKeyPublishedAt)
+	subTitleID := findMetaFieldIDBy(fetchedProducts, idx, metaFieldKeySubTitle)
+	numberOfPagesID := findMetaFieldIDBy(fetchedProducts, idx, metaFieldKeyNumberOfPages)
+
+	return []*client.MetafieldInput{{
+		ID:        publishedAtID,
+		Key:       &metaFieldKeyPublishedAt,
+		Namespace: &metaFieldNamespace,
+		Value:     &value,
+		ValueType: &valueType,
+	}, {
+		ID:        subTitleID,
+		Value:     &onixProduct.Title.Subtitle,
+		Key:       &metaFieldKeySubTitle,
+		Namespace: &metaFieldNamespace,
+		ValueType: &valueType,
+	}, {
+		ID:        numberOfPagesID,
+		Value:     &numberOfPages,
+		Key:       &metaFieldKeyNumberOfPages,
+		Namespace: &metaFieldNamespace,
+		ValueType: &valueType,
+	}}, nil
+}
+
+func updateInput(onixProduct *Product, fetchedProducts *client.ProductISBNs, idx int) (*client.ProductInput, error) {
+	currentProduct := fetchedProducts.Products.Edges[idx]
+	title := onixProduct.Title.TitleText
+	mtIpt, err := metaFieldInput(onixProduct, fetchedProducts, idx)
+	if err != nil {
+		return nil, err
+	}
+
+	// NOTE: DescriptionHTML and Tags are possible to edit manually,
+	// So we should touch only at create-time.
+	return &client.ProductInput{
+		ID:         &currentProduct.Node.ID,
+		Metafields: mtIpt,
+		Title:      &title,
+		// NOTE: DescriptionHTML and Tags are possible to edit manually,
+		// So we should touch only at create-time.
+	}, nil
+}
+
 // Run imports ONIX for Books 2.1 format file to Shopify.
 func Run(input string) error {
 	file, err := ioutil.ReadFile(input)
@@ -41,63 +104,11 @@ func Run(input string) error {
 		found, idx := hasSameISBN13(*isbn, products)
 		if found {
 			fmt.Println("Update", d.Title.TitleText, d.Title.Subtitle)
-
-			currentProduct := products.Products.Edges[idx]
-			title := d.Title.TitleText
-			numberOfPages := fmt.Sprintf("%d", d.NumberOfPages)
-			date, err := extractDatetime(d.PublicationDate)
+			ipt, err := updateInput(&d, products, idx)
 			if err != nil {
 				return err
 			}
-			value := date.String()
-			valueType := client.MetafieldValueTypeString
-			var publishedAtID *string
-			var subTitleID *string
-			var numberOfPagesID *string
-			for _, edge := range currentProduct.Node.Metafields.Edges {
-				if edge.Node.Key == metaFieldKeyPublishedAt {
-					publishedAtID = &edge.Node.ID
-					break
-				}
-			}
-			for _, edge := range currentProduct.Node.Metafields.Edges {
-				if edge.Node.Key == metaFieldKeySubTitle {
-					subTitleID = &edge.Node.ID
-					break
-				}
-			}
-			for _, edge := range currentProduct.Node.Metafields.Edges {
-				if edge.Node.Key == metaFieldKeyNumberOfPages {
-					numberOfPagesID = &edge.Node.ID
-					break
-				}
-			}
-
-			// NOTE: DescriptionHTML and Tags are possible to edit manually,
-			// So we should touch only at create-time.
-			res, err := gqlClient.ProductUpdateDo(context.Background(), client.ProductInput{
-				ID: &currentProduct.Node.ID,
-				Metafields: []*client.MetafieldInput{{
-					ID:        publishedAtID,
-					Key:       &metaFieldKeyPublishedAt,
-					Namespace: &metaFieldNamespace,
-					Value:     &value,
-					ValueType: &valueType,
-				}, {
-					ID:        subTitleID,
-					Value:     &d.Title.Subtitle,
-					Key:       &metaFieldKeySubTitle,
-					Namespace: &metaFieldNamespace,
-					ValueType: &valueType,
-				}, {
-					ID:        numberOfPagesID,
-					Value:     &numberOfPages,
-					Key:       &metaFieldKeyNumberOfPages,
-					Namespace: &metaFieldNamespace,
-					ValueType: &valueType,
-				}},
-				Title: &title,
-			})
+			res, err := gqlClient.ProductUpdateDo(context.Background(), *ipt)
 			if err != nil {
 				return err
 			}
@@ -110,18 +121,13 @@ func Run(input string) error {
 			}
 		} else {
 			fmt.Println("Create", d.Title.TitleText, d.Title.Subtitle)
-			var descriptionHTML string = "<h2>出版社より</h2><br />"
-			otherText := d.OtherTexts.FindByType("Long description")
-			translated, err := Translate(otherText.Text.Body)
+			descriptionHTML, err := generateDescription(&d)
 			if err != nil {
 				return err
 			}
-			if otherText != nil {
-				descriptionHTML = fmt.Sprintf(`<h2>出版社より</h2>
-%s
-<hr/>
-<h2>DeepL 粗訳</h2>
-%s`, otherText.Text.Body, *translated)
+			mtIpt, err := metaFieldInput(&d, products, idx)
+			if err != nil {
+				return err
 			}
 
 			tags := extractTags(&d)
@@ -146,32 +152,10 @@ func Run(input string) error {
 				price = &p
 			}
 
-			date, err := extractDatetime(d.PublicationDate)
-			if err != nil {
-				return err
-			}
-			numberOfPages := fmt.Sprintf("%d", d.NumberOfPages)
-			value := date.String()
-			valueType := client.MetafieldValueTypeString
 			res, err := gqlClient.ProductCreateDo(context.Background(), client.ProductInput{
 				CollectionsToJoin: []string{"gid://shopify/Collection/236195152071"}, // NOTE: /collections/recommend
-				DescriptionHTML:   &descriptionHTML,
-				Metafields: []*client.MetafieldInput{{
-					Key:       &metaFieldKeyPublishedAt,
-					Namespace: &metaFieldNamespace,
-					Value:     &value,
-					ValueType: &valueType,
-				}, {
-					Value:     &d.Title.Subtitle,
-					Key:       &metaFieldKeySubTitle,
-					Namespace: &metaFieldNamespace,
-					ValueType: &valueType,
-				}, {
-					Value:     &numberOfPages,
-					Key:       &metaFieldKeyNumberOfPages,
-					Namespace: &metaFieldNamespace,
-					ValueType: &valueType,
-				}},
+				DescriptionHTML:   descriptionHTML,
+				Metafields:        mtIpt,
 				Variants: []*client.ProductVariantInput{
 					{
 						InventoryPolicy: &inventoryPolicy,
