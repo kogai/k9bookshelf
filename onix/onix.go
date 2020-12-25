@@ -311,7 +311,7 @@ func Run(input string) error {
 			value := date.String()
 			valueType := client.MetafieldValueTypeString
 			res, err := gqlClient.ProductCreateDo(context.Background(), client.ProductInput{
-				CollectionsToJoin: []string{"gid://shopify/Collection/236195152071"},
+				CollectionsToJoin: []string{"gid://shopify/Collection/236195152071"}, // NOTE: /collections/recommend
 				DescriptionHTML:   &descriptionHTML,
 				Metafields: []*client.MetafieldInput{{
 					Key:       &metaFieldKeyPublishedAt,
