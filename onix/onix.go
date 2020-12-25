@@ -28,10 +28,8 @@ func Run(input string) error {
 		return err
 	}
 	gqlClient, ctx := client.EstablishGqlClient(shopDomain, apiVersion, appSecret)
-	// restClient := establishRestClient(shopDomain, appKey, appSecret)
 	products, err := fetchProducts(ctx, gqlClient)
 	if err != nil {
-		fmt.Println("HERE", shopDomain, apiVersion, appSecret)
 		return err
 	}
 
@@ -45,37 +43,6 @@ func Run(input string) error {
 			fmt.Println("Update", d.Title.TitleText, d.Title.Subtitle)
 
 			currentProduct := products.Products.Edges[idx]
-			// var descriptionHTML string = ""
-			// otherText := d.OtherTexts.FindByType("Long description")
-			// if otherText != nil {
-			// 	descriptionHTML = otherText.Text.Body
-			// }
-
-			// var tags []string
-			// subject := d.Subjects.FindByIDType("Keywords")
-			// if subject != nil {
-			// 	tags = strings.Split(*subject.SubjectHeadingText, "; ")
-			// }
-			// inventoryPolicy := client.ProductVariantInventoryPolicyContinue
-
-			// var weight *float64
-			// measure := d.Measures.FindByType("Unit weight")
-			// weightUnit := client.WeightUnitKilograms
-			// if measure != nil {
-			// 	w, err := measure.ToKg()
-			// 	if err != nil {
-			// 		return err
-			// 	}
-			// 	weight = &w
-			// }
-
-			// var price *string
-			// _price := d.SupplyDetail.Prices.FindByType("USD")
-			// if _price != nil {
-			// 	p := fmt.Sprintf("%f", _price.PriceAmount)
-			// 	price = &p
-			// }
-
 			title := d.Title.TitleText
 			numberOfPages := fmt.Sprintf("%d", d.NumberOfPages)
 			date, err := extractDatetime(d.PublicationDate)
@@ -129,15 +96,6 @@ func Run(input string) error {
 					Namespace: &metaFieldNamespace,
 					ValueType: &valueType,
 				}},
-				// 	Variants: []*client.ProductVariantInput{
-				// 		{
-				// 			InventoryPolicy: &inventoryPolicy,
-				// 			Weight:          weight,
-				// 			WeightUnit:      &weightUnit,
-				// 			Price:           price,
-				// 			Barcode:         isbn,
-				// 		},
-				// 	},
 				Title: &title,
 			})
 			if err != nil {
@@ -188,13 +146,6 @@ func Run(input string) error {
 				price = &p
 			}
 
-			// onlineStoreID := "gid://shopify/Publication/68389830855"
-			// facebookID := "gid://shopify/Publication/68395040967"
-			// googleID := "gid://shopify/Publication/68395073735"
-			// amazonID := "gid://shopify/Publication/68864508103"
-			// chatID := "gid://shopify/Publication/68864934087"
-			// buyButtonID := "gid://shopify/Publication/68977950919"
-			// published := true
 			date, err := extractDatetime(d.PublicationDate)
 			if err != nil {
 				return err
@@ -230,27 +181,6 @@ func Run(input string) error {
 						Barcode:         isbn,
 					},
 				},
-				// Published: &published,
-				// Publications: []*client.ProductPublicationInput{
-				// 	{
-				// 		PublicationID: &onlineStoreID,
-				// 	},
-				// 	{
-				// 		PublicationID: &facebookID,
-				// 	},
-				// 	{
-				// 		PublicationID: &googleID,
-				// 	},
-				// 	{
-				// 		PublicationID: &amazonID,
-				// 	},
-				// 	{
-				// 		PublicationID: &chatID,
-				// 	},
-				// 	{
-				// 		PublicationID: &buyButtonID,
-				// 	},
-				// },
 				Tags:   tags,
 				Title:  &title,
 				Vendor: &d.Publisher.PublisherName,
