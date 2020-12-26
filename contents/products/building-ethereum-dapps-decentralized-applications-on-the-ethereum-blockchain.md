@@ -32,15 +32,22 @@ For developers with intermediate experience in JavaScript or an OO language. Fam
 
 **Table of Contents**
 
-PART 11. A first look at decentralized applications
+### PART 1
 
+1. A first look at decentralized applications
 1. Understanding the blockchain
 2. The Ethereum platform
-3. Deploying your first smart contractPART 2
+3. Deploying your first smart contract
+
+### PART 2
+
 4. Programming smart contracts in Solidity
 5. Writing more complex smart contracts
 6. Generalizing functionality with abstract contracts and interfaces
-7. Managing smart contracts with Web3.jsPART 3
+7. Managing smart contracts with Web3.js
+
+### PART 3
+
 8. The Ethereum ecosystem
 9. Unit testing contracts with Mocha
 10. Improving the development cycle with Truffle
@@ -87,19 +94,26 @@ JavaScriptまたはOO言語での中級者の経験がある開発者向け。�
 
 **目次**
 
-PART 11. 分散型アプリケーションの初見
+### PART 1
 
+1. 分散型アプリケーションの初見
 1. ブロックチェーンを理解する
 2. イーサリアムのプラットフォーム
-3. 初めてのスマートコントラクトを導入するpart 2
+3. 初めてのスマートコントラクトを導入する
+
+### PRAT 2
+
 4. Solidity でのスマートコントラクトのプログラミング
 5. より複雑なスマートコントラクトを書く
 6. 抽象的な契約とインターフェースによる機能の一般化
-7. Web3.jsでスマートコントラクトを管理するPART 3
+7. Web3.jsでスマートコントラクトを管理する
+
+### PART 3
+
 8. イーサリアムのエコシステム
 9. モカとユニットテスト契約
 10. Truffleによる開発サイクルの改善
 11. 全てをまとめる 完全な投票DappPART 4の構築
 12. Dapp制作の準備をする
 13. セキュリティへの配慮
-14. 15.結論
+14. 結論

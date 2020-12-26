@@ -31,17 +31,24 @@ This book requires a basic understanding of deep learning and intermediate Pytho
 
 **Table of Contents**
 
-PART 1 - WORDY MACHINES1. Packets of thought (NLP overview)
+PART 1 - WORDY MACHINES
 
+1. Packets of thought (NLP overview)
 1. Build your vocabulary (word tokenization)
 2. Math with words (TF-IDF vectors)
-3. Finding meaning in word counts (semantic analysis)PART 2 - DEEPER LEARNING (NEURAL NETWORKS)
+3. Finding meaning in word counts (semantic analysis)
+
+### PART 2 - DEEPER LEARNING (NEURAL NETWORKS)
+
 4. Baby steps with neural networks (perceptrons and backpropagation)
 5. Reasoning with word vectors (Word2vec)
 6. Getting words in order with convolutional neural networks (CNNs)
 7. Loopy (recurrent) neural networks (RNNs)
 8. Improving retention with long short-term memory networks
-9. Sequence-to-sequence models and attentionPART 3 - GETTING REAL (REAL-WORLD NLP CHALLENGES)
+9. Sequence-to-sequence models and attention
+
+### PART 3 - GETTING REAL (REAL-WORLD NLP CHALLENGES)
+
 10. Information extraction (named entity extraction and question answering)
 11. Getting chatty (dialog engines)
 12. Scaling up (optimization, parallelization, and batch processing)
@@ -81,17 +88,24 @@ _Natural Language Processing in Action_ は、人間の言語を読んで解釈�
 
 **目次**
 
-PART 1 - WORDY MACHINES1. 思考のパケット（NLPの概要
+### PART 1 - WORDY MACHINES
 
+1. 思考のパケット（NLPの概要
 1. 語彙力をつける（単語のトークン化
 2. 単語を使った数学（TF-IDF ベクトル
-3. 単語数から意味を見つける（意味分析）PART 2 - より深い学習（神経ネットワーク
+3. 単語数から意味を見つける（意味分析）
+
+### PART 2 - より深い学習（神経ネットワーク
+
 4. ニューラルネットワークを用いたベビーステップ（パーセプトロンとバックプロパゲーション
 5. 単語ベクトルを使った推論 (Word2vec)
 6. 畳み込みニューラルネットワーク(CNN)を用いて言葉を整列させる
 7. ルーピー（リカレント）ニューラルネットワーク（RNN
 8. 長期短期記憶ネットワークによる定着性の向上
-9. シーケンス間のモデルとアテンションパート3 - GETTING REAL (REAL-WORLD NLP CHALLENGES)
+9. シーケンス間のモデルとアテンション
+
+### パート3 - GETTING REAL (REAL-WORLD NLP CHALLENGES)
+
 10. 情報抽出（名前付き実体抽出と質問回答
 11. おしゃべりになる (ダイアログエンジン)
 12. スケールアップ（最適化、並列化、バッチ処理

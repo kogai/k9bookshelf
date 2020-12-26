@@ -6,7 +6,7 @@ The origin of this book is a two-day event, entitled RoboSoft, that took place i
 
 The intended readership includes researchers and practitioners with all levels of experience interested in working in the area of robotics, and software engineering more generally. The chapters are all self-contained, include explanations of the core concepts, and finish with a discussion of directions for further work.
 
-Chapters 'Towards Autonomous Robot Evolution', 'Composition, Separation of Roles and Model-Driven Approaches as Enabler of a Robotics Software Ecosystem' and 'Verifiable Autonomy and Responsible Robotics' are available open access under a Creative Commons Attribution 4.0 International License via link.springer.com.
+Chapters ‘Towards Autonomous Robot Evolution’, ‘Composition, Separation of Roles and Model-Driven Approaches as Enabler of a Robotics Software Ecosystem’ and ‘Verifiable Autonomy and Responsible Robotics’ are available open access under a Creative Commons Attribution 4.0 International License via link.springer.com.
 
 ---
 

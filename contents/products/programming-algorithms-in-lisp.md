@@ -12,7 +12,7 @@ _Programming Algorithms in Lisp_ shows real-world engineering considerations and
 - Program using strings
 - Work with approximations and compression
 
- **Who This Book Is For**
+**Who This Book Is For**
 
 Intermediate Lisp programmers wanting to do algorithms programming. A very experienced non-Lisp programmer may be able to benefit from this book as well.
 
@@ -32,6 +32,6 @@ _Lisp でのアルゴリズムのプログラミング_ _は、これらのア�
 - 文字列を使用したプログラミング
 - 近似と圧縮を使用する
 
- **この本は誰のための本ですか**
+**この本は誰のための本ですか**
 
 アルゴリズム プログラミングを行いたい初中級の Lisp プログラマです。非常に経験豊富な非Lispプログラマーも、この本の恩恵を受けることができるかもしれません。
