@@ -6,7 +6,7 @@ Enterprise APIs have become the common way of exposing business functions to the
 
 Security must be an integral part of any development project. This book shares best practices in designing APIs for rock-solid security. API security has evolved since the first edition of this book, and the growth of standards has been exponential. OAuth 2.0 is the most widely adopted framework that is used as the foundation for standards, and this book shows you how to apply OAuth 2.0 to your own situation in order to secure and protect your enterprise APIs from exploitation and attack.
 
- **What You Will Learn**
+**What You Will Learn**
 
 - Securely design, develop, and deploy enterprise APIs
 - Pick security standards and protocols to match business needs
@@ -38,7 +38,7 @@ Enterprise security architects who are interested in best practices around desig
 
 この本の初版からAPIセキュリティは進化しており、標準規格の成長は指数関数的なものになっています。OAuth 2.0は、標準化の基盤として最も広く採用されているフレームワークであり、本書では、企業のAPIを悪用や攻撃から安全に保護するために、OAuth 2.0を自分の状況に適用する方法を紹介しています。
 
- **何を学ぶか**
+**何を学ぶか**
 
 - エンタープライズ API を安全に設計、開発、展開する
 - ビジネスのニーズに合わせてセキュリティ標準とプロトコルを選択する

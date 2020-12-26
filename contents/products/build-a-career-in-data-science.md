@@ -8,13 +8,13 @@ Purchase of the print book includes a free eBook in PDF, Kindle, and ePub format
 
 About the technology
 
-What are the keys to a data scientist's long-term success? Blending your technical know-how with the right "soft skills" turns out to be a central ingredient of a rewarding career.
+What are the keys to a data scientist’s long-term success? Blending your technical know-how with the right “soft skills” turns out to be a central ingredient of a rewarding career.
 
 About the book
 
-_Build a Career in Data Science_ is your guide to landing your first data science job and developing into a valued senior employee. By following clear and simple instructions, you'll learn to craft an amazing resume and ace your interviews. In this demanding, rapidly changing field, it can be challenging to keep projects on track, adapt to company needs, and manage tricky stakeholders. You'll love the insights on how to handle expectations, deal with failures, and plan your career path in the stories from seasoned data scientists included in the book.
+_Build a Career in Data Science_ is your guide to landing your first data science job and developing into a valued senior employee. By following clear and simple instructions, you’ll learn to craft an amazing resume and ace your interviews. In this demanding, rapidly changing field, it can be challenging to keep projects on track, adapt to company needs, and manage tricky stakeholders. You’ll love the insights on how to handle expectations, deal with failures, and plan your career path in the stories from seasoned data scientists included in the book.
 
-What's inside
+What’s inside
 
 Creating a portfolio of data science projects
 

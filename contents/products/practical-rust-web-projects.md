@@ -4,15 +4,15 @@ Go beyond the basics of Rust and build web and serverless cloud applications. Th
 
 This book will open your eyes to the world of practical web applications of Rust. After reading the book, you will be able to apply your Rust knowledge to build your own web projects.
 
- **What You Will Learn**
+**What You Will Learn**
 
 - Build dynamic websites with databases
 - Build RESTful APIs
 - Write a WebSocket server that can power a real-time chat app in Rust
-- Discover the benefits of serverless computing using Amazon Web Service's Rust support
+- Discover the benefits of serverless computing using Amazon Web Service’s Rust support
 - Compile Rust to WebAssembly for high-performance frontend applications
 
- **Who This Book Is For**
+**Who This Book Is For**
 
 A reader with basic Rust knowledge, wishing to learn more about how to apply Rust in a real-world scenario. A developer who is evaluating the possibility to build their next project in Rust.
 
@@ -24,7 +24,7 @@ Rustの基礎を超えて、Webやサーバーレスのクラウドアプリケ�
 
 この本は、Rust の実用的な Web アプリケーションの世界に目を開かせてくれます。
 
- **何を学ぶか**
+**何を学ぶか**
 
 - データベースを使って動的な Web サイトを構築する
 - RESTful API を構築する
@@ -33,6 +33,6 @@ Rustの基礎を超えて、Webやサーバーレスのクラウドアプリケ�
 - Amazon Web Service の Rust サポートを使用したサーバーレスコンピューティングの利点を発見
 - 高性能フロントエンドアプリケーションのための Rust を WebAssembly にコンパイル
 
- **この本は誰のための本ですか**
+**この本は誰のための本ですか**
 
 基本的な Rust の知識を持った読者です。実際のシナリオでRustを適用する方法を学びたい方。次のプロジェクトを Rust で構築する可能性を評価している開発者。
