@@ -1,3 +1,5 @@
+- k9bookshelfの開発レポジトリはbazelでビルドを管理している
+- 仕事でremote-cacheを使ったのでこちらにも展開した
 - Google Cloud Storageがファーストクラスでサポートされている
 - Cloud Storageの`storage.objects`の get, create, updateを持つroleを作成
 - Service Accountを作成して紐付ける
