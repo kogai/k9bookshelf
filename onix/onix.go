@@ -74,6 +74,58 @@ func updateInput(onixProduct *Product, fetchedProducts *client.ProductISBNs, idx
 	}, nil
 }
 
+func createInput(onixProduct *Product, fetchedProducts *client.ProductISBNs, idx int) (*client.ProductInput, error) {
+	isbn := onixProduct.Productidentifiers.FindByIDType("ISBN-13")
+	descriptionHTML, err := generateDescription(onixProduct)
+	if err != nil {
+		return nil, err
+	}
+	mtIpt, err := metaFieldInput(onixProduct, fetchedProducts, idx)
+	if err != nil {
+		return nil, err
+	}
+
+	tags := extractTags(onixProduct)
+	title := onixProduct.Title.TitleText
+	inventoryPolicy := client.ProductVariantInventoryPolicyContinue
+
+	var weight *float64
+	measure := onixProduct.Measures.FindByType("Unit weight")
+	weightUnit := client.WeightUnitKilograms
+	if measure != nil {
+		w, err := measure.ToKg()
+		if err != nil {
+			return nil, err
+		}
+		weight = &w
+	}
+
+	var price *string
+	_price := onixProduct.SupplyDetail.Prices.FindByType("USD")
+	if _price != nil {
+		p := fmt.Sprintf("%f", _price.PriceAmount*fixedExchangeRate)
+		price = &p
+	}
+	return &client.ProductInput{
+		CollectionsToJoin: []string{"gid://shopify/Collection/236195152071"}, // NOTE: /collections/recommend
+		DescriptionHTML:   descriptionHTML,
+		Metafields:        mtIpt,
+		Variants: []*client.ProductVariantInput{
+			{
+				InventoryPolicy: &inventoryPolicy,
+				Weight:          weight,
+				WeightUnit:      &weightUnit,
+				Price:           price,
+				Barcode:         isbn,
+			},
+		},
+		Tags:   tags,
+		Title:  &title,
+		Vendor: &onixProduct.Publisher.PublisherName,
+	}, nil
+
+}
+
 // Run imports ONIX for Books 2.1 format file to Shopify.
 func Run(input string) error {
 	file, err := ioutil.ReadFile(input)
@@ -121,54 +173,12 @@ func Run(input string) error {
 			}
 		} else {
 			fmt.Println("Create", d.Title.TitleText, d.Title.Subtitle)
-			descriptionHTML, err := generateDescription(&d)
-			if err != nil {
-				return err
-			}
-			mtIpt, err := metaFieldInput(&d, products, idx)
+			ipt, err := createInput(&d, products, idx)
 			if err != nil {
 				return err
 			}
 
-			tags := extractTags(&d)
-			title := d.Title.TitleText
-			inventoryPolicy := client.ProductVariantInventoryPolicyContinue
-
-			var weight *float64
-			measure := d.Measures.FindByType("Unit weight")
-			weightUnit := client.WeightUnitKilograms
-			if measure != nil {
-				w, err := measure.ToKg()
-				if err != nil {
-					return err
-				}
-				weight = &w
-			}
-
-			var price *string
-			_price := d.SupplyDetail.Prices.FindByType("USD")
-			if _price != nil {
-				p := fmt.Sprintf("%f", _price.PriceAmount*fixedExchangeRate)
-				price = &p
-			}
-
-			res, err := gqlClient.ProductCreateDo(context.Background(), client.ProductInput{
-				CollectionsToJoin: []string{"gid://shopify/Collection/236195152071"}, // NOTE: /collections/recommend
-				DescriptionHTML:   descriptionHTML,
-				Metafields:        mtIpt,
-				Variants: []*client.ProductVariantInput{
-					{
-						InventoryPolicy: &inventoryPolicy,
-						Weight:          weight,
-						WeightUnit:      &weightUnit,
-						Price:           price,
-						Barcode:         isbn,
-					},
-				},
-				Tags:   tags,
-				Title:  &title,
-				Vendor: &d.Publisher.PublisherName,
-			})
+			res, err := gqlClient.ProductCreateDo(context.Background(), *ipt)
 			if err != nil {
 				return err
 			}
