@@ -6,6 +6,8 @@ go_library(
         "deepl.go",
         "message.go",
         "onix.go",
+        "util.go",
+        "value.go",
     ],
     importpath = "github.com/kogai/k9bookshelf/onix",
     visibility = ["//visibility:public"],

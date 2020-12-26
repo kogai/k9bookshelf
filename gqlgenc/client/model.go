@@ -295,6 +295,8 @@ type App struct {
 
 func (App) IsNode() {}
 
+// An auto-generated type for paginating through multiple Apps.
+//
 type AppConnection struct {
 	// A list of edges.
 	Edges []*AppEdge `json:"edges"`
@@ -318,6 +320,8 @@ type AppCredit struct {
 
 func (AppCredit) IsNode() {}
 
+// An auto-generated type for paginating through multiple AppCredits.
+//
 type AppCreditConnection struct {
 	// A list of edges.
 	Edges []*AppCreditEdge `json:"edges"`
@@ -333,6 +337,8 @@ type AppCreditCreatePayload struct {
 	UserErrors []*UserError `json:"userErrors"`
 }
 
+// An auto-generated type which holds one AppCredit and a cursor during pagination.
+//
 type AppCreditEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -340,6 +346,8 @@ type AppCreditEdge struct {
 	Node *AppCredit `json:"node"`
 }
 
+// An auto-generated type which holds one App and a cursor during pagination.
+//
 type AppEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -390,6 +398,8 @@ type AppInstallation struct {
 
 func (AppInstallation) IsNode() {}
 
+// An auto-generated type for paginating through multiple AppInstallations.
+//
 type AppInstallationConnection struct {
 	// A list of edges.
 	Edges []*AppInstallationEdge `json:"edges"`
@@ -397,6 +407,8 @@ type AppInstallationConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one AppInstallation and a cursor during pagination.
+//
 type AppInstallationEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -437,6 +449,8 @@ type AppPurchaseOneTime struct {
 func (AppPurchaseOneTime) IsAppPurchase() {}
 func (AppPurchaseOneTime) IsNode()        {}
 
+// An auto-generated type for paginating through multiple AppPurchaseOneTimes.
+//
 type AppPurchaseOneTimeConnection struct {
 	// A list of edges.
 	Edges []*AppPurchaseOneTimeEdge `json:"edges"`
@@ -454,6 +468,8 @@ type AppPurchaseOneTimeCreatePayload struct {
 	UserErrors []*UserError `json:"userErrors"`
 }
 
+// An auto-generated type which holds one AppPurchaseOneTime and a cursor during pagination.
+//
 type AppPurchaseOneTimeEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -512,6 +528,8 @@ type AppSubscriptionCancelPayload struct {
 	UserErrors []*UserError `json:"userErrors"`
 }
 
+// An auto-generated type for paginating through multiple AppSubscriptions.
+//
 type AppSubscriptionConnection struct {
 	// A list of edges.
 	Edges []*AppSubscriptionEdge `json:"edges"`
@@ -529,6 +547,8 @@ type AppSubscriptionCreatePayload struct {
 	UserErrors []*UserError `json:"userErrors"`
 }
 
+// An auto-generated type which holds one AppSubscription and a cursor during pagination.
+//
 type AppSubscriptionEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -600,6 +620,8 @@ type AppUsageRecord struct {
 
 func (AppUsageRecord) IsNode() {}
 
+// An auto-generated type for paginating through multiple AppUsageRecords.
+//
 type AppUsageRecordConnection struct {
 	// A list of edges.
 	Edges []*AppUsageRecordEdge `json:"edges"`
@@ -615,6 +637,8 @@ type AppUsageRecordCreatePayload struct {
 	UserErrors []*UserError `json:"userErrors"`
 }
 
+// An auto-generated type which holds one AppUsageRecord and a cursor during pagination.
+//
 type AppUsageRecordEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -775,6 +799,8 @@ type CalculatedDiscountAllocation struct {
 	DiscountApplication CalculatedDiscountApplication `json:"discountApplication"`
 }
 
+// An auto-generated type for paginating through multiple CalculatedDiscountApplications.
+//
 type CalculatedDiscountApplicationConnection struct {
 	// A list of edges.
 	Edges []*CalculatedDiscountApplicationEdge `json:"edges"`
@@ -782,6 +808,8 @@ type CalculatedDiscountApplicationConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one CalculatedDiscountApplication and a cursor during pagination.
+//
 type CalculatedDiscountApplicationEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -939,6 +967,8 @@ type CalculatedLineItem struct {
 	VariantTitle *string `json:"variantTitle"`
 }
 
+// An auto-generated type for paginating through multiple CalculatedLineItems.
+//
 type CalculatedLineItemConnection struct {
 	// A list of edges.
 	Edges []*CalculatedLineItemEdge `json:"edges"`
@@ -946,6 +976,8 @@ type CalculatedLineItemConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one CalculatedLineItem and a cursor during pagination.
+//
 type CalculatedLineItemEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -1078,6 +1110,8 @@ type Channel struct {
 
 func (Channel) IsNode() {}
 
+// An auto-generated type for paginating through multiple Channels.
+//
 type ChannelConnection struct {
 	// A list of edges.
 	Edges []*ChannelEdge `json:"edges"`
@@ -1085,6 +1119,8 @@ type ChannelConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one Channel and a cursor during pagination.
+//
 type ChannelEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -1177,6 +1213,8 @@ type CollectionAddProductsPayload struct {
 	UserErrors []*UserError `json:"userErrors"`
 }
 
+// An auto-generated type for paginating through multiple Collections.
+//
 type CollectionConnection struct {
 	// A list of edges.
 	Edges []*CollectionEdge `json:"edges"`
@@ -1208,6 +1246,8 @@ type CollectionDeletePayload struct {
 	UserErrors []*UserError `json:"userErrors"`
 }
 
+// An auto-generated type which holds one Collection and a cursor during pagination.
+//
 type CollectionEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -1265,6 +1305,8 @@ type CollectionPublication struct {
 	PublishDate string `json:"publishDate"`
 }
 
+// An auto-generated type for paginating through multiple CollectionPublications.
+//
 type CollectionPublicationConnection struct {
 	// A list of edges.
 	Edges []*CollectionPublicationEdge `json:"edges"`
@@ -1272,6 +1314,8 @@ type CollectionPublicationConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one CollectionPublication and a cursor during pagination.
+//
 type CollectionPublicationEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -1477,6 +1521,8 @@ type CountryHarmonizedSystemCode struct {
 	HarmonizedSystemCode string `json:"harmonizedSystemCode"`
 }
 
+// An auto-generated type for paginating through multiple CountryHarmonizedSystemCodes.
+//
 type CountryHarmonizedSystemCodeConnection struct {
 	// A list of edges.
 	Edges []*CountryHarmonizedSystemCodeEdge `json:"edges"`
@@ -1484,6 +1530,8 @@ type CountryHarmonizedSystemCodeConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one CountryHarmonizedSystemCode and a cursor during pagination.
+//
 type CountryHarmonizedSystemCodeEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -1534,6 +1582,8 @@ type CurrencySetting struct {
 	RateUpdatedAt *string `json:"rateUpdatedAt"`
 }
 
+// An auto-generated type for paginating through multiple CurrencySettings.
+//
 type CurrencySettingConnection struct {
 	// A list of edges.
 	Edges []*CurrencySettingEdge `json:"edges"`
@@ -1541,6 +1591,8 @@ type CurrencySettingConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one CurrencySetting and a cursor during pagination.
+//
 type CurrencySettingEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -1667,6 +1719,8 @@ type CustomerAddTaxExemptionsPayload struct {
 	UserErrors []*UserError `json:"userErrors"`
 }
 
+// An auto-generated type for paginating through multiple Customers.
+//
 type CustomerConnection struct {
 	// A list of edges.
 	Edges []*CustomerEdge `json:"edges"`
@@ -1698,6 +1752,8 @@ type CustomerDeletePayload struct {
 	UserErrors []*UserError `json:"userErrors"`
 }
 
+// An auto-generated type which holds one Customer and a cursor during pagination.
+//
 type CustomerEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -1785,6 +1841,8 @@ type CustomerJourneySummary struct {
 	Ready bool `json:"ready"`
 }
 
+// An auto-generated type for paginating through multiple CustomerMoments.
+//
 type CustomerMomentConnection struct {
 	// A list of edges.
 	Edges []*CustomerMomentEdge `json:"edges"`
@@ -1792,6 +1850,8 @@ type CustomerMomentConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one CustomerMoment and a cursor during pagination.
+//
 type CustomerMomentEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -1884,6 +1944,8 @@ type DeletionEvent struct {
 	SubjectType DeletionEventSubjectType `json:"subjectType"`
 }
 
+// An auto-generated type for paginating through multiple DeletionEvents.
+//
 type DeletionEventConnection struct {
 	// A list of edges.
 	Edges []*DeletionEventEdge `json:"edges"`
@@ -1891,6 +1953,8 @@ type DeletionEventConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one DeletionEvent and a cursor during pagination.
+//
 type DeletionEventEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -2022,6 +2086,8 @@ type DeliveryLocationGroupZone struct {
 	Zone *DeliveryZone `json:"zone"`
 }
 
+// An auto-generated type for paginating through multiple DeliveryLocationGroupZones.
+//
 type DeliveryLocationGroupZoneConnection struct {
 	// A list of edges.
 	Edges []*DeliveryLocationGroupZoneEdge `json:"edges"`
@@ -2029,6 +2095,8 @@ type DeliveryLocationGroupZoneConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one DeliveryLocationGroupZone and a cursor during pagination.
+//
 type DeliveryLocationGroupZoneEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -2078,6 +2146,8 @@ type DeliveryMethodDefinition struct {
 
 func (DeliveryMethodDefinition) IsNode() {}
 
+// An auto-generated type for paginating through multiple DeliveryMethodDefinitions.
+//
 type DeliveryMethodDefinitionConnection struct {
 	// A list of edges.
 	Edges []*DeliveryMethodDefinitionEdge `json:"edges"`
@@ -2093,6 +2163,8 @@ type DeliveryMethodDefinitionCounts struct {
 	RateDefinitionsCount int64 `json:"rateDefinitionsCount"`
 }
 
+// An auto-generated type which holds one DeliveryMethodDefinition and a cursor during pagination.
+//
 type DeliveryMethodDefinitionEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -2138,8 +2210,8 @@ type DeliveryParticipant struct {
 	PercentageOfRateFee float64 `json:"percentageOfRateFee"`
 }
 
-func (DeliveryParticipant) IsNode()                 {}
 func (DeliveryParticipant) IsDeliveryRateProvider() {}
+func (DeliveryParticipant) IsNode()                 {}
 
 // Input fields for a participant.
 type DeliveryParticipantInput struct {
@@ -2221,6 +2293,8 @@ type DeliveryProfile struct {
 
 func (DeliveryProfile) IsNode() {}
 
+// An auto-generated type for paginating through multiple DeliveryProfiles.
+//
 type DeliveryProfileConnection struct {
 	// A list of edges.
 	Edges []*DeliveryProfileEdge `json:"edges"`
@@ -2228,6 +2302,8 @@ type DeliveryProfileConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one DeliveryProfile and a cursor during pagination.
+//
 type DeliveryProfileEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -2267,6 +2343,8 @@ type DeliveryProfileItem struct {
 	Variants *ProductVariantConnection `json:"variants"`
 }
 
+// An auto-generated type for paginating through multiple DeliveryProfileItems.
+//
 type DeliveryProfileItemConnection struct {
 	// A list of edges.
 	Edges []*DeliveryProfileItemEdge `json:"edges"`
@@ -2274,6 +2352,8 @@ type DeliveryProfileItemConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one DeliveryProfileItem and a cursor during pagination.
+//
 type DeliveryProfileItemEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -2431,6 +2511,8 @@ type DiscountAmountInput struct {
 	AppliesOnEachItem *bool `json:"appliesOnEachItem,omitempty"`
 }
 
+// An auto-generated type for paginating through multiple DiscountApplications.
+//
 type DiscountApplicationConnection struct {
 	// A list of edges.
 	Edges []*DiscountApplicationEdge `json:"edges"`
@@ -2438,6 +2520,8 @@ type DiscountApplicationConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one DiscountApplication and a cursor during pagination.
+//
 type DiscountApplicationEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -2549,9 +2633,9 @@ type DiscountAutomaticBxgy struct {
 	UsesPerOrderLimit *int64 `json:"usesPerOrderLimit"`
 }
 
+func (DiscountAutomaticBxgy) IsDiscountAutomatic() {}
 func (DiscountAutomaticBxgy) IsNode()              {}
 func (DiscountAutomaticBxgy) IsHasEvents()         {}
-func (DiscountAutomaticBxgy) IsDiscountAutomatic() {}
 
 // Return type for `discountAutomaticBxgyCreate` mutation.
 type DiscountAutomaticBxgyCreatePayload struct {
@@ -2585,6 +2669,8 @@ type DiscountAutomaticBxgyUpdatePayload struct {
 	UserErrors []*DiscountUserError `json:"userErrors"`
 }
 
+// An auto-generated type for paginating through multiple DiscountAutomatics.
+//
 type DiscountAutomaticConnection struct {
 	// A list of edges.
 	Edges []*DiscountAutomaticEdge `json:"edges"`
@@ -2608,6 +2694,8 @@ type DiscountAutomaticDeletePayload struct {
 	UserErrors []*DiscountUserError `json:"userErrors"`
 }
 
+// An auto-generated type which holds one DiscountAutomatic and a cursor during pagination.
+//
 type DiscountAutomaticEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -2628,6 +2716,8 @@ type DiscountAutomaticNode struct {
 func (DiscountAutomaticNode) IsNode()      {}
 func (DiscountAutomaticNode) IsHasEvents() {}
 
+// An auto-generated type for paginating through multiple DiscountAutomaticNodes.
+//
 type DiscountAutomaticNodeConnection struct {
 	// A list of edges.
 	Edges []*DiscountAutomaticNodeEdge `json:"edges"`
@@ -2635,6 +2725,8 @@ type DiscountAutomaticNodeConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one DiscountAutomaticNode and a cursor during pagination.
+//
 type DiscountAutomaticNodeEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -2971,6 +3063,8 @@ type DiscountCodeNode struct {
 func (DiscountCodeNode) IsNode()      {}
 func (DiscountCodeNode) IsHasEvents() {}
 
+// An auto-generated type for paginating through multiple DiscountCodeNodes.
+//
 type DiscountCodeNodeConnection struct {
 	// A list of edges.
 	Edges []*DiscountCodeNodeEdge `json:"edges"`
@@ -2978,6 +3072,8 @@ type DiscountCodeNodeConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one DiscountCodeNode and a cursor during pagination.
+//
 type DiscountCodeNodeEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -3213,8 +3309,8 @@ type DiscountPercentage struct {
 	Percentage float64 `json:"percentage"`
 }
 
-func (DiscountPercentage) IsDiscountCustomerGetsValue() {}
 func (DiscountPercentage) IsDiscountEffect()            {}
+func (DiscountPercentage) IsDiscountCustomerGetsValue() {}
 
 // The entitled or prerequisite products and product variants for a discount.
 type DiscountProducts struct {
@@ -3266,6 +3362,8 @@ type DiscountRedeemCode struct {
 	ID string `json:"id"`
 }
 
+// An auto-generated type for paginating through multiple DiscountRedeemCodes.
+//
 type DiscountRedeemCodeConnection struct {
 	// A list of edges.
 	Edges []*DiscountRedeemCodeEdge `json:"edges"`
@@ -3273,6 +3371,8 @@ type DiscountRedeemCodeConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one DiscountRedeemCode and a cursor during pagination.
+//
 type DiscountRedeemCodeEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -3440,12 +3540,12 @@ type DraftOrder struct {
 	UpdatedAt string `json:"updatedAt"`
 }
 
-func (DraftOrder) IsCommentEventEmbed()      {}
 func (DraftOrder) IsNode()                   {}
 func (DraftOrder) IsHasMetafields()          {}
 func (DraftOrder) IsCommentEventSubject()    {}
 func (DraftOrder) IsLegacyInteroperability() {}
 func (DraftOrder) IsHasEvents()              {}
+func (DraftOrder) IsCommentEventEmbed()      {}
 
 // The order-level discount applied to a draft order.
 type DraftOrderAppliedDiscount struct {
@@ -3502,6 +3602,8 @@ type DraftOrderCompletePayload struct {
 	UserErrors []*UserError `json:"userErrors"`
 }
 
+// An auto-generated type for paginating through multiple DraftOrders.
+//
 type DraftOrderConnection struct {
 	// A list of edges.
 	Edges []*DraftOrderEdge `json:"edges"`
@@ -3534,6 +3636,8 @@ type DraftOrderDeletePayload struct {
 	UserErrors []*UserError `json:"userErrors"`
 }
 
+// An auto-generated type which holds one DraftOrder and a cursor during pagination.
+//
 type DraftOrderEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -3677,6 +3781,8 @@ type DraftOrderLineItem struct {
 
 func (DraftOrderLineItem) IsNode() {}
 
+// An auto-generated type for paginating through multiple DraftOrderLineItems.
+//
 type DraftOrderLineItemConnection struct {
 	// A list of edges.
 	Edges []*DraftOrderLineItemEdge `json:"edges"`
@@ -3684,6 +3790,8 @@ type DraftOrderLineItemConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one DraftOrderLineItem and a cursor during pagination.
+//
 type DraftOrderLineItemEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -3801,6 +3909,8 @@ type EventBridgeWebhookSubscriptionUpdatePayload struct {
 	WebhookSubscription *WebhookSubscription `json:"webhookSubscription"`
 }
 
+// An auto-generated type for paginating through multiple Events.
+//
 type EventConnection struct {
 	// A list of edges.
 	Edges []*EventEdge `json:"edges"`
@@ -3808,6 +3918,8 @@ type EventConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one Event and a cursor during pagination.
+//
 type EventEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -3918,6 +4030,8 @@ type FulfillmentCancelPayload struct {
 	UserErrors []*UserError `json:"userErrors"`
 }
 
+// An auto-generated type for paginating through multiple Fulfillments.
+//
 type FulfillmentConnection struct {
 	// A list of edges.
 	Edges []*FulfillmentEdge `json:"edges"`
@@ -3943,6 +4057,8 @@ type FulfillmentCreateV2Payload struct {
 	UserErrors []*UserError `json:"userErrors"`
 }
 
+// An auto-generated type which holds one Fulfillment and a cursor during pagination.
+//
 type FulfillmentEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -3962,6 +4078,8 @@ type FulfillmentEvent struct {
 
 func (FulfillmentEvent) IsNode() {}
 
+// An auto-generated type for paginating through multiple FulfillmentEvents.
+//
 type FulfillmentEventConnection struct {
 	// A list of edges.
 	Edges []*FulfillmentEventEdge `json:"edges"`
@@ -3969,6 +4087,8 @@ type FulfillmentEventConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one FulfillmentEvent and a cursor during pagination.
+//
 type FulfillmentEventEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -4018,6 +4138,8 @@ type FulfillmentLineItem struct {
 
 func (FulfillmentLineItem) IsNode() {}
 
+// An auto-generated type for paginating through multiple FulfillmentLineItems.
+//
 type FulfillmentLineItemConnection struct {
 	// A list of edges.
 	Edges []*FulfillmentLineItemEdge `json:"edges"`
@@ -4025,6 +4147,8 @@ type FulfillmentLineItemConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one FulfillmentLineItem and a cursor during pagination.
+//
 type FulfillmentLineItemEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -4134,6 +4258,8 @@ type FulfillmentOrderClosePayload struct {
 	UserErrors []*UserError `json:"userErrors"`
 }
 
+// An auto-generated type for paginating through multiple FulfillmentOrders.
+//
 type FulfillmentOrderConnection struct {
 	// A list of edges.
 	Edges []*FulfillmentOrderEdge `json:"edges"`
@@ -4172,6 +4298,8 @@ type FulfillmentOrderDestination struct {
 
 func (FulfillmentOrderDestination) IsNode() {}
 
+// An auto-generated type which holds one FulfillmentOrder and a cursor during pagination.
+//
 type FulfillmentOrderEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -4194,6 +4322,8 @@ type FulfillmentOrderLineItem struct {
 
 func (FulfillmentOrderLineItem) IsNode() {}
 
+// An auto-generated type for paginating through multiple FulfillmentOrderLineItems.
+//
 type FulfillmentOrderLineItemConnection struct {
 	// A list of edges.
 	Edges []*FulfillmentOrderLineItemEdge `json:"edges"`
@@ -4201,6 +4331,8 @@ type FulfillmentOrderLineItemConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one FulfillmentOrderLineItem and a cursor during pagination.
+//
 type FulfillmentOrderLineItemEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -4240,6 +4372,8 @@ type FulfillmentOrderLocationForMove struct {
 	Movable bool `json:"movable"`
 }
 
+// An auto-generated type for paginating through multiple FulfillmentOrderLocationForMoves.
+//
 type FulfillmentOrderLocationForMoveConnection struct {
 	// A list of edges.
 	Edges []*FulfillmentOrderLocationForMoveEdge `json:"edges"`
@@ -4247,6 +4381,8 @@ type FulfillmentOrderLocationForMoveConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one FulfillmentOrderLocationForMove and a cursor during pagination.
+//
 type FulfillmentOrderLocationForMoveEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -4277,6 +4413,8 @@ type FulfillmentOrderMerchantRequest struct {
 
 func (FulfillmentOrderMerchantRequest) IsNode() {}
 
+// An auto-generated type for paginating through multiple FulfillmentOrderMerchantRequests.
+//
 type FulfillmentOrderMerchantRequestConnection struct {
 	// A list of edges.
 	Edges []*FulfillmentOrderMerchantRequestEdge `json:"edges"`
@@ -4284,6 +4422,8 @@ type FulfillmentOrderMerchantRequestConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one FulfillmentOrderMerchantRequest and a cursor during pagination.
+//
 type FulfillmentOrderMerchantRequestEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -4491,6 +4631,8 @@ type Image struct {
 
 func (Image) IsHasMetafields() {}
 
+// An auto-generated type for paginating through multiple Images.
+//
 type ImageConnection struct {
 	// A list of edges.
 	Edges []*ImageEdge `json:"edges"`
@@ -4498,6 +4640,8 @@ type ImageConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one Image and a cursor during pagination.
+//
 type ImageEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -4616,6 +4760,8 @@ type InventoryItem struct {
 func (InventoryItem) IsNode()                   {}
 func (InventoryItem) IsLegacyInteroperability() {}
 
+// An auto-generated type for paginating through multiple InventoryItems.
+//
 type InventoryItemConnection struct {
 	// A list of edges.
 	Edges []*InventoryItemEdge `json:"edges"`
@@ -4623,6 +4769,8 @@ type InventoryItemConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one InventoryItem and a cursor during pagination.
+//
 type InventoryItemEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -4689,6 +4837,8 @@ type InventoryLevel struct {
 
 func (InventoryLevel) IsNode() {}
 
+// An auto-generated type for paginating through multiple InventoryLevels.
+//
 type InventoryLevelConnection struct {
 	// A list of edges.
 	Edges []*InventoryLevelEdge `json:"edges"`
@@ -4696,6 +4846,8 @@ type InventoryLevelConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one InventoryLevel and a cursor during pagination.
+//
 type InventoryLevelEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -4832,6 +4984,8 @@ type LineItem struct {
 
 func (LineItem) IsNode() {}
 
+// An auto-generated type for paginating through multiple LineItems.
+//
 type LineItemConnection struct {
 	// A list of edges.
 	Edges []*LineItemEdge `json:"edges"`
@@ -4839,6 +4993,8 @@ type LineItemConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one LineItem and a cursor during pagination.
+//
 type LineItemEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -4935,6 +5091,8 @@ type LineItemMutable struct {
 
 func (LineItemMutable) IsNode() {}
 
+// An auto-generated type for paginating through multiple LineItemMutables.
+//
 type LineItemMutableConnection struct {
 	// A list of edges.
 	Edges []*LineItemMutableEdge `json:"edges"`
@@ -4942,6 +5100,8 @@ type LineItemMutableConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one LineItemMutable and a cursor during pagination.
+//
 type LineItemMutableEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -4981,6 +5141,8 @@ type LocalizationExtension struct {
 	Value string `json:"value"`
 }
 
+// An auto-generated type for paginating through multiple LocalizationExtensions.
+//
 type LocalizationExtensionConnection struct {
 	// A list of edges.
 	Edges []*LocalizationExtensionEdge `json:"edges"`
@@ -4988,6 +5150,8 @@ type LocalizationExtensionConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one LocalizationExtension and a cursor during pagination.
+//
 type LocalizationExtensionEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -5072,6 +5236,8 @@ type LocationAddress struct {
 	Zip *string `json:"zip"`
 }
 
+// An auto-generated type for paginating through multiple Locations.
+//
 type LocationConnection struct {
 	// A list of edges.
 	Edges []*LocationEdge `json:"edges"`
@@ -5079,6 +5245,8 @@ type LocationConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one Location and a cursor during pagination.
+//
 type LocationEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -5292,6 +5460,8 @@ type MarketingActivityBudgetInput struct {
 	Total *MoneyInput `json:"total,omitempty"`
 }
 
+// An auto-generated type for paginating through multiple MarketingActivities.
+//
 type MarketingActivityConnection struct {
 	// A list of edges.
 	Edges []*MarketingActivityEdge `json:"edges"`
@@ -5331,6 +5501,8 @@ type MarketingActivityCreatePayload struct {
 	UserErrors []*UserError `json:"userErrors"`
 }
 
+// An auto-generated type which holds one MarketingActivity and a cursor during pagination.
+//
 type MarketingActivityEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -5532,6 +5704,8 @@ type MarketingEvent struct {
 func (MarketingEvent) IsNode()                   {}
 func (MarketingEvent) IsLegacyInteroperability() {}
 
+// An auto-generated type for paginating through multiple MarketingEvents.
+//
 type MarketingEventConnection struct {
 	// A list of edges.
 	Edges []*MarketingEventEdge `json:"edges"`
@@ -5539,6 +5713,8 @@ type MarketingEventConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one MarketingEvent and a cursor during pagination.
+//
 type MarketingEventEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -5546,6 +5722,8 @@ type MarketingEventEdge struct {
 	Node *MarketingEvent `json:"node"`
 }
 
+// An auto-generated type for paginating through multiple Media.
+//
 type MediaConnection struct {
 	// A list of edges.
 	Edges []*MediaEdge `json:"edges"`
@@ -5553,6 +5731,8 @@ type MediaConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one Media and a cursor during pagination.
+//
 type MediaEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -5644,6 +5824,8 @@ type Metafield struct {
 func (Metafield) IsNode()                   {}
 func (Metafield) IsLegacyInteroperability() {}
 
+// An auto-generated type for paginating through multiple Metafields.
+//
 type MetafieldConnection struct {
 	// A list of edges.
 	Edges []*MetafieldEdge `json:"edges"`
@@ -5665,6 +5847,8 @@ type MetafieldDeletePayload struct {
 	UserErrors []*UserError `json:"userErrors"`
 }
 
+// An auto-generated type which holds one Metafield and a cursor during pagination.
+//
 type MetafieldEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -5710,6 +5894,8 @@ type MetafieldStorefrontVisibility struct {
 func (MetafieldStorefrontVisibility) IsNode()                   {}
 func (MetafieldStorefrontVisibility) IsLegacyInteroperability() {}
 
+// An auto-generated type for paginating through multiple MetafieldStorefrontVisibilities.
+//
 type MetafieldStorefrontVisibilityConnection struct {
 	// A list of edges.
 	Edges []*MetafieldStorefrontVisibilityEdge `json:"edges"`
@@ -5733,6 +5919,8 @@ type MetafieldStorefrontVisibilityDeletePayload struct {
 	UserErrors []*UserError `json:"userErrors"`
 }
 
+// An auto-generated type which holds one MetafieldStorefrontVisibility and a cursor during pagination.
+//
 type MetafieldStorefrontVisibilityEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -6246,6 +6434,8 @@ type OrderClosePayload struct {
 	UserErrors []*UserError `json:"userErrors"`
 }
 
+// An auto-generated type for paginating through multiple Orders.
+//
 type OrderConnection struct {
 	// A list of edges.
 	Edges []*OrderEdge `json:"edges"`
@@ -6265,6 +6455,8 @@ type OrderDisputeSummary struct {
 
 func (OrderDisputeSummary) IsNode() {}
 
+// An auto-generated type which holds one Order and a cursor during pagination.
+//
 type OrderEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -6468,6 +6660,8 @@ type OrderStagedChangeAddVariant struct {
 
 func (OrderStagedChangeAddVariant) IsOrderStagedChange() {}
 
+// An auto-generated type for paginating through multiple OrderStagedChanges.
+//
 type OrderStagedChangeConnection struct {
 	// A list of edges.
 	Edges []*OrderStagedChangeEdge `json:"edges"`
@@ -6488,6 +6682,8 @@ type OrderStagedChangeDecrementItem struct {
 
 func (OrderStagedChangeDecrementItem) IsOrderStagedChange() {}
 
+// An auto-generated type which holds one OrderStagedChange and a cursor during pagination.
+//
 type OrderStagedChangeEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -6572,6 +6768,8 @@ type OrderTransaction struct {
 
 func (OrderTransaction) IsNode() {}
 
+// An auto-generated type for paginating through multiple OrderTransactions.
+//
 type OrderTransactionConnection struct {
 	// A list of edges.
 	Edges []*OrderTransactionEdge `json:"edges"`
@@ -6579,6 +6777,8 @@ type OrderTransactionConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one OrderTransaction and a cursor during pagination.
+//
 type OrderTransactionEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -6711,6 +6911,8 @@ type PriceRuleActivatePayload struct {
 	UserErrors []*UserError `json:"userErrors"`
 }
 
+// An auto-generated type for paginating through multiple PriceRules.
+//
 type PriceRuleConnection struct {
 	// A list of edges.
 	Edges []*PriceRuleEdge `json:"edges"`
@@ -6788,6 +6990,8 @@ type PriceRuleDiscountCode struct {
 
 func (PriceRuleDiscountCode) IsNode() {}
 
+// An auto-generated type for paginating through multiple PriceRuleDiscountCodes.
+//
 type PriceRuleDiscountCodeConnection struct {
 	// A list of edges.
 	Edges []*PriceRuleDiscountCodeEdge `json:"edges"`
@@ -6807,6 +7011,8 @@ type PriceRuleDiscountCodeCreatePayload struct {
 	UserErrors []*UserError `json:"userErrors"`
 }
 
+// An auto-generated type which holds one PriceRuleDiscountCode and a cursor during pagination.
+//
 type PriceRuleDiscountCodeEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -6832,6 +7038,8 @@ type PriceRuleDiscountCodeUpdatePayload struct {
 	UserErrors []*UserError `json:"userErrors"`
 }
 
+// An auto-generated type which holds one PriceRule and a cursor during pagination.
+//
 type PriceRuleEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -7129,6 +7337,8 @@ type PrivateMetafield struct {
 
 func (PrivateMetafield) IsNode() {}
 
+// An auto-generated type for paginating through multiple PrivateMetafields.
+//
 type PrivateMetafieldConnection struct {
 	// A list of edges.
 	Edges []*PrivateMetafieldEdge `json:"edges"`
@@ -7155,6 +7365,8 @@ type PrivateMetafieldDeletePayload struct {
 	UserErrors []*UserError `json:"userErrors"`
 }
 
+// An auto-generated type which holds one PrivateMetafield and a cursor during pagination.
+//
 type PrivateMetafieldEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -7317,7 +7529,6 @@ type Product struct {
 	Vendor string `json:"vendor"`
 }
 
-func (Product) IsCommentEventEmbed()        {}
 func (Product) IsNode()                     {}
 func (Product) IsNavigable()                {}
 func (Product) IsHasMetafields()            {}
@@ -7325,6 +7536,7 @@ func (Product) IsHasPublishedTranslations() {}
 func (Product) IsPublishable()              {}
 func (Product) IsOnlineStorePreviewable()   {}
 func (Product) IsLegacyInteroperability()   {}
+func (Product) IsCommentEventEmbed()        {}
 
 // Specifies product images to append.
 type ProductAppendImagesInput struct {
@@ -7364,6 +7576,8 @@ type ProductChangeStatusUserError struct {
 
 func (ProductChangeStatusUserError) IsDisplayableError() {}
 
+// An auto-generated type for paginating through multiple Products.
+//
 type ProductConnection struct {
 	// A list of edges.
 	Edges []*ProductEdge `json:"edges"`
@@ -7445,6 +7659,8 @@ type ProductDuplicatePayload struct {
 	UserErrors []*UserError `json:"userErrors"`
 }
 
+// An auto-generated type which holds one Product and a cursor during pagination.
+//
 type ProductEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -7569,6 +7785,8 @@ type ProductPublication struct {
 	PublishDate *string `json:"publishDate"`
 }
 
+// An auto-generated type for paginating through multiple ProductPublications.
+//
 type ProductPublicationConnection struct {
 	// A list of edges.
 	Edges []*ProductPublicationEdge `json:"edges"`
@@ -7576,6 +7794,8 @@ type ProductPublicationConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one ProductPublication and a cursor during pagination.
+//
 type ProductPublicationEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -7754,12 +7974,12 @@ type ProductVariant struct {
 	WeightUnit WeightUnit `json:"weightUnit"`
 }
 
-func (ProductVariant) IsCommentEventEmbed()        {}
 func (ProductVariant) IsNode()                     {}
 func (ProductVariant) IsHasMetafields()            {}
 func (ProductVariant) IsHasPublishedTranslations() {}
 func (ProductVariant) IsNavigable()                {}
 func (ProductVariant) IsLegacyInteroperability()   {}
+func (ProductVariant) IsCommentEventEmbed()        {}
 
 // Specifies the input fields required to append media to a single variant.
 type ProductVariantAppendMediaInput struct {
@@ -7779,6 +7999,8 @@ type ProductVariantAppendMediaPayload struct {
 	UserErrors []*MediaUserError `json:"userErrors"`
 }
 
+// An auto-generated type for paginating through multiple ProductVariants.
+//
 type ProductVariantConnection struct {
 	// A list of edges.
 	Edges []*ProductVariantEdge `json:"edges"`
@@ -7824,6 +8046,8 @@ type ProductVariantDetachMediaPayload struct {
 	UserErrors []*MediaUserError `json:"userErrors"`
 }
 
+// An auto-generated type which holds one ProductVariant and a cursor during pagination.
+//
 type ProductVariantEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -7897,6 +8121,8 @@ type ProductVariantPricePair struct {
 	Price *MoneyV2 `json:"price"`
 }
 
+// An auto-generated type for paginating through multiple ProductVariantPricePairs.
+//
 type ProductVariantPricePairConnection struct {
 	// A list of edges.
 	Edges []*ProductVariantPricePairEdge `json:"edges"`
@@ -7904,6 +8130,8 @@ type ProductVariantPricePairConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one ProductVariantPricePair and a cursor during pagination.
+//
 type ProductVariantPricePairEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -7946,6 +8174,8 @@ type Publication struct {
 
 func (Publication) IsNode() {}
 
+// An auto-generated type for paginating through multiple Publications.
+//
 type PublicationConnection struct {
 	// A list of edges.
 	Edges []*PublicationEdge `json:"edges"`
@@ -7953,6 +8183,8 @@ type PublicationConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one Publication and a cursor during pagination.
+//
 type PublicationEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -8123,6 +8355,8 @@ type RefundLineItem struct {
 	TotalTaxSet *MoneyBag `json:"totalTaxSet"`
 }
 
+// An auto-generated type for paginating through multiple RefundLineItems.
+//
 type RefundLineItemConnection struct {
 	// A list of edges.
 	Edges []*RefundLineItemEdge `json:"edges"`
@@ -8130,6 +8364,8 @@ type RefundLineItemConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one RefundLineItem and a cursor during pagination.
+//
 type RefundLineItemEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -8222,6 +8458,8 @@ type ResourcePublication struct {
 	Publishable Publishable `json:"publishable"`
 }
 
+// An auto-generated type for paginating through multiple ResourcePublications.
+//
 type ResourcePublicationConnection struct {
 	// A list of edges.
 	Edges []*ResourcePublicationEdge `json:"edges"`
@@ -8229,6 +8467,8 @@ type ResourcePublicationConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one ResourcePublication and a cursor during pagination.
+//
 type ResourcePublicationEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -8251,6 +8491,8 @@ type ResourcePublicationV2 struct {
 	Publishable Publishable `json:"publishable"`
 }
 
+// An auto-generated type for paginating through multiple ResourcePublicationV2s.
+//
 type ResourcePublicationV2Connection struct {
 	// A list of edges.
 	Edges []*ResourcePublicationV2Edge `json:"edges"`
@@ -8258,6 +8500,8 @@ type ResourcePublicationV2Connection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one ResourcePublicationV2 and a cursor during pagination.
+//
 type ResourcePublicationV2Edge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -8302,6 +8546,8 @@ type SavedSearch struct {
 func (SavedSearch) IsNode()                   {}
 func (SavedSearch) IsLegacyInteroperability() {}
 
+// An auto-generated type for paginating through multiple SavedSearches.
+//
 type SavedSearchConnection struct {
 	// A list of edges.
 	Edges []*SavedSearchEdge `json:"edges"`
@@ -8343,6 +8589,8 @@ type SavedSearchDeletePayload struct {
 	UserErrors []*UserError `json:"userErrors"`
 }
 
+// An auto-generated type which holds one SavedSearch and a cursor during pagination.
+//
 type SavedSearchEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -8412,6 +8660,8 @@ type ScriptTag struct {
 func (ScriptTag) IsNode()                   {}
 func (ScriptTag) IsLegacyInteroperability() {}
 
+// An auto-generated type for paginating through multiple ScriptTags.
+//
 type ScriptTagConnection struct {
 	// A list of edges.
 	Edges []*ScriptTagEdge `json:"edges"`
@@ -8435,6 +8685,8 @@ type ScriptTagDeletePayload struct {
 	UserErrors []*UserError `json:"userErrors"`
 }
 
+// An auto-generated type which holds one ScriptTag and a cursor during pagination.
+//
 type ScriptTagEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -8497,6 +8749,8 @@ type SearchResultConnection struct {
 	ResultsAfterCount int64 `json:"resultsAfterCount"`
 }
 
+// An auto-generated type which holds one SearchResult and a cursor during pagination.
+//
 type SearchResultEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -8557,6 +8811,8 @@ type ShippingLine struct {
 	Title string `json:"title"`
 }
 
+// An auto-generated type for paginating through multiple ShippingLines.
+//
 type ShippingLineConnection struct {
 	// A list of edges.
 	Edges []*ShippingLineEdge `json:"edges"`
@@ -8564,6 +8820,8 @@ type ShippingLineConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one ShippingLine and a cursor during pagination.
+//
 type ShippingLineEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -8986,11 +9244,11 @@ type ShopResourceLimits struct {
 	LocationLimit int64 `json:"locationLimit"`
 	// Maximum number of product options allowed.
 	MaxProductOptions int64 `json:"maxProductOptions"`
-	// Maximum number of variants allowed.
+	// The maximum number of variants allowed per product.
 	MaxProductVariants int64 `json:"maxProductVariants"`
 	// Whether the shop has reached the limit of the number of URL redirects it can make for resources.
 	RedirectLimitReached bool `json:"redirectLimitReached"`
-	// SKU limits. If the shop has unlimited skus the quantity used cannot be retrieved.
+	// The maximum number of variants allowed per shop. If the shop has unlimited SKUs, then the quantity used cannot be retrieved.
 	SkuResourceLimits *ResourceLimit `json:"skuResourceLimits"`
 }
 
@@ -9081,6 +9339,8 @@ type ShopifyPaymentsBankAccount struct {
 
 func (ShopifyPaymentsBankAccount) IsNode() {}
 
+// An auto-generated type for paginating through multiple ShopifyPaymentsBankAccounts.
+//
 type ShopifyPaymentsBankAccountConnection struct {
 	// A list of edges.
 	Edges []*ShopifyPaymentsBankAccountEdge `json:"edges"`
@@ -9088,6 +9348,8 @@ type ShopifyPaymentsBankAccountConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one ShopifyPaymentsBankAccount and a cursor during pagination.
+//
 type ShopifyPaymentsBankAccountEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -9134,6 +9396,8 @@ type ShopifyPaymentsDispute struct {
 func (ShopifyPaymentsDispute) IsLegacyInteroperability() {}
 func (ShopifyPaymentsDispute) IsNode()                   {}
 
+// An auto-generated type for paginating through multiple ShopifyPaymentsDisputes.
+//
 type ShopifyPaymentsDisputeConnection struct {
 	// A list of edges.
 	Edges []*ShopifyPaymentsDisputeEdge `json:"edges"`
@@ -9141,6 +9405,8 @@ type ShopifyPaymentsDisputeConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one ShopifyPaymentsDispute and a cursor during pagination.
+//
 type ShopifyPaymentsDisputeEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -9213,6 +9479,8 @@ type ShopifyPaymentsPayout struct {
 func (ShopifyPaymentsPayout) IsLegacyInteroperability() {}
 func (ShopifyPaymentsPayout) IsNode()                   {}
 
+// An auto-generated type for paginating through multiple ShopifyPaymentsPayouts.
+//
 type ShopifyPaymentsPayoutConnection struct {
 	// A list of edges.
 	Edges []*ShopifyPaymentsPayoutEdge `json:"edges"`
@@ -9220,6 +9488,8 @@ type ShopifyPaymentsPayoutConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one ShopifyPaymentsPayout and a cursor during pagination.
+//
 type ShopifyPaymentsPayoutEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -9415,6 +9685,8 @@ type StorefrontAccessToken struct {
 
 func (StorefrontAccessToken) IsNode() {}
 
+// An auto-generated type for paginating through multiple StorefrontAccessTokens.
+//
 type StorefrontAccessTokenConnection struct {
 	// A list of edges.
 	Edges []*StorefrontAccessTokenEdge `json:"edges"`
@@ -9446,6 +9718,8 @@ type StorefrontAccessTokenDeletePayload struct {
 	UserErrors []*UserError `json:"userErrors"`
 }
 
+// An auto-generated type which holds one StorefrontAccessToken and a cursor during pagination.
+//
 type StorefrontAccessTokenEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -9459,6 +9733,8 @@ type StorefrontAccessTokenInput struct {
 	Title string `json:"title,omitempty"`
 }
 
+// An auto-generated type for paginating through multiple Strings.
+//
 type StringConnection struct {
 	// A list of edges.
 	Edges []*StringEdge `json:"edges"`
@@ -9466,6 +9742,8 @@ type StringConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one String and a cursor during pagination.
+//
 type StringEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -9579,6 +9857,8 @@ type TenderTransaction struct {
 
 func (TenderTransaction) IsNode() {}
 
+// An auto-generated type for paginating through multiple TenderTransactions.
+//
 type TenderTransactionConnection struct {
 	// A list of edges.
 	Edges []*TenderTransactionEdge `json:"edges"`
@@ -9596,6 +9876,8 @@ type TenderTransactionCreditCardDetails struct {
 
 func (TenderTransactionCreditCardDetails) IsTenderTransactionDetails() {}
 
+// An auto-generated type which holds one TenderTransaction and a cursor during pagination.
+//
 type TenderTransactionEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -9645,6 +9927,8 @@ type TranslatableResource struct {
 	Translations []*Translation `json:"translations"`
 }
 
+// An auto-generated type for paginating through multiple TranslatableResources.
+//
 type TranslatableResourceConnection struct {
 	// A list of edges.
 	Edges []*TranslatableResourceEdge `json:"edges"`
@@ -9652,6 +9936,8 @@ type TranslatableResourceConnection struct {
 	PageInfo *PageInfo `json:"pageInfo"`
 }
 
+// An auto-generated type which holds one TranslatableResource and a cursor during pagination.
+//
 type TranslatableResourceEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
@@ -9843,6 +10129,8 @@ type WebhookSubscription struct {
 func (WebhookSubscription) IsNode()                   {}
 func (WebhookSubscription) IsLegacyInteroperability() {}
 
+// An auto-generated type for paginating through multiple WebhookSubscriptions.
+//
 type WebhookSubscriptionConnection struct {
 	// A list of edges.
 	Edges []*WebhookSubscriptionEdge `json:"edges"`
@@ -9866,6 +10154,8 @@ type WebhookSubscriptionDeletePayload struct {
 	UserErrors []*UserError `json:"userErrors"`
 }
 
+// An auto-generated type which holds one WebhookSubscription and a cursor during pagination.
+//
 type WebhookSubscriptionEdge struct {
 	// A cursor for use in pagination.
 	Cursor string `json:"cursor"`
