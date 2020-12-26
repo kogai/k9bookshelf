@@ -40,7 +40,7 @@ ReactiveX, tmux2などのニッチなテーマを扱いつつも、間延びす�
 
 電子書籍ではDRM Freeを謳い、アーリーアクセスプログラムも提供しています。
 
-数年前にサイトのリプレイスを行ったらしく、久しぶりにサインインしたらアカウントの再登録が必要になりました。
+数年前にサイトのリプレイスを行ったらしく、久しぶりにサインインしたらアカウントの再登録が必要になっていました。
 
 [Pragmatic Bookshelfの取り扱い書籍](https://k9bookshelf.com/collections/pragmatic-bookshelf)
 
@@ -54,11 +54,13 @@ Pragmatic Bookshelfに劣らずマニアックなテーマからメジャーな�
 
 文体が口語寄りと言うか、脇道に逸れがちでやや間延びした印象を持つことがあります。
 
-さり気なく和訳されていることも多いですが、装画やタイトルが元の姿を留めない程変わっていることも多く、気づかずに読んでいたということがあるかも知れません。
+[さり気なく和訳されている](https://amzn.to/38zzYx0 "OAuth徹底入門") ことも多いですが、 [装画やタイトルが元の姿を留めない程変わっている](https://k9bookshelf.com/products/oauth-2-in-action "OAuth2 in Action") ことも多く、気づかずに読んでいたということがあるかも知れません。
 
-[MEAP(Manning Early Access Program)](https://www.manning.com/meap-program) で発売前の書籍を積極的に紹介していますが、刊行までに数年スパンで待つことが多いです。 それでも他所で取り扱われづらいテーマだったりするので、大人しく待つわけですが。。。 (マイクロフロントエンドの本とか)
+機械学習やデータサイエンス関連の書籍が豊富なのも特徴です。
 
-In Action, In Depthシリーズが有名。 出勤形態は [フルリモート](https://www.manning.com/manning) なんですね。
+[MEAP(Manning Early Access Program)](https://www.manning.com/meap-program) で発売前の書籍を積極的に紹介していますが、刊行までに数年スパンで待つことが多いです。 それでも他所で取り扱われづらいテーマだったりするので、大人しく待つわけですが。。。 （私の場合はマイクロフロントエンドの本とか）
+
+In Action, In Depthシリーズが有名です。 [フルリモート](https://www.manning.com/manning) の企業なんですね。
 
 [Manning Publicationsの取り扱い書籍](https://k9bookshelf.com/collections/manning-publications)
 
@@ -84,7 +86,7 @@ In Action, In Depthシリーズが有名。 出勤形態は [フルリモート]
 
 自身が有数のテックカンパニーであることの経験からインスパイアされた刊行物には強いこだわりを感じます。
 
-技術系の書籍は中身重視ということかペーパバックのものが多いですが、StripePressは装丁も美しいです。
+技術系の書籍は中身重視というか、ペーパバックのものが多いですが、StripePressは装丁も美しいです。
 
 いわゆる技術の習得を目指す書籍というよりは、マネジメント関連や技術系ノンフィクションの書籍を取り扱っています。
 
@@ -99,4 +101,3 @@ In Action, In Depthシリーズが有名。 出勤形態は [フルリモート]
 この記事で挙げた以外でも名著も絶版も多いPearson Educationや、Hardware Hackingが強いNo Starch Pressなど、国外にも魅力的な出版社が多数あります。
 
 時には出版社から次に読む技術書を選んでみるのも面白いかも知れません。
-
