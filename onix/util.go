@@ -92,6 +92,16 @@ func extractDatetime(date string) (time.Time, error) {
 func generateDescription(onixProduct *Product) (*string, error) {
 	var descriptionHTML string = ""
 	otherText := onixProduct.OtherTexts.FindByType("Long description")
+	if otherText == nil {
+		otherText = onixProduct.OtherTexts.FindByType("Main description")
+	}
+	if otherText == nil {
+		otherText = onixProduct.OtherTexts.FindByType("Short description/annotation")
+	}
+	if otherText == nil {
+		otherText = onixProduct.OtherTexts.FindByType("Biographical note")
+	}
+
 	translated, err := Translate(otherText.Text.Body)
 	if err != nil {
 		return nil, err
