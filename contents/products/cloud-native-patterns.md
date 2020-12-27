@@ -35,20 +35,20 @@ Requires basic software design skills and an ability to read Java or a similar l
 ### PART 1 THE CLOUD-NATIVE CONTEXT1.
 
 1. You keep using that word: Defining cloud-native
-1. Running cloud-native applications in production
-1. The platform for cloud-native software
+2. Running cloud-native applications in production
+3. The platform for cloud-native software
 
 ### PART 2 - CLOUD-NATIVE PATTERNS
 
-4. Event-driven microservices: It’s not just request/response
-5. App redundancy: Scale-out and statelessness
-6. Application configuration: Not just environment variables
-7. The application lifecycle: Accounting for constant change
-8. Accessing apps: Services, routing, and service discovery
-9. Interaction redundancy: Retries and other control loops
-10. Fronting services: Circuit breakers and API gateways
-11. Troubleshooting: Finding the needle in the haystack
-12. Cloud-native data: Breaking the data monolith
+1. Event-driven microservices: It’s not just request/response
+2. App redundancy: Scale-out and statelessness
+3. Application configuration: Not just environment variables
+4. The application lifecycle: Accounting for constant change
+5. Accessing apps: Services, routing, and service discovery
+6. Interaction redundancy: Retries and other control loops
+7. Fronting services: Circuit breakers and API gateways
+8. Troubleshooting: Finding the needle in the haystack
+9. Cloud-native data: Breaking the data monolith
 
 ---
 
@@ -89,17 +89,17 @@ _Cloud Native Patterns_ は、クラウドのダイナミックで分散した�
 ### 第1部 - クラウド ネイティブの文脈
 
 1. その言葉を使い続けていますね。クラウドネイティブの定義
-3. 本番環境でのクラウドネイティブ・アプリケーションの実行
-5. クラウドネイティブ・ソフトウェアのプラットフォーム
+2. 本番環境でのクラウドネイティブ・アプリケーションの実行
+3. クラウドネイティブ・ソフトウェアのプラットフォーム
 
 ### パート 2 - クラウドネイティブ・パターン
 
-7. イベント駆動型のマイクロサービス。リクエスト/レスポンスだけではない
-8. アプリケーションの冗長性。スケールアウトとステートレス
-9. アプリケーション構成。環境変数だけではない
-10. アプリケーションのライフサイクル。不変の変化への対応
-11. アプリケーションへのアクセス: サービス、ルーティング、およびサービスの発見
-12. インタラクションの冗長性。リトライおよびその他の制御ループ
-13. 。サーキットブレーカーおよび API ゲートウェイ
-15. トラブルシューティング。干し草の山の中から針を見つける
-16. クラウド・ネイティブ・データ。データのモノリスを壊す
+1. イベント駆動型のマイクロサービス。リクエスト/レスポンスだけではない
+2. アプリケーションの冗長性。スケールアウトとステートレス
+3. アプリケーション構成。環境変数だけではない
+4. アプリケーションのライフサイクル。不変の変化への対応
+5. アプリケーションへのアクセス: サービス、ルーティング、およびサービスの発見
+6. インタラクションの冗長性。リトライおよびその他の制御ループ
+7. 。サーキットブレーカーおよび API ゲートウェイ
+8. トラブルシューティング。干し草の山の中から針を見つける
+9. クラウド・ネイティブ・データ。データのモノリスを壊す

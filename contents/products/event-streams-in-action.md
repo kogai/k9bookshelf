@@ -41,12 +41,12 @@ For readers with experience coding in Java, Scala, or Python.
 
 ### PART 2- DATA ENGINEERING WITH STREAMS
 
-6. Schemas
-7. Archiving events
-8. Railway-oriented processing
-9. CommandsPART 3 - EVENT ANALYTICS
-10. Analytics-on-read
-11. Analytics-on-write
+1. Schemas
+2. Archiving events
+3. Railway-oriented processing
+4. CommandsPART 3 - EVENT ANALYTICS
+5. Analytics-on-read
+6. Analytics-on-write
 
 ---
 
@@ -87,18 +87,18 @@ _Event Streams in Action_ は、統一ログ処理パターンを使用してイ
 
 1. イベントストリームの導入
 2. ユニファイドログ24
-4. Apache Kafkaでのイベントストリーム処理
-5. Amazon Kinesisでのイベントストリーム処理
-6. ステートフルストリーム処理
+3. Apache Kafkaでのイベントストリーム処理
+4. Amazon Kinesisでのイベントストリーム処理
+5. ステートフルストリーム処理
 
 ### PART 2-2ストリームを使用したデータエンジニアリング
 
-7. スキーマ
-8. イベントをアーカイブ
-9. する
-10. レールウェイ指向の処理
-11. コマンド第 3 部 - イベント分析
-12. 読み取り時の分析
-14. 書き込み時の分析
+1. スキーマ
+2. イベントをアーカイブ
+3. する
+4. レールウェイ指向の処理
+5. コマンド第 3 部 - イベント分析
+6. 読み取り時の分析
+7. 書き込み時の分析
 
 。

@@ -35,26 +35,26 @@ For developers with intermediate experience in JavaScript or an OO language. Fam
 ### PART 1
 
 1. A first look at decentralized applications
-1. Understanding the blockchain
-2. The Ethereum platform
-3. Deploying your first smart contract
+2. Understanding the blockchain
+3. The Ethereum platform
+4. Deploying your first smart contract
 
 ### PART 2
 
-4. Programming smart contracts in Solidity
-5. Writing more complex smart contracts
-6. Generalizing functionality with abstract contracts and interfaces
-7. Managing smart contracts with Web3.js
+1. Programming smart contracts in Solidity
+2. Writing more complex smart contracts
+3. Generalizing functionality with abstract contracts and interfaces
+4. Managing smart contracts with Web3.js
 
 ### PART 3
 
-8. The Ethereum ecosystem
-9. Unit testing contracts with Mocha
-10. Improving the development cycle with Truffle
-11. Putting it all together: Building a complete voting DappPART 4
-12. Making a Dapp production ready
-13. Security considerations
-14. Conclusions
+1. The Ethereum ecosystem
+2. Unit testing contracts with Mocha
+3. Improving the development cycle with Truffle
+4. Putting it all together: Building a complete voting DappPART 4
+5. Making a Dapp production ready
+6. Security considerations
+7. Conclusions
 
 ---
 
@@ -97,23 +97,23 @@ JavaScriptまたはOO言語での中級者の経験がある開発者向け。�
 ### PART 1
 
 1. 分散型アプリケーションの初見
-1. ブロックチェーンを理解する
-2. イーサリアムのプラットフォーム
-3. 初めてのスマートコントラクトを導入する
+2. ブロックチェーンを理解する
+3. イーサリアムのプラットフォーム
+4. 初めてのスマートコントラクトを導入する
 
 ### PRAT 2
 
-4. Solidity でのスマートコントラクトのプログラミング
-5. より複雑なスマートコントラクトを書く
-6. 抽象的な契約とインターフェースによる機能の一般化
-7. Web3.jsでスマートコントラクトを管理する
+1. Solidity でのスマートコントラクトのプログラミング
+2. より複雑なスマートコントラクトを書く
+3. 抽象的な契約とインターフェースによる機能の一般化
+4. Web3.jsでスマートコントラクトを管理する
 
 ### PART 3
 
-8. イーサリアムのエコシステム
-9. モカとユニットテスト契約
-10. Truffleによる開発サイクルの改善
-11. 全てをまとめる 完全な投票DappPART 4の構築
-12. Dapp制作の準備をする
-13. セキュリティへの配慮
-14. 結論
+1. イーサリアムのエコシステム
+2. モカとユニットテスト契約
+3. Truffleによる開発サイクルの改善
+4. 全てをまとめる 完全な投票DappPART 4の構築
+5. Dapp制作の準備をする
+6. セキュリティへの配慮
+7. 結論
