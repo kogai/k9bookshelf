@@ -41,17 +41,17 @@ Readers need beginner programming skills and knowledge of basic statistics.
 
 ### PART 2 - BUILDING A PRODUCT WITH SOFTWARE AND STATISTICS
 
-6. Developing a plan
-7. Statistics and modeling: concepts and foundations
-8. Software: statistics in action
-9. Supplementary software: bigger, faster, more efficient
-10. Plan execution: putting it all together
+1. Developing a plan
+2. Statistics and modeling: concepts and foundations
+3. Software: statistics in action
+4. Supplementary software: bigger, faster, more efficient
+5. Plan execution: putting it all together
 
 ### PART 3 - FINISHING OFF THE PRODUCT AND WRAPPING UP
 
-11. Delivering a product
-12. After product delivery: problems and revisions
-13. Wrapping up: putting the project away
+1. Delivering a product
+2. After product delivery: problems and revisions
+3. Wrapping up: putting the project away
 
 ---
 
@@ -93,19 +93,19 @@ _Think Like a Data Scientist_ は、実世界のデータ中心の問題を解�
 1. データ サイエンスの哲学
 2. 良い質問をすることで目標を設定する
 3. 私たちの周りのすべてのデータ。仮想の荒野
-5. データの取り合い: 捕獲から家畜化まで
-6. データの評価: 突いたり、突いたり
+4. データの取り合い: 捕獲から家畜化まで
+5. データの評価: 突いたり、突いたり
 
 ### 第2部 - ソフトウェアと統計学を使用した製品の構築
 
-8. 計画の策定
-9. 統計学とモデリング。概念と基礎
-10. ソフトウェア: 統計の実際
-12. 補足ソフトウェア: より大きく、より速く、より効率的に
-13. 計画の実行: すべてをまとめる
+1. 計画の策定
+2. 統計学とモデリング。概念と基礎
+3. ソフトウェア: 統計の実際
+4. 補足ソフトウェア: より大きく、より速く、より効率的に
+5. 計画の実行: すべてをまとめる
 
 ### 第3部 - 製品の仕上げと仕上げ
 
-16. 製品を納品する
-17. 納品後: 問題と修正
-19. 仕上げ: プロジェクトを片付ける
+1. 製品を納品する
+2. 納品後: 問題と修正
+3. 仕上げ: プロジェクトを片付ける

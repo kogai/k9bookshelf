@@ -40,26 +40,26 @@ Readers need basic programming skills and knowledge of HTTP and JSON.
 
 ### Part 2 - Building an OAuth 2 environment
 
-3. Building a simple OAuth client
-4. Building a simple OAuth protected resource
-5. Building a simple OAuth authorization server
-6. OAuth 2.0 in the real world
+1. Building a simple OAuth client
+2. Building a simple OAuth protected resource
+3. Building a simple OAuth authorization server
+4. OAuth 2.0 in the real world
 
 ### Part 3 - OAuth 2 implementation and vulnerabilities
 
-7. Common client vulnerabilities
-8. Common protected resources vulnerabilities
-9. Common authorization server vulnerabilities
-10. Common OAuth token vulnerabilities
+1. Common client vulnerabilities
+2. Common protected resources vulnerabilities
+3. Common authorization server vulnerabilities
+4. Common OAuth token vulnerabilities
 
 ### Part 4 - Taking OAuth further
 
-11. OAuth tokens
-12. Dynamic client registration
-13. User authentication with OAuth 2.0
-14. Protocols and profiles using OAuth 2.0
-15. Beyond bearer tokens
-16. Summary and conclusions
+1. OAuth tokens
+2. Dynamic client registration
+3. User authentication with OAuth 2.0
+4. Protocols and profiles using OAuth 2.0
+5. Beyond bearer tokens
+6. Summary and conclusions
 
 ---
 
@@ -106,24 +106,24 @@ _OAuth 2 in Action_ は、クライアント、認証サーバー、およびリ
 
 ### パート 2 - OAuth 2 環境の構築
 
-5. 単純な OAuth クライアントを構築する
-6. 単純な OAuth 保護されたリソースを構築する
-7. 単純な OAuth 認証サーバーを構築する
-9. 現実世界での OAuth 2.0。0 の実世界における
+1. 単純な OAuth クライアントを構築する
+2. 単純な OAuth 保護されたリソースを構築する
+3. 単純な OAuth 認証サーバーを構築する
+4. 現実世界での OAuth 2.0。0 の実世界における
 
 ### パート 3 - OAuth 2 の実装と脆弱性
 
-10. 共通のクライアントの脆弱性
-11. 共通の保護されたリソースの脆弱性
-13. 共通の認可サーバーの脆弱性
-15. 共通の OAuth トークンの脆弱性
+1. 共通のクライアントの脆弱性
+2. 共通の保護されたリソースの脆弱性
+3. 共通の認可サーバーの脆弱性
+4. 共通の OAuth トークンの脆弱性
 
 ### パート 4 - OAuth 2.OAuth をさらに進化させる
 
-16. OAuth トークン
-17. 動的クライアント登録
-19. OAuth 2.0 を使用したユーザー認証
-21. 。0
-22. OAuth 2.0 を使用したプロトコルとプロファイル
-24. ベアラートークンを超えて
-26. まとめと結論
+1. OAuth トークン
+2. 動的クライアント登録
+3. OAuth 2.0 を使用したユーザー認証
+4. 。0
+5. OAuth 2.0 を使用したプロトコルとプロファイル
+6. ベアラートークンを超えて
+7. まとめと結論
