@@ -1,0 +1,26 @@
+name: theme download
+on:
+  schedule:
+    - cron: "0 1 * * 1" # Every Monday morning
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+      - name: Set up Theme-kit
+        run: curl -s https://shopify.github.io/themekit/scripts/install.py | sudo python
+      - name: Download liquid
+        run: theme download
+        env:
+          THEME_APP_SECRET: ${{ secrets.THEME_APP_SECRET }}
+          THEME_ID: ${{ secrets.THEME_ID }}
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3.0.0
+        with:
+          title: Update theme
+          base: main
