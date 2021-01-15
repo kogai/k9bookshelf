@@ -26,7 +26,6 @@ func findMetaFieldIDBy(fetchedProducts *client.ProductISBNs, idx int, key string
 }
 
 func metaFieldInput(onixProduct *codegen.Product, fetchedProducts *client.ProductISBNs, idx int) ([]*client.MetafieldInput, error) {
-	numberOfPages := fmt.Sprintf("%d", onixProduct.NumberOfPages)
 	date, err := extractDatetime(*onixProduct.PublicationDate)
 	if err != nil {
 		return nil, err
@@ -46,13 +45,13 @@ func metaFieldInput(onixProduct *codegen.Product, fetchedProducts *client.Produc
 		ValueType: &valueType,
 	}, {
 		ID:        subTitleID,
-		Value:     onixProduct.Subtitle,
+		Value:     onixProduct.Titles[0].Subtitle,
 		Key:       &metaFieldKeySubTitle,
 		Namespace: &metaFieldNamespace,
 		ValueType: &valueType,
 	}, {
 		ID:        numberOfPagesID,
-		Value:     &numberOfPages,
+		Value:     onixProduct.NumberOfPages,
 		Key:       &metaFieldKeyNumberOfPages,
 		Namespace: &metaFieldNamespace,
 		ValueType: &valueType,
@@ -163,11 +162,11 @@ func Run(input string, dryRun bool) error {
 		ps := Productidentifiers(d.ProductIdentifiers)
 		isbn := ps.FindByIDType("ISBN-13")
 		if isbn == nil {
-			return fmt.Errorf("%s not have ISBN-13 value", d.Titles[0].TitleText)
+			return fmt.Errorf("%s not have ISBN-13 value", *d.Titles[0].TitleText)
 		}
 		found, idx := hasSameISBN13(*isbn, products)
 		if found {
-			fmt.Println("Update", d.Titles[0].TitleText, d.Subtitle)
+			fmt.Println("Update", d.Titles[0].TitleText, d.Titles[0].Subtitle)
 			ipt, err := updateInput(&d, products, idx)
 			if err != nil {
 				return err
@@ -199,7 +198,7 @@ func Run(input string, dryRun bool) error {
 				}
 			}
 		} else {
-			fmt.Println("Create", d.Titles[0].TitleText, d.Subtitle)
+			fmt.Println("Create", d.Titles[0].TitleText, d.Titles[0].Subtitle)
 			ipt, err := createInput(&d, products, idx)
 			if err != nil {
 				return err
