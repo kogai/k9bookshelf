@@ -1,4 +1,4 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "go_default_library",
@@ -15,16 +15,5 @@ go_library(
         "//gqlgenc/client:go_default_library",
         "@com_github_bold_commerce_go_shopify//:go_default_library",
         "@com_github_kogai_onix_codegen//go:go_default_library",
-    ],
-)
-
-go_test(
-    name = "go_default_test",
-    srcs = ["onix_test.go"],
-    data = glob(["fixtures/*"]),
-    embed = [":go_default_library"],
-    deps = [
-        "//gqlgenc/client:go_default_library",
-        "@in_gopkg_go_playground_assert_v1//:go_default_library",
     ],
 )

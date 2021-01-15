@@ -147,6 +147,8 @@ github.com/kisielk/errcheck v1.1.0/go.mod h1:EZBBE59ingxPouuu3KfxchcWSUPOHkagtvW
 github.com/kisielk/gotool v1.0.0/go.mod h1:XhKaO+MFFWcvkIS/tQcRk01m1F5IRFswLeQ+oQHNcck=
 github.com/kogai/onix-codegen v0.0.0-20210114135750-18c2feec0315 h1:kZ3952hgt25gTSS3Y9d6F7ppCvaj87DKyZ9KemCZyc4=
 github.com/kogai/onix-codegen v0.0.0-20210114135750-18c2feec0315/go.mod h1:O6sFzL6G9/WlHKtUaORq8Z/DQuATGdo5GCo+QcQSye4=
+github.com/kogai/onix-codegen v0.0.0-20210115150916-b4661a1eb629 h1:BQJKUZi76Jyb9s4T8XLFvJKMreU3HQHT+R4QuAzMR7Q=
+github.com/kogai/onix-codegen v0.0.0-20210115150916-b4661a1eb629/go.mod h1:O6sFzL6G9/WlHKtUaORq8Z/DQuATGdo5GCo+QcQSye4=
 github.com/konsorten/go-windows-terminal-sequences v1.0.1/go.mod h1:T0+1ngSBFLxvqU3pZ+m/2kptfBszLMUkC4ZK/EgS/cQ=
 github.com/kr/logfmt v0.0.0-20140226030751-b84e30acd515/go.mod h1:+0opPa2QZZtGFBFZlji/RkVcI2GknAs/DXo4wKdlNEc=
 github.com/kr/pretty v0.1.0 h1:L/CwN0zerZDmRFUapSPitk6f+Q3+0za1rQkzVuMiMFI=

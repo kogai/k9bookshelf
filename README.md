@@ -16,4 +16,7 @@ $ make deploy/contents
 
 ```sh
 $ make ONIX_FILE=20201208.onix import
+
+# dry-run writes snapshot json to onix/snapshots
+$ make ONIX_FILE=20201208.onix import/dry
 ```

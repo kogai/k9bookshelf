@@ -2409,8 +2409,8 @@ type DeliveryRateDefinition struct {
 	Price *MoneyV2 `json:"price"`
 }
 
-func (DeliveryRateDefinition) IsNode()                 {}
 func (DeliveryRateDefinition) IsDeliveryRateProvider() {}
+func (DeliveryRateDefinition) IsNode()                 {}
 
 // Input fields for a rate definition.
 type DeliveryRateDefinitionInput struct {
@@ -6392,13 +6392,13 @@ type Order struct {
 	UpdatedAt string `json:"updatedAt"`
 }
 
+func (Order) IsCommentEventEmbed()         {}
 func (Order) IsNode()                      {}
 func (Order) IsCommentEventSubject()       {}
 func (Order) IsHasMetafields()             {}
 func (Order) IsLegacyInteroperability()    {}
 func (Order) IsHasEvents()                 {}
 func (Order) IsHasLocalizationExtensions() {}
-func (Order) IsCommentEventEmbed()         {}
 
 // Specifies the authorized transaction to capture and the total amount to capture from it.
 type OrderCaptureInput struct {
@@ -7532,7 +7532,6 @@ type Product struct {
 	Vendor string `json:"vendor"`
 }
 
-func (Product) IsCommentEventEmbed()        {}
 func (Product) IsNode()                     {}
 func (Product) IsNavigable()                {}
 func (Product) IsHasMetafields()            {}
@@ -7540,6 +7539,7 @@ func (Product) IsHasPublishedTranslations() {}
 func (Product) IsPublishable()              {}
 func (Product) IsOnlineStorePreviewable()   {}
 func (Product) IsLegacyInteroperability()   {}
+func (Product) IsCommentEventEmbed()        {}
 
 // Specifies product images to append.
 type ProductAppendImagesInput struct {
@@ -7977,12 +7977,12 @@ type ProductVariant struct {
 	WeightUnit WeightUnit `json:"weightUnit"`
 }
 
-func (ProductVariant) IsCommentEventEmbed()        {}
 func (ProductVariant) IsNode()                     {}
 func (ProductVariant) IsHasMetafields()            {}
 func (ProductVariant) IsHasPublishedTranslations() {}
 func (ProductVariant) IsNavigable()                {}
 func (ProductVariant) IsLegacyInteroperability()   {}
+func (ProductVariant) IsCommentEventEmbed()        {}
 
 // Specifies the input fields required to append media to a single variant.
 type ProductVariantAppendMediaInput struct {

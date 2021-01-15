@@ -12,7 +12,7 @@ require (
 	github.com/bold-commerce/go-shopify v2.3.0+incompatible
 	github.com/gomarkdown/markdown v0.0.0-20201113031856-722100d81a8e
 	github.com/google/go-querystring v1.0.0 // indirect
-	github.com/kogai/onix-codegen v0.0.0-20210114135750-18c2feec0315
+	github.com/kogai/onix-codegen v0.0.0-20210115150916-b4661a1eb629
 	github.com/shopspring/decimal v1.2.0 // indirect
 	github.com/spf13/cobra v1.1.1
 	github.com/tdewolff/minify/v2 v2.9.10

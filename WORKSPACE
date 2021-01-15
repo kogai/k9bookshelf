@@ -1465,8 +1465,8 @@ go_repository(
 go_repository(
     name = "com_github_kogai_onix_codegen",
     importpath = "github.com/kogai/onix-codegen",
-    sum = "h1:kZ3952hgt25gTSS3Y9d6F7ppCvaj87DKyZ9KemCZyc4=",
-    version = "v0.0.0-20210114135750-18c2feec0315",
+    sum = "h1:BQJKUZi76Jyb9s4T8XLFvJKMreU3HQHT+R4QuAzMR7Q=",
+    version = "v0.0.0-20210115150916-b4661a1eb629",
 )
 
 go_rules_dependencies()
