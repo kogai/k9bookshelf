@@ -1,0 +1,40 @@
+{
+  "descriptionHtml": "\u003ch2\u003e出版社より\u003c/h2\u003e\nThis book illustrates how to apply Go programming to network operations. The topics cover common use cases through examples that are designed to act as a guide and serve as a reference. The reader is assumed to have already gained a fundamental understanding of Go programming; however, the examples are explained for additional clarification. The focus is on using Go for network operations, not on the language itself.\n\u003chr/\u003e\n\u003ch2\u003eDeepL 粗訳\u003c/h2\u003e\n本書では、囲碁プログラミングをネットワーク運用に適用する方法を説明しています。トピックは、ガイドとしての役割を果たし、参考になるように設計された例を通して、一般的なユースケースをカバーしています。読者は、Goプログラミングの基本的な理解をすでに得ていることを前提としていますが、例題は、さらに明確にするために説明されています。言語そのものではなく、ネットワーク操作にGoを使用することに焦点を当てています。",
+  "title": "Go Programming for Network Operations",
+  "vendor": "Amazon Digital Services LLC - KDP Print US",
+  "collectionsToJoin": [
+    "gid://shopify/Collection/236195152071"
+  ],
+  "metafields": [
+    {
+      "id": "gid://shopify/Metafield/17120788938951",
+      "key": "published_at",
+      "namespace": "k9bookshelf",
+      "value": "2019-02-08 00:00:00 +0000 UTC",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17120788971719",
+      "key": "subtitle",
+      "namespace": "k9bookshelf",
+      "value": "A Golang Network Automation Handbook",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17127288537287",
+      "key": "number_of_pages",
+      "namespace": "k9bookshelf",
+      "value": "112",
+      "valueType": "STRING"
+    }
+  ],
+  "variants": [
+    {
+      "barcode": "9781793121233",
+      "inventoryPolicy": "CONTINUE",
+      "price": "1428.900000",
+      "weight": 0.158757349695,
+      "weightUnit": "KILOGRAMS"
+    }
+  ]
+}

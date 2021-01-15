@@ -1,0 +1,55 @@
+{
+  "descriptionHtml": "\u003ch2\u003e出版社より\u003c/h2\u003e\n\n        \u003cb\u003e\u003ci\u003e\u003cb\u003eThe Go Programming Language\u003c/b\u003e\u003c/i\u003e\u003c/b\u003e is the authoritative resource for any programmer who wants to learn Go. It shows how to write clear and idiomatic Go to solve real-world problems. The book does not assume prior knowledge of Go nor experience with any specific language, so you'll find it accessible whether you're most comfortable with JavaScript, Ruby, Python, Java, or C++.\u003c/p\u003e \u003cul\u003e \u003cli\u003e The first chapter is a tutorial on the basic concepts of Go, introduced through programs for file I/O and text processing, simple graphics, and web clients and servers. \u003c/li\u003e \u003cli\u003e Early chapters cover the structural elements of Go programs: syntax, control flow, data types, and the organization of a program into packages, files, and functions. The examples illustrate many packages from the standard library and show how to create new ones of your own. Later chapters explain the package mechanism in more detail, and how to build, test, and maintain projects using the go tool. \u003c/li\u003e \u003cli\u003e The chapters on methods and interfaces introduce Go's unconventional approach to object-oriented programming, in which methods can be declared on any type and interfaces are implicitly satisfied. They explain the key principles of encapsulation, composition, and substitutability using realistic examples. \u003c/li\u003e \u003cli\u003e Two chapters on concurrency present in-depth approaches to this increasingly important topic. The first, which covers the basic mechanisms of goroutines and channels, illustrates the style known as communicating sequential processes for which Go is renowned. The second covers more traditional aspects of concurrency with shared variables. These chapters provide a solid foundation for programmers encountering concurrency for the first time. \u003c/li\u003e \u003cli\u003e The final two chapters explore lower-level features of Go. One covers the art of metaprogramming using reflection. The other shows how to use the unsafe package to step outside the type system for special situations, and how to use the cgo tool to create Go bindings for C libraries. \u003c/li\u003e \u003c/ul\u003e The book features hundreds of interesting and practical examples of well-written Go code that cover the whole language, its most important packages, and a wide range of applications. Each chapter has exercises to test your understanding and explore extensions and alternatives. Source code is freely available for download from http: //gopl.io/ and may be conveniently fetched, built, and installed using the go get command.\u003c/p\u003e\n      \n\u003chr/\u003e\n\u003ch2\u003eDeepL 粗訳\u003c/h2\u003e\n\n        \u003cb\u003e\u003ci\u003e\u003ci\u003e\u003cb\u003e囲碁プログラミング言語\u003c/b\u003e\u003cb\u003e\u003c/i\u003e\u003c/b\u003eは、囲碁を学びたいと考えているすべてのプログラマーのための権威あるリソースです。この本では、実世界の問題を解決するための明確で慣用的な囲碁の書き方が示されています。この本は、Go の予備知識や特定の言語の経験を前提としていないので、JavaScript、Ruby、Python、Java、または C++ に慣れているかどうかにかかわらず、アクセスしやすいことがわかります。\u003c/li\u003e \u003cli\u003e \u003cli\u003e初期の章では、構文、制御フロー、データ型、およびパッケージ、ファイル、関数へのプログラムの編成など、Go プログラムの構造的な要素について説明します。例では、標準ライブラリの多くのパッケージを説明し、独自の新しいパッケージを作成する方法を示しています。後の章では、パッケージのメカニズムをより詳細に説明し、go ツールを使用してプロジェクトを構築、テスト、および保守する方法を説明します。\u003c/li\u003e \u003cli\u003eメソッドとインターフェイスの章では、オブジェクト指向プログラミングに対する Go の型破りなアプローチを紹介します。これらの章では、現実的な例を使ってカプセル化、構成、および置換可能性の重要な原則を説明します。\u003c/li\u003e \u003cli\u003e並行性に関する 2 つの章では、このますます重要になっているトピックへの詳細なアプローチを紹介しています。最初の章では、ゴローチンとチャネルの基本的なメカニズムをカバーし、Go が有名な逐次プロセスの通信として知られるスタイルを説明しています。2番目の章では、共有変数を使用した並行処理のより伝統的な側面をカバーしています。これらの章は、初めて同時実行を使用するプログラマーにしっかりとした基礎を提供します。\u003c/li\u003e \u003cli\u003e最後の 2 つの章では、Go の低レベルの機能を探求します。1 つの章では、リフレクションを使用したメタプログラミングの技術を扱います。もう 1 つは、特別な状況のために型システムの外に出るために unsafe パッケージを使用する方法と、C ライブラリ用の Go バインディングを作成するために cgo ツールを使用する方法を示しています。\u003c/li\u003e \u003c/ul\u003e 本書には、言語全体、最も重要なパッケージ、幅広いアプリケーションを網羅した、興味深く実用的な数百ものよく書かれた囲碁コードの例が掲載されています。各章には、理解度をテストし、拡張機能や代替機能を探索するための練習問題があります。ソースコードはhttp: //gopl.io/から自由にダウンロードでき、go getコマンドを使って便利に取得、ビルド、インストールすることができます。\n      ",
+  "tags": [
+    "golang",
+    "goroutines",
+    "gofmt",
+    "methods and interfaces",
+    "concurrency",
+    "packages",
+    "testing",
+    "reflection",
+    "go programming",
+    "go programming language",
+    "go training",
+    "programming in go",
+    "learning go",
+    "go tutorial",
+    "go book"
+  ],
+  "title": "The Go Programming Language",
+  "vendor": "Pearson Education",
+  "collectionsToJoin": [
+    "gid://shopify/Collection/236195152071"
+  ],
+  "metafields": [
+    {
+      "id": "gid://shopify/Metafield/17120788349127",
+      "key": "published_at",
+      "namespace": "k9bookshelf",
+      "value": "2015-11-05 00:00:00 +0000 UTC",
+      "valueType": "STRING"
+    },
+    {
+      "key": "subtitle",
+      "namespace": "k9bookshelf",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17127288373447",
+      "key": "number_of_pages",
+      "namespace": "k9bookshelf",
+      "value": "400",
+      "valueType": "STRING"
+    }
+  ],
+  "variants": [
+    {
+      "barcode": "9780134190440",
+      "inventoryPolicy": "CONTINUE",
+      "price": "4398.900000",
+      "weight": 0.8164663698600001,
+      "weightUnit": "KILOGRAMS"
+    }
+  ]
+}

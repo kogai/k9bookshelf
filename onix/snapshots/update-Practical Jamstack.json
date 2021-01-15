@@ -1,0 +1,27 @@
+{
+  "title": "Practical Jamstack",
+  "id": "gid://shopify/Product/6147338469575",
+  "metafields": [
+    {
+      "id": "gid://shopify/Metafield/17120788250823",
+      "key": "published_at",
+      "namespace": "k9bookshelf",
+      "value": "2020-10-27 00:00:00 +0000 UTC",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17120788283591",
+      "key": "subtitle",
+      "namespace": "k9bookshelf",
+      "value": "Blazing Fast, Simple, and Secure Web Development, the Modern Way",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17127288307911",
+      "key": "number_of_pages",
+      "namespace": "k9bookshelf",
+      "value": "307",
+      "valueType": "STRING"
+    }
+  ]
+}

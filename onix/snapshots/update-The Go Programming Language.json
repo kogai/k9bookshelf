@@ -1,0 +1,25 @@
+{
+  "title": "The Go Programming Language",
+  "id": "gid://shopify/Product/6147338535111",
+  "metafields": [
+    {
+      "id": "gid://shopify/Metafield/17120788349127",
+      "key": "published_at",
+      "namespace": "k9bookshelf",
+      "value": "2015-11-05 00:00:00 +0000 UTC",
+      "valueType": "STRING"
+    },
+    {
+      "key": "subtitle",
+      "namespace": "k9bookshelf",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17127288373447",
+      "key": "number_of_pages",
+      "namespace": "k9bookshelf",
+      "value": "400",
+      "valueType": "STRING"
+    }
+  ]
+}

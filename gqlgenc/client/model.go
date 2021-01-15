@@ -2210,8 +2210,8 @@ type DeliveryParticipant struct {
 	PercentageOfRateFee float64 `json:"percentageOfRateFee"`
 }
 
-func (DeliveryParticipant) IsDeliveryRateProvider() {}
 func (DeliveryParticipant) IsNode()                 {}
+func (DeliveryParticipant) IsDeliveryRateProvider() {}
 
 // Input fields for a participant.
 type DeliveryParticipantInput struct {
@@ -2633,9 +2633,9 @@ type DiscountAutomaticBxgy struct {
 	UsesPerOrderLimit *int64 `json:"usesPerOrderLimit"`
 }
 
-func (DiscountAutomaticBxgy) IsDiscountAutomatic() {}
 func (DiscountAutomaticBxgy) IsNode()              {}
 func (DiscountAutomaticBxgy) IsHasEvents()         {}
+func (DiscountAutomaticBxgy) IsDiscountAutomatic() {}
 
 // Return type for `discountAutomaticBxgyCreate` mutation.
 type DiscountAutomaticBxgyCreatePayload struct {
@@ -3309,8 +3309,8 @@ type DiscountPercentage struct {
 	Percentage float64 `json:"percentage"`
 }
 
-func (DiscountPercentage) IsDiscountEffect()            {}
 func (DiscountPercentage) IsDiscountCustomerGetsValue() {}
+func (DiscountPercentage) IsDiscountEffect()            {}
 
 // The entitled or prerequisite products and product variants for a discount.
 type DiscountProducts struct {
@@ -6024,8 +6024,8 @@ type MoneyV2 struct {
 	CurrencyCode CurrencyCode `json:"currencyCode"`
 }
 
-func (MoneyV2) IsPricingValue()              {}
 func (MoneyV2) IsDeliveryConditionCriteria() {}
+func (MoneyV2) IsPricingValue()              {}
 
 // An individual move to perform of an object to a position.
 type MoveInput struct {
@@ -6392,13 +6392,13 @@ type Order struct {
 	UpdatedAt string `json:"updatedAt"`
 }
 
+func (Order) IsCommentEventEmbed()         {}
 func (Order) IsNode()                      {}
 func (Order) IsCommentEventSubject()       {}
 func (Order) IsHasMetafields()             {}
 func (Order) IsLegacyInteroperability()    {}
 func (Order) IsHasEvents()                 {}
 func (Order) IsHasLocalizationExtensions() {}
-func (Order) IsCommentEventEmbed()         {}
 
 // Specifies the authorized transaction to capture and the total amount to capture from it.
 type OrderCaptureInput struct {
@@ -7498,7 +7498,7 @@ type Product struct {
 	ResourcePublicationsV2 *ResourcePublicationV2Connection `json:"resourcePublicationsV2"`
 	// SEO information of the product.
 	Seo *Seo `json:"seo"`
-	// The product status. Product statuses aren't currently available to stores on the Shopify Plus plan.
+	// The product status.
 	Status ProductStatus `json:"status"`
 	// The storefront ID of the product.
 	StorefrontID string `json:"storefrontId"`
@@ -7520,7 +7520,10 @@ type Product struct {
 	UnpublishedChannels *ChannelConnection `json:"unpublishedChannels"`
 	// The list of publications that the resource is not published to.
 	UnpublishedPublications *PublicationConnection `json:"unpublishedPublications"`
-	// The date and time ([ISO 8601 format](http://en.wikipedia.org/wiki/ISO_8601)) when the product was last modified.
+	// The date and time when the product was last modified.
+	// A product's `updatedAt` value can change for different reasons. For example, if an order
+	// is placed for a product that has inventory tracking set up, then the inventory adjustment
+	// is counted as an update.
 	//
 	UpdatedAt string `json:"updatedAt"`
 	// A list of variants associated with the product.
@@ -11343,7 +11346,7 @@ const (
 	CountryCodeVa CountryCode = "VA"
 	// Honduras.
 	CountryCodeHn CountryCode = "HN"
-	// Hong Kong SAR China.
+	// Hong Kong SAR.
 	CountryCodeHk CountryCode = "HK"
 	// Hungary.
 	CountryCodeHu CountryCode = "HU"
@@ -11405,7 +11408,7 @@ const (
 	CountryCodeLt CountryCode = "LT"
 	// Luxembourg.
 	CountryCodeLu CountryCode = "LU"
-	// Macao SAR China.
+	// Macao SAR.
 	CountryCodeMo CountryCode = "MO"
 	// Madagascar.
 	CountryCodeMg CountryCode = "MG"

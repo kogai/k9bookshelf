@@ -1,0 +1,27 @@
+{
+  "title": "97 Things Every Programmer Should Know",
+  "id": "gid://shopify/Product/6151815233735",
+  "metafields": [
+    {
+      "id": "gid://shopify/Metafield/17130846322887",
+      "key": "published_at",
+      "namespace": "k9bookshelf",
+      "value": "2010-02-15 00:00:00 +0000 UTC",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17130846355655",
+      "key": "subtitle",
+      "namespace": "k9bookshelf",
+      "value": "Collective Wisdom from the Experts",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17130846388423",
+      "key": "number_of_pages",
+      "namespace": "k9bookshelf",
+      "value": "229",
+      "valueType": "STRING"
+    }
+  ]
+}

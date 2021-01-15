@@ -1,0 +1,48 @@
+{
+  "descriptionHtml": "\u003ch2\u003e出版社より\u003c/h2\u003e\n\n        \u003cp\u003e\u003cstrong\u003eDive deep into the Go language and become an expert Go developer\u003c/strong\u003e\u003c/p\u003e \u003cp\u003e\u003cstrong\u003eKey Features\u003c/strong\u003e\u003c/p\u003e \u003cul\u003e\u003cli\u003eSecond edition of the bestselling guide to advanced Go programming, expanded to cover machine learning, more Go packages and a range of modern development techniques \u003c/li\u003e\u003cli\u003eCompletes the Go developer's education with real-world guides to building high-performance production systems \u003c/li\u003e\u003cli\u003ePacked with practical examples and patterns to apply to your own development work \u003c/li\u003e\u003cli\u003eClearly explains Go nuances and features to remove the frustration from Go development\u003c/li\u003e\u003c/ul\u003e \u003cp\u003e\u003cstrong\u003eBook Description\u003c/strong\u003e\u003c/p\u003e \u003cp\u003eOften referred to (incorrectly) as Golang, Go is the high-performance systems language of the future. Mastering Go, Second Edition helps you become a productive expert Go programmer, building and improving on the groundbreaking first edition. \u003c/p\u003e\u003cp\u003e \u003c/p\u003e\u003cp\u003eMastering Go, Second Edition shows how to put Go to work on real production systems. For programmers who already know the Go language basics, this book provides examples, patterns, and clear explanations to help you deeply understand Go's capabilities and apply them in your programming work. \u003c/p\u003e\u003cp\u003e \u003c/p\u003e\u003cp\u003eThe book covers the nuances of Go, with in-depth guides on types and structures, packages, concurrency, network programming, compiler design, optimization, and more. Each chapter ends with exercises and resources to fully embed your new knowledge. \u003c/p\u003e\u003cp\u003e \u003c/p\u003e\u003cp\u003eThis second edition includes a completely new chapter on machine learning in Go, guiding you from the foundation statistics techniques through simple regression and clustering to classification, neural networks, and anomaly detection. Other chapters are expanded to cover using Go with Docker and Kubernetes, Git, WebAssembly, JSON, and more. \u003c/p\u003e\u003cp\u003e \u003c/p\u003e\u003cp\u003eIf you take the Go programming language seriously, the second edition of this book is an essential guide on expert techniques.\u003c/p\u003e \u003cp\u003e\u003cstrong\u003eWhat you will learn\u003c/strong\u003e\u003c/p\u003e \u003cul\u003e\u003cli\u003eClear guidance on using Go for production systems \u003c/li\u003e\u003cli\u003eDetailed explanations of how Go internals work, the design choices behind the language, and how to optimize your Go code \u003c/li\u003e\u003cli\u003eA full guide to all Go data types, composite types, and data structures \u003c/li\u003e\u003cli\u003eMaster packages, reflection, and interfaces for effective Go programming \u003c/li\u003e\u003cli\u003eBuild high-performance systems networking code, including server and client-side applications \u003c/li\u003e\u003cli\u003eInterface with other systems using WebAssembly, JSON, and gRPC \u003c/li\u003e\u003cli\u003eWrite reliable, high-performance concurrent code \u003c/li\u003e\u003cli\u003eBuild machine learning systems in Go, from simple statistical regression to complex neural networks\u003c/li\u003e\u003c/ul\u003e\n      \n\u003chr/\u003e\n\u003ch2\u003eDeepL 粗訳\u003c/h2\u003e\n\n        \u003cp\u003e\u003cstrong\u003eGo 言語を深く学び、Go 開発者のエキスパートになる\u003c/strong\u003e\u003c/p\u003e \u003cp\u003e\u003cstrong\u003e主な機能\u003c/strong\u003e\u003c/p\u003e \u003cul\u003e\u003cli\u003eベストセラーとなった高度な Go プログラミングのガイドの第 2 版で、機械学習をカバーするように拡張されています。より多くの Go パッケージと幅広い最新の開発テクニックを提供します\u003c/li\u003e\u003cli\u003e \u003c/li\u003e\u003cli\u003e高品質の Go を構築するための実世界のガイドで、Go 開発者の教育を完成させます。パフォーマンス生産システム\u003c/li\u003e\u003cli\u003e \u003c/li\u003e\u003cli\u003e自身の開発作業に適用できる実用的な例とパターンが満載\u003c/li\u003e\u003cli\u003e \u003c/li\u003e\u003cli\u003e Go のニュアンスと機能をわかりやすく説明し、Go 開発のフラストレーションを取り除きます\u003c/li\u003e\u003c/ul\u003e \u003cp\u003e\u003cstrong\u003e本の説明\u003c/strong\u003e\u003c/p\u003e \u003cp\u003eしばしば Golang と呼ばれることがあります (間違っています)。Goは、未来の高性能システム言語です。Mastering Go, Second Edition は、生産性の高いエキスパートの囲碁プログラマーになるのに役立ちます。\u003c/p\u003e\u003cp\u003e \u003c/p\u003e\u003cp\u003e『Mastering Go, Second Edition』では、実際の生産システムでGoを使用する方法を紹介しています。すでに Go 言語の基本を知っているプログラマーのために、本書では、例題、パターン、わかりやすい説明を提供し、Go の機能を深く理解し、プログラミング作業に応用できるようにします。\u003c/p\u003e\u003cp\u003e \u003c/p\u003e\u003cp\u003e本書は、型と構造、パッケージ、同時実行、ネットワーク プログラミング、コンパイラ設計、最適化などについての詳細なガイドで、Go のニュアンスをカバーしています。各章の最後には、新しい知識を完全に定着させるための練習問題とリソースがあります。\u003c/p\u003e\u003cp\u003e \u003c/p\u003e\u003cp\u003eこの第 2 版には、Go の機械学習に関する全く新しい章が含まれており、統計学の基礎技術から単純な回帰とクラスタリング、分類、ニューラル ネットワーク、異常検出までを案内しています。その他の章では、Docker や Kubernetes、Git、WebAssembly、JSON などを使用した Go の使用方法についても説明しています。\u003c/p\u003e\u003cp\u003e \u003c/p\u003e\u003cp\u003e \u003c/p\u003e\u003cp\u003eGo プログラミング言語に真剣に取り組んでいる人にとって、この本の第 2 版はエキスパートのテクニックに関する必須のガイドです。\u003c/p\u003e \u003cp\u003e\u003cstrong\u003e何を学ぶか\u003c/strong\u003e\u003c/p\u003e \u003cul\u003e\u003cli\u003eプロダクション システムで Go を使用する際の明確なガイダンス\u003c/li\u003e\u003cli\u003e \u003c/li\u003e\u003cli\u003e Go 内部の仕組み、言語の背後にある設計の選択、および Go コードを最適化する方法についての詳細な説明\u003c/li\u003e\u003cli\u003e \u003c/li\u003e\u003cli\u003eすべての Go データ型、複合型、およびデータ構造の完全なガイド\u003c/li\u003e\u003cli\u003e \u003c/li\u003e\u003cli\u003eマスター パッケージ、リフレクション。および効果的な Go プログラミングのためのインターフェイス\u003c/li\u003e\u003cli\u003e \u003c/li\u003e\u003cli\u003eサーバーおよびクライアントサイドアプリケーションを含む高性能なシステムネットワーキングコードを構築する\u003c/li\u003e\u003cli\u003e WebAssembly、JSON、および gRPC を使用した他のシステムとのインターフェイス\u003c/li\u003e\u003cli\u003e \u003c/li\u003e\u003cli\u003e信頼性の高い高性能な同時実行コードを書く\u003c/li\u003e\u003cli\u003e \u003c/li\u003e\u003cli\u003e単純な統計的回帰から複雑なニューラルネットワークまで、Go で機械学習システムを構築する\u003c/li\u003e\u003cul\u003e \u003c/ul\u003e \u003c/li\u003e\u003cli\u003e。\n      ",
+  "tags": [
+    "Go",
+    "Golang",
+    "machine learning",
+    "systems programming",
+    "The Go Programming Language",
+    "Go Programming"
+  ],
+  "title": "Mastering Go - Second Edition",
+  "vendor": "Packt Publishing",
+  "collectionsToJoin": [
+    "gid://shopify/Collection/236195152071"
+  ],
+  "metafields": [
+    {
+      "id": "gid://shopify/Metafield/17120788709575",
+      "key": "published_at",
+      "namespace": "k9bookshelf",
+      "value": "2019-08-28 00:00:00 +0000 UTC",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17120788742343",
+      "key": "subtitle",
+      "namespace": "k9bookshelf",
+      "value": "Create Golang production applications using network libraries, concurrency, machine learning, and advanced data structures",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17127288406215",
+      "key": "number_of_pages",
+      "namespace": "k9bookshelf",
+      "value": "798",
+      "valueType": "STRING"
+    }
+  ],
+  "variants": [
+    {
+      "barcode": "9781838559335",
+      "inventoryPolicy": "CONTINUE",
+      "price": "5498.900000",
+      "weight": 1.3471695102690002,
+      "weightUnit": "KILOGRAMS"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "title": "Hello, Startup",
+  "id": "gid://shopify/Product/6151815069895",
+  "metafields": [
+    {
+      "id": "gid://shopify/Metafield/17130846027975",
+      "key": "published_at",
+      "namespace": "k9bookshelf",
+      "value": "2015-11-09 00:00:00 +0000 UTC",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17130846060743",
+      "key": "subtitle",
+      "namespace": "k9bookshelf",
+      "value": "A Programmer's Guide to Building Products, Technologies, and Teams",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17130846093511",
+      "key": "number_of_pages",
+      "namespace": "k9bookshelf",
+      "value": "604",
+      "valueType": "STRING"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "descriptionHtml": "\u003ch2\u003e出版社より\u003c/h2\u003e\n\n        \u003cb\u003eSummary\u003c/b\u003e \u003cp/\u003e\u003ci\u003eGo in Action\u003c/i\u003e introduces the Go language, guiding you from inquisitive developer to Go guru. The book begins by introducing the unique features and concepts of Go. Then, you'll get hands-on experience writing real-world applications including websites and network servers, as well as techniques to manipulate and convert data at speeds that will make your friends jealous. \u003cp/\u003ePurchase of the print book includes a free eBook in PDF, Kindle, and ePub formats from Manning Publications. \u003cp/\u003e\u003cb\u003eAbout the Technology\u003c/b\u003e \u003cp/\u003eApplication development can be tricky enough even when you aren't dealing with complex systems programming problems like web-scale concurrency and real-time performance. While it's possible to solve these common issues with additional tools and frameworks, Go handles them right out of the box, making for a more natural and productive coding experience. Developed at Google, Go powers nimble startups as well as big enterprises--companies that rely on high-performing services in their infrastructure. \u003cp/\u003e\u003cb\u003eAbout the Book\u003c/b\u003e \u003cp/\u003e\u003ci\u003eGo in Action\u003c/i\u003e is for any intermediate-level developer who has experience with other programming languages and wants a jump-start in learning Go or a more thorough understanding of the language and its internals. This book provides an intensive, comprehensive, and idiomatic view of Go. It focuses on the specification and implementation of the language, including topics like language syntax, Go's type system, concurrency, channels, and testing. \u003cp/\u003e\u003cb\u003eWhat's Inside\u003c/b\u003e\u003cbr\u003e\u003cul\u003e\u003cli\u003eLanguage specification and implementation\u003c/li\u003e\u003cli\u003eGo's type system\u003c/li\u003e\u003cli\u003eInternals of Go's data structures\u003c/li\u003e\u003cli\u003eTesting and benchmarking\u003c/li\u003e\u003c/ul\u003e\u003cbr\u003e\u003cb\u003eAbout the Reader\u003c/b\u003e \u003cp/\u003eThis book assumes you're a working developer proficient with another language like Java, Ruby, Python, C#, or C++. \u003cp/\u003e\u003cb\u003eAbout the Authors\u003c/b\u003e \u003cp/\u003e\u003cb\u003eWilliam Kennedy\u003c/b\u003e is a seasoned software developer and author of the blog GoingGo.Net. \u003cb\u003eBrian Ketelsen\u003c/b\u003e and \u003cb\u003eErik St. Martin\u003c/b\u003e are the organizers of GopherCon and coauthors of the Go-based Skynet framework. \u003cp/\u003e\u003cb\u003eTable of Contents\u003c/b\u003e\u003cbr\u003e\u003col\u003e\u003cli\u003eIntroducing Go\u003c/li\u003e\u003cli\u003eGo quick-start\u003c/li\u003e\u003cli\u003ePackaging and tooling\u003c/li\u003e\u003cli\u003eArrays, slices, and maps\u003c/li\u003e\u003cli\u003eGo's type system\u003c/li\u003e\u003cli\u003eConcurrency\u003c/li\u003e\u003cli\u003eConcurrency patterns\u003c/li\u003e\u003cli\u003eStandard library\u003c/li\u003e\u003cli\u003eTesting and benchmarking\u003c/li\u003e\u003c/ol\u003e\n      \n\u003chr/\u003e\n\u003ch2\u003eDeepL 粗訳\u003c/h2\u003e\n\n        \u003cb\u003e概要\u003c/b\u003e \u003cp/\u003e\u003ci\u003eGo in Action\u003c/i\u003eでは、Go言語を紹介し、好奇心旺盛な開発者からGoの達人へと導いてくれます。本書は、Go のユニークな機能とコンセプトを紹介することから始まります。その後、Web サイトやネットワークサーバーを含む実世界のアプリケーションを書く実践的な経験を積み、友人が嫉妬するほどのスピードでデータを操作したり変換したりするテクニックを身につけます。\u003cp/\u003e印刷版の書籍を購入すると、マニング出版からPDF、Kindle、ePub形式の電子書籍が無料で提供されます。\u003cp/\u003e\u003cb\u003e技術について\u003c/b\u003e \u003cp/\u003eアプリケーション開発は、ウェブスケールの同時実行やリアルタイムパフォーマンスのような複雑なシステムプログラミングの問題を扱っていなくても、十分にトリッキーなことがあります。これらの一般的な問題は、追加のツールやフレームワークを使用して解決することも可能ですが、Go はこれらの問題をすぐに処理し、より自然で生産的なコーディング体験を提供します。Google で開発された Go は、軽快なスタートアップ企業だけでなく、インフラストラクチャの高パフォーマンス サービスに依存している大企業にも力を与えています。\u003cp/\u003e\u003cb\u003eこの本について\u003c/b\u003e \u003cp/\u003e\u003ci\u003eGo in Action\u003c/i\u003eは、他のプログラミング言語を使用した経験があり、Go の学習を始めたい、または言語とその内部をより深く理解したいと考えている中級レベルの開発者のための本です。この本では、Go についての集中的、包括的、かつ慣用的な見解を提供します。言語構文、Go の型システム、同時実行、チャンネル、テストなどのトピックを含む、言語の仕様と実装に焦点を当てています。\u003cp/\u003e\u003cb\u003e内容\u003c/b\u003e\u003cbr\u003e\u003cul\u003e\u003cli\u003e言語の仕様と実装\u003c/li\u003e\u003cli\u003eGo の型システム\u003c/li\u003e\u003cli\u003eGo のデータ構造の内部\u003c/li\u003e\u003cli\u003e\u003c/li\u003e\u003cli\u003eテストとベンチマーク\u003c/li\u003e\u003c/ul\u003e\u003cbr\u003e\u003cb\u003e読者について\u003c/b\u003e\u003cbr\u003e\u003cb\u003e \u003cp/\u003eこの本は、Java のような別の言語に精通した開発者であることを前提としています。Ruby、Python、C#、またはC++。\u003cp/\u003e\u003cb\u003e著者について\u003c/b\u003e \u003cp/\u003e\u003cb\u003eウィリアム・ケネディ\u003c/b\u003e は、ベテランのソフトウェア開発者であり、ブログ「GoingGo.Net」の著者です。\u003cb\u003eBrian Ketelsen\u003c/b\u003e と \u003cb\u003eErik St. Martin\u003c/b\u003e は GopherCon の主催者であり、Go ベースの Skynet フレームワークの共著者です。\u003cp/\u003e\u003cb\u003e目次\u003c/b\u003e\u003cbr\u003e\u003col\u003e\u003cli\u003eGo の紹介\u003c/li\u003e\u003cli\u003eGo クイックスタート\u003c/li\u003e\u003cli\u003e \u003c/li\u003e\u003cli\u003eパッケージとツール\u003c/li\u003e\u003cli\u003e \u003c/li\u003e\u003cli\u003e配列、スライス。およびマップ\u003c/li\u003e\u003cli\u003eGo の型システム\u003c/li\u003e\u003cli\u003e \u003c/li\u003e\u003cli\u003e通貨\u003c/li\u003e\u003cli\u003eパターン\u003c/li\u003e\u003cli\u003e \u003c/li\u003e\u003cli\u003e標準ライブラリ\u003c/li\u003e\u003cli\u003e \u003c/li\u003e\u003cli\u003eテストとベンチマーク\u003c/li\u003e\u003c/ol\u003e。\n      ",
+  "tags": [
+    "Concurrency",
+    "Go",
+    "Go 1.2",
+    "Golang",
+    "Parallel Programming",
+    "Performance",
+    "Web sites",
+    "applications",
+    "code",
+    "compiles",
+    "developers",
+    "inheritance-free",
+    "network",
+    "performant",
+    "runtime",
+    "servers",
+    "software",
+    "startups"
+  ],
+  "title": "Go in Action",
+  "vendor": "Manning Publications",
+  "collectionsToJoin": [
+    "gid://shopify/Collection/236195152071"
+  ],
+  "metafields": [
+    {
+      "id": "gid://shopify/Metafield/17120788775111",
+      "key": "published_at",
+      "namespace": "k9bookshelf",
+      "value": "2015-11-26 00:00:00 +0000 UTC",
+      "valueType": "STRING"
+    },
+    {
+      "key": "subtitle",
+      "namespace": "k9bookshelf",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17127288438983",
+      "key": "number_of_pages",
+      "namespace": "k9bookshelf",
+      "value": "264",
+      "valueType": "STRING"
+    }
+  ],
+  "variants": [
+    {
+      "barcode": "9781617291784",
+      "inventoryPolicy": "CONTINUE",
+      "price": "4948.900000",
+      "weight": 0.4535924277,
+      "weightUnit": "KILOGRAMS"
+    }
+  ]
+}

@@ -3,12 +3,16 @@ package onix
 import (
 	"bytes"
 	"context"
+	"encoding/json"
 	"encoding/xml"
 	"fmt"
 	"io"
 	"io/ioutil"
+	"os"
+	"strconv"
 
 	"github.com/kogai/k9bookshelf/gqlgenc/client"
+	codegen "github.com/kogai/onix-codegen/go"
 )
 
 func findMetaFieldIDBy(fetchedProducts *client.ProductISBNs, idx int, key string) *string {
@@ -21,9 +25,8 @@ func findMetaFieldIDBy(fetchedProducts *client.ProductISBNs, idx int, key string
 	return nil
 }
 
-func metaFieldInput(onixProduct *Product, fetchedProducts *client.ProductISBNs, idx int) ([]*client.MetafieldInput, error) {
-	numberOfPages := fmt.Sprintf("%d", onixProduct.NumberOfPages)
-	date, err := extractDatetime(onixProduct.PublicationDate)
+func metaFieldInput(onixProduct *codegen.Product, fetchedProducts *client.ProductISBNs, idx int) ([]*client.MetafieldInput, error) {
+	date, err := extractDatetime(*onixProduct.PublicationDate)
 	if err != nil {
 		return nil, err
 	}
@@ -42,22 +45,22 @@ func metaFieldInput(onixProduct *Product, fetchedProducts *client.ProductISBNs, 
 		ValueType: &valueType,
 	}, {
 		ID:        subTitleID,
-		Value:     &onixProduct.Title.Subtitle,
+		Value:     onixProduct.Titles[0].Subtitle,
 		Key:       &metaFieldKeySubTitle,
 		Namespace: &metaFieldNamespace,
 		ValueType: &valueType,
 	}, {
 		ID:        numberOfPagesID,
-		Value:     &numberOfPages,
+		Value:     onixProduct.NumberOfPages,
 		Key:       &metaFieldKeyNumberOfPages,
 		Namespace: &metaFieldNamespace,
 		ValueType: &valueType,
 	}}, nil
 }
 
-func updateInput(onixProduct *Product, fetchedProducts *client.ProductISBNs, idx int) (*client.ProductInput, error) {
+func updateInput(onixProduct *codegen.Product, fetchedProducts *client.ProductISBNs, idx int) (*client.ProductInput, error) {
 	currentProduct := fetchedProducts.Products.Edges[idx]
-	title := onixProduct.Title.TitleText
+	title := onixProduct.Titles[0].TitleText
 	mtIpt, err := metaFieldInput(onixProduct, fetchedProducts, idx)
 	if err != nil {
 		return nil, err
@@ -68,14 +71,15 @@ func updateInput(onixProduct *Product, fetchedProducts *client.ProductISBNs, idx
 	return &client.ProductInput{
 		ID:         &currentProduct.Node.ID,
 		Metafields: mtIpt,
-		Title:      &title,
+		Title:      title,
 		// NOTE: DescriptionHTML and Tags are possible to edit manually,
 		// So we should touch only at create-time.
 	}, nil
 }
 
-func createInput(onixProduct *Product, fetchedProducts *client.ProductISBNs, idx int) (*client.ProductInput, error) {
-	isbn := onixProduct.Productidentifiers.FindByIDType("ISBN-13")
+func createInput(onixProduct *codegen.Product, fetchedProducts *client.ProductISBNs, idx int) (*client.ProductInput, error) {
+	pds := Productidentifiers(onixProduct.ProductIdentifiers)
+	isbn := pds.FindByIDType("ISBN-13")
 	descriptionHTML, err := generateDescription(onixProduct)
 	if err != nil {
 		return nil, err
@@ -86,14 +90,15 @@ func createInput(onixProduct *Product, fetchedProducts *client.ProductISBNs, idx
 	}
 
 	tags := extractTags(onixProduct)
-	title := onixProduct.Title.TitleText
+	title := onixProduct.Titles[0].TitleText
 	inventoryPolicy := client.ProductVariantInventoryPolicyContinue
 
 	var weight *float64
-	measure := onixProduct.Measures.FindByType("Unit weight")
+	measures := Measures(onixProduct.Measures)
+	measure := measures.FindByType("Unit weight")
 	weightUnit := client.WeightUnitKilograms
 	if measure != nil {
-		w, err := measure.ToKg()
+		w, err := ToKg(measure)
 		if err != nil {
 			return nil, err
 		}
@@ -101,9 +106,14 @@ func createInput(onixProduct *Product, fetchedProducts *client.ProductISBNs, idx
 	}
 
 	var price *string
-	_price := onixProduct.SupplyDetail.Prices.FindByType("USD")
+	prices := Prices(onixProduct.SupplyDetails[0].Prices)
+	_price := prices.FindByType("US Dollar")
+	n, err := strconv.ParseFloat(_price.PriceAmount, 64)
+	if err != nil {
+		return nil, err
+	}
 	if _price != nil {
-		p := fmt.Sprintf("%f", _price.PriceAmount*fixedExchangeRate)
+		p := fmt.Sprintf("%f", n*fixedExchangeRate)
 		price = &p
 	}
 	return &client.ProductInput{
@@ -120,20 +130,20 @@ func createInput(onixProduct *Product, fetchedProducts *client.ProductISBNs, idx
 			},
 		},
 		Tags:   tags,
-		Title:  &title,
-		Vendor: &onixProduct.Publisher.PublisherName,
+		Title:  title,
+		Vendor: onixProduct.Publishers[0].PublisherName,
 	}, nil
 
 }
 
 // Run imports ONIX for Books 2.1 format file to Shopify.
-func Run(input string) error {
+func Run(input string, dryRun bool) error {
 	file, err := ioutil.ReadFile(input)
 	if err != nil {
 		return err
 	}
 
-	var data IngramContentOnix
+	var data codegen.ONIXMessage
 	decoder := xml.NewDecoder(bytes.NewReader(file))
 	decoder.CharsetReader = func(label string, input io.Reader) (io.Reader, error) {
 		return input, nil
@@ -149,48 +159,78 @@ func Run(input string) error {
 	}
 
 	for _, d := range data.Products {
-		isbn := d.Productidentifiers.FindByIDType("ISBN-13")
+		ps := Productidentifiers(d.ProductIdentifiers)
+		isbn := ps.FindByIDType("ISBN-13")
 		if isbn == nil {
-			return fmt.Errorf("%s not have ISBN-13 value", d.Title.TitleText)
+			return fmt.Errorf("%s not have ISBN-13 value", *d.Titles[0].TitleText)
 		}
 		found, idx := hasSameISBN13(*isbn, products)
 		if found {
-			fmt.Println("Update", d.Title.TitleText, d.Title.Subtitle)
+			fmt.Println("Update", d.Titles[0].TitleText, d.Titles[0].Subtitle)
 			ipt, err := updateInput(&d, products, idx)
 			if err != nil {
 				return err
 			}
-			res, err := gqlClient.ProductUpdateDo(context.Background(), *ipt)
-			if err != nil {
-				return err
-			}
-			if len(res.ProductUpdate.UserErrors) > 0 {
-				errMsg := ""
-				for _, e := range res.ProductUpdate.UserErrors {
-					errMsg += fmt.Sprintln(e.Field, ":", e.Message)
+			if dryRun {
+				by, err := json.MarshalIndent(ipt, "", "  ")
+				if err != nil {
+					return err
 				}
-				return fmt.Errorf(errMsg)
+				wd, err := os.Getwd()
+				if err != nil {
+					return err
+				}
+				err = ioutil.WriteFile(fmt.Sprintf("%s/onix/update-%s.json", wd, *ipt.Title), by, 0644)
+				if err != nil {
+					return err
+				}
+			} else {
+				res, err := gqlClient.ProductUpdateDo(context.Background(), *ipt)
+				if err != nil {
+					return err
+				}
+				if len(res.ProductUpdate.UserErrors) > 0 {
+					errMsg := ""
+					for _, e := range res.ProductUpdate.UserErrors {
+						errMsg += fmt.Sprintln(e.Field, ":", e.Message)
+					}
+					return fmt.Errorf(errMsg)
+				}
 			}
 		} else {
-			fmt.Println("Create", d.Title.TitleText, d.Title.Subtitle)
+			fmt.Println("Create", *d.Titles[0].TitleText)
 			ipt, err := createInput(&d, products, idx)
 			if err != nil {
 				return err
 			}
 
-			res, err := gqlClient.ProductCreateDo(context.Background(), *ipt)
-			if err != nil {
-				return err
-			}
-			if len(res.ProductCreate.UserErrors) > 0 {
-				errMsg := ""
-				for _, e := range res.ProductCreate.UserErrors {
-					errMsg += fmt.Sprintln(e.Field, ":", e.Message)
+			if dryRun {
+				by, err := json.MarshalIndent(ipt, "", "  ")
+				if err != nil {
+					return err
 				}
-				return fmt.Errorf(errMsg)
+				wd, err := os.Getwd()
+				if err != nil {
+					return err
+				}
+				err = ioutil.WriteFile(fmt.Sprintf("%s/onix/create-%s.json", wd, *ipt.Title), by, 0644)
+				if err != nil {
+					return err
+				}
+			} else {
+				res, err := gqlClient.ProductCreateDo(context.Background(), *ipt)
+				if err != nil {
+					return err
+				}
+				if len(res.ProductCreate.UserErrors) > 0 {
+					errMsg := ""
+					for _, e := range res.ProductCreate.UserErrors {
+						errMsg += fmt.Sprintln(e.Field, ":", e.Message)
+					}
+					return fmt.Errorf(errMsg)
+				}
+				fmt.Printf("Done. open 'https://ipage.ingramcontent.com/ipage/servlet/ibg.common.titledetail.imageloader?ean=%s&size=640&howerType=Y'\n", *isbn)
 			}
-
-			fmt.Printf("Done. open 'https://ipage.ingramcontent.com/ipage/servlet/ibg.common.titledetail.imageloader?ean=%s&size=640&howerType=Y'\n", *isbn)
 		}
 	}
 	return nil

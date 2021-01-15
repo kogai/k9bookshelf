@@ -1,0 +1,27 @@
+{
+  "title": "Introducing Deno",
+  "id": "gid://shopify/Product/6147338633415",
+  "metafields": [
+    {
+      "id": "gid://shopify/Metafield/17120788873415",
+      "key": "published_at",
+      "namespace": "k9bookshelf",
+      "value": "2020-09-25 00:00:00 +0000 UTC",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17120788906183",
+      "key": "subtitle",
+      "namespace": "k9bookshelf",
+      "value": "A First Look at the Newest JavaScript Runtime",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17127288471751",
+      "key": "number_of_pages",
+      "namespace": "k9bookshelf",
+      "value": "141",
+      "valueType": "STRING"
+    }
+  ]
+}
