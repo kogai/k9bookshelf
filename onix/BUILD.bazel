@@ -14,6 +14,6 @@ go_library(
     deps = [
         "//gqlgenc/client:go_default_library",
         "@com_github_bold_commerce_go_shopify//:go_default_library",
-        "@com_github_kogai_onix_codegen//go:go_default_library",
+        "@com_github_kogai_onix_codegen//go:go",
     ],
 )
