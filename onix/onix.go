@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"os"
 
 	"github.com/kogai/k9bookshelf/gqlgenc/client"
 )
@@ -162,22 +163,29 @@ func Run(input string, dryRun bool) error {
 				return err
 			}
 			if dryRun {
-				by, err := json.Marshal(ipt)
+				by, err := json.MarshalIndent(ipt, "", "  ")
 				if err != nil {
 					return err
 				}
-				fmt.Println(string(by))
-				err = ioutil.WriteFile(fmt.Sprintf("onix/update-%s.json", *ipt.Title), by, 0644)
+				wd, err := os.Getwd()
+				if err != nil {
+					return err
+				}
+				err = ioutil.WriteFile(fmt.Sprintf("%s/onix/update-%s.json", wd, *ipt.Title), by, 0644)
 				if err != nil {
 					return err
 				}
 			} else {
 				if dryRun {
-					by, err := json.Marshal(ipt)
+					by, err := json.MarshalIndent(ipt, "", "  ")
 					if err != nil {
 						return err
 					}
-					err = ioutil.WriteFile(fmt.Sprintf("onix/create-%s.json", *ipt.Title), by, 0644)
+					wd, err := os.Getwd()
+					if err != nil {
+						return err
+					}
+					err = ioutil.WriteFile(fmt.Sprintf("%s/onix/create-%s.json", wd, *ipt.Title), by, 0644)
 					if err != nil {
 						return err
 					}
@@ -213,7 +221,6 @@ func Run(input string, dryRun bool) error {
 				}
 				return fmt.Errorf(errMsg)
 			}
-
 			fmt.Printf("Done. open 'https://ipage.ingramcontent.com/ipage/servlet/ibg.common.titledetail.imageloader?ean=%s&size=640&howerType=Y'\n", *isbn)
 		}
 	}
