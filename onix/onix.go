@@ -107,7 +107,7 @@ func createInput(onixProduct *codegen.Product, fetchedProducts *client.ProductIS
 
 	var price *string
 	prices := Prices(onixProduct.SupplyDetails[0].Prices)
-	_price := prices.FindByType("USD")
+	_price := prices.FindByType("US Dollar")
 	n, err := strconv.ParseFloat(_price.PriceAmount, 64)
 	if err != nil {
 		return nil, err
@@ -198,7 +198,7 @@ func Run(input string, dryRun bool) error {
 				}
 			}
 		} else {
-			fmt.Println("Create", *d.Titles[0].TitleText, *d.Titles[0].Subtitle)
+			fmt.Println("Create", *d.Titles[0].TitleText)
 			ipt, err := createInput(&d, products, idx)
 			if err != nil {
 				return err
