@@ -29,7 +29,7 @@ import: $(GO_FILES)
 
 import/dry: $(GO_FILES)
 	$(BZL) run //onix/cmd -- --dryRun --input $(PWD)/onix/$(ONIX_FILE)
-	cp -r $(BZL_BIN)/onix/cmd/cmd_/cmd.runfiles/k9books/onix/*.json $(CURDIR)/onix/fixtures/
+	cp -r $(BZL_BIN)/onix/cmd/cmd_/cmd.runfiles/k9books/onix/*.json $(CURDIR)/onix/snapshots/
 
 watch:
 	$(TK) watch --dir theme
