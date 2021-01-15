@@ -1,0 +1,53 @@
+{
+  "descriptionHtml": "\u003ch2\u003e出版社より\u003c/h2\u003e\n\u003cb\u003eSummary\u003c/b\u003e \u003cp/\u003e\u003ci\u003eVoice Applications for Alexa and Google Assistant\u003c/i\u003e is your guide to designing, building, and implementing voice-based applications for Alexa and Google Assistant. Inside, you'll learn how to build your own skills--the voice app term for actions the device can perform--from scratch. \u003cp/\u003eForeword by Max Amordeluso. \u003cp/\u003ePurchase of the print book includes a free eBook in PDF, Kindle, and ePub formats from Manning Publications. You'll find registration instructions inside the print book. \u003cp/\u003e\u003cb\u003eAbout the Technology\u003c/b\u003e \u003cp/\u003eIn 2018, an estimated 100 million voice-controlled devices were installed in homes worldwide, and the apps that control them, like Amazon Alexa and Google Assistant, are getting more powerful, with new skills being added every day. Great voice apps improve how users interact with the web, whether they're checking the weather, asking for sports scores, or playing a game. \u003cp/\u003e\u003cb\u003eAbout the Book\u003c/b\u003e \u003cp/\u003e\u003ci\u003eVoice Applications for Alexa and Google Assistant\u003c/i\u003e is your guide to designing, building, and implementing voice-based applications for Alexa and Google Assistant. You'll learn to build applications that listen to users, store information, and rely on user context, as you create a voice-powered sleep tracker from scratch. With the basics mastered, you'll dig deeper into multiuse conversational flow and other more-advanced concepts. Smaller projects along the way reinforce your new techniques and best practices. \u003cp/\u003e\u003cb\u003eWhat's inside\u003c/b\u003e \u003cp/\u003e\u003cul\u003e\u003cli\u003eBuilding a call-and-response skill\u003c/li\u003e\u003cli\u003eDesigning a voice user interface\u003c/li\u003e\u003cli\u003eUsing conversational context\u003c/li\u003e\u003cli\u003eGoing multimodal\u003c/li\u003e\u003cli\u003eTips and best practices\u003c/li\u003e\u003c/ul\u003e\u003cbr\u003e\u003cb\u003eAbout the Reader\u003c/b\u003e \u003cp/\u003ePerfect for developers with intermediate JavaScript skills and basic Node.js skills. No previous experience with voice-first platforms is required. \u003cp/\u003e\u003cb\u003eAbout the Author\u003c/b\u003e \u003cp/\u003e\u003cb\u003eDustin A. Coates\u003c/b\u003e is a developer who focuses on voice and conversational applications. He's currently the voice search lead at Algolia and is also a Google Developers Expert for Assistant as well as cohost of the VUX World podcast. \u003cp/\u003e\u003cb\u003eTable of Contents\u003c/b\u003e \u003cp/\u003e\u003col\u003e\u003cli\u003eIntroduction to voice first \u003c/li\u003e\u003cli\u003eBuilding a call-and-response skill on Alexa \u003c/li\u003e\u003cli\u003eDesigning a voice user interface \u003c/li\u003e\u003cli\u003eUsing entity resolution and built?in intents in Alexa skills \u003c/li\u003e\u003cli\u003eMaking a conversational Alexa skill \u003c/li\u003e\u003cli\u003eVUI and conversation best practices \u003c/li\u003e\u003cli\u003eUsing conversation tools to add meaning and usability\u003c/li\u003e\u003cli\u003eDirecting conversation flow\u003c/li\u003e\u003cli\u003eBuilding for Google Assistant \u003c/li\u003e\u003cli\u003eGoing multimodal \u003c/li\u003e\u003cli\u003ePush interactions \u003c/li\u003e\u003cli\u003eBuilding for actions on Google with the Actions SDK \u003c/li\u003e\u003c/ol\u003e\n\u003chr/\u003e\n\u003ch2\u003eDeepL 粗訳\u003c/h2\u003e\n\u003cb\u003e概要\u003c/b\u003e \u003cp/\u003e\u003ci\u003eVoice Applications for Alexa and Google Assistant\u003c/i\u003eは、Alexa と Google Assistant のための音声ベースのアプリケーションを設計、構築、および実装するためのガイドです。この本の中では、あなた自身のスキル（デバイスが実行できるアクションのための音声アプリの用語）をゼロから構築する方法を学ぶことができます。\u003cp/\u003eマックス・アモルデルソによる序文。\u003cp/\u003e印刷された本を購入すると、マニング出版からPDF、Kindle、ePub形式の無料のeBookが提供されます。また、印刷された本の中には登録方法が記載されています。\u003cp/\u003e\u003cb\u003e技術について\u003c/b\u003e \u003cp/\u003e2018年には、世界中の家庭に推定1億台の音声制御デバイスが設置され、Amazon AlexaやGoogleアシスタントのようなそれらを制御するアプリは、日々新しいスキルが追加され、ますます強力になっています。優れた音声アプリは、天気を確認したり、スポーツのスコアを聞いたり、ゲームをしたりと、ユーザーがウェブと対話する方法を改善します。\u003cp/\u003e\u003cb\u003e本について\u003c/b\u003e \u003cp/\u003e\u003ci\u003eVoice Applications for Alexa and Google Assistant\u003c/i\u003eは、Alexa と Google Assistant のための音声ベースのアプリケーションを設計、構築、実装するためのガイドです。音声によるスリープトラッカーをゼロから作成しながら、ユーザーの声に耳を傾け、情報を保存し、ユーザーのコンテキストに依存するアプリケーションを構築する方法を学びます。基本をマスターした後は、マルチユースの会話フローやその他のより高度な概念をさらに深く掘り下げていきます。途中の小さなプロジェクトでは、新しいテクニックとベストプラクティスを強化していきます。\u003cp/\u003e\u003cb\u003e内容\u003c/b\u003e \u003cp/\u003e\u003cul\u003e\u003cli\u003eコール アンド レスポンスのスキルを構築する\u003c/li\u003e\u003cli\u003e音声ユーザー インターフェイスを設計する\u003c/li\u003e\u003cli\u003e会話のコンテキストを使用する\u003c/li\u003e\u003cli\u003eマルチモーダルになる\u003c/li\u003e\u003cli\u003eヒントとベストプラクティス\u003c/li\u003e\u003c/ul\u003e\u003cbr\u003e\u003cb\u003eこのリーダーについて\u003c/b\u003e \u003cp/\u003e\u003cbr\u003e\u003cb\u003e中級の JavaScript スキルと基本的な Node.jsのスキルを持った開発者に最適です。音声優先プラットフォームの経験は必要ありません。\u003cp/\u003e\u003cb\u003e著者について\u003c/b\u003e \u003cp/\u003e\u003cb\u003eDustin A. Coates\u003c/b\u003eは、音声および会話型アプリケーションに焦点を当てた開発者です。現在はAlgoliaで音声検索を担当しているほか、Google Developers Expert for AssistantやVUX Worldポッドキャストの共同ホストも務めています。\u003cp/\u003e\u003cb\u003e目次\u003c/b\u003e \u003cp/\u003e\u003col\u003e\u003cli\u003e音声ファーストへの入門\u003c/li\u003e\u003cli\u003e \u003c/li\u003e\u003cli\u003eAlexa での通話応答スキルの構築\u003c/li\u003e\u003cli\u003e \u003c/li\u003e\u003cli\u003e音声ユーザー インターフェイスの設計\u003c/li\u003e\u003cli\u003e \u003c/li\u003e\u003cli\u003eAlexa スキルでのエンティティ解像度とビルト?Alexa スキルでのエンティティ解決と組み込みインテントの使用\u003c/li\u003e\u003cli\u003e \u003c/li\u003e\u003cli\u003e会話型 Alexa スキルの作成\u003c/li\u003e\u003cli\u003e \u003c/li\u003e\u003cli\u003eVUI と会話のベストプラクティス\u003c/li\u003e\u003cli\u003e \u003c/li\u003e\u003cli\u003e会話ツールを使用して意味と使いやすさを追加する\u003c/li\u003e\u003cli\u003e \u003c/li\u003e\u003cli\u003e指向性\u003c/li\u003e\u003cli\u003e \u003c/li\u003e\u003cli\u003e\u003cli\u003e会話ツールの使用会話の流れ\u003c/li\u003e\u003cli\u003e \u003c/li\u003e\u003cli\u003eGoogle アシスタントのための構築\u003c/li\u003e\u003cli\u003e \u003c/li\u003e\u003cli\u003eマルチモーダルになる\u003c/li\u003e\u003cli\u003e \u003c/li\u003e\u003cli\u003eプッシュ インタラクション\u003c/li\u003e\u003cli\u003e \u003c/li\u003e\u003cli\u003e \u003c/li\u003e\u003cli\u003eアクション SDK を使用した Google 上のアクションのための構築\u003c/li\u003e\u003col\u003e \u003c/ol\u003e \u003c/li\u003e\u003cli\u003e \u003c/ol\u003e。",
+  "tags": [
+    "alexa",
+    "amazon",
+    "applications",
+    "assistant",
+    "aws",
+    "echo",
+    "google",
+    "home",
+    "javascript",
+    "lambda",
+    "ui",
+    "voice"
+  ],
+  "title": "Voice Applications for Alexa and Google Assistant",
+  "vendor": "Manning Publications",
+  "collectionsToJoin": [
+    "gid://shopify/Collection/236195152071"
+  ],
+  "metafields": [
+    {
+      "id": "gid://shopify/Metafield/17064720007367",
+      "key": "published_at",
+      "namespace": "k9bookshelf",
+      "value": "2019-07-23 00:00:00 +0000 UTC",
+      "valueType": "STRING"
+    },
+    {
+      "key": "subtitle",
+      "namespace": "k9bookshelf",
+      "value": "",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17127283359943",
+      "key": "number_of_pages",
+      "namespace": "k9bookshelf",
+      "value": "264",
+      "valueType": "STRING"
+    }
+  ],
+  "variants": [
+    {
+      "barcode": "9781617295317",
+      "inventoryPolicy": "CONTINUE",
+      "price": "5498.900000",
+      "weight": 0.4535924277,
+      "weightUnit": "KILOGRAMS"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "descriptionHtml": "\u003ch2\u003e出版社より\u003c/h2\u003e\n\u003cp\u003eEasy to understand and fun to read, this updated edition of \u003ci\u003eIntroducing Python\u003c/i\u003e is ideal for beginning programmers as well as those new to the language. Author Bill Lubanovic takes you from the basics to more involved and varied topics, mixing tutorials with cookbook-style code recipes to explain concepts in Python 3. End-of-chapter exercises help you practice what you've learned.\u003c/p\u003e\u003cp\u003eYou'll gain a strong foundation in the language, including best practices for testing, debugging, code reuse, and other development tips. This book also shows you how to use Python for applications in business, science, and the arts, using various Python tools and open source packages.\u003c/p\u003e\n\u003chr/\u003e\n\u003ch2\u003eDeepL 粗訳\u003c/h2\u003e\n\u003cp\u003e理解しやすく、楽しく読める\u003ci\u003ePython入門\u003c/i\u003eの最新版は、初心者だけでなく、初めてPythonを使う人にも最適です。著者の Bill Lubanovic は、Python 3 の概念を説明するために、チュートリアルとクックブックスタイルのコードレシピを混ぜて、基礎からより複雑で多様なトピックへとあなたを導きます。\u003c/p\u003e\u003cp\u003e章末の練習問題では、学んだことを実践するのに役立ちます。テスト、デバッグ、コードの再利用、およびその他の開発のヒントのベストプラクティスを含む、この言語の強力な基礎を得ることができます。また、本書では、さまざまな Python ツールやオープンソース パッケージを使用して、ビジネス、科学、芸術の分野で Python を使用する方法も紹介しています。",
+  "tags": [
+    "3.x",
+    "Py",
+    "Python",
+    "Python 3",
+    "Pythonista",
+    "code",
+    "coding",
+    "crash course",
+    "data science",
+    "data structures",
+    "database",
+    "datatypes",
+    "function",
+    "lubanovic",
+    "module",
+    "object-oriented",
+    "programming language",
+    "scripting",
+    "web development"
+  ],
+  "title": "Introducing Python",
+  "vendor": "O'Reilly Media",
+  "collectionsToJoin": [
+    "gid://shopify/Collection/236195152071"
+  ],
+  "metafields": [
+    {
+      "id": "gid://shopify/Metafield/17064719876295",
+      "key": "published_at",
+      "namespace": "k9bookshelf",
+      "value": "2019-11-26 00:00:00 +0000 UTC",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17064719941831",
+      "key": "subtitle",
+      "namespace": "k9bookshelf",
+      "value": "Modern Computing in Simple Packages",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17127283294407",
+      "key": "number_of_pages",
+      "namespace": "k9bookshelf",
+      "value": "630",
+      "valueType": "STRING"
+    }
+  ],
+  "variants": [
+    {
+      "barcode": "9781492051367",
+      "inventoryPolicy": "CONTINUE",
+      "price": "5498.900000",
+      "weight": 0.9888314923860001,
+      "weightUnit": "KILOGRAMS"
+    }
+  ]
+}

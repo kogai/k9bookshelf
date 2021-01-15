@@ -1,0 +1,55 @@
+{
+  "descriptionHtml": "\u003ch2\u003e出版社より\u003c/h2\u003e\n\u003cp\u003eTap into the wisdom of experts to learn what every programmer should know, no matter what language you use. With the 97 short and extremely useful tips for programmers in this book, you'll expand your skills by adopting new approaches to old problems, learning appropriate best practices, and honing your craft through sound advice.\u003c/p\u003e\u003cp\u003eWith contributions from some of the most experienced and respected practitioners in the industry--including Michael Feathers, Pete Goodliffe, Diomidis Spinellis, Cay Horstmann, Verity Stob, and many more--this book contains practical knowledge and principles that you can apply to all kinds of projects.\u003c/p\u003e\u003cp\u003eA few of the 97 things you should know: \u003c/p\u003e\u003cul\u003e\u003cli\u003e\"Code in the Language of the Domain\" by Dan North\u003c/li\u003e\u003cli\u003e\"Write Tests for People\" by Gerard Meszaros\u003c/li\u003e\u003cli\u003e\"Convenience Is Not an -ility\" by Gregor Hohpe\u003c/li\u003e\u003cli\u003e\"Know Your IDE\" by Heinz Kabutz\u003c/li\u003e\u003cli\u003e\"A Message to the Future\" by Linda Rising\u003c/li\u003e\u003cli\u003e\"The Boy Scout Rule\" by Robert C. Martin (Uncle Bob)\u003c/li\u003e\u003cli\u003e\"Beware the Share\" by Udi Dahan\u003c/li\u003e\u003c/ul\u003e\n\u003chr/\u003e\n\u003ch2\u003eDeepL 粗訳\u003c/h2\u003e\n\u003cp\u003e専門家の知恵を借りて、どの言語を使っていても、すべてのプログラマが知っておくべきことを学びましょう。本書に掲載されている 97 の短くて非常に有用なプログラマーのためのヒントでは、古い問題への新しいアプローチを採用し、適切なベストプラクティスを学び、健全なアドバイスを通じて技術を磨くことで、スキルの幅を広げることができます。\u003c/p\u003e\u003cp\u003eMichael Feathers、Pete Goodliffe、Diomidis Spinellis、Cay Horstmann、Verity Stob など、業界で最も経験豊富で尊敬されている実務家からの寄稿で、この本には、あらゆる種類のプロジェクトに適用できる実用的な知識と原則が含まれています。\u003c/p\u003e\u003cp\u003e\u003cul\u003e\u003cli\u003e\"ドメインの言語でコードを書く\" by Dan North\u003c/li\u003e\u003cli\u003e\u003e\u003cli\u003e\"Write Tests for People\" by Gerard Meszaros\u003c/li\u003e\u003cli\u003e\u003e\u003cli\u003e\"Convenience Is Not an -ility\" by Gregor Hohpe\u003c/li\u003e\u003cli\u003e\u003e\u003cli\u003e\"Know Your IDE\" by Heinz Kabutz\u003c/li\u003e\u003cli\u003e\u003e\u003cli\u003e\"A Message to the Future\" by Linda Rising\u003c/li\u003e\u003cli\u003e\u003e\u003cli\u003e\"The Boy Scout Rule\" by Robert C. Martin (Uncle Bob)\u003c/li\u003e\u003cli\u003eによるボーイスカウトのルール\u003c/li\u003e\u003cli\u003e。Martin (Uncle Bob)\u003c/li\u003e\u003cli\u003e\"Beware the Share\" by Udi Dahan\u003c/li\u003e\u003c/ul\u003e。",
+  "tags": [
+    "programming",
+    "software",
+    "algorithms",
+    "c",
+    "c#",
+    "data",
+    "f#",
+    "java",
+    "management",
+    "python",
+    "ruby",
+    "source control",
+    "teams"
+  ],
+  "title": "97 Things Every Programmer Should Know",
+  "vendor": "O'Reilly Media",
+  "collectionsToJoin": [
+    "gid://shopify/Collection/236195152071"
+  ],
+  "metafields": [
+    {
+      "id": "gid://shopify/Metafield/17130846322887",
+      "key": "published_at",
+      "namespace": "k9bookshelf",
+      "value": "2010-02-15 00:00:00 +0000 UTC",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17130846355655",
+      "key": "subtitle",
+      "namespace": "k9bookshelf",
+      "value": "Collective Wisdom from the Experts",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17130846388423",
+      "key": "number_of_pages",
+      "namespace": "k9bookshelf",
+      "value": "229",
+      "valueType": "STRING"
+    }
+  ],
+  "variants": [
+    {
+      "barcode": "9780596809485",
+      "inventoryPolicy": "CONTINUE",
+      "price": "3848.900000",
+      "weight": 0.353802093606,
+      "weightUnit": "KILOGRAMS"
+    }
+  ]
+}
