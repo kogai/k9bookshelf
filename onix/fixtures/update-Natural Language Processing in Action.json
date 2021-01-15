@@ -1,0 +1,27 @@
+{
+  "title": "Natural Language Processing in Action",
+  "id": "gid://shopify/Product/6118546571463",
+  "metafields": [
+    {
+      "id": "gid://shopify/Metafield/17064719745223",
+      "key": "published_at",
+      "namespace": "k9bookshelf",
+      "value": "2019-04-14 00:00:00 +0000 UTC",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17064719777991",
+      "key": "subtitle",
+      "namespace": "k9bookshelf",
+      "value": "Understanding, Analyzing, and Generating Text with Python",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17127283196103",
+      "key": "number_of_pages",
+      "namespace": "k9bookshelf",
+      "value": "544",
+      "valueType": "STRING"
+    }
+  ]
+}

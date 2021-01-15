@@ -1,0 +1,27 @@
+{
+  "title": "Mastering Go - Second Edition",
+  "id": "gid://shopify/Product/6147338567879",
+  "metafields": [
+    {
+      "id": "gid://shopify/Metafield/17120788709575",
+      "key": "published_at",
+      "namespace": "k9bookshelf",
+      "value": "2019-08-28 00:00:00 +0000 UTC",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17120788742343",
+      "key": "subtitle",
+      "namespace": "k9bookshelf",
+      "value": "Create Golang production applications using network libraries, concurrency, machine learning, and advanced data structures",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17127288406215",
+      "key": "number_of_pages",
+      "namespace": "k9bookshelf",
+      "value": "798",
+      "valueType": "STRING"
+    }
+  ]
+}
