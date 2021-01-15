@@ -3,6 +3,7 @@ package onix
 import (
 	"bytes"
 	"context"
+	"encoding/json"
 	"encoding/xml"
 	"fmt"
 	"io"
@@ -127,7 +128,7 @@ func createInput(onixProduct *Product, fetchedProducts *client.ProductISBNs, idx
 }
 
 // Run imports ONIX for Books 2.1 format file to Shopify.
-func Run(input string) error {
+func Run(input string, dryRun bool) error {
 	file, err := ioutil.ReadFile(input)
 	if err != nil {
 		return err
@@ -160,16 +161,39 @@ func Run(input string) error {
 			if err != nil {
 				return err
 			}
-			res, err := gqlClient.ProductUpdateDo(context.Background(), *ipt)
-			if err != nil {
-				return err
-			}
-			if len(res.ProductUpdate.UserErrors) > 0 {
-				errMsg := ""
-				for _, e := range res.ProductUpdate.UserErrors {
-					errMsg += fmt.Sprintln(e.Field, ":", e.Message)
+			if dryRun {
+				by, err := json.Marshal(ipt)
+				if err != nil {
+					return err
 				}
-				return fmt.Errorf(errMsg)
+				fmt.Println(string(by))
+				err = ioutil.WriteFile(fmt.Sprintf("onix/update-%s.json", *ipt.Title), by, 0644)
+				if err != nil {
+					return err
+				}
+			} else {
+				if dryRun {
+					by, err := json.Marshal(ipt)
+					if err != nil {
+						return err
+					}
+					err = ioutil.WriteFile(fmt.Sprintf("onix/create-%s.json", *ipt.Title), by, 0644)
+					if err != nil {
+						return err
+					}
+				} else {
+					res, err := gqlClient.ProductUpdateDo(context.Background(), *ipt)
+					if err != nil {
+						return err
+					}
+					if len(res.ProductUpdate.UserErrors) > 0 {
+						errMsg := ""
+						for _, e := range res.ProductUpdate.UserErrors {
+							errMsg += fmt.Sprintln(e.Field, ":", e.Message)
+						}
+						return fmt.Errorf(errMsg)
+					}
+				}
 			}
 		} else {
 			fmt.Println("Create", d.Title.TitleText, d.Title.Subtitle)
