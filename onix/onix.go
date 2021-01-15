@@ -198,7 +198,7 @@ func Run(input string, dryRun bool) error {
 				}
 			}
 		} else {
-			fmt.Println("Create", d.Titles[0].TitleText, d.Titles[0].Subtitle)
+			fmt.Println("Create", *d.Titles[0].TitleText, *d.Titles[0].Subtitle)
 			ipt, err := createInput(&d, products, idx)
 			if err != nil {
 				return err
