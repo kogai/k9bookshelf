@@ -1,0 +1,25 @@
+{
+  "title": "Voice Applications for Alexa and Google Assistant",
+  "id": "gid://shopify/Product/6118546669767",
+  "metafields": [
+    {
+      "id": "gid://shopify/Metafield/17064720007367",
+      "key": "published_at",
+      "namespace": "k9bookshelf",
+      "value": "2019-07-23 00:00:00 +0000 UTC",
+      "valueType": "STRING"
+    },
+    {
+      "key": "subtitle",
+      "namespace": "k9bookshelf",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17127283359943",
+      "key": "number_of_pages",
+      "namespace": "k9bookshelf",
+      "value": "264",
+      "valueType": "STRING"
+    }
+  ]
+}

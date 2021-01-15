@@ -1,0 +1,27 @@
+{
+  "title": "Building Ethereum Dapps",
+  "id": "gid://shopify/Product/6118546768071",
+  "metafields": [
+    {
+      "id": "gid://shopify/Metafield/17064720072903",
+      "key": "published_at",
+      "namespace": "k9bookshelf",
+      "value": "2019-03-12 00:00:00 +0000 UTC",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17064720105671",
+      "key": "subtitle",
+      "namespace": "k9bookshelf",
+      "value": "Decentralized Applications on the Ethereum Blockchain",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17127283425479",
+      "key": "number_of_pages",
+      "namespace": "k9bookshelf",
+      "value": "504",
+      "valueType": "STRING"
+    }
+  ]
+}

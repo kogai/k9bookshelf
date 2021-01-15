@@ -1,0 +1,55 @@
+{
+  "descriptionHtml": "\u003ch2\u003e出版社より\u003c/h2\u003e\n\u003cb\u003eSummary\u003c/b\u003e \u003cp/\u003e\u003ci\u003eNatural Language Processing in Action\u003c/i\u003e is your guide to creating machines that understand human language using the power of Python with its ecosystem of packages dedicated to NLP and AI. \u003cp/\u003ePurchase of the print book includes a free eBook in PDF, Kindle, and ePub formats from Manning Publications. \u003cp/\u003e\u003cb\u003eAbout the Technology\u003c/b\u003e \u003cp/\u003eRecent advances in deep learning empower applications to understand text and speech with extreme accuracy. The result? Chatbots that can imitate real people, meaningful resume-to-job matches, superb predictive search, and automatically generated document summaries--all at a low cost. New techniques, along with accessible tools like Keras and TensorFlow, make professional-quality NLP easier than ever before. \u003cp/\u003e\u003cb\u003eAbout the Book\u003c/b\u003e \u003cp/\u003e\u003ci\u003eNatural Language Processing in Action\u003c/i\u003e is your guide to building machines that can read and interpret human language. In it, you'll use readily available Python packages to capture the meaning in text and react accordingly. The book expands traditional NLP approaches to include neural networks, modern deep learning algorithms, and generative techniques as you tackle real-world problems like extracting dates and names, composing text, and answering free-form questions. \u003cp/\u003e\u003cb\u003eWhat's inside\u003c/b\u003e \u003cp/\u003e\u003cul\u003e\u003cli\u003eSome sentences in this book were written by NLP! Can you guess which ones?\u003c/li\u003e\u003cli\u003eWorking with Keras, TensorFlow, gensim, and scikit-learn\u003c/li\u003e\u003cli\u003eRule-based and data-based NLP\u003c/li\u003e\u003cli\u003eScalable pipelines\u003c/li\u003e\u003c/ul\u003e\u003cbr\u003e\u003cb\u003eAbout the Reader\u003c/b\u003e \u003cp/\u003eThis book requires a basic understanding of deep learning and intermediate Python skills. \u003cp/\u003e\u003cb\u003eAbout the Author\u003c/b\u003e \u003cp/\u003e\u003cb\u003eHobson Lane\u003c/b\u003e, \u003cb\u003eCole Howard\u003c/b\u003e, and \u003cb\u003eHannes Max Hapke\u003c/b\u003e are experienced NLP engineers who use these techniques in production. \u003cp/\u003e\u003cb\u003eTable of Contents\u003c/b\u003e \u003cp/\u003e\u003col\u003ePART 1 - WORDY MACHINES\u003cli\u003ePackets of thought (NLP overview)\u003c/li\u003e\u003cli\u003eBuild your vocabulary (word tokenization)\u003c/li\u003e\u003cli\u003eMath with words (TF-IDF vectors)\u003c/li\u003e\u003cli\u003eFinding meaning in word counts (semantic analysis)\u003c/li\u003ePART 2 - DEEPER LEARNING (NEURAL NETWORKS)\u003cli\u003eBaby steps with neural networks (perceptrons and backpropagation)\u003c/li\u003e\u003cli\u003eReasoning with word vectors (Word2vec)\u003c/li\u003e\u003cli\u003eGetting words in order with convolutional neural networks (CNNs)\u003c/li\u003e\u003cli\u003eLoopy (recurrent) neural networks (RNNs)\u003c/li\u003e\u003cli\u003eImproving retention with long short-term memory networks\u003c/li\u003e\u003cli\u003eSequence-to-sequence models and attention\u003c/li\u003ePART 3 - GETTING REAL (REAL-WORLD NLP CHALLENGES)\u003cli\u003eInformation extraction (named entity extraction and question answering)\u003c/li\u003e\u003cli\u003eGetting chatty (dialog engines)\u003c/li\u003e\u003cli\u003eScaling up (optimization, parallelization, and batch processing)\u003c/li\u003e\u003c/ol\u003e\n\u003chr/\u003e\n\u003ch2\u003eDeepL 粗訳\u003c/h2\u003e\n\u003cb\u003e概要\u003c/b\u003e \u003cp/\u003e\u003ci\u003eNatural Language Processing in Action\u003c/i\u003eは、NLPとAIに特化したパッケージのエコシステムであるPythonのパワーを使って、人間の言語を理解する機械を作るためのガイドです。\u003cp/\u003e印刷版の書籍を購入すると、マニング出版からPDF、Kindle、ePub形式の無料のeBookが同梱されます。\u003cp/\u003e\u003cb\u003e技術について\u003c/b\u003e \u003cp/\u003eディープラーニングの最近の進歩により、テキストや音声を非常に正確に理解できるようになりました。その結果?本物の人間を模倣できるチャットボット、意味のある履歴書と職務経歴書のマッチ、優れた予測検索、および自動生成された文書の要約などを低コストで実現します。新しい技術と、KerasやTensorFlowのようなアクセス可能なツールにより、プロ品質のNLPがこれまで以上に簡単にできるようになりました。\u003cp/\u003e\u003cb\u003eこの本について\u003c/b\u003e \u003cp/\u003e\u003ci\u003eNatural Language Processing in Action\u003c/i\u003eは、人間の言語を読み取って解釈できる機械を構築するためのガイドです。この本では、すぐに利用できるPythonパッケージを使用して、テキストの意味を捉え、それに応じて反応させます。この本では、日付や名前の抽出、テキストの構成、自由形式の質問への回答などの実世界の問題に取り組む際に、従来の NLP のアプローチをニューラルネットワーク、最新のディープラーニングアルゴリズム、および生成技術を含むように拡張しています。\u003cp/\u003e\u003cb\u003e内容\u003c/b\u003e \u003cp/\u003e\u003cul\u003e\u003cli\u003eこの本の中のいくつかの文章は、NLP によって書かれたものです。\u003c/li\u003e\u003cli\u003eKeras、TensorFlow、gensim、scikit-learnとの連携\u003c/li\u003e\u003cli\u003eルールベースとデータベースのNLP\u003c/li\u003e\u003cli\u003eスケーラブルなパイプライン\u003c/li\u003e\u003c/ul\u003e\u003cbr\u003e\u003cb\u003e読者について\u003c/b\u003e \u003cp/\u003e本書は、ディープラーニングの基本的な理解とPythonの中級的なスキルを必要とします。\u003cp/\u003e\u003cb\u003e著者について\u003c/b\u003e \u003cp/\u003e\u003cb\u003eHobson Lane\u003c/b\u003e、\u003cb\u003eCole Howard\u003c/b\u003e、\u003cb\u003eHannes Max Hapke\u003c/b\u003eは、これらの技術を本番で使用している経験豊富なNLPエンジニアです。\u003cp/\u003e\u003cb\u003e目次\u003c/b\u003e \u003cp/\u003e\u003col\u003ePART 1 - WORDY MACHINES\u003cli\u003e思考のパケット (NLP の概要)\u003c/li\u003e\u003cli\u003e語彙を構築する (単語のトークン化)\u003c/li\u003e\u003cli\u003e単語を使った数学 (TF-IDF ベクトル)\u003c/li\u003e\u003cli\u003e単語数に意味を見出す (意味分析)\u003c/li\u003ePART 2より深い学習 (ニューラル ネットワーク)\u003cli\u003eニューラル ネットワークによるベビー ステップ (パーセプトロンとバックプロパゲーション)\u003c/li\u003e\u003cli\u003e単語ベクトルによる推論 (Word2vec)\u003c/li\u003e\u003cli\u003e畳み込みニューラル ネットワーク (CNNs)\u003c/li\u003e\u003cli\u003eで単語を順番に取得する\u003c/li\u003e\u003cli\u003eルーピー (リカレント) ニューラル ネットワーク (RNNs)\u003c/li\u003e\u003cli\u003eロングショートによる保持力の向上\u003c/li\u003e\u003cli\u003e \u003c/li\u003e\u003cli\u003eロングショートによる保持力の向上\u003c/li\u003e\u003cli\u003e \u003c/li\u003e \u003c/li\u003e\u003cli\u003e\u003cli\u003eニューラル ネットワーク (RNNs)\u003c/li\u003e\u003cli\u003eを使用して単語を順番に取得する項記憶ネットワーク\u003c/li\u003e\u003cli\u003eシーケンス間モデルと注意\u003c/li\u003e\u003cli\u003eパート 3 - リアルになる (現実の NLP の課題)\u003cli\u003e情報抽出 (名前付きエンティティ抽出と質問への回答)\u003c/li\u003e\u003cli\u003eおしゃべりになる (ダイアログ エンジン)\u003c/li\u003e\u003cli\u003e\u003cli\u003eスケールアップ (最適化.並列化、およびバッチ処理）\u003c/li\u003e\u003c/ol\u003e \u003c/li\u003e\u003c/ol\u003e。",
+  "tags": [
+    "NLP",
+    "c++",
+    "java",
+    "javascript",
+    "language",
+    "learning",
+    "machine",
+    "natural",
+    "patterns",
+    "processing",
+    "python",
+    "recognition",
+    "speech"
+  ],
+  "title": "Natural Language Processing in Action",
+  "vendor": "Manning Publications",
+  "collectionsToJoin": [
+    "gid://shopify/Collection/236195152071"
+  ],
+  "metafields": [
+    {
+      "id": "gid://shopify/Metafield/17064719745223",
+      "key": "published_at",
+      "namespace": "k9bookshelf",
+      "value": "2019-04-14 00:00:00 +0000 UTC",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17064719777991",
+      "key": "subtitle",
+      "namespace": "k9bookshelf",
+      "value": "Understanding, Analyzing, and Generating Text with Python",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17127283196103",
+      "key": "number_of_pages",
+      "namespace": "k9bookshelf",
+      "value": "544",
+      "valueType": "STRING"
+    }
+  ],
+  "variants": [
+    {
+      "barcode": "9781617294631",
+      "inventoryPolicy": "CONTINUE",
+      "price": "5498.900000",
+      "weight": 0.86182561263,
+      "weightUnit": "KILOGRAMS"
+    }
+  ]
+}

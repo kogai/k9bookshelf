@@ -1,0 +1,51 @@
+{
+  "descriptionHtml": "\u003ch2\u003e出版社より\u003c/h2\u003e\n\n        \u003cp\u003eLearn what JAMstack is all about, what those three big letters in the front mean and why it's so beneficial. This book shows you how to create sites and apps on the JAMstack using GatsbyJS, a tool made specifically for generating them. As part of that, you'll learn about React, one of the hottest front-end development tools out there today.\u003c/p\u003e \u003cp\u003eYou will build three separate projects, starting with a relatively simple site to get your feet wet, then a more robust and dynamic application to see more advanced topics like API usage and data storage. Finally, you'll build a game on the JAMstack to get a whole different perspective on how all the pieces can fit together.\u003c/p\u003e \u003cp\u003eJAMstack, a modern take on best practices, is taking the web development world by storm and allowing developers to create web site and apps that are blazingly fast and highly secure. In many ways JAMstack is a throwback to web development of yesteryear, all while providing a simpler development experience that is streamlined by many years of best practices being brought to bear.\u003c/p\u003e \u003cp\u003e\u003cb\u003eWhat You'll Learn\u003c/b\u003e\u003c/p\u003e \u003cp\u003e\u003c/p\u003e\u003cul\u003e\u003cli\u003eReview the principles of JAMstack: Javascript, APIs and Markup\u003c/li\u003e\u003cli\u003eUse React to build a front-end\u003c/li\u003e\u003cli\u003eSet up a GitHub account and hosting using GitHub Pages\u003c/li\u003e\u003cli\u003eHost in Netlify (the creators of JAMstack!)\u003c/li\u003e\u003cli\u003eUnderstand Netlify functions and FaunaDB for persistent data storage\u003c/li\u003e\u003cli\u003eExplore GraphQL usage for querying data\u003c/li\u003e\u003cli\u003eWork with the Phaser game library\u003c/li\u003e\u003c/ul\u003e\u003cp\u003e\u003c/p\u003e \u003cp\u003e\u003cb\u003eWho This Book Is For\u003c/b\u003e\u003c/p\u003eWeb developers with some HTML, CSS and JavaScript experience, who want to apply best practices to build web sites that have no back-end server infrastructure while still providing dynamic content along with a streamlined development process. Architects who just want to learn JAMstack, even if they aren't going to be hacking code all day.\u003cp\u003e\u003c/p\u003e\n      \n\u003chr/\u003e\n\u003ch2\u003eDeepL 粗訳\u003c/h2\u003e\n\n        \u003cp\u003eJAMstackとは何か、正面の3つの大きな文字が意味するものは何か、そしてなぜJAMstackがそんなに有益なのかを学びましょう。本書では、JAMstack上でサイトやアプリを作成するために特別に作られたツールであるGatsbyJSを使って、JAMstack上でサイトやアプリを作成する方法を紹介しています。\u003c/p\u003e \u003cp\u003e \u003cp\u003e3つのプロジェクトを構築します。\u003c/p\u003e \u003cp\u003eベストプラクティスを現代風にアレンジしたJAMstackは、Web開発の世界を席巻しており、開発者は非常に高速で安全性の高いWebサイトやアプリケーションを作成できるようになっています。多くの点で、JAMstackは往年のWeb開発を思い起こさせるものですが、長年のベストプラクティスによって合理化された、よりシンプルな開発体験を提供しています。\u003c/p\u003e \u003cp\u003e\u003cb\u003e何を学ぶか\u003c/b\u003e\u003c/p\u003e \u003cp\u003e\u003c/p\u003e\u003cul\u003e\u003cli\u003eJAMstackの原則をおさらいしましょう。Javascript、APIとマークアップ\u003c/li\u003e\u003cli\u003eフロントエンドを構築するためにReactを使用する\u003c/li\u003e\u003cli\u003eGitHubアカウントを設定し、GitHub Pagesを使用してホスティングする\u003c/li\u003e\u003cli\u003eNetlify（JAMstackの生みの親！）でホストする\u003c/li\u003e\u003cli\u003e。)\u003c/li\u003e\u003cli\u003eNetlify の機能と永続的なデータ保存のための FaunaDB を理解する\u003c/li\u003e\u003cli\u003e \u003c/li\u003e\u003cli\u003eデータをクエリするための GraphQL の使用法を探る\u003c/li\u003e\u003cli\u003e \u003c/ul\u003e\u003cp\u003e\u003c/ul\u003e\u003cp\u003e \u003cp\u003e\u003cb\u003eこの本は誰のためのものか\u003c/b\u003e\u003cb\u003e\u003c/b\u003e\u003c/p\u003e \u003cp\u003e\u003cb\u003eHTML を多少持っている Web 開発者です。CSSとJavaScriptの経験があり、バックエンドのサーバーインフラストラクチャを持たないWebサイトを構築しながら、ダイナミックなコンテンツを提供し、合理化された開発プロセスを提供するためのベストプラクティスを適用したいと考えている方。一日中コードをハッキングしていなくても、JAMstackを学びたいと思っているアーキテクト。\n      ",
+  "tags": [
+    "JAMstack",
+    "JavaScript",
+    "architecture",
+    "mark-up",
+    "web apps",
+    "gatsby",
+    "gatsby.js",
+    "netlify",
+    "graphQL"
+  ],
+  "title": "Practical Jamstack",
+  "vendor": "Apress",
+  "collectionsToJoin": [
+    "gid://shopify/Collection/236195152071"
+  ],
+  "metafields": [
+    {
+      "id": "gid://shopify/Metafield/17120788250823",
+      "key": "published_at",
+      "namespace": "k9bookshelf",
+      "value": "2020-10-27 00:00:00 +0000 UTC",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17120788283591",
+      "key": "subtitle",
+      "namespace": "k9bookshelf",
+      "value": "Blazing Fast, Simple, and Secure Web Development, the Modern Way",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17127288307911",
+      "key": "number_of_pages",
+      "namespace": "k9bookshelf",
+      "value": "307",
+      "valueType": "STRING"
+    }
+  ],
+  "variants": [
+    {
+      "barcode": "9781484261767",
+      "inventoryPolicy": "CONTINUE",
+      "price": "4398.900000",
+      "weight": 0.571526458902,
+      "weightUnit": "KILOGRAMS"
+    }
+  ]
+}

@@ -10,13 +10,14 @@ import (
 
 	shopify "github.com/bold-commerce/go-shopify"
 	"github.com/kogai/k9bookshelf/gqlgenc/client"
+	codegen "github.com/kogai/onix-codegen/go"
 )
 
 // TODO: Convert implementation to instance method.
-func findPriceBy(prices []Price, currencyCode string) *Price {
-	var price *Price
+func findPriceBy(prices []codegen.Price, currencyCode string) *codegen.Price {
+	var price *codegen.Price
 	for _, p := range prices {
-		if p.CurrencyCode == currencyCode {
+		if p.CurrencyCode.Body == currencyCode {
 			price = &p
 			break
 		}
@@ -75,11 +76,12 @@ func extractID(graphqlID string) (int, error) {
 	return strconv.Atoi(result[len(result)-1])
 }
 
-func extractTags(p *Product) []string {
+func extractTags(p *codegen.Product) []string {
 	var tags []string
-	subject := p.Subjects.FindByIDType("Keywords")
-	if subject != nil {
-		tags = strings.Split(subject.SubjectHeadingText, "; ")
+	sbs := Subjects(p.Subjects)
+	subject := sbs.FindByIDType("Keywords")
+	if subject != nil && subject.SubjectHeadingText != nil {
+		tags = strings.Split(*subject.SubjectHeadingText, "; ")
 	}
 	return tags
 }
@@ -89,20 +91,20 @@ func extractDatetime(date string) (time.Time, error) {
 	return time.Parse(shortForm, date)
 }
 
-func generateDescription(onixProduct *Product) (*string, error) {
+func generateDescription(onixProduct *codegen.Product) (*string, error) {
 	var descriptionHTML string = ""
-	otherText := onixProduct.OtherTexts.FindByType("Long description")
+	otherTexts := OtherTexts(onixProduct.OtherTexts)
+	otherText := otherTexts.FindByType("Long description")
 	if otherText == nil {
-		otherText = onixProduct.OtherTexts.FindByType("Main description")
+		otherText = otherTexts.FindByType("Main description")
 	}
 	if otherText == nil {
-		otherText = onixProduct.OtherTexts.FindByType("Short description/annotation")
+		otherText = otherTexts.FindByType("Short description/annotation")
 	}
 	if otherText == nil {
-		otherText = onixProduct.OtherTexts.FindByType("Biographical note")
+		otherText = otherTexts.FindByType("Biographical note")
 	}
-
-	translated, err := Translate(otherText.Text.Body)
+	translated, err := Translate(string(*otherText.Text))
 	if err != nil {
 		return nil, err
 	}
@@ -111,7 +113,7 @@ func generateDescription(onixProduct *Product) (*string, error) {
 %s
 <hr/>
 <h2>DeepL 粗訳</h2>
-%s`, otherText.Text.Body, *translated)
+%s`, *otherText.Text, *translated)
 	}
 	return &descriptionHTML, nil
 }
