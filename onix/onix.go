@@ -176,31 +176,16 @@ func Run(input string, dryRun bool) error {
 					return err
 				}
 			} else {
-				if dryRun {
-					by, err := json.MarshalIndent(ipt, "", "  ")
-					if err != nil {
-						return err
+				res, err := gqlClient.ProductUpdateDo(context.Background(), *ipt)
+				if err != nil {
+					return err
+				}
+				if len(res.ProductUpdate.UserErrors) > 0 {
+					errMsg := ""
+					for _, e := range res.ProductUpdate.UserErrors {
+						errMsg += fmt.Sprintln(e.Field, ":", e.Message)
 					}
-					wd, err := os.Getwd()
-					if err != nil {
-						return err
-					}
-					err = ioutil.WriteFile(fmt.Sprintf("%s/onix/create-%s.json", wd, *ipt.Title), by, 0644)
-					if err != nil {
-						return err
-					}
-				} else {
-					res, err := gqlClient.ProductUpdateDo(context.Background(), *ipt)
-					if err != nil {
-						return err
-					}
-					if len(res.ProductUpdate.UserErrors) > 0 {
-						errMsg := ""
-						for _, e := range res.ProductUpdate.UserErrors {
-							errMsg += fmt.Sprintln(e.Field, ":", e.Message)
-						}
-						return fmt.Errorf(errMsg)
-					}
+					return fmt.Errorf(errMsg)
 				}
 			}
 		} else {
@@ -210,18 +195,33 @@ func Run(input string, dryRun bool) error {
 				return err
 			}
 
-			res, err := gqlClient.ProductCreateDo(context.Background(), *ipt)
-			if err != nil {
-				return err
-			}
-			if len(res.ProductCreate.UserErrors) > 0 {
-				errMsg := ""
-				for _, e := range res.ProductCreate.UserErrors {
-					errMsg += fmt.Sprintln(e.Field, ":", e.Message)
+			if dryRun {
+				by, err := json.MarshalIndent(ipt, "", "  ")
+				if err != nil {
+					return err
 				}
-				return fmt.Errorf(errMsg)
+				wd, err := os.Getwd()
+				if err != nil {
+					return err
+				}
+				err = ioutil.WriteFile(fmt.Sprintf("%s/onix/create-%s.json", wd, *ipt.Title), by, 0644)
+				if err != nil {
+					return err
+				}
+			} else {
+				res, err := gqlClient.ProductCreateDo(context.Background(), *ipt)
+				if err != nil {
+					return err
+				}
+				if len(res.ProductCreate.UserErrors) > 0 {
+					errMsg := ""
+					for _, e := range res.ProductCreate.UserErrors {
+						errMsg += fmt.Sprintln(e.Field, ":", e.Message)
+					}
+					return fmt.Errorf(errMsg)
+				}
+				fmt.Printf("Done. open 'https://ipage.ingramcontent.com/ipage/servlet/ibg.common.titledetail.imageloader?ean=%s&size=640&howerType=Y'\n", *isbn)
 			}
-			fmt.Printf("Done. open 'https://ipage.ingramcontent.com/ipage/servlet/ibg.common.titledetail.imageloader?ean=%s&size=640&howerType=Y'\n", *isbn)
 		}
 	}
 	return nil
