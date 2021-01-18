@@ -1,0 +1,500 @@
+<footer class="site-footer" role="contentinfo" data-section-id="{{ section.id }}" data-section-type="footer-section">
+
+  <div class="grid">
+
+    {% case section.blocks.size %}
+      {% when 0 %}
+      {% when 1 %}
+        {% assign column_width = 'text-left' %}
+      {% when 2 %}
+        {% assign column_width = 'medium-up--one-half small--one-whole' %}
+      {% when 3 %}
+        {% assign column_width = 'medium-up--one-third small--one-whole' %}
+      {% when 4 %}
+        {% assign column_width = 'medium-up--one-quarter small--one-whole' %}
+    {% endcase %}
+
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'menu' %}
+          <div class="grid__item {{ column_width }}">
+            {% if block.settings.title %}
+              <h3 class="site-footer__section-title">{{ block.settings.title | escape }}</h3>
+            {% endif %}
+            <ul class="site-footer__menu">
+              {% for link in linklists[block.settings.menu].links %}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+
+        {% when 'text' %}
+          <div class="grid__item {{ column_width }}">
+            {% if block.settings.title %}
+              <h3 class="site-footer__section-title">{{ block.settings.title | escape }}</h3>
+            {% endif %}
+            <div class="rte">{{ block.settings.richtext }}</div>
+          </div>
+
+        {% when 'newsletter' %}
+          <div class="grid__item {{ column_width }}">
+            {% if block.settings.title %}
+              <h3 class="site-footer__section-title">{{ block.settings.title | escape }}</h3>
+            {% endif %}
+            <h3 class="site-footer__section-title">{{ 'general.newsletter_form.newsletter_heading' | t }}</h3>
+            {% include 'newsletter', label: block.settings.subtext %}
+          </div>
+
+      {% endcase %}
+    {% endfor %}
+
+    </div>
+
+  {% if section.blocks.size > 0 %}
+    <hr>
+  {% endif %}
+
+  <div class="grid medium-up--grid--table sub-footer small--text-center">
+    <div class="grid__item medium-up--one-half">
+      <small>{{ 'layout.footer.copyright' | t }} &copy; {{ 'now' | date: '%Y' }}, {{ shop.name | link_to: routes.root_url }}. {{ powered_by_link }}</small>
+    </div>
+    {%- if section.settings.show_payment_icons -%}
+      {%- unless shop.enabled_payment_types == empty -%}
+        <div class="grid__item medium-up--one-half medium-up--text-right">
+          <span class="visually-hidden">{{ 'general.payment.method' | t }}</span>
+          <ul class="list--inline payment-icons">
+            {%- for type in shop.enabled_payment_types -%}
+              <li>
+                {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endunless -%}
+    {%- endif -%}
+  </div>
+</footer>
+
+
+
+{% schema %}
+{
+  "name": {
+    "cs": "Zápatí",
+    "da": "Sidefod",
+    "de": "Fußzeile",
+    "en": "Footer",
+    "es": "Pie de página",
+    "fi": "Alatunniste",
+    "fr": "Pied de page",
+    "it": "Footer",
+    "ja": "フッター",
+    "ko": "바닥글",
+    "nb": "Footer",
+    "nl": "Voettekst",
+    "pl": "Stopka",
+    "pt-BR": "Rodapé",
+    "pt-PT": "Rodapé",
+    "sv": "Sidfot",
+    "th": "ส่วนท้าย",
+    "tr": "Altbilgi",
+    "vi": "Chân trang",
+    "zh-CN": "页脚",
+    "zh-TW": "頁尾"
+  },
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": {
+        "cs": "Zobrazit ikony plateb",
+        "da": "Vis betalingsikoner",
+        "de": "Zahlungs-Buttons anzeigen",
+        "en": "Show payment icons",
+        "es": "Mostrar iconos de pago",
+        "fi": "Näytä maksukuvakkeet",
+        "fr": "Afficher les icônes de paiement",
+        "it": "Mostra le icone di pagamento",
+        "ja": "支払いアイコンを表示する",
+        "ko": "결제 아이콘 표시",
+        "nb": "Vis betalingsikoner",
+        "nl": "Betalingspictogrammen weergeven",
+        "pl": "Pokaż ikony płatności",
+        "pt-BR": "Exibir ícones de pagamento",
+        "pt-PT": "Mostrar ícones de pagamento",
+        "sv": "Visa betalningsikoner",
+        "th": "แสดงไอคอนการชำระเงิน",
+        "tr": "Ödeme simgelerini göster",
+        "vi": "Hiển thị biểu tượng thanh toán",
+        "zh-CN": "显示付款图标",
+        "zh-TW": "顯示付款圖示"
+      },
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": {
+        "cs": "Nabídka",
+        "da": "Menu",
+        "de": "Menü",
+        "en": "Menu",
+        "es": "Menú",
+        "fi": "Valikko",
+        "fr": "Menu",
+        "it": "Menu",
+        "ja": "メニュー",
+        "ko": "메뉴",
+        "nb": "Meny",
+        "nl": "Menu",
+        "pl": "Menu",
+        "pt-BR": "Menu",
+        "pt-PT": "Menu",
+        "sv": "Meny",
+        "th": "เมนู",
+        "tr": "Menü",
+        "vi": "Menu",
+        "zh-CN": "菜单",
+        "zh-TW": "選單"
+      },
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": {
+            "cs": "Nadpis",
+            "da": "Overskrift",
+            "de": "Titel",
+            "en": "Heading",
+            "es": "Título",
+            "fi": "Otsake",
+            "fr": "Titre",
+            "it": "Heading",
+            "ja": "見出し",
+            "ko": "제목",
+            "nb": "Overskrift",
+            "nl": "Kop",
+            "pl": "Nagłówek",
+            "pt-BR": "Título",
+            "pt-PT": "Título",
+            "sv": "Rubrik",
+            "th": "ส่วนหัว",
+            "tr": "Başlık",
+            "vi": "Tiêu đề",
+            "zh-CN": "标题",
+            "zh-TW": "標題"
+          },
+          "default": {
+            "cs": "Odkazy",
+            "da": "Links",
+            "de": "Links",
+            "en": "Links",
+            "es": "Enlaces",
+            "fi": "Linkit",
+            "fr": "Liens",
+            "it": "Links",
+            "ja": "リンク",
+            "ko": "링크",
+            "nb": "Koblinger",
+            "nl": "Links",
+            "pl": "Linki",
+            "pt-BR": "Links",
+            "pt-PT": "Ligações",
+            "sv": "Länkar",
+            "th": "ลิงก์",
+            "tr": "Bağlantılar",
+            "vi": "Liên kết",
+            "zh-CN": "链接",
+            "zh-TW": "連結"
+          }
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": {
+            "cs": "Nabídka",
+            "da": "Menu",
+            "de": "Menü",
+            "en": "Menu",
+            "es": "Menú",
+            "fi": "Valikko",
+            "fr": "Menu",
+            "it": "Menu",
+            "ja": "メニュー",
+            "ko": "메뉴",
+            "nb": "Meny",
+            "nl": "Menu",
+            "pl": "Menu",
+            "pt-BR": "Menu",
+            "pt-PT": "Menu",
+            "sv": "Meny",
+            "th": "เมนู",
+            "tr": "Menü",
+            "vi": "Menu",
+            "zh-CN": "菜单",
+            "zh-TW": "選單"
+          },
+          "info": {
+            "cs": "V této nabídce se nezobrazí položky rozevíracího seznamu",
+            "da": "Denne menu viser ikke rullemenupunkter",
+            "de": "Dieses Menü zeigt keine Dropdowns an",
+            "en": "This menu won't show dropdown items",
+            "es": "Este menú no mostrará elementos desplegables",
+            "fi": "Tämä valikko ei näytä pudotuskohteita",
+            "fr": "Ce menu n'affichera pas les éléments des menus déroulants",
+            "it": "Questo menu non mostrerà elementi a discesa",
+            "ja": "このメニューにはドロップダウンアイテムは表示されません",
+            "ko": "이 메뉴는 드롭 다운 항목을 표시하지 않습니다.",
+            "nb": "Denne menyen vil ikke vise rullegardinelementer",
+            "nl": "Dit menu laat geen vervolgkeuze-artikelen zien.",
+            "pl": "W tym menu pozycje rozwijane nie będą wyświetlane",
+            "pt-BR": "Este menu não mostra itens suspensos",
+            "pt-PT": "Este menu não irá mostrar itens pendentes",
+            "sv": "Den här menyn kommer inte att visa objekt i rullgardinsmenyn",
+            "th": "เมนูนี้จะไม่แสดงรายการดรอปดาวน์",
+            "tr": "Bu menü açılır öğeleri göstermez",
+            "vi": "Menu này sẽ không hiển thị các mục thả xuống",
+            "zh-CN": "此菜单不会显示下拉项",
+            "zh-TW": "這個選單不會顯示下拉式項目"
+          }
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": {
+        "cs": "Text",
+        "da": "Tekst",
+        "de": "Text",
+        "en": "Text",
+        "es": "Texto",
+        "fi": "Teksti",
+        "fr": "Texte",
+        "it": "Testo",
+        "ja": "テキスト",
+        "ko": "텍스트",
+        "nb": "Tekst",
+        "nl": "Tekst",
+        "pl": "Tekst",
+        "pt-BR": "Texto",
+        "pt-PT": "Texto",
+        "sv": "Text",
+        "th": "ข้อความ",
+        "tr": "Metin",
+        "vi": "Văn bản",
+        "zh-CN": "文本",
+        "zh-TW": "文字"
+      },
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": {
+            "cs": "Nadpis",
+            "da": "Overskrift",
+            "de": "Titel",
+            "en": "Heading",
+            "es": "Título",
+            "fi": "Otsake",
+            "fr": "Titre",
+            "it": "Heading",
+            "ja": "見出し",
+            "ko": "제목",
+            "nb": "Overskrift",
+            "nl": "Kop",
+            "pl": "Nagłówek",
+            "pt-BR": "Título",
+            "pt-PT": "Título",
+            "sv": "Rubrik",
+            "th": "ส่วนหัว",
+            "tr": "Başlık",
+            "vi": "Tiêu đề",
+            "zh-CN": "标题",
+            "zh-TW": "標題"
+          },
+          "default": {
+            "cs": "Kontaktujte nás",
+            "da": "Kontakte os",
+            "de": "Kontaktiere uns",
+            "en": "Contact us",
+            "es": "Ponte en contacto con nosotros",
+            "fi": "Ota yhteyttä",
+            "fr": "Contactez-nous",
+            "it": "Contattaci",
+            "ja": "お問い合わせ",
+            "ko": "문의처",
+            "nb": "Kontakt oss",
+            "nl": "Neem contact met ons op",
+            "pl": "Skontaktuj się z nami",
+            "pt-BR": "Fale conosco",
+            "pt-PT": "Contacte-nos",
+            "sv": "Kontakta oss",
+            "th": "ติดต่อเรา",
+            "tr": "Bizimle iletişime geçin",
+            "vi": "Liên hệ với chúng tôi",
+            "zh-CN": "联系我们",
+            "zh-TW": "聯絡我們"
+          }
+        },
+        {
+          "type": "richtext",
+          "id": "richtext",
+          "label": {
+            "cs": "Text",
+            "da": "Tekst",
+            "de": "Text",
+            "en": "Text",
+            "es": "Texto",
+            "fi": "Teksti",
+            "fr": "Texte",
+            "it": "Testo",
+            "ja": "テキスト",
+            "ko": "텍스트",
+            "nb": "Tekst",
+            "nl": "Tekst",
+            "pl": "Tekst",
+            "pt-BR": "Texto",
+            "pt-PT": "Texto",
+            "sv": "Text",
+            "th": "ข้อความ",
+            "tr": "Metin",
+            "vi": "Văn bản",
+            "zh-CN": "文本",
+            "zh-TW": "文字"
+          },
+          "default": {
+            "cs": "<p>Informujte zákazníky prostřednictvím tohoto textu o své značce.</p>",
+            "da": "<p>Brug denne tekst til at dele oplysninger om dit brand med dine kunder.</p>",
+            "de": "<p>Mit diesem Text kannst du deine Kunden über deine Marke informieren.</p>",
+            "en": "<p>Use this text to share information about your brand with your customers.</p>",
+            "es": "<p>Usa este texto para compartir información sobre tu marca con tus clientes.</p>",
+            "fi": "<p>Tätä tekstiä voidaan käyttää brändiäsi koskevien tietojen jakamiseen asiakkaille.</p>",
+            "fr": "<p>Utilisez ce texte pour partager des informations sur votre marque avec vos clients.</p>",
+            "it": "<p>Utilizza questo spazio per condividere informazioni sul tuo brand con i clienti.</p>",
+            "ja": "<p>このテキストを使用して、あなたのブランドに関する情報をお客様と共有します。</p>",
+            "ko": "<p>이 텍스트는 고객의 브랜드에 대한 정보를 공유하는데 사용하십시오.</p>",
+            "nb": "<p>Bruk denne teksten til å dele informasjon om merkevaren din med kundene dine.</p>",
+            "nl": "<p>Gebruik deze tekst om informatie over je merk met je klanten te delen.</p>",
+            "pl": "<p>Użyj tego tekstu do udostępniania klientom informacji o swojej marce.</p>",
+            "pt-BR": "<p>Use este texto para compartilhar informações sobre sua marca com seus clientes.</p>",
+            "pt-PT": "<p>Utilize este texto para partilhar informações sobre a sua marca com os seus clientes.</p>",
+            "sv": "<p>Använd den här texten för att dela information om ditt varumärke med dina kunder.</p>",
+            "th": "<p>ใช้ข้อความนี้เพื่อแชร์ข้อมูลเกี่ยวกับแบรนด์และลูกค้าของคุณ</p>",
+            "tr": "<p>Bu metni müşterilerle markanız hakkında bilgi paylaşmak için kullanabilirsiniz.</p>",
+            "vi": "<p>Sử dụng văn bản này để chia sẻ thông tin về thương hiệu của bạn với khách hàng.</p>",
+            "zh-CN": "<p>使用此文本与您的客户分享有关您的品牌的信息。</p>",
+            "zh-TW": "<p>請利用此段文字跟顧客分享您的品牌資訊。</p>"
+          }
+        }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "name": {
+        "cs": "Přihlášení k odběru novinek",
+        "da": "Tilmelding til nyhedsbrev",
+        "de": "Newsletter-Anmeldung",
+        "en": "Newsletter signup",
+        "es": "Suscripción al boletín",
+        "fi": "Uutiskirjeen tilaus",
+        "fr": "Inscription",
+        "it": "Iscrizione newsletter",
+        "ja": "ニュースレターの登録",
+        "ko": "뉴스레터 신청",
+        "nb": "Registrering for nyhetsbrev",
+        "nl": "Nieuwsbriefaanmelding",
+        "pl": "Rejestracja do newslettera",
+        "pt-BR": "Assinatura da newsletter",
+        "pt-PT": "Registo na newsletter",
+        "sv": "Nyhetsbrevsregistrering",
+        "th": "การสมัครรับจดหมายข่าว",
+        "tr": "Bülten aboneliği",
+        "vi": "Đăng ký nhận bản tin",
+        "zh-CN": "新闻通讯注册",
+        "zh-TW": "訂閱電子報"
+      },
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "subtext",
+          "label": {
+            "cs": "Text nižší úrovně",
+            "da": "Undertekst",
+            "de": "Subtext",
+            "en": "Subtext",
+            "es": "Subtexto",
+            "fi": "Alateksti",
+            "fr": "Sous-texte",
+            "it": "Sottotesto",
+            "ja": "サブテキスト",
+            "ko": "하위 텍스트",
+            "nb": "Undertekst",
+            "nl": "Subtekst",
+            "pl": "Tekst podrzędny",
+            "pt-BR": "Subtexto",
+            "pt-PT": "Subtexto",
+            "sv": "Undertext",
+            "th": "ข้อความรอง",
+            "tr": "Alt metin",
+            "vi": "Văn bản phụ",
+            "zh-CN": "子文本",
+            "zh-TW": "子文字"
+          },
+          "default": {
+            "cs": "<p>Získejte informace o propagačních akcích, nových produktech a slevách – přímo do své schránky.</p>",
+            "da": "<p>Reklamer, nye produkter og salg. Direkte i din indbakke.</p>",
+            "de": "<p>Werbeaktionen, neue Produkte und Sonderangebote. Direkt in deinem Posteingang.</p>",
+            "en": "<p>Promotions, new products and sales. Directly to your inbox.</p>",
+            "es": "<p>Promociones, nuevos productos y ofertas. Directamente a tu bandeja de entrada.</p>",
+            "fi": "<p>Kampanjat, uudet tuotteet ja myynti. Suoraan saapuneet-kansioosi</p>",
+            "fr": "<p>Promotions, nouveaux produits et soldes. Directement dans votre boîte de réception.</p>",
+            "it": "<p>Promozioni, nuovi prodotti e offerte. Direttamente nella tua casella di posta.</p>",
+            "ja": "<p>新商品やセール情報などのお得な情報をお届けします。</p>",
+            "ko": "<p>프로모션, 신제품, 판매. 받은 편지함으로 바로 이동.</p>",
+            "nb": "<p>Kampanjer, nye produkter og salg. Direkte i innboksen din.</p>",
+            "nl": "<p>Promoties, nieuwe producten en uitverkoop rechtstreeks in je inbox.</p>",
+            "pl": "<p>Promocje, nowe produkty i wyprzedaże. Bezpośrednio do Twojej skrzynki odbiorczej.</p>",
+            "pt-BR": "<p>Promoções, novos produtos e vendas. Diretamente para sua caixa de entrada.</p>",
+            "pt-PT": "<p>Promoções, novos produtos e ofertas. Diretamente na sua caixa de entrada.</p>",
+            "sv": "<p>Kampanjer, nya produkter och försäljning. Direkt till din inkorg.</p>",
+            "th": "<p>โปรโมชัน สินค้าใหม่ และการลดราคา ส่งตรงสู่กล่องจดหมายเข้าของคุณ</p>",
+            "tr": "<p>Promosyonlar, yeni ürünler ve indirimler. Doğrudan gelen kutunuzda.</p>",
+            "vi": "<p>Khuyến mãi, sản phẩm mới và chương trình giảm giá. Trực tiếp vào hộp thư đến của bạn.</p>",
+            "zh-CN": "<p>促销、新产品和销售。直接发送到您的收件箱。</p>",
+            "zh-TW": "<p>讓您直接在收件匣內收取促銷活動、最新產品和特賣活動訊息。</p>"
+          }
+        },
+        {
+          "type": "paragraph",
+          "content": {
+            "cs": "Pro všechny zákazníky, kteří se zaregistrují, se v Shopify vytvoří účet. [Zobrazit zákazníky](/admin/customers?query=&accepts_marketing=1)",
+            "da": "Alle kunder, der tilmelder sig, får oprettet en konto i Shopify. [Se kunder](/admin/customers?query=&accepts_marketing=1)",
+            "de": "Für alle Kunden, die sich registrieren, wird in Shopify ein Konto erstellt. [Kunden ansehen](/admin/customers?query=&accepts_marketing=1)",
+            "en": "Any customers who sign up will have an account created for them in Shopify. [View customers](/admin/customers?query=&accepts_marketing=1)",
+            "es": "Todos los clientes que se registren tendrán una cuenta creada para ellos en Shopify. [Ver clientes](/admin/customers?query=&accepts_marketing=1)",
+            "fi": "Tilaaville asiakkaille luodaan tili Shopify-palvelussa. [Näytä asiakkaat ](/admin/customers?query=&accepts_marketing=1)",
+            "fr": "Un compte sera créé dans Shopify pour les clients qui s'inscrivent. [Afficher les clients](/admin/customers?query=&accepts_marketing=1)",
+            "it": "Per tutti i clienti che si iscrivono verrà creato appositamente un account su Shopify. [Visualizza clienti](/admin/customers?query=&accepts_marketing=1)",
+            "ja": "サインアップしたお客様は、Shopifyでアカウントが作成されます。[お客様を表示する](/admin/customers?query=&accepts_marketing=1)",
+            "ko": "가입한 고객은 Shopify에서 생성된 계정을 보유하게 됩니다. [고객 보기](/admin/customers?query=&accepts_marketing=1)",
+            "nb": "Alle kunder som melder seg på, vil få opprettet en konto i Shopify. [Se kunder](/admin/customers?query=&accepts_marketing=1)",
+            "nl": "Voor alle klanten die zich aanmelden, wordt een Shopify-account gemaakt. [Bekijk klanten](/admin/customers?query=&accepts_marketing=1)",
+            "pl": "Dla wszystkich klientów, którzy się zarejestrują, utworzone zostaną konta w Shopify. [Wyświetl klientów](/admin/customers?query=&accepts_marketing=1)",
+            "pt-BR": "Todos os clientes que se inscreverem terão uma conta criada para eles na Shopify. [Visualizar clientes](/admin/customers?query=&accepts_marketing=1)",
+            "pt-PT": "Será criada uma conta na Shopify para todos os clientes que se registarem. [Ver clientes](/admin/customers?query=&accepts_marketing=1)",
+            "sv": "Alla kunder som registrerar sig kommer att få ett konto skapat i Shopify. [Visa kunder](/admin/customers?query=&accepts_marketing=1)",
+            "th": "ระบบจะสร้างบัญชีผู้ใช้ใน Shopify ให้แก่ลูกค้ารายที่ลงทะเบียนแล้ว [ดูลูกค้า](/admin/customers?query=&accepts_marketing=1)",
+            "tr": "Kaydolan tüm müşteriler için Shopify'da bir hesap oluşturulur. [Müşterileri görüntüleyin](/admin/customers?query=&accepts_marketing=1)",
+            "vi": "Bất kỳ khách hàng nào đăng ký đều sẽ được tạo tài khoản trong Shopify. [Xem khách hàng](/admin/customers?query=&accepts_marketing=1)",
+            "zh-CN": "任何注册用户都将在 Shopify 中拥有一个为他们创建的账户。[查看客户](/admin/customers?query=&accepts_marketing=1)",
+            "zh-TW": "顧客註冊後就可以擁有 Shopify 帳號。[查看顧客](/admin/customers?query=&accepts_marketing=1)"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

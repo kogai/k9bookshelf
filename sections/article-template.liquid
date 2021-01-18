@@ -1,0 +1,206 @@
+<!-- /templates/article.liquid -->
+{% comment %}
+  Comments will not appear right after they are submitted, either to be checked for spam
+  or to await moderation. When a comment is submitted, the browser is redirected to a page
+  that includes the new comment id in its URL.
+    Example: http://shopname.myshopify.com/blogs/news/2022072-my-post?comment=3721372
+{% endcomment %}
+
+{%- assign new_comment = false -%}
+{% if comment and comment.created_at %}
+  {%- assign new_comment = true -%}
+  {%- assign new_comment_id = comment.id -%}
+{% endif %}
+
+{% if new_comment %}
+  {%- assign duplicate_comment = false %}
+  {% for comment in article.comments %}
+    {% if comment.id == new_comment_id %}
+      {%- assign duplicate_comment = true %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+
+  {% if duplicate_comment %}
+    {%- assign number_of_comments = article.comments_count -%}
+  {% else %}
+    {%- assign number_of_comments = article.comments_count | plus: 1 -%}
+  {% endif %}
+{% else %}
+  {%- assign number_of_comments = article.comments_count -%}
+{% endif %}
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  <header>
+    <h1>{{ article.title }}</h1>
+    {% capture author %}<strong>{{ article.author }}</strong>{% endcapture %}
+    {% capture date %}<time datetime="{{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' }}">{{ article.published_at | date: format: 'date' }}</time>{% endcapture %}
+    <p class="txt--minor">{{ 'blogs.article.author_on_date_html' | t: author: author, date: date }}</p>
+  </header>
+
+  <div class="rte" itemprop="articleBody">
+    {{ article.content }}
+  </div>
+
+  {% if article.tags.size > 0 %}
+    <ul class="list--inline txt--minor">
+      <li>
+        <span>{{ 'blogs.article.tags' | t }}:</span>
+        {% for tag in article.tags %}
+          <a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a>{% unless forloop.last %}, {% endunless %}
+        {% endfor %}
+      </li>
+    </ul>
+  {% endif %}
+
+  {% if section.settings.social_sharing_blog %}
+    {% include 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image %}
+  {% endif %}
+
+  {% if blog.comments_enabled? %}
+    <h2 class="h3">{{ 'blogs.comments.with_count' | t: count: number_of_comments }}</h2>
+
+    {% paginate article.comments by 5 %}
+
+      {% comment %}
+        #comments is required, it is used as an anchor link by Shopify.
+      {% endcomment %}
+      <div id="comments">
+
+        {% if new_comment %}
+          <p class="form--success">
+            {% if blog.moderated? %}
+              {{ 'blogs.comments.success_moderated' | t }}
+            {% else %}
+              {{ 'blogs.comments.success' | t }}
+            {% endif %}
+          </p>
+        {% endif %}
+
+        {% if number_of_comments > 0 %}
+          <ul class="comments">
+            <hr>
+
+            {% if new_comment %}
+              {% unless paginate.current_page > 1 %}
+                <li id="{{ comment.id }}" class="comment">
+                  {% include 'comment' %}
+                </li>
+                <hr>
+              {% endunless %}
+            {% endif %}
+
+            {% for comment in article.comments %}
+              {% unless comment.id == new_comment_id %}
+                <li id="{{ comment.id }}" class="comment">
+                  {% include 'comment' %}
+                </li>
+                <hr>
+              {% endunless %}
+            {% endfor %}
+          </ul>
+
+          {% if paginate.pages > 1 %}
+            <div class="pagination text-center">
+              {{ paginate | default_pagination }}
+            </div>
+          {% endif %}
+        {% endif %}
+
+        <div class="comment-form">
+          {% form 'new_comment', article %}
+
+            <h2 class="h3">{{ 'blogs.comments.title' | t }}</h2>
+
+            {{ form.errors | default_errors }}
+
+            <div class="grid form-vertical">
+
+              <div class="grid__item">
+                <label for="CommentAuthor" class="label--hidden">{{ 'blogs.comments.name' | t }}</label>
+                <input type="text" name="comment[author]" id="CommentAuthor" class="input-full{% if form.errors contains 'author' %} input--error{% endif %}" placeholder="{{ 'blogs.comments.name' | t }}" value="{{ form.author }}" autocapitalize="words">
+
+                <label for="CommentEmail" class="label--hidden">{{ 'blogs.comments.email' | t }}</label>
+                <input type="email" name="comment[email]" id="CommentEmail" class="input-full{% if form.errors contains 'email' %} input--error{% endif %}" placeholder="{{ 'blogs.comments.email' | t }}" value="{{ form.email }}" autocorrect="off" autocapitalize="off">
+              </div>
+
+              <div class="grid__item">
+                <label for="CommentBody" class="label--hidden">{{ 'blogs.comments.message' | t }}</label>
+                <textarea name="comment[body]" id="CommentBody" class="input-full{% if form.errors contains 'body' %} input--error{% endif %}" placeholder="{{ 'blogs.comments.message' | t }}">{{ form.body }}</textarea>
+              </div>
+
+            </div>
+
+            {% if blog.moderated? %}
+              <p>{{ 'blogs.comments.moderated' | t }}</p>
+            {% endif %}
+
+            <input type="submit" class="btn" value="{{ 'blogs.comments.post' | t }}">
+          {% endform %}
+        </div>
+
+      </div>
+    {% endpaginate %}
+  {% endif %}
+
+</article>
+
+
+{% schema %}
+{
+  "name": {
+    "cs": "Stránky s články",
+    "da": "Artikelsider",
+    "de": "Artikelseiten",
+    "en": "Article pages",
+    "es": "Páginas del artículo",
+    "fi": "Artikkelisivut",
+    "fr": "Pages d'articles",
+    "it": "Pagine articoli",
+    "ja": "記事ページ",
+    "ko": "문서 페이지",
+    "nb": "Artikkelsider",
+    "nl": "Artikelpagina's",
+    "pl": "Strony artykułów",
+    "pt-BR": "Páginas do artigo",
+    "pt-PT": "Páginas de artigo",
+    "sv": "Artikelsidor",
+    "th": "หน้าบทความ",
+    "tr": "Makale sayfaları",
+    "vi": "Trang bài viết",
+    "zh-CN": "文章页面",
+    "zh-TW": "文章頁面"
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "social_sharing_blog",
+      "label": {
+        "cs": "Povolit sdílení pro blogové články",
+        "da": "Aktivér deling for blogartikler",
+        "de": "Teilen von Blog-Beiträgen aktivieren",
+        "en": "Enable sharing for blog articles",
+        "es": "Habilitar el uso compartido de artículos de blog",
+        "fi": "Ota blogi-artikkelien jakaminen käyttöön",
+        "fr": "Activer le partage pour les articles de blog",
+        "it": "Abilita condivisione per gli articoli del blog",
+        "ja": "ブログ記事の共有を有効にする",
+        "ko": "블로그 기사 공유 사용",
+        "nb": "Aktiver deling for bloggartikler",
+        "nl": "Delen van blogartikelen toestaan",
+        "pl": "Włącz udostępnianie artykułów na blogu",
+        "pt-BR": "Habilitar compartilhamento para artigos de blog",
+        "pt-PT": "Ativar partilha para artigos no blogue",
+        "sv": "Aktivera delning för bloggartiklar",
+        "th": "เปิดใช้การแชร์บทความบล็อก",
+        "tr": "Blog makaleleri için paylaşmayı etkinleştir",
+        "vi": "Bật chia sẻ bài viết trên blog",
+        "zh-CN": "启用博客文章分享",
+        "zh-TW": "啟用部落格文章分享功能"
+      },
+      "default": true
+    }
+  ]
+}
+{% endschema %}
