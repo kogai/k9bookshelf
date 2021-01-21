@@ -12,7 +12,7 @@ import (
 	"strconv"
 
 	"github.com/kogai/k9bookshelf/gqlgenc/client"
-	codegen "github.com/kogai/onix-codegen/go"
+	codegen "github.com/kogai/onix-codegen/generated/go/v2"
 )
 
 func findMetaFieldIDBy(fetchedProducts *client.ProductISBNs, idx int, key string) *string {

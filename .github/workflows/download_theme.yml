@@ -15,7 +15,7 @@ jobs:
       - name: Set up Theme-kit
         run: curl -s https://shopify.github.io/themekit/scripts/install.py | sudo python
       - name: Download liquid
-        run: theme download
+        run: theme --dir theme download
         env:
           THEME_APP_SECRET: ${{ secrets.THEME_APP_SECRET }}
           THEME_ID: ${{ secrets.THEME_ID }}
