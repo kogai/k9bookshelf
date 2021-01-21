@@ -151,6 +151,8 @@ github.com/kogai/onix-codegen v0.0.0-20210115150916-b4661a1eb629 h1:BQJKUZi76Jyb
 github.com/kogai/onix-codegen v0.0.0-20210115150916-b4661a1eb629/go.mod h1:O6sFzL6G9/WlHKtUaORq8Z/DQuATGdo5GCo+QcQSye4=
 github.com/kogai/onix-codegen v0.0.0-20210115161516-0134b80e0f71 h1:GgbXJYRfb65u8DHwKjq8c0uJQe2uYkHFjydese+2XOY=
 github.com/kogai/onix-codegen v0.0.0-20210115161516-0134b80e0f71/go.mod h1:O6sFzL6G9/WlHKtUaORq8Z/DQuATGdo5GCo+QcQSye4=
+github.com/kogai/onix-codegen v0.0.0-20210120165507-1661b6cc3d1d h1:rGitXq8sIBQc5CcqHwUdBXN1nBMhUZX1xa8uTswt5Jo=
+github.com/kogai/onix-codegen v0.0.0-20210120165507-1661b6cc3d1d/go.mod h1:O6sFzL6G9/WlHKtUaORq8Z/DQuATGdo5GCo+QcQSye4=
 github.com/konsorten/go-windows-terminal-sequences v1.0.1/go.mod h1:T0+1ngSBFLxvqU3pZ+m/2kptfBszLMUkC4ZK/EgS/cQ=
 github.com/kr/logfmt v0.0.0-20140226030751-b84e30acd515/go.mod h1:+0opPa2QZZtGFBFZlji/RkVcI2GknAs/DXo4wKdlNEc=
 github.com/kr/pretty v0.1.0 h1:L/CwN0zerZDmRFUapSPitk6f+Q3+0za1rQkzVuMiMFI=

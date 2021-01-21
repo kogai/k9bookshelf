@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strconv"
 
-	codegen "github.com/kogai/onix-codegen/go"
+	codegen "github.com/kogai/onix-codegen/generated/go/v2"
 )
 
 // Productidentifiers is not documented yet.
