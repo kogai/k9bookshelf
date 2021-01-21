@@ -10,7 +10,7 @@ import (
 
 	shopify "github.com/bold-commerce/go-shopify"
 	"github.com/kogai/k9bookshelf/gqlgenc/client"
-	codegen "github.com/kogai/onix-codegen/go"
+	codegen "github.com/kogai/onix-codegen/generated/go/v2"
 )
 
 // TODO: Convert implementation to instance method.
