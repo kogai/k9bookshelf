@@ -1,0 +1,27 @@
+{
+  "title": "Math Art",
+  "id": "gid://shopify/Product/6205361946823",
+  "metafields": [
+    {
+      "id": "gid://shopify/Metafield/17268418773191",
+      "key": "published_at",
+      "namespace": "k9bookshelf",
+      "value": "2019-04-16 00:00:00 +0000 UTC",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17268418805959",
+      "key": "subtitle",
+      "namespace": "k9bookshelf",
+      "value": "Truth, Beauty, and Equations",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17268418838727",
+      "key": "number_of_pages",
+      "namespace": "k9bookshelf",
+      "value": "208",
+      "valueType": "STRING"
+    }
+  ]
+}

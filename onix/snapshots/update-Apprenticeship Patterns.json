@@ -1,0 +1,27 @@
+{
+  "title": "Apprenticeship Patterns",
+  "id": "gid://shopify/Product/6205362110663",
+  "metafields": [
+    {
+      "id": "gid://shopify/Metafield/17268418937031",
+      "key": "published_at",
+      "namespace": "k9bookshelf",
+      "value": "2009-10-01 00:00:00 +0000 UTC",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17268418969799",
+      "key": "subtitle",
+      "namespace": "k9bookshelf",
+      "value": "Guidance for the Aspiring Software Craftsman",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17268419002567",
+      "key": "number_of_pages",
+      "namespace": "k9bookshelf",
+      "value": "139",
+      "valueType": "STRING"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "descriptionHtml": "\u003ch2\u003e出版社より\u003c/h2\u003e\n\u003cp\u003eAre you doing all you can to further your career as a software developer? With today's rapidly changing and ever-expanding technologies, being successful requires more than technical expertise. To grow professionally, you also need soft skills and effective learning techniques. Honing those skills is what this book is all about. Authors Dave Hoover and Adewale Oshineye have cataloged dozens of behavior patterns to help you perfect essential aspects of your craft.\u003cbr/\u003e\u003cbr/\u003eCompiled from years of research, many interviews, and feedback from O'Reilly's online forum, these patterns address difficult situations that programmers, administrators, and DBAs face every day. And it's not just about financial success. \u003ci\u003eApprenticeship Patterns\u003c/i\u003e also approaches software development as a means to personal fulfillment. Discover how this book can help you make the best of both your life and your career. \u003cbr/\u003e\u003cbr/\u003eSolutions to some common obstacles that this book explores in-depth include: \u003cbr/\u003e\u003cbr/\u003e\u003c/p\u003e\u003cul\u003e\u003cli\u003eBurned out at work? \"Nurture Your Passion\" by finding a pet project to rediscover the joy of problem solving.\u003c/li\u003e\u003cli\u003eFeeling overwhelmed by new information? Re-explore familiar territory by building something you've built before, then use \"Retreat into Competence\" to move forward again.\u003c/li\u003e\u003cli\u003eStuck in your learning? Seek a team of experienced and talented developers with whom you can \"Be the Worst\" for a while.\u003c/li\u003e\u003c/ul\u003e\u003cbr/\u003e\u003cbr/\u003e\"Brilliant stuff! Reading this book was like being in a time machine that pulled me back to those key learning moments in my career as a professional software developer and, instead of having to learn best practices the hard way, I had a guru sitting on my shoulder guiding me every step towards master craftsmanship. I'll certainly be recommending this book to clients. I wish I had this book 14 years ago!\"-Russ Miles, CEO, OpenCredo\n\u003chr/\u003e\n\u003ch2\u003eDeepL 粗訳\u003c/h2\u003e\n\u003cp\u003eソフトウェア開発者としてのキャリアを積むために、できる限りのことをしていますか？今日の急速に変化し、拡大し続ける技術では、成功するためには技術的な専門知識だけでなく、ソフトスキルも必要です。専門的に成長するためには、ソフトスキルと効果的な学習テクニックも必要です。これらのスキルを磨くことが本書のすべてです。また、経済的な成功だけではありません。\u003ci\u003eApprenticeship Patterns\u003c/i\u003e は、個人的な充実感を得るための手段としてのソフトウェア開発にもアプローチしています。\u003cbr/\u003e\u003cbr/\u003e\u003cbr/\u003e\u003c/p\u003e\u003cul\u003e\u003cli\u003e仕事で燃え尽きた？\u003c/li\u003e\u003cli\u003e新しい情報に圧倒されていますか?以前に構築したものを構築することで慣れ親しんだ領域を再探索し、「能力への回帰」を使用して再び前進します。\u003c/li\u003e\u003cli\u003e学習に行き詰っていますか?経験豊富で才能のある開発者のチームを探して、しばらくの間「最悪の存在になる」ことができます。この本を読むと、プロのソフトウェア開発者としてのキャリアの中で重要な学習の瞬間にタイムマシンの中にいるような気分になり、ベストプラクティスを難しい方法で学ばなければならない代わりに、熟練した職人技を身につけるためのあらゆるステップを指導してくれる教祖が肩に座っていました。私はこの本をクライアントに推薦することになるでしょう。14年前にこの本があればよかったのに！」-Russ Miles, CEO, OpenCredo",
+  "title": "Apprenticeship Patterns",
+  "vendor": "O'Reilly Media",
+  "collectionsToJoin": [
+    "gid://shopify/Collection/236195152071"
+  ],
+  "metafields": [
+    {
+      "id": "gid://shopify/Metafield/17064773583047",
+      "key": "published_at",
+      "namespace": "k9bookshelf",
+      "value": "2009-10-01 00:00:00 +0000 UTC",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17064773648583",
+      "key": "subtitle",
+      "namespace": "k9bookshelf",
+      "value": "Guidance for the Aspiring Software Craftsman",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17127287816391",
+      "key": "number_of_pages",
+      "namespace": "k9bookshelf",
+      "value": "139",
+      "valueType": "STRING"
+    }
+  ],
+  "variants": [
+    {
+      "barcode": "9780596518387",
+      "inventoryPolicy": "CONTINUE",
+      "price": "3298.900000",
+      "weight": 0.27215545662,
+      "weightUnit": "KILOGRAMS"
+    }
+  ]
+}

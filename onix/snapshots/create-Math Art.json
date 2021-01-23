@@ -1,0 +1,56 @@
+{
+  "descriptionHtml": "\u003ch2\u003e出版社より\u003c/h2\u003e\n\u003cb\u003eFrom geometry in motion to the possibilities of pi, this stunning volume reveals how art has been inspired by the beauty and poetry of mathematical principles.\u003c/b\u003e \u003cp/\u003e The worlds of visual art and mathematics come together in this spectacular volume by award-winning writer Stephen Ornes. He explores the growing sensation of math art, presenting more than 80 pieces, including a crocheted, colorful representation of non-Euclidian geometry that looks like sea coral and a 65-ton, 28-foot-tall bronze sculpture covered in a space-filling curve. For each work, we get the artist's story followed by accessible and thought-provoking explanations of the mathematical concept and equations behind the art. From 3D-printed objects that give real form to abstract mathematical theories, to mystic fractals, to Andy Warhol as a solution to the Traveling Salesman Problem, these artworks embody some of strangest, most beautiful relationships among numbers and across dimensions.\n\u003chr/\u003e\n\u003ch2\u003eDeepL 粗訳\u003c/h2\u003e\n\u003cb\u003e動きのある幾何学から円周率の可能性まで、この驚くべきボリュームでは、アートがどのようにして数学的原理の美しさと詩に触発されてきたかを明らかにしています。彼は、海の珊瑚のように見える非ユークリッド幾何学のかぎ針編みのカラフルな表現や、空間を埋め尽くすような曲線で覆われた 65 トン、28 フィートの高さのブロンズ彫刻など、80 以上の作品を紹介しながら、数学アートの成長しつつある感覚を探求しています。それぞれの作品について、アーティストのストーリーに続いて、アートの背後にある数学的な概念や方程式について、親しみやすく示唆に富んだ説明がなされています。抽象的な数学的理論に実際の形を与える3Dプリントされたオブジェクトから、神秘的なフラクタル、アンディ・ウォーホルの「トラベリング・セールスマン問題」の解決策まで、これらの作品は、数と次元を超えた奇妙で最も美しい関係を体現しています。",
+  "tags": [
+    "math art",
+    "impossible objects",
+    "math artists",
+    "non Euclidian geometry",
+    "gifts for grads",
+    "gifts for dads",
+    "nature art",
+    "MC Escher",
+    "geometry in art",
+    "books for math lovers",
+    "gift for geek",
+    "physics",
+    "fractal",
+    "gift for math nerd"
+  ],
+  "title": "Math Art",
+  "vendor": "Sterling",
+  "collectionsToJoin": [
+    "gid://shopify/Collection/236195152071"
+  ],
+  "metafields": [
+    {
+      "id": "gid://shopify/Metafield/17064773583047",
+      "key": "published_at",
+      "namespace": "k9bookshelf",
+      "value": "2019-04-16 00:00:00 +0000 UTC",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17064773648583",
+      "key": "subtitle",
+      "namespace": "k9bookshelf",
+      "value": "Truth, Beauty, and Equations",
+      "valueType": "STRING"
+    },
+    {
+      "id": "gid://shopify/Metafield/17127287816391",
+      "key": "number_of_pages",
+      "namespace": "k9bookshelf",
+      "value": "208",
+      "valueType": "STRING"
+    }
+  ],
+  "variants": [
+    {
+      "barcode": "9781454930440",
+      "inventoryPolicy": "CONTINUE",
+      "price": "2744.500000",
+      "weight": 0.975223719555,
+      "weightUnit": "KILOGRAMS"
+    }
+  ]
+}
