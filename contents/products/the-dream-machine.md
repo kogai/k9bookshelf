@@ -1,0 +1,7 @@
+Behind every great revolution is a vision and behind perhaps the greatest revolution of our time, personal computing, is the vision of J.C.R. Licklider. He did not design the first personal computers or write the software that ran on them, nor was he involved in the legendary early companies that brought them to the forefront of our everyday experience. He was instead a relentless visionary that saw the potential of the way individuals could interact with computers and software.
+
+At a time when computers were a short step removed from mechanical data processors, Licklider was writing treatises on "human-computer symbiosis", "computers as communication devices", and a now not-so-unfamiliar "Intergalactic Network." His ideas became so influential, his passion so contagious, that Waldrop called him "computing's Johnny Appleseed.
+
+In a simultaneously compelling personal narrative and comprehensive historical exposition, Waldrop tells the story of the man who not only instigated the work that led to the internet, but also shifted our understanding of what computers were and could be.
+
+Included in this edition are also the original texts of Licklider's three most influential writings: 'Man-computer symbiosis' (1960), which outlines the vision that inspired the personal computer revolution of the 1970s; his 'Intergalactic Network' memo (1963), which outlines the vision that inspired the internet; and "The computer as a communication device" (1968, co-authored with Robert Taylor), which amplifies his vision for what the network could become
