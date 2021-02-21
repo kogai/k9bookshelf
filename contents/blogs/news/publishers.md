@@ -1,6 +1,4 @@
-<!-- TODO: Add thumbnail of Book of Stripe Press -->
-
-このサイトでは英語の技術書を専門に取り扱っているのですが、一口に「技術書」と言っても実に様々な出版社が各々の個性で書籍を刊行しています。
+k9bookshelfでは英語の技術書を中心に取り扱っているのですが、一口に「技術書」と言っても実に様々な出版社が各々の個性で書籍を刊行しています。
 
 国内の技術系出版社としては，オライリー・ジャパンなどが思い浮かぶかと思いますが、英語圏の技術系出版社というのはどういったところがあるのでしょうか？
 
@@ -18,7 +16,7 @@ Webアプリケーションからモバイルアプリ、ゲーム開発系な�
 
 王道的なテーマを深堀りした書籍を刊行している印象ですが、Computer Science系の書籍は少ないかも知れません。
 
-以前30日連続で毎日一冊無料ダウンロードみたいな無茶なセールをやっていました。 (テーマが古くてあまりうれしくはなかったけど。。。)
+以前30日連続で毎日一冊無料ダウンロードみたいな無茶なセールをやっていました。 (テーマが古いものが多くてあまりうれしくはなかったけど。。。)
 
 動画コンテンツも豊富。自社のオンデマンド出版工場を持っているらしく、原則直販で仕入れています。
 
@@ -82,22 +80,22 @@ In Action, In Depthシリーズが有名です。 [フルリモート](https://w
 
 [https://press.stripe.com/](https://press.stripe.com/)
 
-決済代行サービスの雄、 [Stripe](https://stripe.com) が運営している出版社。
+![](https://lh3.googleusercontent.com/6iHzyemEiR9o-UZ9ZbWHtdlp6v-yPO2T5OZpJaYx1vldCpU6TUJHuC835no2papVJMAI3m-9LS-tijivNtUzdys2zHw0R9XeS00l1EgYMN6zc6D24fEOynROb8ZeCL1RRgbfPtnRMwAFzw037x-eFdd_RnMq0W_3OZVTqq4-cZpoYkOiuejL1T-uaJLBSb18KyFGRaVBNQvZHc2JU4U9Sfcok7G3xlcHMgY-xvrZFggsxzfCaVfpF6CS_8-QBTxlLb89XVthW-BVRc8mVe24PuqUnm3RH9K85ttqAFNiK_5B5_PBCPjj5ts5XbSF2CbjwEJtFVf1WNuN-DUwHn4EoOm22qPHql-yfBnQe7nAWdkczLfP6T2MS3oFQ60PdTsOATCZyzEGbOMnLCSbxdAjiOquKt8n1gIm636WpN__J--9V_KSvY46IPqVXE9xVA-uBMFn_e3WMcIiEgGL1Umz2Gk30mWNy5MKl_LLodmELWhXzlZDXpnYw89az6xgQqWG1ZYU41SP5_Z1VHlHEd-i5JVAq469rZVnf9xDM9rdXaNJKjaabZkk1HxxIigNJQAQ_fkHGImR4ZjdXxKqU4EYRkBPg5FFmdRj9Cdb0-hDQttpQXOH9h4xbcV0Qsciae-vxRx3xd0WhdOrcLYQpP498FgYe-r4Lno9sJD7qCoBm9fmsXE0oWg4tD9rSZMY=s1550-no?authuser=0)
+
+決済代行サービスの [Stripe](https://stripe.com) が運営している出版社。
 
 自身が有数のテックカンパニーであることの経験からインスパイアされた刊行物には強いこだわりを感じます。
 
-技術系の書籍は中身重視というか、ペーパバックのものが多いですが、StripePressは装丁も美しいです。
+技術系の書籍は中身重視なのかペーパバックのものが多いですが、Stripe Pressのものは装丁も美しいです。
 
-いわゆる技術の習得を目指す書籍というよりは、マネジメント関連や技術系ノンフィクションの書籍を取り扱っています。
+いわゆる技術の習得を目指す書籍というよりは、マネジメント関連や技術系ノンフィクションの書籍がメインのようです。
 
-実は出版取次との取引がなく、且つ国内(US)配送のみの直取引でしか仕入れられないので、日本国内で手に入れようと思ったら当サイトが(多分)唯一の選択肢になると思います。
-
-<!-- TODO: Collection -->
+実は出版取次との取引がなく、且つ国内(US)配送のみの直取引でしか仕入れられないので、日本国内で手に入れようと思ったら当サイトがおそらく唯一の選択肢になると思います。
 
 ## まとめ
 
 当サイトで取り扱いの多い出版社を中心に、特徴や印象を並べてみました。
 
-この記事で挙げた以外でも名著も絶版も多いPearson Educationや、Hardware Hackingが強いNo Starch Pressなど、国外にも魅力的な出版社が多数あります。
+この記事で挙げた以外でも名著も絶版も多いPearson Educationや、ハードウェア関連の書籍が多いNo Starch Pressなど、魅力的な出版社は多数あります。
 
 時には出版社から次に読む技術書を選んでみるのも面白いかも知れません。
