@@ -1,14 +1,3 @@
-分散システムにおける一つのServiceをステップ・バイ・ステップで構築していく本です。基本的にはアプリケーションレイヤーの話がメインですが、最後に少しだけk8sの話が出てきます。
-
-2020年現在では単一のデプロイ単位からなるアプリケーションで成立するサービスってほぼないと思うのですが、そういう意味で新しい世代のWeb開発入門本として読めるかも知れません。
-(とは言えいわゆるモノリシックなWebアプリケーションは普通に作れる知識レベルを前提とした本だと思います)
-
-この手の書籍は大抵そうですが、コード例にはテストも付いているので読み進めやすいです。
-
-ところでボブ、アリス、マロリーって公開鍵暗号の説明をする時の定形キャラクターだったんですね。知らなかった。
-
-## 出版社より
-
 You know the basics of Go and are eager to put your knowledge to work. This book is just what you need to apply Go to real-world situations. You’ll build a distributed service that’s highly available, resilient, and scalable. Along the way you’ll master the techniques, tools, and tricks that skilled Go programmers use every day to build quality applications. Level up your Go skills today.
 
 Take your Go skills to the next level by learning how to design, develop, and deploy a distributed service. Start from the bare essentials of storage handling, then work your way through networking a client and server, and finally to distributing server instances, deployment, and testing. All this will make coding in your day job or side projects easier, faster, and more fun.
