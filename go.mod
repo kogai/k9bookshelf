@@ -15,7 +15,7 @@ require (
 	github.com/kogai/onix-codegen v0.0.0-20210120165507-1661b6cc3d1d
 	github.com/shopspring/decimal v1.2.0 // indirect
 	github.com/spf13/cobra v1.1.1
-	github.com/tdewolff/minify/v2 v2.9.10
+	github.com/tdewolff/minify/v2 v2.9.16
 	github.com/vbauerster/mpb v3.4.0+incompatible
 	golang.org/x/crypto v0.0.0-20201117144127-c1f2f97bffc9 // indirect
 	golang.org/x/net v0.0.0-20201110031124-69a78807bb2b
