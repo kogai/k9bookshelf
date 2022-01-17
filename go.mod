@@ -4,7 +4,7 @@ go 1.14
 
 require (
 	github.com/99designs/gqlgen v0.13.0
-	github.com/JohannesKaufmann/html-to-markdown v1.2.0
+	github.com/JohannesKaufmann/html-to-markdown v1.3.1
 	github.com/PuerkitoBio/goquery v1.6.0 // indirect
 	github.com/VividCortex/ewma v1.1.1 // indirect
 	github.com/Yamashou/gqlgenc v0.0.0-20201118110422-c5e4e29019a7
@@ -18,7 +18,7 @@ require (
 	github.com/tdewolff/minify/v2 v2.9.10
 	github.com/vbauerster/mpb v3.4.0+incompatible
 	golang.org/x/crypto v0.0.0-20201117144127-c1f2f97bffc9 // indirect
-	golang.org/x/net v0.0.0-20201110031124-69a78807bb2b
+	golang.org/x/net v0.0.0-20201110031124-69a78807bb2b // indirect
 	golang.org/x/sys v0.0.0-20201119102817-f84b799fce68 // indirect
 	golang.org/x/tools v0.0.0-20201121010211-780cb80bd7fb // indirect
 	gopkg.in/go-playground/assert.v1 v1.2.1
