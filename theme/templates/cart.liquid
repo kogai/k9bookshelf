@@ -21,7 +21,7 @@
                     {%- assign img_url = item.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
                     {%- capture wrapper_id -%}CartImageWrapper--{{ item.image.id }}{%- endcapture -%}
                     {%- capture img_id -%}CartImage--{{ item.image.id }}{%- endcapture -%}
-                    {% include 'image-style' with image: item.image, width: 720, height: 600, small_style: false, wrapper_id: wrapper_id, img_id: img_id %}
+                    {% include 'image-style' with image, image: item.image, width: 720, height: 600, small_style: false, wrapper_id: wrapper_id, img_id: img_id %}
                     <div id="{{ wrapper_id }}" class="cart__image-wrapper supports-js">
                       <a class="cart__image-container" href="{{ item.url | within: collections.all }}" style="padding-top:{{ 1 | divided_by: item.image.aspect_ratio | times: 100}}%;">
                         <img id="{{ img_id }}"
@@ -191,3 +191,15 @@
     {% endif %}
   </div>
 </div>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% include 'image-style' with image: item.image, width: 720, height: 600,
+    small_style: false, wrapper_id: wrapper_id, img_id: img_id %}"
+  to: "{% include 'image-style' with image, image: item.image, width: 720, height:
+    600, small_style: false, wrapper_id: wrapper_id, img_id: img_id %}"
+  position: 1432..1574
+{% endcomment %}
