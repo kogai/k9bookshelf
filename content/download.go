@@ -2,6 +2,8 @@ package content
 
 import (
 	"context"
+	"errors"
+	"fmt"
 	"os"
 	"path"
 	"sync"
@@ -10,52 +12,24 @@ import (
 	"github.com/vbauerster/mpb/v8/decor"
 )
 
-func dowloadContens(output string, contents *[]Content, bar *mpb.Bar) error {
-	err := os.MkdirAll(output, os.ModePerm)
-	if err != nil {
+func dowloadContens(output string, contents []Content, bar *mpb.Bar) error {
+	if err := os.MkdirAll(output, os.ModePerm); err != nil {
 		return err
 	}
-	var wg sync.WaitGroup
-
-	for _, content := range *contents {
-		wg.Add(1)
-		c := make(chan error)
-
-		go func(handle, descriptionHTML string, meta *FrontMatter) {
-			defer wg.Done()
-			defer bar.Increment()
-
-			file, err := os.Create(path.Join(output, handle+".md"))
-			if err != nil {
-				c <- err
-				return
-			}
-			md, err := htmlToMarkdown(descriptionHTML)
-			if err != nil {
-				c <- err
-				return
-			}
-
-			fm, err := renderFrontMatter(meta)
-			if err != nil {
-				c <- err
-				return
-			}
-
-			_, err = file.WriteString(fm + md)
-			if err != nil {
-				c <- err
-				return
-			}
-			c <- nil
-		}(content.handle, content.html, content.meta)
-		err = <-c
+	for _, content := range contents {
+		md, err := htmlToMarkdown(content.html)
 		if err != nil {
+			return fmt.Errorf("%s: %w", path.Join(output, content.handle), err)
+		}
+		fm, err := renderFrontMatter(content.meta)
+		if err != nil {
+			return fmt.Errorf("%s: %w", path.Join(output, content.handle), err)
+		}
+		if err := os.WriteFile(path.Join(output, content.handle+".md"), []byte(fm+md), 0644); err != nil {
 			return err
 		}
+		bar.Increment()
 	}
-
-	wg.Wait()
 	return nil
 }
 
@@ -114,9 +88,11 @@ func Download(shopDomain, appKey, appSecret, shopToken, output string) error {
 		blogs = append(blogs, contents)
 	}
 
+	all := append([]Contents{products, pages}, blogs...)
+	errs := make([]error, len(all))
 	var wg sync.WaitGroup
 	progress := mpb.New(mpb.WithWaitGroup(&wg))
-	for _, cts := range append([]Contents{products, pages}, blogs...) {
+	for i, cts := range all {
 		wg.Add(1)
 		bar := progress.AddBar(int64(len(cts.items)),
 			mpb.PrependDecorators(
@@ -130,15 +106,15 @@ func Download(shopDomain, appKey, appSecret, shopToken, output string) error {
 			),
 		)
 
-		go func(o string, items []Content, b *mpb.Bar) {
+		go func(i int, o string, items []Content, b *mpb.Bar) {
 			defer wg.Done()
-			err = dowloadContens(o, &items, b)
-		}(path.Join(output, cts.kind), cts.items, bar)
-		if err != nil {
-			return err
-		}
+			if errs[i] = dowloadContens(o, items, b); errs[i] != nil {
+				// NOTE: Abort the bar so that progress.Wait doesn't wait for its completion.
+				b.Abort(false)
+			}
+		}(i, path.Join(output, cts.kind), cts.items, bar)
 	}
 
 	progress.Wait()
-	return nil
+	return errors.Join(errs...)
 }
