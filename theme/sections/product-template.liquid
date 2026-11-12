@@ -18,7 +18,7 @@
         {% capture wrapper_id %}ProductImageWrapper-{{ image.id }}{% endcapture %}
         {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
 
-        {% include 'image-style' with image: image, width: 720, height: 600, small_style: true, wrapper_id: wrapper_id, img_id: img_id %}
+        {% include 'image-style' with image, image: image, width: 720, height: 600, small_style: true, wrapper_id: wrapper_id, img_id: img_id %}
 
         <div id="{{ wrapper_id }}" class="product-single__featured-image-wrapper supports-js{% unless featured_image == image %} hidden{% endunless %}" data-image-id="{{ image.id }}">
           <div class="product-single__photos" data-image-id="{{ image.id }}" style="padding-top:{{ 1 | divided_by: image.aspect_ratio | times: 100}}%;">
@@ -853,3 +853,15 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% include 'image-style' with image: image, width: 720, height: 600, small_style:
+    true, wrapper_id: wrapper_id, img_id: img_id %}"
+  to: "{% include 'image-style' with image, image: image, width: 720, height: 600,
+    small_style: true, wrapper_id: wrapper_id, img_id: img_id %}"
+  position: 1318..1454
+{% endcomment %}
