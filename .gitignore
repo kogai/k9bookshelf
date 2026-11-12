@@ -1,7 +1,7 @@
-/bazel-*
 # /generated
 /bin
 /onix/*.onix
 /theme/assets/app.min.*
 /secrets.json
-/*.bazelrc
+/node_modules
+/k9bookshelf
