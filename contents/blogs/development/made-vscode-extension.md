@@ -45,10 +45,10 @@ VSCodeだとこういう感じ
 動かしてみたところはこんな感じ。
 
 Cmd + Shift + P から `Show RegExp preview`コマンドを打つ
-![](https://raw.githubusercontent.com/kogai/k9bookshelf/main/contents/assets/devlog/made-vscode-extension/command.png)
+![](https://raw.githubusercontent.com/kogai/k9bookshelf/main/contents/assets/development/made-vscode-extension/command.png)
 
 こんな感じでダイアグラムが表示される
-![](https://raw.githubusercontent.com/kogai/k9bookshelf/main/contents/assets/devlog/made-vscode-extension/diagram.png)
+![](https://raw.githubusercontent.com/kogai/k9bookshelf/main/contents/assets/development/made-vscode-extension/diagram.png)
 
 
 よかったら使ってみて下さい。
