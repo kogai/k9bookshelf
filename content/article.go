@@ -10,7 +10,7 @@ import (
 
 // Article is documented at https://shopify.dev/docs/admin-api/rest/reference/online-store/article
 type Article struct {
-	ID                int64      `json:"id"`
+	ID                int64      `json:"id,omitempty"`
 	Title             string     `json:"title,omitempty"`
 	CreatedAt         *time.Time `json:"created_at,omitempty"`
 	BodyHTML          string     `json:"body_html,omitempty"`
@@ -80,4 +80,26 @@ func (a *ArticleResource) Put(article Article) (*Article, error) {
 		return nil, err
 	}
 	return &response, nil
+}
+
+// NOTE: shopify.Blog isn't tagged by `omitempty`, so creating a blog through it sends empty values of every field
+// and the API rejects it (e.g. `commentable: must be in a valid state`).
+type newBlog struct {
+	Title  string `json:"title"`
+	Handle string `json:"handle"`
+}
+
+type blogPayload struct {
+	Blog shopify.Blog `json:"blog"`
+}
+
+// createBlog creates a blog only with its title and handle.
+func createBlog(client *shopify.Client, title, handle string) (*shopify.Blog, error) {
+	var response blogPayload
+	p := path.Join("admin", "api", apiVersion, "blogs.json")
+	err := client.Post(p, map[string]newBlog{"blog": {Title: title, Handle: handle}}, &response)
+	if err != nil {
+		return nil, err
+	}
+	return &response.Blog, nil
 }
