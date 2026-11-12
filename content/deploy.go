@@ -145,7 +145,7 @@ func deployBlogs(shopDomain, appKey, appSecret string, blogs map[string][]Conten
 			}
 		}
 		if blog == nil {
-			blog, err = adminClient.Blog.Create(shopify.Blog{Title: blogHandle, Handle: blogHandle})
+			blog, err = createBlog(adminClient, blogHandle, blogHandle)
 			if err != nil {
 				return fmt.Errorf("failed to create blog [%s]: %w", blogHandle, err)
 			}
