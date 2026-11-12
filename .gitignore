@@ -5,3 +5,9 @@
 /secrets.json
 /node_modules
 /k9bookshelf
+/.env
+/.env.*
+*.pem
+*.p12
+*.key
+/config.local.yml

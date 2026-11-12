@@ -20,7 +20,7 @@ TK := ./bin/theme
 
 CONTENT := go run ./content/cmd/content
 
-.PHONY: deploy/theme deploy/contents download/contents download/theme watch lint test golden check/theme import import/dry release gqlgenc dist
+.PHONY: deploy/theme deploy/contents download/contents download/theme watch lint test golden check/theme check/secrets import import/dry release gqlgenc dist
 
 bin/theme:
 	mkdir -p bin
@@ -42,10 +42,14 @@ download/theme: bin/theme
 lint:
 	$(LINT) ./theme
 
-test:
+test: check/secrets
 	test -z "$$(gofmt -l $(GOFMT_FILES))" || (gofmt -l $(GOFMT_FILES); exit 1)
 	go vet ./...
 	go test ./...
+
+# Fails when tracked files contain something that looks like a secret. This repository is public.
+check/secrets:
+	./scripts/check-secrets.sh
 
 # Regenerates golden files of HTML rendered from contents/ (content/testdata/rendered)
 golden:
