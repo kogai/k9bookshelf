@@ -127,97 +127,97 @@ func deployPages(shopDomain, appKey, appSecret string, contents []Content, bar *
 }
 
 func deployBlogs(shopDomain, appKey, appSecret string, blogs map[string][]Content, bar *mpb.Bar) error {
-	var err error
 	adminClient := establishRestClient(shopDomain, appKey, appSecret)
-	wg := sync.WaitGroup{}
-	c := make(chan error)
+	articleResource := NewArticleResource(adminClient)
 
 	currentBlogs, err := adminClient.Blog.List(nil)
 	if err != nil {
 		return err
 	}
 
-	for _blogCategory, _blogContents := range blogs {
-		wg.Add(1)
-		var b *shopify.Blog
-		go func(blogCategory string, blogContents []Content) {
-			defer wg.Done()
-
-			for _, currentBlog := range currentBlogs {
-				if currentBlog.Handle == blogCategory {
-					b = &currentBlog
-					break
-				}
+	// NOTE: Articles are deployed sequentially to stay within the rate limit of the REST Admin API.
+	for blogHandle, blogContents := range blogs {
+		var blog *shopify.Blog
+		for i := range currentBlogs {
+			if currentBlogs[i].Handle == blogHandle {
+				blog = &currentBlogs[i]
+				break
 			}
-			if b == nil {
-				c <- fmt.Errorf("blog category [%s] is not exist", blogCategory)
-				return
-			}
-
-			articles, err := NewArticleResource(adminClient).List(b.ID)
+		}
+		if blog == nil {
+			blog, err = adminClient.Blog.Create(shopify.Blog{Title: blogHandle, Handle: blogHandle})
 			if err != nil {
-				c <- err
-				return
+				return fmt.Errorf("failed to create blog [%s]: %w", blogHandle, err)
+			}
+		}
+
+		articles, err := articleResource.List(blog.ID)
+		if err != nil {
+			return err
+		}
+		existing := map[string]Article{}
+		for _, a := range articles.Articles {
+			existing[a.Handle] = a
+		}
+
+		for _, content := range blogContents {
+			publishedAt, err := content.meta.publishedAt()
+			if err != nil {
+				return fmt.Errorf("blog article [%s/%s]: %w", blogHandle, content.handle, err)
+			}
+			article := Article{
+				BlogID:      blog.ID,
+				BodyHTML:    content.html,
+				PublishedAt: publishedAt,
+				Tags:        content.meta.tags(),
+			}
+			if content.meta != nil {
+				article.Title = content.meta.Title
 			}
 
-			for _, _content := range blogContents {
-				wg.Add(1)
-				var _article Article
-				for _, a := range articles.Articles {
-					if _content.handle == a.Handle {
-						_article = a
-					}
+			if a, ok := existing[content.handle]; ok {
+				article.ID = a.ID
+				_, err = articleResource.Put(article)
+			} else {
+				if article.Title == "" {
+					return fmt.Errorf("blog article [%s/%s] is not exist. Add `title` to front matter to create it", blogHandle, content.handle)
 				}
-
-				if _article.ID == 0 {
-					c <- fmt.Errorf("blog article [%s] is not exist", _content.handle)
-					return
-				}
-
-				go func(content Content, article Article) {
-					defer wg.Done()
-					defer bar.Increment()
-
-					_, err = NewArticleResource(adminClient).Put(Article{
-						ID:       article.ID,
-						BlogID:   article.BlogID,
-						BodyHTML: content.html,
-					})
-
-					if err != nil {
-						c <- err
-						return
-					}
-				}(_content, _article)
+				article.Handle = content.handle
+				_, err = articleResource.Post(article)
 			}
-		}(_blogCategory, _blogContents)
-
+			if err != nil {
+				return fmt.Errorf("blog article [%s/%s]: %w", blogHandle, content.handle, err)
+			}
+			bar.Increment()
+		}
 	}
-	go func() {
-		wg.Wait()
-		c <- nil
-	}()
-
-	err = <-c
-	return err
+	return nil
 }
 
 func filesToContents(inputDir string, files []os.FileInfo) ([]Content, error) {
 	contents := []Content{}
 	for _, file := range files {
 		filename := file.Name()
+		if file.IsDir() || filepath.Ext(filename) != ".md" {
+			continue
+		}
 		handle := filename[0 : len(filename)-len(filepath.Ext(filename))]
 		md, err := ioutil.ReadFile(path.Join(inputDir, filename))
 		if err != nil {
 			return nil, err
 		}
-		html, err := markdownToHTML(string(md))
+		meta, body, err := splitFrontMatter(string(md))
+		if err != nil {
+			return nil, fmt.Errorf("%s: %w", path.Join(inputDir, filename), err)
+		}
+		html, err := markdownToHTML(body)
 		if err != nil {
 			return nil, err
 		}
 		contents = append(contents, Content{
 			handle: handle,
 			html:   html,
+			meta:   meta,
 		})
 	}
 	return contents, nil
