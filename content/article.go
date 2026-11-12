@@ -49,11 +49,26 @@ func NewArticleResource(client *shopify.Client) *ArticleResource {
 // List returns articles
 func (a *ArticleResource) List(blogID int64) (*Articles, error) {
 	articles := Articles{Articles: []Article{}}
-	err := a.client.Get(path.Join("admin", "api", apiVersion, "blogs", fmt.Sprint(blogID), "articles.json"), &articles, nil)
+	// NOTE: 250 is the maximum page size of the REST Admin API.
+	options := struct {
+		Limit int `url:"limit"`
+	}{Limit: 250}
+	err := a.client.Get(path.Join("admin", "api", apiVersion, "blogs", fmt.Sprint(blogID), "articles.json"), &articles, options)
 	if err != nil {
 		return nil, err
 	}
 	return &articles, nil
+}
+
+// Post creates article
+func (a *ArticleResource) Post(article Article) (*Article, error) {
+	var response ArticlePayload
+	p := path.Join("admin", "api", apiVersion, "blogs", fmt.Sprint(article.BlogID), "articles.json")
+	err := a.client.Post(p, ArticlePayload{Article: article}, &response)
+	if err != nil {
+		return nil, err
+	}
+	return &response.Article, nil
 }
 
 // Put update article

@@ -20,7 +20,7 @@ func dowloadContens(output string, contents *[]Content, bar *mpb.Bar) error {
 		wg.Add(1)
 		c := make(chan error)
 
-		go func(handle, descriptionHTML string) {
+		go func(handle, descriptionHTML string, meta *FrontMatter) {
 			defer wg.Done()
 			defer bar.Increment()
 
@@ -35,13 +35,19 @@ func dowloadContens(output string, contents *[]Content, bar *mpb.Bar) error {
 				return
 			}
 
-			_, err = file.WriteString(md)
+			fm, err := renderFrontMatter(meta)
+			if err != nil {
+				c <- err
+				return
+			}
+
+			_, err = file.WriteString(fm + md)
 			if err != nil {
 				c <- err
 				return
 			}
 			c <- nil
-		}(content.handle, content.html)
+		}(content.handle, content.html, content.meta)
 		err = <-c
 		if err != nil {
 			return err
@@ -98,6 +104,7 @@ func Download(shopDomain, appKey, appSecret, shopToken, output string) error {
 			contents.items = append(contents.items, Content{
 				handle: article.Handle,
 				html:   article.BodyHTML,
+				meta:   articleToFrontMatter(article),
 			})
 		}
 		blogs = append(blogs, contents)

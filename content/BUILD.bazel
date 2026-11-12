@@ -7,6 +7,7 @@ go_library(
         "client.go",
         "deploy.go",
         "download.go",
+        "frontmatter.go",
         "markdown.go",
         "syncdata.go",
     ],
@@ -22,12 +23,16 @@ go_library(
         "@com_github_vbauerster_mpb//:go_default_library",
         "@com_github_vbauerster_mpb//decor:go_default_library",
         "@com_github_yamashou_gqlgenc//client:go_default_library",
+        "@in_gopkg_yaml_v2//:go_default_library",
     ],
 )
 
 go_test(
     name = "go_default_test",
-    srcs = ["markdown_test.go"],
+    srcs = [
+        "frontmatter_test.go",
+        "markdown_test.go",
+    ],
     embed = [":go_default_library"],
     deps = ["@in_gopkg_go_playground_assert_v1//:go_default_library"],
 )
