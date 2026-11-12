@@ -2,7 +2,7 @@
 
 ## 必要なもの
 
-- Go 1.24
+- Go 1.26
 - Node.js 20.9 以降 / Yarn（テーマのビルドと lint）
 - Theme Kit は `make bin/theme` で `bin/theme` に取得される（チェックサム検証あり）
 

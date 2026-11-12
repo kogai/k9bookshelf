@@ -11,13 +11,16 @@ import (
 	shopify "github.com/bold-commerce/go-shopify/v4"
 )
 
+// gqlHTTPClient is used by GraphQL Admin API client. It's replaced in tests.
+var gqlHTTPClient = http.DefaultClient
+
 func establishGqlClient(shopDomain, shopToken string) (*generated.Client, context.Context) {
 	authHeader := func(req *http.Request) {
 		req.Header.Set("X-Shopify-Access-Token", shopToken)
 	}
 
 	return &generated.Client{
-		Client: client.NewClient(http.DefaultClient,
+		Client: client.NewClient(gqlHTTPClient,
 			fmt.Sprintf("https://%s/admin/api/%s/graphql.json", shopDomain, apiVersion),
 			authHeader),
 	}, context.Background()

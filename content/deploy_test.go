@@ -65,7 +65,7 @@ func (f *fakeShop) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func withFakeShop(t *testing.T, shop *fakeShop) string {
+func withFakeShop(t *testing.T, shop http.Handler) string {
 	server := httptest.NewServer(shop)
 	t.Cleanup(server.Close)
 	u, _ := url.Parse(server.URL)
@@ -78,7 +78,11 @@ func withFakeShop(t *testing.T, shop *fakeShop) string {
 		return transport.RoundTrip(r)
 	})}
 	restClientOptions = []shopify.Option{shopify.WithHTTPClient(client), shopify.WithRetry(0)}
-	t.Cleanup(func() { restClientOptions = nil })
+	gqlHTTPClient = client
+	t.Cleanup(func() {
+		restClientOptions = nil
+		gqlHTTPClient = http.DefaultClient
+	})
 	return "example.myshopify.com"
 }
 
