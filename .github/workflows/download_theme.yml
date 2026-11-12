@@ -1,10 +1,10 @@
 name: theme download
 on:
+  # NOTE: Running on every pull request competed with deploys for the rate limit of the Admin API
+  # (2 calls per second), so this runs only weekly or manually.
   schedule:
     - cron: "0 1 * * 1" # Every Monday morning
-  pull_request:
-    types:
-      - opened
+  workflow_dispatch:
 
 jobs:
   build:
