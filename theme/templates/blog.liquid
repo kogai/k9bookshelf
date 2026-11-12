@@ -23,7 +23,7 @@
         {%- assign img_url = article.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
         {%- capture wrapper_id -%}ArticleImageWrapper--{{ article.image.id }}{%- endcapture -%}
         {%- capture img_id -%}ArticleImage--{{ article.image.id }}{%- endcapture -%}
-        {% include 'image-style' with image: article.image, width: 242, height: 256, small_style: false, wrapper_id: wrapper_id, img_id: img_id %}
+        {% include 'image-style' with image, image: article.image, width: 242, height: 256, small_style: false, wrapper_id: wrapper_id, img_id: img_id %}
         <div id="{{ wrapper_id }}" class="supports-js" style="width:100%;margin-right:1rem;">
           <a class="article__image-wrapper" href="{{ article.url }}" style="padding-top:{{ 1 | divided_by: article.image.aspect_ratio | times: 100}}%;">
             <img id="{{ img_id }}"
@@ -85,3 +85,15 @@
 </div>
 
 {% endpaginate %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% include 'image-style' with image: article.image, width: 242, height: 256,
+    small_style: false, wrapper_id: wrapper_id, img_id: img_id %}"
+  to: "{% include 'image-style' with image, image: article.image, width: 242, height:
+    256, small_style: false, wrapper_id: wrapper_id, img_id: img_id %}"
+  position: 1082..1227
+{% endcomment %}
