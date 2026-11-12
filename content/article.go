@@ -1,20 +1,21 @@
 package content
 
 import (
+	"context"
 	"fmt"
 	"path"
 	"time"
 
-	shopify "github.com/bold-commerce/go-shopify"
+	shopify "github.com/bold-commerce/go-shopify/v4"
 )
 
 // Article is documented at https://shopify.dev/docs/admin-api/rest/reference/online-store/article
 type Article struct {
-	ID                int64      `json:"id,omitempty"`
+	ID                uint64     `json:"id,omitempty"`
 	Title             string     `json:"title,omitempty"`
 	CreatedAt         *time.Time `json:"created_at,omitempty"`
 	BodyHTML          string     `json:"body_html,omitempty"`
-	BlogID            int64      `json:"blog_id,omitempty"`
+	BlogID            uint64     `json:"blog_id,omitempty"`
 	Author            string     `json:"author,omitempty"`
 	UserID            int64      `json:"user_id,omitempty"`
 	PublishedAt       *time.Time `json:"published_at,omitempty"`
@@ -47,13 +48,13 @@ func NewArticleResource(client *shopify.Client) *ArticleResource {
 }
 
 // List returns articles
-func (a *ArticleResource) List(blogID int64) (*Articles, error) {
+func (a *ArticleResource) List(blogID uint64) (*Articles, error) {
 	articles := Articles{Articles: []Article{}}
 	// NOTE: 250 is the maximum page size of the REST Admin API.
 	options := struct {
 		Limit int `url:"limit"`
 	}{Limit: 250}
-	err := a.client.Get(path.Join("admin", "api", apiVersion, "blogs", fmt.Sprint(blogID), "articles.json"), &articles, options)
+	err := a.client.Get(context.Background(), path.Join("blogs", fmt.Sprint(blogID), "articles.json"), &articles, options)
 	if err != nil {
 		return nil, err
 	}
@@ -63,8 +64,8 @@ func (a *ArticleResource) List(blogID int64) (*Articles, error) {
 // Post creates article
 func (a *ArticleResource) Post(article Article) (*Article, error) {
 	var response ArticlePayload
-	p := path.Join("admin", "api", apiVersion, "blogs", fmt.Sprint(article.BlogID), "articles.json")
-	err := a.client.Post(p, ArticlePayload{Article: article}, &response)
+	p := path.Join("blogs", fmt.Sprint(article.BlogID), "articles.json")
+	err := a.client.Post(context.Background(), p, ArticlePayload{Article: article}, &response)
 	if err != nil {
 		return nil, err
 	}
@@ -74,8 +75,8 @@ func (a *ArticleResource) Post(article Article) (*Article, error) {
 // Put update article
 func (a *ArticleResource) Put(article Article) (*Article, error) {
 	var response Article
-	p := path.Join("admin", "api", apiVersion, "blogs", fmt.Sprint(article.BlogID), "articles", fmt.Sprintf("%d.json", article.ID))
-	err := a.client.Put(p, ArticlePayload{Article: article}, &response)
+	p := path.Join("blogs", fmt.Sprint(article.BlogID), "articles", fmt.Sprintf("%d.json", article.ID))
+	err := a.client.Put(context.Background(), p, ArticlePayload{Article: article}, &response)
 	if err != nil {
 		return nil, err
 	}
@@ -96,8 +97,8 @@ type blogPayload struct {
 // createBlog creates a blog only with its title and handle.
 func createBlog(client *shopify.Client, title, handle string) (*shopify.Blog, error) {
 	var response blogPayload
-	p := path.Join("admin", "api", apiVersion, "blogs.json")
-	err := client.Post(p, map[string]newBlog{"blog": {Title: title, Handle: handle}}, &response)
+	p := path.Join("blogs.json")
+	err := client.Post(context.Background(), p, map[string]newBlog{"blog": {Title: title, Handle: handle}}, &response)
 	if err != nil {
 		return nil, err
 	}

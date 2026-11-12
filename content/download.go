@@ -1,12 +1,13 @@
 package content
 
 import (
+	"context"
 	"os"
 	"path"
 	"sync"
 
-	"github.com/vbauerster/mpb"
-	"github.com/vbauerster/mpb/decor"
+	"github.com/vbauerster/mpb/v8"
+	"github.com/vbauerster/mpb/v8/decor"
 )
 
 func dowloadContens(output string, contents *[]Content, bar *mpb.Bar) error {
@@ -61,7 +62,10 @@ func dowloadContens(output string, contents *[]Content, bar *mpb.Bar) error {
 // Download downloads contents from store
 func Download(shopDomain, appKey, appSecret, shopToken, output string) error {
 	adminClient, ctx := establishGqlClient(shopDomain, shopToken)
-	restClient := establishRestClient(shopDomain, appKey, appSecret)
+	restClient, err := establishRestClient(shopDomain, appKey, appSecret)
+	if err != nil {
+		return err
+	}
 
 	res, err := fetchProducts(ctx, adminClient)
 	if err != nil {
@@ -75,7 +79,7 @@ func Download(shopDomain, appKey, appSecret, shopToken, output string) error {
 		})
 	}
 
-	rawPages, err := restClient.Page.List(nil)
+	rawPages, err := restClient.Page.List(context.Background(), nil)
 	if err != nil {
 		return err
 	}
@@ -87,7 +91,7 @@ func Download(shopDomain, appKey, appSecret, shopToken, output string) error {
 		})
 	}
 
-	rawBlogs, err := restClient.Blog.List(nil)
+	rawBlogs, err := restClient.Blog.List(context.Background(), nil)
 	if err != nil {
 		return err
 	}
@@ -96,7 +100,7 @@ func Download(shopDomain, appKey, appSecret, shopToken, output string) error {
 		contents := Contents{
 			kind: path.Join("blogs", blog.Handle),
 		}
-		articles, err := NewArticleResource(restClient).List(blog.ID)
+		articles, err := NewArticleResource(restClient).List(blog.Id)
 		if err != nil {
 			return err
 		}
@@ -121,7 +125,7 @@ func Download(shopDomain, appKey, appSecret, shopToken, output string) error {
 			),
 			mpb.AppendDecorators(
 				decor.OnComplete(
-					decor.EwmaETA(decor.ET_STYLE_GO, 60), "done",
+					decor.AverageETA(decor.ET_STYLE_GO), "done",
 				),
 			),
 		)

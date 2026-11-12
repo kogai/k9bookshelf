@@ -8,7 +8,6 @@ import (
 	"strings"
 	"time"
 
-	shopify "github.com/bold-commerce/go-shopify"
 	"github.com/kogai/k9bookshelf/gqlgenc/client"
 	codegen "github.com/kogai/onix-codegen/generated/go/v2"
 )
@@ -60,15 +59,6 @@ func hasSameISBN13(isbn string, products *client.ProductISBNs) (bool, int) {
 		}
 	}
 	return false, 0
-}
-
-func establishRestClient(shopDomain, appKey, appSecret string) *shopify.Client {
-	app := shopify.App{
-		ApiKey:    appKey,
-		ApiSecret: appSecret,
-	}
-
-	return shopify.NewClient(app, shopDomain, appSecret, shopify.WithVersion(apiVersion))
 }
 
 func extractID(graphqlID string) (int, error) {

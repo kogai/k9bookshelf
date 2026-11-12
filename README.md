@@ -3,8 +3,7 @@
 ## 必要なもの
 
 - Go 1.24
-- Node.js / Yarn（テーマのビルドと lint）
-  - Node.js 17 以降では `NODE_OPTIONS=--openssl-legacy-provider` が必要（webpack 5.18 が md4 を使うため）
+- Node.js 20.9 以降 / Yarn（テーマのビルドと lint）
 - Theme Kit は `make bin/theme` で `bin/theme` に取得される（チェックサム検証あり）
 
 ## テスト

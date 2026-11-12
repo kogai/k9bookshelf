@@ -194,7 +194,7 @@ func Run(input string, dryRun bool) error {
 					for _, e := range res.ProductUpdate.UserErrors {
 						errMsg += fmt.Sprintln(e.Field, ":", e.Message)
 					}
-					return fmt.Errorf(errMsg)
+					return fmt.Errorf("%s", errMsg)
 				}
 			}
 		} else {
@@ -227,7 +227,7 @@ func Run(input string, dryRun bool) error {
 					for _, e := range res.ProductCreate.UserErrors {
 						errMsg += fmt.Sprintln(e.Field, ":", e.Message)
 					}
-					return fmt.Errorf(errMsg)
+					return fmt.Errorf("%s", errMsg)
 				}
 				fmt.Printf("Done. open 'https://ipage.ingramcontent.com/ipage/servlet/ibg.common.titledetail.imageloader?ean=%s&size=640&howerType=Y'\n", *isbn)
 			}

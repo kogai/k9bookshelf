@@ -8,7 +8,7 @@ import (
 	generated "github.com/kogai/k9bookshelf/gqlgenc/client"
 
 	"github.com/Yamashou/gqlgenc/client"
-	shopify "github.com/bold-commerce/go-shopify"
+	shopify "github.com/bold-commerce/go-shopify/v4"
 )
 
 func establishGqlClient(shopDomain, shopToken string) (*generated.Client, context.Context) {
@@ -23,14 +23,19 @@ func establishGqlClient(shopDomain, shopToken string) (*generated.Client, contex
 	}, context.Background()
 }
 
-func establishRestClient(shopDomain, appKey, appSecret string) *shopify.Client {
+func establishRestClient(shopDomain, appKey, appSecret string) (*shopify.Client, error) {
 	app := shopify.App{
 		ApiKey:    appKey,
 		ApiSecret: appSecret,
 	}
 
-	return shopify.NewClient(app, shopDomain, appSecret, shopify.WithVersion(apiVersion))
+	// NOTE: Retry is applied when the REST Admin API responds 429 (rate limited) or 503.
+	opts := append([]shopify.Option{shopify.WithVersion(apiVersion), shopify.WithRetry(3)}, restClientOptions...)
+	return shopify.NewClient(app, shopDomain, appSecret, opts...)
 }
+
+// restClientOptions are appended to options of REST Admin API client. It's replaced in tests.
+var restClientOptions []shopify.Option
 
 func fetchProducts(ctx context.Context, adminClient *generated.Client) (*generated.Products, error) {
 	var cursor *string
