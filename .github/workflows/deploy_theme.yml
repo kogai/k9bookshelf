@@ -8,12 +8,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      # NOTE: webpack 5.18 uses md4 which is unavailable on OpenSSL 3 (Node.js >= 17) by default.
-      NODE_OPTIONS: --openssl-legacy-provider
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22.x
           cache: yarn

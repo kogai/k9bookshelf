@@ -1,6 +1,7 @@
 package content
 
 import (
+	"context"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -10,9 +11,9 @@ import (
 
 	generated "github.com/kogai/k9bookshelf/gqlgenc/client"
 
-	shopify "github.com/bold-commerce/go-shopify"
-	"github.com/vbauerster/mpb"
-	"github.com/vbauerster/mpb/decor"
+	shopify "github.com/bold-commerce/go-shopify/v4"
+	"github.com/vbauerster/mpb/v8"
+	"github.com/vbauerster/mpb/v8/decor"
 )
 
 func deployProducts(shopDomain, shopToken string, contents []Content, bar *mpb.Bar) error {
@@ -68,69 +69,49 @@ func deployProducts(shopDomain, shopToken string, contents []Content, bar *mpb.B
 }
 
 func deployPages(shopDomain, appKey, appSecret string, contents []Content, bar *mpb.Bar) error {
-	var err error
-	adminClient := establishRestClient(shopDomain, appKey, appSecret)
-	wg := sync.WaitGroup{}
-	c := make(chan error)
-	for _, content := range contents {
-		wg.Add(1)
-
-		go func(handle, html string) {
-			defer wg.Done()
-			defer bar.Increment()
-
-			pages, err := adminClient.Page.List(nil)
-			if err != nil {
-				c <- err
-				return
-			}
-			var page shopify.Page
-			for _, p := range pages {
-				if p.Handle == handle {
-					page = p
-					break
-				}
-			}
-
-			// NOTE: Because Page struct isn't tagged by `omitempty` and Metafields are initialized with nil,
-			metafields := []shopify.Metafield{}
-			if page.Metafields != nil {
-				metafields = page.Metafields
-			}
-			_, err = adminClient.Page.Update(shopify.Page{
-				ID:             page.ID,
-				Author:         page.Author,
-				Handle:         handle,
-				Title:          page.Title,
-				CreatedAt:      page.CreatedAt,
-				UpdatedAt:      page.UpdatedAt,
-				BodyHTML:       html,
-				TemplateSuffix: page.TemplateSuffix,
-				PublishedAt:    page.PublishedAt,
-				ShopID:         page.ShopID,
-				Metafields:     metafields,
-			})
-
-			if err != nil {
-				c <- err
-				return
-			}
-		}(content.handle, content.html)
+	ctx := context.Background()
+	adminClient, err := establishRestClient(shopDomain, appKey, appSecret)
+	if err != nil {
+		return err
 	}
-	go func() {
-		wg.Wait()
-		c <- nil
-	}()
+	pages, err := adminClient.Page.List(ctx, nil)
+	if err != nil {
+		return err
+	}
 
-	err = <-c
-	return err
+	for _, content := range contents {
+		var page *shopify.Page
+		for i := range pages {
+			if pages[i].Handle == content.handle {
+				page = &pages[i]
+				break
+			}
+		}
+		if page == nil {
+			return fmt.Errorf("page [%s] is not exist", content.handle)
+		}
+
+		// NOTE: Fields of shopify.Page are tagged by `omitempty`, so only body is updated.
+		_, err = adminClient.Page.Update(ctx, shopify.Page{
+			Id:       page.Id,
+			BodyHTML: content.html,
+		})
+		if err != nil {
+			return fmt.Errorf("page [%s]: %w", content.handle, err)
+		}
+		bar.Increment()
+	}
+	return nil
 }
 
 func deployBlogs(shopDomain, appKey, appSecret string, blogs map[string][]Content, bar *mpb.Bar) error {
-	adminClient := establishRestClient(shopDomain, appKey, appSecret)
+	adminClient, err := establishRestClient(shopDomain, appKey, appSecret)
+	if err != nil {
+		return err
+	}
 	articleResource := NewArticleResource(adminClient)
 
-	currentBlogs, err := adminClient.Blog.List(nil)
+	currentBlogs, err := adminClient.Blog.List(context.Background(), nil)
 	if err != nil {
 		return err
 	}
@@ -145,13 +126,13 @@ func deployBlogs(shopDomain, appKey, appSecret string, blogs map[string][]Conten
 			}
 		}
 		if blog == nil {
-			blog, err = adminClient.Blog.Create(shopify.Blog{Title: blogHandle, Handle: blogHandle})
+			blog, err = createBlog(adminClient, blogHandle, blogHandle)
 			if err != nil {
 				return fmt.Errorf("failed to create blog [%s]: %w", blogHandle, err)
 			}
 		}
 
-		articles, err := articleResource.List(blog.ID)
+		articles, err := articleResource.List(blog.Id)
 		if err != nil {
 			return err
 		}
@@ -166,7 +147,7 @@ func deployBlogs(shopDomain, appKey, appSecret string, blogs map[string][]Conten
 				return fmt.Errorf("blog article [%s/%s]: %w", blogHandle, content.handle, err)
 			}
 			article := Article{
-				BlogID:      blog.ID,
+				BlogID:      blog.Id,
 				BodyHTML:    content.html,
 				PublishedAt: publishedAt,
 				Tags:        content.meta.tags(),
@@ -298,7 +279,7 @@ func Deploy(shopDomain, appKey, appSecret, shopToken, input string) error {
 			),
 			mpb.AppendDecorators(
 				decor.OnComplete(
-					decor.EwmaETA(decor.ET_STYLE_GO, 60), "done",
+					decor.AverageETA(decor.ET_STYLE_GO), "done",
 				),
 			),
 		)
