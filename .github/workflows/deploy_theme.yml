@@ -8,28 +8,16 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      # NOTE: webpack 5.18 uses md4 which is unavailable on OpenSSL 3 (Node.js >= 17) by default.
+      NODE_OPTIONS: --openssl-legacy-provider
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v2.1.4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 15.x
-      - name: Restore caches
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.npm
-            ./node_modules
-          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-
-      - run: yarn install
-      - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@master
-        with:
-          project_id: "k9bookshelf-bazel-cache"
-          service_account_key: ${{ secrets.GCP_BAZEL_CACHE_KEY }}
-          export_default_credentials: true
+          node-version: 22.x
+          cache: yarn
+      - run: yarn install --frozen-lockfile
       - run: make lint
       - run: make deploy/theme
         if: github.ref == 'refs/heads/main'

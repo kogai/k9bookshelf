@@ -10,17 +10,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-      - name: Set up Theme-kit
-        run: curl -s https://shopify.github.io/themekit/scripts/install.py | sudo python
+      - uses: actions/checkout@v4
       - name: Download liquid
-        run: theme --dir theme download
+        run: make download/theme
         env:
           THEME_APP_SECRET: ${{ secrets.THEME_APP_SECRET }}
           THEME_ID: ${{ secrets.THEME_ID }}
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3.7.0
+        uses: peter-evans/create-pull-request@v7
         with:
           title: Update theme
           base: main
+          add-paths: theme
