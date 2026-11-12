@@ -6,11 +6,25 @@ on:
     - cron: "0 1 * * 1" # Every Monday morning
   workflow_dispatch:
 
+# NOTE: Prevent download runs from overlapping each other. Deploy workflows aren't in this group,
+# because a group keeps only one pending run and would cancel a pending deploy.
+concurrency:
+  group: theme-download
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    # NOTE: create-pull-request pushes a branch and opens a pull request.
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
+      # NOTE: Always download onto main, even when dispatched from another branch,
+      # so that the pull request doesn't carry unmerged commits of that branch.
       - uses: actions/checkout@v7
+        with:
+          ref: main
       - name: Download liquid
         run: make download/theme
         env:
