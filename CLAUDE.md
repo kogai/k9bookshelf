@@ -33,6 +33,16 @@ make check/theme  # テーマのビルドと lint（デプロイはしない）
 - ライブラリの更新は、レビューしやすい単位（Go / Node.js / GitHub Actions など）で分ける
 - 依存関係のある PR は、先にマージすべきものを PR の説明に書く
 
+## 公開レポジトリ
+
+このレポジトリは public。コミット、PR、Issue、コメントに書いたものは誰でも読める。
+
+- 認証情報（API キー、アクセストークン、パスワード、秘密鍵、`.env`、サービスアカウントの JSON など）をコミットしない。値は GitHub Actions の secrets に置き、ファイルには `${ENV_NAME}` のように環境変数で参照する（`config.yml` 参照）
+- 顧客情報、注文情報、売上など、ストアの非公開データをコミットしない。`onix/*.onix` は gitignore 済み
+- PR やコミットメッセージにも、secret の値、管理画面の内部 URL、個人のメールアドレスを書かない
+- `make test` に含まれる `make check/secrets` が、追跡中のファイルから secret らしい文字列や禁止ファイルを検出する。Claude Code では `git commit` の前に同じチェックが走り、検出するとコミットが止まる
+- 誤ってコミットした場合は、履歴から消すだけでは不十分。push 済みならすぐにその secret を失効・再発行する
+
 ## デプロイ
 
 - main へ push すると GitHub Actions がストアへデプロイする（`deploy_contents.yml` / `deploy_theme.yml`）。**main へのマージは本番ストアへの反映を意味する**
