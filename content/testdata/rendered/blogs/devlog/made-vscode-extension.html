@@ -1,0 +1,43 @@
+<p>半年くらい前に作業用のエディタをAtomからVSCodeに切り替えた。
+TypeScriptに最適化されていてとても快適なんだけど、Atomで常用していたあるプラグインの代替となる拡張機能が無かった。</p>
+
+<p><a href="https://github.com/klorenz/atom-regex-railroad-diagrams">atom-regex-railroad-diagrams</a>というプラグインで、正規表現をダイアグラムとして表示してくれるというもの。
+かなしいことに私は正規表現が苦手で、書いたパターンが実際にどんな文字列にマッチするのかイマイチイメージできないのだが、このプラグインを使うと視覚的にわかりやすい形で書いたパターンを確認できていた。</p>
+
+<p>VSCodeに移行してからも、正規表現を書くときだけAtomを起動してダイアグラムを確認するような生活を送っていたのだが、それもかなしいのでVSCode向けに同じような機能を持った拡張機能を作ってみることにした。</p>
+
+<p><a href="https://marketplace.visualstudio.com/items?itemName=kogai.regex-railroad-diagrams">vscode-regex-railroad-diagrams</a></p>
+
+<p>同じElectronベースのエディタということで中核となる実装はほとんどそのまま流用しつつ、VSCodeとの橋渡しに成るインタフェースを作った感じだ。
+作ってみて思ったのが、同じElectronベースのエディタとはいえ、結構APIに違いがあるようだった。</p>
+
+<p>特にAtomは直接プラグインのコードでDOM要素に手を触れることができるようだが、VSCodeではそういったインタフェースはないようで、特定のライフサイクルの時に呼ばれる関数にHTMLとして評価できる文字列を渡すことで細かくスタイリングしたHTML要素を描画した。
+あと、Atomでは正規表現部分を囲むCSSクラスがあるので正規表現を表す文字列を簡単に取得できていたのだが、VSCodeではそういう風にはなっていなかったので、正規表現部分を抽出するコードを書く必要があった。</p>
+
+<p>Atomだとこういう感じ</p>
+
+<pre><code class="language-html">&lt;span class=&quot;string regexp js&quot;&gt;
+  &lt;span class=&quot;punctuation definition string begin js&quot;&gt;/&lt;/span&gt;
+  foo
+  &lt;span class=&quot;punctuation definition string end js&quot;&gt;/&lt;/span&gt;
+&lt;/span&gt;
+</code></pre>
+
+<p>VSCodeだとこういう感じ</p>
+
+<pre><code class="language-html">&lt;span&gt;
+  &lt;span class=&quot;token meta var expr js string regex punctuation definition begin&quot;&gt;/&lt;/span&gt;
+  &lt;span class=&quot;token meta var expr js string regex&quot;&gt;foo&lt;/span&gt;
+  &lt;span class=&quot;token meta var expr js string regex punctuation definition end&quot;&gt;/&lt;/span&gt;
+&lt;/span&gt;
+</code></pre>
+
+<p>動かしてみたところはこんな感じ。</p>
+
+<p>Cmd + Shift + P から <code>Show RegExp preview</code>コマンドを打つ
+<img src="https://raw.githubusercontent.com/kogai/k9bookshelf/main/contents/assets/devlog/made-vscode-extension/command.png" alt="" /></p>
+
+<p>こんな感じでダイアグラムが表示される
+<img src="https://raw.githubusercontent.com/kogai/k9bookshelf/main/contents/assets/devlog/made-vscode-extension/diagram.png" alt="" /></p>
+
+<p>よかったら使ってみて下さい。</p>

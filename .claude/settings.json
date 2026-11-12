@@ -1,0 +1,38 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/session-start.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(make test)",
+      "Bash(make golden)",
+      "Bash(make check/theme)",
+      "Bash(make lint)",
+      "Bash(go test:*)",
+      "Bash(go vet:*)",
+      "Bash(go build:*)",
+      "Bash(gofmt:*)",
+      "Bash(yarn webpack)",
+      "Bash(yarn theme-lint:*)"
+    ],
+    "deny": [
+      "Bash(make deploy/theme)",
+      "Bash(make deploy/contents)",
+      "Bash(make download/theme)",
+      "Bash(make download/contents)",
+      "Bash(make import)",
+      "Bash(make release)",
+      "Bash(./bin/theme deploy:*)",
+      "Bash(go run ./content/cmd/content deploy:*)"
+    ]
+  }
+}

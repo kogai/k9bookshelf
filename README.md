@@ -13,6 +13,18 @@
 $ make test
 ```
 
+`make test` は `contents/` の各ファイルを検証し、`contents/` から生成した HTML を `content/testdata/rendered/` の golden ファイルと比較します。`contents/` や変換処理を変えたら golden ファイルを更新して、差分を確認してからコミットしてください。
+
+```sh
+$ make golden
+```
+
+テーマのビルドと lint だけを行う（デプロイしない）場合:
+
+```sh
+$ make check/theme
+```
+
 ## テーマの更新
 
 ```sh

@@ -1,0 +1,60 @@
+<h2>ターミナルからログイン</h2>
+
+<pre><code class="language-shell">ssh root@IP
+</code></pre>
+
+<hr>
+
+<h2>Ubuntu版</h2>
+
+<pre><code class="language-shell">sudo apt-get update
+sudo apt-get install nodejs
+sudo apt-get install npm
+sudo apt-get install git
+npm install -g bower
+</code></pre>
+
+<hr>
+
+<h2>CentOS版</h2>
+
+<pre><code class="language-shell">yum update
+curl -sL https://rpm.nodesource.com/setup | bash -
+yum install -y nodejs
+yum install git
+npm install -g bower
+</code></pre>
+
+<h3>gitデプロイつなぎ込み</h3>
+
+<p><a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-automatic-deployment-with-git-with-a-vps">解説記事</a></p>
+
+<ol>
+<li><p><code>/var/repo/site.git/</code> を作成して <code>git init —bare</code></p></li>
+
+<li><p><code>/var/repo/site.git/hooks/</code> へ移動</p></li>
+
+<li><p><code>cat &gt; post-receive</code> で<code>post-receive</code>ファイルを作成</p></li>
+
+<li><p><code>vim</code>モードにするなどして以下記入<code>:x</code>で保存</p>
+
+<pre><code class="language-bash">#!/bin/sh
+git --work-tree=/var/www/ディレクトリ名 --git-dir=/var/repo/site.git checkout -f
+</code></pre></li>
+
+<li><p><code>chmod +x post-receive</code></p></li>
+
+<li><p>ローカルレポジトリにgitパスをつなぎ込み</p>
+
+<pre><code class="language-shell">git remote add product ssh://root@IP/var/repo/site.git
+</code></pre></li>
+
+<li><p><code>SSHキー</code>の登録（新規アカウント作成時のみ）</p></li>
+
+<li><p>プッシュしてデプロイ</p></li>
+</ol>
+
+<h3>サーバー永続化</h3>
+
+<p><code>npm</code>の<code>pm2</code>をインストール
+<code>pm2 start app.js</code> でサーバー永続化</p>

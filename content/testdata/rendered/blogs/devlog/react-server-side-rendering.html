@@ -1,0 +1,62 @@
+<p>Reactjsでwebアプリケーションを作る時に良いことの一つには、サーバーサイドレンダリングが自然な感じで出来るということがあるかと思います。</p>
+
+<p>基本的に違いは2つだけみたいです。
+- renderメソッドの代わりにrenderToString(特殊な状況ではrenderToStaticMarkUp)を使う
+- 描画対象のDOMノードは指定しない</p>
+
+<p>こんな感じで試してみました。</p>
+
+<pre><code class="language-javascript">var React = require('react');
+
+var ServerSide = React.createClass({
+  render: function () {
+    'use strict';
+    return (
+      &lt;h1&gt;Hello! React-Server-Side-Rendering.&lt;/h1&gt;
+    );
+  }
+});
+
+module.exports = React.renderToString(&lt;ServerSide /&gt;);
+
+// クライアントサイドだとこんな感じでDOMノードを指定してrenderしている
+// React.render(&lt;ServerSide /&gt;, document.body);
+</code></pre>
+
+<p>###gulp
+jsxで書いていたら、jsにコンパイルしてあげる必要があります。
+上のファイルを、例えばgulpでこんな感じにコンパイルしてあげます。</p>
+
+<pre><code class="language-javascript">gulp.task('default', function(){
+  return gulp.src('エントリーポイントへのパス')
+  .pipe(react())
+  .pipe(gulp.dest('生成先のディレクトリ'));
+});
+
+</code></pre>
+
+<p>###サーバー側
+<a href="http://hapijs.com/">Hapi</a>を使ってサーバーを立てています。</p>
+
+<pre><code class="language-javascript">var Hapi = require('hapi');
+var server = new Hapi.Server();
+var ServerSide = require('gulpで生成したファイルへのパス');
+
+server.connection({
+  host: 'localhost',
+  port: 3000
+});
+
+server.route({
+  method: 'GET',
+  path: '/',
+  handler: function ( req, reply ) {
+    // React.renderToStringで生成したDOMノードをレスポンスとして返します。
+    reply(ServerSide);
+  }
+});
+
+server.start();
+</code></pre>
+
+<p>これならクライアントサイドの延長で記述できそうで素敵です。</p>

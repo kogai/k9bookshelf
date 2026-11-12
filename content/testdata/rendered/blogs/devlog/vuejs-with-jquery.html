@@ -1,0 +1,31 @@
+<p>業務でIE9〜の案件が降ってきたので、vue.jsを使ってみた。
+よくあるスライド切替をvue.js + jQuery + jQuery.bxSliderで。</p>
+
+<h2>スライド画像が繰り返される部分に<code>v-repeat</code>を設定</h2>
+
+<pre><code class="language-jade">ul(id='slide')
+  li(v-repeat='photos')
+    img(src=&quot;{{photo}}&quot;, alt=&quot;{{title}}&quot;)
+</code></pre>
+
+<h2><code>vue.js</code>で要素を描画してからjQueryプラグインを適用</h2>
+
+<pre><code class="language-js">var slide = new Vue({
+  el: '#slide',
+  data: {
+    photos: [
+      {
+        &quot;photo&quot;: &quot;画像1のパス&quot;,
+        &quot;title&quot;: &quot;画像1の名前&quot;
+      },
+      {
+        &quot;photo&quot;: &quot;画像2のパス&quot;,
+        &quot;title&quot;: &quot;画像2の名前&quot;
+      }
+    ]
+  }
+});
+jQuery(&quot;#slide&quot;).bxSlider();
+</code></pre>
+
+<p>これで行けました。</p>

@@ -1,0 +1,19 @@
+<p>スマートウォッチのPebbleからWi-FiスマートリモコンのIRKitに家中のリモコン家電をON/OFFにする命令を送れるようにしました。</p>
+
+<h3>手順</h3>
+
+<ol>
+<li>「 IRKitを使ってJavaScriptから家電を操作。外出先でも！」を参考に、clienttokenを取得してdeviceidとclientkey を取得する</li>
+<li>Pebbleアプリの「Simply.js」 をインストール</li>
+<li>実行するjavascriptファイルを書く</li>
+</ol>
+
+<p><a href="https://gist.github.com/kogai/4ab760b8f7fd2da66423">gist url</a>
+※ globalDefineとremoteCommandの中の数値はユーザー毎に適宜設定する</p>
+
+<p>赤外線送信を一度に行うと、干渉するのか配列内のいずれかの命令しか実行されないっぽかったので、setTimeoutでディレイをかけています。
+手首を一振りしてテレビやエアコンが一斉にOFFになっていく光景はちょっとSFチックで素敵です。</p>
+
+<h3>動作サンプル</h3>
+
+<p><a href="http://instagram.com/p/rhJ2B8hBy8/">instagram url</a></p>

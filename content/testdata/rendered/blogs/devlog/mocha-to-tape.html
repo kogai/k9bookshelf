@@ -1,0 +1,119 @@
+<p>普段テストは、Node.jsのコードはmocha・ブラウザ向けのコードはkarma(jasmine)で書くことが多いんだけど、たまには別のライブラリも試してみたいな〜と思ってたところにこの記事を読んだ</p>
+
+<p><a href="https://medium.com/javascript-scene/why-i-use-tape-instead-of-mocha-so-should-you-6aa105d8eaf4#.yaaii9wua">Why I use Tape Instead of Mocha &amp; So Should You</a></p>
+
+<p>1年半くらい前の記事で、要約すると設定ファイル不要でグローバルな変数やテスト間で共有される変数を持たないシンプルなテストフレームワークなのでMochaよりtapeに乗り換えた、テストは極力複雑にならないようにして(その方がデバッグも容易、みたいな文脈もある気がする)もっとプロダクトの質に注力しよう、みたいな感じか。
+テストフレームワークやらランナーやらの設定でごちゃごちゃなってるなというのは、前々から感じていたことではあったので、自分で公開している小さなライブラリのmochaを使って書いていたテストコードをtapeに切り替えてみた。
+前に書いた<a href="/blogs/devlog/create-custom-operator">このポスト</a>で作ったやつ。</p>
+
+<p>元々のコードはこんな感じ
+RxJSのmarbleを使ってテストしてるのでちょっと論旨がズレそうな気もする&hellip;</p>
+
+<pre><code class="language-typescript">import { deepStrictEqual } from &quot;assert&quot;;
+import { TestScheduler } from &quot;rxjs/testing/TestScheduler&quot;;
+import { Observable } from &quot;rxjs/Observable&quot;;
+import &quot;./&quot;;
+import {
+  createTestScheduler,
+  TestSchedulers,
+  createColdObservable
+} from &quot;./test-helpers&quot;;
+  
+describe(&quot;ofTypeObservable&quot;, () =&gt; {
+  let action$: Observable&lt;any&gt;;
+  let testSchedulers: TestSchedulers;
+  let testScheduler: TestScheduler;
+  let cold: createColdObservable;
+  
+  beforeEach(() =&gt; {
+    // createTestSchedulerの中でassertionをしている
+    testSchedulers = createTestScheduler();
+    testScheduler = testSchedulers.testScheduler;
+    cold = testSchedulers.cold;
+    action$ = cold(&quot;abc&quot;, {
+      a: { type: &quot;foo&quot;, payload: &quot;fooPayload&quot; },
+      b: { type: &quot;bar&quot;, payload: &quot;barPayload&quot; },
+      c: { type: &quot;buzz&quot;, payload: &quot;buzzPayload&quot; },
+    });
+  });
+  
+  it(&quot;should filtering specific type&quot;, () =&gt; {
+    const expect$ = action$.ofType(&quot;bar&quot;);
+    testScheduler.expectObservable(expect$).toBe(&quot;-a&quot;, { a: &quot;barPayload&quot; });
+    testScheduler.flush();
+  });
+  
+  it(&quot;can pick by own payload&quot;, () =&gt; {
+    action$ = cold(&quot;ab&quot;, {
+      a: { type: &quot;foo&quot;, payload: &quot;fooPayload&quot; },
+      b: { type: &quot;bar&quot;, customPayload: &quot;barPayload&quot; },
+    });
+    const expect$ = action$.ofType(&quot;bar&quot;, (value: any) =&gt; value.customPayload);
+    testScheduler.expectObservable(expect$).toBe(&quot;-a&quot;, { a: &quot;barPayload&quot; });
+    testScheduler.flush();
+  });
+});
+</code></pre>
+
+<p>変更後はこんな感じ</p>
+
+<pre><code class="language-typescript">import * as test from &quot;tape&quot;;
+import { deepStrictEqual } from &quot;assert&quot;;
+import { TestScheduler } from &quot;rxjs/testing/TestScheduler&quot;;
+import { Observable } from &quot;rxjs/Observable&quot;;
+  
+import &quot;./&quot;;
+import { createTestScheduler, TestSchedulers, createColdObservable } from &quot;./test-helpers&quot;;
+  
+const setup = (assert: test.Test) =&gt; {
+  // createTestSchedulerの中でassertionをしているので、tapeの提供しているassertオブジェクトを渡してる
+  const testSchedulers = createTestScheduler(assert);
+  const testScheduler = testSchedulers.testScheduler;
+  const cold = testSchedulers.cold;
+  const action$ = cold(&quot;abc&quot;, {
+    a: { type: &quot;foo&quot;, payload: &quot;fooPayload&quot; },
+    b: { type: &quot;bar&quot;, payload: &quot;barPayload&quot; },
+    c: { type: &quot;buzz&quot;, payload: &quot;buzzPayload&quot; },
+  });
+  return {
+    testSchedulers, testScheduler, cold, action$,
+  }
+}
+  
+test(&quot;should filtering specific type&quot;, assert =&gt; {
+  const {action$, testScheduler} = setup(assert)
+  const expect$ = action$.ofType(&quot;bar&quot;);
+  testScheduler.expectObservable(expect$).toBe(&quot;-a&quot;, { a: &quot;barPayload&quot; });
+  testScheduler.flush();
+  assert.end()
+})
+  
+test(&quot;can pick by own payload&quot;, assert =&gt; {
+  const {cold, testScheduler} = setup(assert)
+  const action$ = cold(&quot;ab&quot;, {
+    a: { type: &quot;foo&quot;, payload: &quot;fooPayload&quot; },
+    b: { type: &quot;bar&quot;, customPayload: &quot;barPayload&quot; },
+  });
+  const expect$ = action$.ofType(&quot;bar&quot;, (value: any) =&gt; value.customPayload);
+  testScheduler.expectObservable(expect$).toBe(&quot;-a&quot;, { a: &quot;barPayload&quot; });
+  testScheduler.flush();
+  assert.end()
+})
+</code></pre>
+
+<p>コード全体は<a href="https://github.com/kogai/of-type-operator">ココ</a>にある</p>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=kogai-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B00ESXY9MA&linkId=b69fd1b67eac33ba21c756c87b0e0380"></iframe>
+
+<p>たしかこの本で読んだんだったと思うけど、テストフレームワークの目的は入力に対して期待した出力が得られているか確認する単なる関数に過ぎない、みたいな話があって、自前のassertion関数を実装するように促されたりしていた。
+<code>tape</code>はそういう思想にわりと近い感じがしていて、登場人物がとても少なく且つグローバルな変数を使っていたりしないので、テストファイルの中で全てが完結しているのが良い感じだと思った。</p>
+
+<p>テストリポーターを任意のものにスイッチするのが</p>
+
+<pre><code class="language-bash">$(npm bin)/tape test.js | $(npm bin)/tape-custom-reporter
+</code></pre>
+
+<p>みたいにパイプで流せるのも良い。</p>
+
+<p>プロジェクト毎に色々変わったことをしようとするとまた話が変わってくるのかも知れないが、小さなライブラリのために使うのであれば、軽く導入できて良いように思った。
+あとブラウザでテストを実行するのは試してみてないので、それは別途試してみたい。</p>

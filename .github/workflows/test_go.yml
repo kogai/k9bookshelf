@@ -12,3 +12,17 @@ jobs:
         with:
           go-version: "1.24"
       - run: make test
+
+  theme:
+    runs-on: ubuntu-latest
+    env:
+      # NOTE: webpack 5.18 uses md4 which is unavailable on OpenSSL 3 (Node.js >= 17) by default.
+      NODE_OPTIONS: --openssl-legacy-provider
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+      - run: make check/theme

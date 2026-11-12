@@ -230,41 +230,14 @@ type tmpIterable struct {
 
 // Deploy uploads contents to store
 func Deploy(shopDomain, appKey, appSecret, shopToken, input string) error {
-	rawProducts, err := ioutil.ReadDir(path.Join(input, "products"))
+	loaded, err := loadContents(input)
 	if err != nil {
 		return err
 	}
-	products, err := filesToContents(path.Join(input, "products"), rawProducts)
-	if err != nil {
-		return err
-	}
-
-	rawPages, err := ioutil.ReadDir(path.Join(input, "pages"))
-	if err != nil {
-		return err
-	}
-	pages, err := filesToContents(path.Join(input, "pages"), rawPages)
-
-	rawBlogs, err := ioutil.ReadDir(path.Join(input, "blogs"))
-	if err != nil {
-		return err
-	}
-
-	blogs := map[string][]Content{}
+	products, pages, blogs := loaded.products, loaded.pages, loaded.blogs
 	numberOfBlogs := 0
-	for _, b := range rawBlogs {
-		if b.IsDir() {
-			files, err := ioutil.ReadDir(path.Join(input, "blogs", b.Name()))
-			if err != nil {
-				return err
-			}
-			contents, err := filesToContents(path.Join(input, "blogs", b.Name()), files)
-			if err != nil {
-				return err
-			}
-			numberOfBlogs += len(contents)
-			blogs[b.Name()] = contents
-		}
+	for _, contents := range blogs {
+		numberOfBlogs += len(contents)
 	}
 
 	wg := sync.WaitGroup{}
