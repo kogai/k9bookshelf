@@ -7,7 +7,7 @@ tags:
   - "GitHub Actions"
 ---
 
-<!-- TODO: 草稿です。公開前にタイトル（【草稿】を外す）、published_at、本文を見直してください。main にマージするとすぐに公開されます -->
+<!-- TODO: 草稿です。公開前にタイトル（【草稿】を外す）、published_at、本文を見直してください。main にマージするとストアに記事が作成されます（タイトル・本文・この TODO コメントもそのまま反映されます） -->
 
 こんにちは。[趣味でマーチャントをやっている](https://k9bookshelf.com/blogs/development/how-and-why-running-bookstore) ものです。
 
@@ -19,7 +19,7 @@ tags:
 
 ## やったこと
 
-最終的にマージされた PR は次のとおりです。一日でこれだけ進みました。
+最終的にマージされた PR は次のとおりです。ほぼ一晩でこれだけ進みました。
 
 - 昔のブログ記事26本の移行（[#371](https://github.com/kogai/k9bookshelf/pull/371)、[#373](https://github.com/kogai/k9bookshelf/pull/373)、[#377](https://github.com/kogai/k9bookshelf/pull/377)）
 - Bazel を廃止して素の Go に移行し、CI を復旧（[#372](https://github.com/kogai/k9bookshelf/pull/372)）
@@ -27,7 +27,7 @@ tags:
 - テストのハーネスと Claude Code 用の設定（[#375](https://github.com/kogai/k9bookshelf/pull/375)、[#376](https://github.com/kogai/k9bookshelf/pull/376)）
 - 公開レポジトリ向けの secret 混入チェック（[#379](https://github.com/kogai/k9bookshelf/pull/379)）
 - レポジトリの運用ルールの明文化（[#380](https://github.com/kogai/k9bookshelf/pull/380)、[#382](https://github.com/kogai/k9bookshelf/pull/382)）
-- テーマのダウンロードの見直し（[#381](https://github.com/kogai/k9bookshelf/pull/381)）
+- テーマのダウンロードの見直しと、ストア側のテーマ変更の取り込み（[#381](https://github.com/kogai/k9bookshelf/pull/381)、[#378](https://github.com/kogai/k9bookshelf/pull/378)）
 
 以下、順に振り返ります。
 
@@ -72,7 +72,7 @@ CI は `actions/cache@v2` や `google-github-actions/setup-gcloud@master` など
 
 数年分の更新が溜まっていたので、Go・Node.js・GitHub Actions をまとめて更新しました。go-shopify は v2 のままだと依存が解決できなくなっていたため、v4 に上げています。
 
-この時、v4 ではリクエストパスに `admin/api/<version>` が自動で付くため、自前で組み立てていたパスが二重になるところでした。これは後述のフェイクの Shopify サーバーを使ったテストで見つかっています。
+この時、v4 ではリクエストパスに `admin/api/<version>` が自動で付くため、自前で組み立てていたパスが二重になるところでした。この PR で追加したフェイクの Shopify サーバーを使ったテストで、送るリクエストのパスを確認しています。
 
 ## ハーネスを作る
 
@@ -82,26 +82,25 @@ CI は `actions/cache@v2` や `google-github-actions/setup-gcloud@master` など
 
 - **golden ファイル**: `contents/` 以下の全 Markdown から生成した HTML をレポジトリに保存し、変換結果を比較します。Markdown ライブラリを更新した時に、ストアに反映される HTML の差分が PR 上で見えるようになりました
 - **コンテンツの検証**: 置き場所、拡張子、handle、front matter の書式をチェックします
-- **フェイクの Shopify Admin API**: `httptest` でフェイクのサーバーを立て、deploy と download が送るリクエストを検証します
+- **フェイクの Shopify Admin API**: `httptest` でフェイクのサーバーを立て、送るリクエストを検証します（deploy は依存更新の PR で、download はこの後の PR で追加）
 
-download のテストを `go test -race` で動かしたところ、goroutine が共有の `err` に書き込んでいてエラーが握りつぶされるバグが見つかりました。昔の自分のコードです。
+download のテストを書いてみると、goroutine が共有の `err` に書き込み、しかも goroutine が終わる前にそれを確認していたため、エラーが失われていたことがわかりました（`go test -race` でも検出されます）。昔の自分のコードです。
 
 ### Claude Code 用の設定
 
 - `CLAUDE.md`: レポジトリの構成、確認用のコマンド、「main へのマージは本番への反映」といったルール
 - `.claude/settings.json`: テスト系のコマンドは許可し、デプロイ系のコマンドは拒否
 - SessionStart フック: クラウドのセッション開始時に Go と Node.js の依存をインストール
-- PreToolUse フック: `git commit` の前に secret らしい文字列が含まれていないかチェック
 
 ## 運用ルールも育てていく
 
 作業の途中で、気になったことをその都度伝えて `CLAUDE.md` に追記してもらいました。
 
-- 「公開レポジトリだからやばいことコミットしないようにして」→ secret 混入チェックと、公開レポジトリとしてのルール
+- 「公開レポジトリだからやばいことコミットしないようにして」→ secret 混入チェック（`make test` と、`git commit` の前に走る PreToolUse フック）と、公開レポジトリとしてのルール
 - 「PR はテーマごとに作ろう」→ 1つの PR には1つの目的、という分け方のルール
 - 「Copilot のレビューを入るようにしたから、サブエージェントのレビューと Copilot のレビューのどちらにも応答してね」→ レビューの進め方のルール
 
-レビューのルール自体もサブエージェントにレビューさせたところ、「『CI が通ったらマージする』だと、自分でマージしてよいと読める」という指摘があり、「マージはユーザーの指示があった時だけ」と明記されました。レビューの仕組みが自分のルールを直していくのは、なかなか面白い光景でした。
+レビューのルール自体もサブエージェントにレビューさせたところ、「『CI が通ったらマージする』だと、自分でマージしてよいと読める」という指摘があり、「マージはユーザーの指示があった時だけ」と明記されました。レビューの仕組みが、そのレビューのルール自体を直していくのは、なかなか面白い光景でした。
 
 <!-- TODO: サブエージェントと Copilot のレビューを両方入れてみた感想 -->
 
@@ -110,7 +109,7 @@ download のテストを `go test -race` で動かしたところ、goroutine �
 一日の中で、思わぬところで何度かつまずきました。
 
 - **API のレート制限**: PR を開くたびにテーマをダウンロードするワークフローが、本番デプロイと Shopify Admin API のレート制限（2 calls per second）を取り合って、無関係な PR のチェックを落としていました。週次の定期実行と手動実行だけにしています
-- **Rulesets と force-push**: テーマ更新の PR を作る create-pull-request はブランチを force-push で更新しますが、レポジトリの Rulesets で force-push を禁止していたため拒否されていました。該当ブランチを対象から外して解決しました
+- **Rulesets と force-push**: テーマ更新の PR を作る create-pull-request はブランチを force-push で更新しますが、レポジトリの Rulesets で force-push を禁止していたため拒否されていました。該当ブランチを対象から外して解決しました <!-- TODO: Rulesets の除外設定を公開記事に書くかどうか判断 -->
 - **独立にマージした PR の噛み合わせ**: 依存更新とハーネスの PR を別々にマージしたら、golden ファイルが新しい Markdown ライブラリの出力と合わずに main のテストが落ちました。ただ、差分は事前に手で確認していた4記事だけで、ハーネスがちゃんと仕事をしていることの確認にもなりました
 
 ## まとめ
