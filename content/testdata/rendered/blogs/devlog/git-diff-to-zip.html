@@ -1,0 +1,40 @@
+<h2>やりたいこと</h2>
+
+<ul>
+<li>クライアント案件で、本番サーバーへのアクセス権がない。</li>
+<li>更新作業の際には差分ファイルのみを納品するように要求されている。</li>
+</ul>
+
+<h2>git archiveで差分抽出</h2>
+
+<p><code>git archive</code>コマンドで、前回納品時との<code>diff</code>を抽出して<code>zip</code>化する</p>
+
+<pre><code class="language-shell">git archive --format=zip HEAD `git diff master --name-only` -o archive.zip
+
+</code></pre>
+
+<p><code>git diff</code>で<code>master</code>ブランチ(前回納品時の状態を想定)との差分ファイルリストを取得して、<code>git archive</code>に渡してあげる。
+これでアーカイブ化できました。</p>
+
+<h2>&ndash;diff-filterを使う</h2>
+
+<p>上記の手法だと差分の中に削除したファイルも含まれてしまい、以下のエラーメッセージが出ます。</p>
+
+<pre><code class="language-shell">fatal: pathspec 'path/to/not/exist/file' did not match any files
+
+</code></pre>
+
+<p>削除したファイルは<code>git archive</code>対象のリストに渡らないようにすれば良さそうです。
+<a href="http://git-scm.com/docs/git-diff">公式ドキュメントのgit-diffのページ</a>を見ると、<code>--diff-filter</code>というオプションがありました。</p>
+
+<blockquote>
+<p>Select only files that are Added (A), Copied &copy;, Deleted (D), Modified (M), Renamed &reg;</p>
+</blockquote>
+
+<p>このオプションを使って追加したファイル(A)と編集したファイル(M)だけにフィルタリングされたリストが作れそうです。</p>
+
+<pre><code class="language-shell">git archive --format=zip HEAD `git diff master --name-only --diff-filter=AM` -o archive.zip
+</code></pre>
+
+<p>これでOK。
+困ったときは公式ドキュメントに限りますね。</p>

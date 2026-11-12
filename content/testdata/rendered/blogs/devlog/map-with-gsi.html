@@ -1,0 +1,122 @@
+<h2>前置き</h2>
+
+<p>1年ほど前に、政府がGoogle Mapsを使わないように要請したという事が話題になりました。
+<a href="http://www.huffingtonpost.jp/2013/09/29/google-map-forbidden_n_4011180.html">ハフィントン・ポスト「グーグルマップの「利用禁止令」 竹島や北方領土が「日本名でない表記」 政府が自治体などに要請」</a></p>
+
+<p>クライアントが政府筋の案件で地図を使わなくてはいけないなんて時に、手軽なGoogle Mapsが利用出来ないのは困りますね。
+そんな時は<a href="http://www.gsi.go.jp/">国土交通省-国土地理院</a>が提供している「地理院地図（電子国土Web.NEXT）」を使う事になるでしょう。</p>
+
+<p>以前はサイト内で詳細な作成例を提供していたのですが、2014年7月にバージョンアップが行われた際に、
+そこら辺のドキュメントもアーカイブされてしまったようです。
+アーカイブ化前に実装した経験をもとに、「地理院地図APIから地図タイルを取得して、任意の座標に画像を表示させる」方法をポストしたいと思います。</p>
+
+<hr>
+
+<h2>手順</h2>
+
+<ol>
+<li>OpenLayersライブラリを読み込む</li>
+<li>「DenshiKokudo Web API for OpenLayers」を読み込む</li>
+<li>背景地図レイヤーを作成</li>
+<li>任意の座標に画像レイヤーを作成</li>
+</ol>
+
+<hr>
+
+<h2>コード</h2>
+
+<pre><code class="language-html">&lt;script type=&quot;text/javascript&quot; src=&quot;http://portal.cyberjapan.jp/sys/OpenLayers-2.11/OpenLayers.js&quot; charset=&quot;UTF-8&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://portal.cyberjapan.jp/sys/v4/webtis/webtis_v4.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+  function init() {
+    var map = null; //地図インスタンス
+    initCX = 139; //初期の経度
+    initCY = 38.5; //初期の緯度
+    initZoomLv = 10; //初期のズームレベル
+    projection900913 = new OpenLayers.Projection(&quot;EPSG:900913&quot;); //真球メルカトル投影を定義
+    projection4326 = new OpenLayers.Projection(&quot;EPSG:4326&quot;); //等経緯度投影を定義
+    selectControl; //SelectFeature
+    maxExtent = new OpenLayers.Bounds(-20037508, -20037508, 20037508, 20037508); //真球メルカトル投影のときの最大範囲(単位はm)
+    restrictedExtent = maxExtent.clone(); //真球メルカトル投影のときの最大範囲に範囲を制限
+    maxResolution = 156543.0339; //真球メルカトル投影のときの最大解像度
+    icon = '表示させる画像要素のパス';
+
+    //地図表示画面のオプション設定
+    var options = {
+      controls: [ //「controls」を設定することで、デフォルトのコントロールを破棄してコントロールを再設定
+        new OpenLayers.Control.Navigation({
+          mouseWheelOptions: {
+            interval: 100
+          }
+        }), //地図マウスイベントのハンドル設定。
+        new OpenLayers.Control.PanZoomBar(), //左上のパンズームバーを設定
+        new OpenLayers.Control.KeyboardDefaults(), //キーボードをデフォルトに設定
+        new OpenLayers.Control.Attribution() //国土地理院著作表示
+      ],
+      projection: projection900913, //背景地図の地理座標系
+      displayProjection: projection4326, //表示の地理座標系
+      units: &quot;m&quot;, //背景地図の単位
+      maxResolution: maxResolution, //背景地図の最大解像度
+      maxExtent: maxExtent, //背景地図の最大範囲
+      restrictedExtent: restrictedExtent //背景地図の表示制限範囲
+    };
+
+    //OpenLayers APIのMapクラスからインスタンスを作成
+    map = new OpenLayers.Map('map', options);
+
+    //スケールバーコントロール表示(最大ピクセル150、下段単位無、EPSG:900913)
+    map.addControl(new OpenLayers.Control.ScaleLine({
+      maxWidth: 150,
+      bottomOutUnits: &quot;&quot;,
+      bottomInUnits: &quot;&quot;,
+      geodesic: true
+    }));
+
+    //電子国土WebシステムVer.4背景地図レイヤーインスタンスを作成。データセットは未指定で、デフォルトデータセットを利用
+    webtisMap = new webtis.Layer.BaseMap(&quot;webtismap&quot;);
+
+    //背景地図レイヤーをMapに追加
+    map.addLayer(webtisMap);
+
+
+    //***ここからベクターレイヤーの記述***
+
+    //ベクターレイヤーの作成
+    myVectorLayer = new OpenLayers.Layer.Vector(&quot;layername&quot;);
+
+    //ベクターレイヤーの座標を定義 (for文を回すと、複数の座標にアイコンを定義できます)
+    myVectorLayer.addFeatures([new OpenLayers.Feature.Vector(
+      new OpenLayers.Geometry.Point(initCX, initCY).transform(projection4326, projection900913)
+      // new OpenLayers.Geometry.Point(経度,緯度).transform(projection4326,projection900913)
+      // 緯度と経度を任意の数値に変えると、初期表示位置とは別の場所にアイコン画像を表示できる
+    )]);
+
+    vector_style = new OpenLayers.Style({
+      'externalGraphic': icon,
+      'pointRadius': 16
+    });
+
+    myVectorLayer.styleMap = new OpenLayers.StyleMap({
+      'default': vector_style
+    });
+
+    //ベクターレイヤーをMapに追加
+    map.addLayer(myVectorLayer);
+
+    //***ここまでベクターレイヤーの記述***
+
+
+    // MapにSelectFeatureコントロールを追加
+    selectControl = new OpenLayers.Control.SelectFeature(myVectorLayer);
+    map.addControl(selectControl);
+    selectControl.activate();
+
+    //初期の中心座標を指定（経緯度で入力して、内部的に真球メルカトル座標に変換して表示）
+    map.setCenter(new OpenLayers.LonLat(initCX, initCY).transform(projection4326, projection900913), initZoomLv);
+  }
+
+  init();
+&lt;/script&gt;
+
+&lt;div id=&quot;map&quot;&gt;&lt;/div&gt;
+</code></pre>

@@ -1,0 +1,39 @@
+<p><code>nodejs</code>の<code>v0.12</code>を使ってるプロジェクトでcircleCIのテストが通りませんでした。
+手元のテストは成功しているのですが。。。</p>
+
+<h4>こんな感じのエラー</h4>
+
+<pre><code class="language-sh">   Uncaught Error: Module did not self-register.
+      at Error (native)
+      at Module.load (module.js:355:32)
+      at Function.Module._load (module.js:310:12)
+      at Module.require (module.js:365:17)
+      at require (module.js:384:17)
+</code></pre>
+
+<h4>困ったときのStackOverflow</h4>
+
+<p><a href="http://stackoverflow.com/questions/28486891/uncaught-error-module-did-not-self-register">Uncaught Error: Module did not self-register</a></p>
+
+<p>事前に</p>
+
+<pre><code class="language-sh">npm rebuild
+</code></pre>
+
+<p>すれば良いみたい。</p>
+
+<p><code>circle.yml</code>をこんな感じにして解決。</p>
+
+<pre><code class="language-yml">dependencies:
+  override:
+    - npm install
+    - npm rebuild
+</code></pre>
+
+<p>ローカルマシンでも同様のエラーを吐く時があるけど、
+同じように</p>
+
+<pre><code class="language-sh">npm rebuild
+</code></pre>
+
+<p>してあげれば解決するっぽいです。</p>

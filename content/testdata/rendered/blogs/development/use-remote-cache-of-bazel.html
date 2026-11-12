@@ -1,0 +1,138 @@
+<p>このサイトの開発レポジトリではBazelでビルドを管理しています。</p>
+
+<p>ビルド最適化の一環としてBazelのremote cacheを設定したので、ログを残しておきます。</p>
+
+<h2>キャッシュサーバの選択</h2>
+
+<p><a href="%E3%83%89%E3%82%AD%E3%83%A5%E3%83%A1%E3%83%B3%E3%83%88">https://docs.bazel.build/versions/master/remote-caching.html</a> によれば、自前でキャッシュサーバを用意する方法と、GCPなどのマネージドサービスを利用する方法があるようです。</p>
+
+<p>BazelはGoogleのプロジェクトだけに、デフォルトでGCPのcredentialsを用いて認証するオプションが付いていますので、これを用いるのが一番手っ取り早そうです。 (月数百円程度のコストは掛かってしまいますが)</p>
+
+<p>自宅サーバが遊んでいればそっちを流用してみても良かったかも。</p>
+
+<h2>GCPの設定</h2>
+
+<p>キャッシュ用のストレージへのアクセス権限と鍵発行を担うアカウントを作成して、ストレージへ紐付けます。</p>
+
+<h3>Projectを作成</h3>
+
+<p>既存の関連Projectがなければ作成します。</p>
+
+<p><img src="https://cdn.shopify.com/s/files/1/0512/0091/7703/files/create-project_480x480.png?v=1609060704" alt="" /></p>
+
+<h3>Roleを作ってService Accountに紐付け</h3>
+
+<p>Remote cacheにはCloud Storageを使います。</p>
+
+<p>その前にCloud StorageにアクセスするためのService Accountと、Accountに紐付けるRoleを用意します。</p>
+
+<p><img src="https://cdn.shopify.com/s/files/1/0512/0091/7703/files/create-role_480x480.png?v=1609060715" alt="" /></p>
+
+<p>Remote cacheのためには、以下の3つの権限が付いていれば良いようです。</p>
+
+<ul>
+<li><code>storage.objects.get</code></li>
+<li><code>storage.objects.create</code></li>
+<li><code>storage.objects.update</code></li>
+</ul>
+
+<p>次にService Accountを作成して、先程作成したRoleを紐付けます。</p>
+
+<p><img src="https://cdn.shopify.com/s/files/1/0512/0091/7703/files/create-service-account_480x480.png?v=1609060723" alt="" /></p>
+
+<h3>Keyを作成</h3>
+
+<p>Service AccountからKeyを発行します。</p>
+
+<h3>Cloud StorageにBucketを作成</h3>
+
+<p>Bucketを作成します。objecgtにはBazelからしかアクセスしないので、Access ControlにはUniformedを設定します。</p>
+
+<h3>PERMISSIONSを追加</h3>
+
+<p>先程作成したService Accountを追加します。</p>
+
+<p><img src="https://cdn.shopify.com/s/files/1/0512/0091/7703/files/add-role_480x480.png?v=1609060696" alt="" /></p>
+
+<h3>LifyCycleを設定</h3>
+
+<p>キャッシュなのでいつまでも残しておく必要はありません。</p>
+
+<p>Actionに <code>Delete Object</code> を選択して、conditionsの <code>Age</code> に適当な期間を入力します。 (私は30日で設定しています)</p>
+
+<h2>ローカルに設定</h2>
+
+<h3>.bazelrcを設定</h3>
+
+<p><code>.bazelrc</code> に、設定したBucketをremote cacheとして紐付けます。</p>
+
+<pre><code class="language-sh">run --remote_cache=https://storage.googleapis.com/your-bucket-name
+run --google_default_credentials
+build --remote_cache=https://storage.googleapis.com/your-bucket-name
+build --google_default_credentials
+test --verbose_failures --remote_cache=https://storage.googleapis.com/your-bucket-name
+test --google_default_credentials
+
+</code></pre>
+
+<p>これでremote cacheの設定は完了です。</p>
+
+<p><code>google_default_credentials</code> はGoogle Cloudへアクセスする際の、 <a href="https://cloud.google.com/iam/docs/service-accounts#default">実行環境のデフォルトのService Accountをクレデンシャルとして用いる</a> オプションです。 先程発行したKeyで<code>gcloud</code>コマンドから認証しておくことで、BazelがBucketへアクセス出来るようになります。</p>
+
+<p>ただしこのためだけに<code>gcloud</code>コマンドをインストールするのも手間なので、以下のようにKeyを直接クレデンシャルとして設定することも可能です。</p>
+
+<pre><code class="language-diff">--- .bazelrc
++++ .bazelrc
+@@ -1,5 +1,3 @@
++try-import %workspace%/dev.bazelrc
+
+</code></pre>
+
+<pre><code class="language-sh"># user.bazelrc
+run --nogoogle_default_credentials
+build --nogoogle_default_credentials
+test --nogoogle_default_credentials
+
+run --google_credentials=secrets.json
+build --google_credentials=secrets.json
+test --google_credentials=secrets.json
+
+</code></pre>
+
+<h3>ビルドしてみる</h3>
+
+<p>設定が正しいか確認してみましょう。</p>
+
+<pre><code class="language-sh">$ npx bazelisk build //...
+
+</code></pre>
+
+<p>設定に問題があれば、404系のエラーがログに表示されるはずです。 ビルドが完了したら、Bucketにobjectが出来ているかも確認できます。</p>
+
+<h2>GitHub Actionsに設定</h2>
+
+<p>最後にCI環境でremote cacheを設定します。 このサイトの <a href="https://github.com/kogai/k9bookshelf/blob/main/.github/workflows/test_go.yml">開発レポジトリではGitHub Actionsを使って</a> いますのでそれに応じた作業ログになります。</p>
+
+<h3>Secretsに設定</h3>
+
+<p><a href="https://github.com/google-github-actions/setup-gcloud/tree/master/setup-gcloud">gcloudの設定用actions</a> が提供されているので、こちらを用います。</p>
+
+<p>先程発行したKeyを適当なsecretsに設定して、actionからgcloudが認証出来るようにします。</p>
+
+<pre><code class="language-yml"># GitHub Actionsの設定
+  - name: Set up Cloud SDK
+    uses: google-github-actions/setup-gcloud@master
+    with:
+      project_id: &quot;your-project-id&quot;
+      service_account_key: ${{ secrets.GCP_BAZEL_CACHE_KEY }}
+      export_default_credentials: true
+
+</code></pre>
+
+<h2>まとめ</h2>
+
+<p>以上で設定はすべて完了です。</p>
+
+<p><a href="https://cloud.google.com/products/calculator/#id=a10aa66c-0e7d-4ee6-bfb4-d3f5a785018e">月ごとの費用感</a> は数ドル~くらいのようです。</p>
+
+<p>実はこのサイトの開発レポジトリくらいの規模感だと費用対効果はいまいちなのですが、別のレポジトリで各7~8分くらいのaction(がcommit毎に複数)が2~3分くらいにまで短縮されました。</p>

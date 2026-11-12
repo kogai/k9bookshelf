@@ -1,0 +1,56 @@
+<p>以前より話が出ていた、npmのプライベートモジュールが公開されていました。
+<a href="https://www.npmjs.com/private-modules">private-modules</a>
+<img src="https://www.evernote.com/shard/s168/sh/241a329b-f2a3-4a33-ad08-4b7fc59d573c/6ec829c5154bd20530db0c9b20b7fffc/deep/0/npm.png" alt="" /></p>
+
+<h2>機能</h2>
+
+<blockquote>
+<ul>
+<li>create and share unlimited private modules for $7/month</li>
+<li>Host as many private packages as you want</li>
+<li>Give read access or read-write access for those packages to any other paid user</li>
+<li>Install and use any packages that other paid users have given you read access to</li>
+<li>Collaborate on any packages that other paid users have given you write access to</li>
+</ul>
+</blockquote>
+
+<p>要旨としては</p>
+
+<ul>
+<li>月額7ドルでモジュールをプライベート公開に出来る</li>
+<li>任意の課金済みユーザーに読み書き権限の発行ができる</li>
+</ul>
+
+<p>ということのようです。</p>
+
+<blockquote>
+<p>Currently, private packages are only available for individual users, but support for organization accounts is coming soon. Feel free to create a user for your organization in the meantime, and we can upgrade it to an organization when support is here.</p>
+</blockquote>
+
+<p>企業(組織)アカウント向けの対応はこれからのようです。</p>
+
+<h2>導入の仕方</h2>
+
+<ol>
+<li><p><a href="https://www.npmjs.com">npmjs</a>にサインアップして課金しておきます。
+※クレジットカード払いのみのようです。</p></li>
+
+<li><p>任意のnpmの<code>package.json</code>の<code>name</code>プロパティに自分のユーザーアカウント名を入れます
+&ldquo;`json
+public
+&ldquo;name&rdquo;: &ldquo;modulename&rdquo;</p></li>
+</ol>
+
+<p>private
+  &ldquo;name&rdquo;: &ldquo;@username/modulename&rdquo;
+&ldquo;`</p>
+
+<ol>
+<li><code>npm publish</code>で公開します。</li>
+</ol>
+
+<p>説明が必要なほどの手順はないですね。。。
+既にnpmを公開したことがある人なら、ほぼやることはありません。
+課金して、モジュールの名前にユーザー名を入れるだけ。</p>
+
+<p>ロードマップにあるという、企業アカウント向けの対応が始まったらnpmの使い方が変わってくるかも知れません。</p>

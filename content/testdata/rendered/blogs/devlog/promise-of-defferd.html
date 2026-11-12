@@ -1,0 +1,49 @@
+<p>非同期処理の書き方色々</p>
+
+<p>myAsync.js</p>
+
+<pre><code class="language-javascript">  'use strict';
+
+  // Promiseオブジェクトをそのまま返す
+  let readAsync = new Promise(function (resolve, reject) {
+      fs.readFile('./README.md', function (err, data) {
+        resolve(data);
+      })
+    });
+
+  // Promiseオブジェクトを返す関数
+  let writeAsync = function (data) {
+    return new Promise(function (resolve, reject) {
+      fs.writeFile('./README-copy.md', data, function (err) {
+        resolve();
+      });
+    });
+  }
+
+  // Defferedオブジェクトのpromiseを返す
+  let renameAsync = function () {
+    var d = Promise.defer();
+    fs.rename('./README-copy.md', './README-copy-modified.md', function (err) {
+      d.resolve();
+    });
+    return d.promise;
+  };
+
+  // Generator
+  let AppendAsync = function* (){
+    fs.appendFile('./README-copy-modified.md', 'this string is appended.');
+    yield;
+  };
+
+  readAsync
+  .then(writeAsync)
+  .then(renameAsync)
+  .then(function () {
+    AppendAsync().next();
+  });
+</code></pre>
+
+<p>実行してみる</p>
+
+<pre><code class="language-sh">babel-node myAsync.js
+</code></pre>

@@ -20,7 +20,7 @@ TK := ./bin/theme
 
 CONTENT := go run ./content/cmd/content
 
-.PHONY: deploy/theme deploy/contents download/contents download/theme watch lint test import import/dry release gqlgenc dist
+.PHONY: deploy/theme deploy/contents download/contents download/theme watch lint test golden check/theme import import/dry release gqlgenc dist
 
 bin/theme:
 	mkdir -p bin
@@ -46,6 +46,15 @@ test:
 	test -z "$$(gofmt -l $(GOFMT_FILES))" || (gofmt -l $(GOFMT_FILES); exit 1)
 	go vet ./...
 	go test ./...
+
+# Regenerates golden files of HTML rendered from contents/ (content/testdata/rendered)
+golden:
+	go test ./content -run TestRenderedContents -update
+
+# Builds theme assets and lints theme without deploying
+check/theme:
+	$(WP)
+	$(LINT) ./theme
 
 deploy/contents:
 	$(CONTENT) deploy \

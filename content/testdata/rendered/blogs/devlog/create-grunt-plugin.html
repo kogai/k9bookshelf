@@ -1,0 +1,43 @@
+<p>現在担当している業務で、ちょっとしたタスクが出てきた。
+あるJSONファイルのデータを元に、別のJSONファイルを生成するというものだ。</p>
+
+<p>イメージはこんな感じ。</p>
+
+<p><code>元のJSONファイルの内容(src.json)</code></p>
+
+<pre><code class="language-js">[
+  {
+    &quot;foo&quot;: &quot;bar&quot;
+  }
+]
+</code></pre>
+
+<p><code>生成したJSONファイルの内容(dest.json)</code></p>
+
+<pre><code class="language-js">[
+{
+&quot;foo&quot;: &quot;bar&quot;,
+&quot;baz&quot;: &quot;foobar&quot;
+}
+]
+</code></pre>
+
+<p>元のJSONファイルを編集するたびに生成先のJSONを編集するとかやってられないので、gruntプラグインで目的に合致しているものがないか探したがなかった。（このプラグインで出来るよというのあったら教えて下さい！）</p>
+
+<p>そこでnode.jsのfsモジュールを使ってJSONファイル(<code>dest.json</code>)を生成するコードを書いて、grunt-shellで逐次実行するようにした。</p>
+
+<p>しばらくそれで問題なかったが、よくよく考えるとshellで逐次実行しなくても、gruntプラグインとして直接実行できるのでは？と気付いた。
+調べてみると、使っていたnode.jsのコードをちょっと変えるだけでgruntプラグインとして公開出来そうだったので、試してみた。</p>
+
+<p>Qiitaのこの記事を参考にした。
+<a href="http://qiita.com/fnobi/items/5590e7e92b4f2bd81d04">grunt-pluginの作り方と解剖</a></p>
+
+<p>作ったものがこちら
+<a href="https://www.npmjs.com/package/grunt-json-extend">grunt-json-extend</a></p>
+
+<p>自分以外に使う人はいなかろう、と思いつつ公開したが、日に数回程はダウンロードされている模様。
+ダウンロード結果の解析は見れないっぽいのでどういう目的で使われているのか全然わからないが、誰かの役に立っているのなら嬉しいな。
+使ったことある人、もしこのブログを見ていたらどんな使い方をしているか教えて下さい。</p>
+
+<p>ちなみにこのプラグインを公開したちょっと後にgulpを初めて使ってみて<code>gulpfile.js</code>の短さに感動してしまったので、
+今後の新規案件では<code>gulp</code>でタスク処理するようになると思います。</p>

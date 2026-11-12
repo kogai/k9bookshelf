@@ -1,0 +1,96 @@
+<p>こんにちは。</p>
+
+<p><a href="https://k9bookshelf.com/blogs/development/how-and-why-running-bookstore">趣味でマーチャントをやっている</a> ものです。</p>
+
+<p>この記事は <a href="https://qiita.com/advent-calendar/2020/shopify-liquid">Shopify開発を盛り上げる（Liquid, React, Node.js, Graph QL） Advent Calendar 2020</a> の11日目の記事です。</p>
+
+<p>昨日は <a href="https://qiita.com/benzookapi">benzookapi</a> さんの <a href="https://www.shopify.jp/blog/partner-app-store-publishing-guide">Shopifyアプリ公開パーフェクトガイド：アプリエコシステムに上手に参加する方法</a> でした。</p>
+
+<p><a href="https://developer.feedforce.jp/entry/2020/12/04/100000">12月4日にも社内ブログで書いた記事を載せて頂きました</a> が、枠がまだ空いているようですので、今日はプライベートで作ったShopifyアプリについてお話したいと思っています。</p>
+
+<h2>この記事でお話するツール</h2>
+
+<p>ショップの商品データやブログ・ページを、手元のMarkdownファイルで編集して、CLIから更新するツールです。</p>
+
+<p>最初に動きを見てもらった方がイメージが付きやすいと思うので、デモを貼っておきます。</p>
+
+<p>ショップの商品情報やブログがCLIで更新されている様子です。</p>
+
+<p><img src="https://cdn.shopify.com/s/files/1/0512/0091/7703/files/2020-12-03_20.37.21_480x480.gif?v=1606995566" alt="デモ動画" /></p>
+
+<h2>Shopifyでのコンテンツの編集について</h2>
+
+<p>さて、皆さんは普段商品情報やページの編集をする時はどうされていますか？</p>
+
+<p>当然ですが、ショップの管理画面で提供されているエディタ(以下リッチエディタ)で更新されていることと思います。</p>
+
+<p>(ちなみにShopifyのデザインシステム<code>Poralis</code>で <a href="https://github.com/Shopify/polaris-react/issues/303#issuecomment-415554317">リッチエディタをComponentとして提供して欲しいという要望</a> が多く集まっているようですね)</p>
+
+<p>私は元々仕事でShopifyアプリの開発をしていた延長で、自分のショップがあったら楽しかろうと思ってこのサイトを出店しているのですが、マーチャントの立場で改めて管理画面を使ってみると、どうにもこのエディタでは満足できないことに気づいたのです。</p>
+
+<p>と言うのも、普段文書を書くのに最もよく使っているのは公私ともに <a href="https://www.markdownguide.org/">markdown</a> だからです。</p>
+
+<p>また本業のプログラマーという職業柄、文章を書くには使い慣れたテキストエディタを使いたいという気持ちもあります。</p>
+
+<p>Shopifyではテーマ開発用ツールとして <a href="https://github.com/Shopify/themekit">theme-kit</a> が提供されており、 Shopifyで編集したテーマファイルをダウンロードしたり手元のエディタで編集したものをアップロードすることが出来ます。</p>
+
+<p>これに近い体験が、コンテンツの管理でも出来ないものでしょうか？</p>
+
+<h3>既存の解決策</h3>
+
+<p>コミュニティを <a href="https://community.shopify.com/c/forums/searchpage/tab/message?advanced=false&amp;allow_punctuation=false&amp;filter=location&amp;location=category:en&amp;q=markdown">検索してみると</a>、markdownで編集出来るようなアプリをリリースしたというコメントは散見されるものの、デッドリンクとなっているなど、2020年時点でも使える解決策は見つかりませんでした。</p>
+
+<p>幸いShopifyには <a href="https://shopify.dev/docs/admin-api">Admin API</a> を始めとする、多種多様なAPIが公開されています。 また、リッチエディタで保存された文言は、内部的にはHTMLで保存されているようです。</p>
+
+<p>商品情報編集やページ・ブログ記事の更新までAPI経由で操作が可能なので、theme-kitよろしくcontent-kitのようなツールが書けそうです。 (と言うか、この記事は <a href="https://github.com/kogai/k9bookshelf/blob/main/content/README.md">content-kitと名付けたその自作ツール</a> で更新しています)</p>
+
+<h2>ツールの構成</h2>
+
+<p>開発に際して参考にしたドキュメントやツールは以下の通りです。</p>
+
+<ul>
+<li><a href="https://help.shopify.com/en/manual/apps/app-types#private-apps">Private App</a> でショップへのアクセス権限を取得</li>
+<li><a href="https://shopify.dev/docs/admin-api">Admin API</a></li>
+<li><a href="https://shopify.dev/docs/admin-api/graphql/reference/common-objects/queryroot/index">GraphQL API</a>
+
+<ul>
+<li>GraphQLのクエリファイルから以下のツールでAPIクライアントを自動生成</li>
+<li><a href="https://github.com/Yamashou/gqlgenc">https://github.com/Yamashou/gqlgenc</a></li>
+<li><a href="https://github.com/99designs/gqlgen">https://github.com/99designs/gqlgen</a></li>
+</ul></li>
+<li><a href="https://shopify.dev/docs/admin-api/rest/reference">REST API</a>
+
+<ul>
+<li>ページとブログの更新はGraphQL APIでサポートされていないのでREST APIも併用</li>
+</ul></li>
+</ul>
+
+<p>Shopifyはドキュメントが非常に充実していて、 <a href="https://shopify.dev/tools/graphiql-admin-api">GraphiQLアプリ</a> によるインタラクティブな試行環境もあるので、 特に詰まることもなく開発出来ました。</p>
+
+<p>ページやブログはREST APIの <a href="https://github.com/bold-commerce/go-shopify">Goクライアントライブラリ</a> でサポートされていませんでした。 この辺りはShopifyアプリではあまり取り扱われないリソースなのかも知れません。</p>
+
+<h3>困ったこと</h3>
+
+<p>Shopifyには開発のための環境は揃いきっているので、困ったことはそれほどありませんでした。</p>
+
+<p>唯一困ったのは、テーマファイルや他のツール(テーマや書誌情報の規格化されたデータファイルの取り込みツールなど)を同じレポジトリで管理している都合上、 <a href="https://bazel.build/">bazel</a> でビルドをしているのですが、GraphQLクライアントの生成ツールが依存している <code>*.gotpl</code> などのファイルの依存関係が自動生成できなかったことです。</p>
+
+<p>Shopify関係ないですね。</p>
+
+<p>(bazelのgo系ルールには依存解決時にパッチを当てる仕組みがあるようで、 <a href="https://github.com/kogai/k9bookshelf/blob/b7bb804c0ad45b5eed5215d1b62a9c434c4cc6aa/content/com_github_yamashou_gqlgenc.patch#L1-L25">パッチを書くことで</a> 解決出来ました)</p>
+
+<h2>まとめ</h2>
+
+<p>どうしてもリッチエディタに慣れなくてついカッとなって作ってしまいました。</p>
+
+<p>マーチャントとしてPrivate Appで好きにカスタムしながらショップを運営するのは結構楽しいです。</p>
+
+<p>アプリストアに出品されないような一般化しづらい要望を(自分で)すくえるのがいいですね。 流行りのノーコードとは真逆の使い方ですが。。。</p>
+
+<p>バイナリを <a href="https://github.com/kogai/k9bookshelf/releases">Releaseページ</a> に置いておくので、良かったら試してみて下さい。</p>
+
+<p>(HTMLとMarkdownの相互変換で微細な差異が生じることがあります)</p>
+
+<hr>
+
+<p>明日は <a href="https://qiita.com/kskinaba">kskinaba</a> さんの「Ruby：Shopify GraphQL Admin API の使い方」です。 お楽しみに！</p>

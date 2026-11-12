@@ -1,0 +1,70 @@
+<h3>更新したファイルだけをタスクの対象に</h3>
+
+<p>gulpでファイルの自動生成をする時、対象ファイルの数が増えてくると生成に時間がかかってツラい感じになってきます。
+<code>gulp-newer</code>を使えば更新した差分ファイルのみをタスクの対象にしてくれるので幸せな感じになれます。</p>
+
+<pre><code class="language-coffee">gulp = require 'gulp'
+newer = require 'gulp-newer'
+jade = require 'gulp-jade'
+
+gulp.task 'sampleTask', -&gt;
+  # 更新差分の基準になるファイル
+  criterionFiles = './dest/html'
+
+	gulp.src([
+		'./src/jade/!(_)*.jade'
+	])
+	.pipe(newer(criterionFiles))
+	.pipe(jade())
+	.pipe(gulp.dest(dest))
+
+gulp.task 'default', [
+  'sampleTask'
+]
+</code></pre>
+
+<h3>本番環境用ファイルを生成する時</h3>
+
+<p>本番環境用のファイルを作る時は、生成漏れがあったら困るので更新差分にはしたくありません。
+そこで<code>production</code>環境の変数を作ってあげて、更新差分の基準ファイルを振り分けするようにしました。</p>
+
+<pre><code class="language-coffee">config =
+	production: false
+
+gulp.task 'setProduction', -&gt;
+  config.production = true
+
+gulp.task 'sampleTask', -&gt;
+
+  if( config.production )
+	   criterionFiles = ''
+  else
+	   criterionFiles = './dest/html'
+
+	gulp.src([
+		'./src/jade/!(_)*.jade'
+	])
+	.pipe(newer(criterionFiles))
+	.pipe(jade())
+	.pipe(gulp.dest(dest))
+
+gulp.task 'default', [
+	'sampleTask'
+]
+
+gulp.task 'build', [
+	'setProduction'
+	'default'
+]
+
+</code></pre>
+
+<h3>まとめ</h3>
+
+<p>静的サイトのジェネレータとしてgulpを使う事が多いので、100枚以上あるhtmlファイルの生成とか画像ファイルの生成にかかる時間が劇的に減りました。
+※ちなみに、gruntにも同様のプラグイン(grunt-newer)があります。</p>
+
+<h4>参考</h4>
+
+<p><a href="https://www.npmjs.com/package/gulp-newer">gulp-newer</a>
+<a href="http://laravel.io/forum/04-03-2014-how-to-handle-development-and-production-assets-with-gulp">How to handle development and production assets with gulp?</a></p>

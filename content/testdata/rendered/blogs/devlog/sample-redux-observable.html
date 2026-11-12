@@ -1,0 +1,284 @@
+<p>これは<a href="http://qiita.com/advent-calendar/2016/react">React Advent Calendar 2016</a>の第 1 日目の記事です。</p>
+
+<p>夏頃から<code>RxJS</code>で状態を管理して<code>React</code>で描画するようなアプリケーションを作っていました。
+<code>RxJS</code>に限らず、(F)RP 系ライブラリの導入に際して、導入のメリットが分かりづらいという話があります。
+難しい(そうに見える)新しいことを覚えてまで導入するほどのメリットがあるようには思えない、みたいな意見です。
+特にライブラリのレポジトリに上がっている Example アプリのような(例えば TODO アプリとか)ものだと、単に複雑性が増しているように見えるということもあります。</p>
+
+<p>これについて、<a href="https://www.manning.com/books/functional-reactive-programming">Functional Reactive Programming</a>という本に、(F)RP は小さく単純なアプリケーションでサンプルを作ってもメリットが見えてこない、機能同士に複雑な依存関係があるような複雑なアプリケーションになって、はじめてその真価がわかってくる、というようなことが書いてありました。
+(この本ではガソリン給油機アプリを想定して、ハイオク・レギュラーを給油しつつ、価格の最大値まで給油するみたいな仕組みを実装していました)</p>
+
+<p>この意見は、実際にアプリケーションを作った上での実感にも近いように思います。
+そこでこの記事では<code>redux</code>のレポジトリにあるサンプルアプリケーションを元にちょっと複雑な仕様を足してみて、<code>RxJS</code>の導入メリットが分かりやすくなることを目指したいと思います。</p>
+
+<p>こんな手順で進めます。</p>
+
+<ol>
+<li><code>redux</code>のチュートリアルからサンプルアプリケーションを見繕ってコードと構造をザッと把握する</li>
+<li><code>1</code>で選んだサンプルアプリケーションの非同期処理部分を<code>RxJS</code>ベースの<code>redux</code>ミドルウェアである<a href="https://github.com/redux-observable/redux-observable">redux-observable</a>で差し替える</li>
+<li>現実にあってもおかしくなさそうな仕様を足してみて、<code>RxJS</code>が複雑さを吸収できていそうか見てみる</li>
+</ol>
+
+<h2>redux のチュートリアルにあるサンプルアプリケーションをクローンしてきてざっと見る</h2>
+
+<p><a href="https://github.com/reactjs/redux/tree/master/examples">redux レポジトリの examples ディレクトリ</a>にいくつかサンプルアプリケーションがあります。
+この中で、非同期な通信の処理が入って現実のアプリケーションを想像しやすく、適度にシンプルな「ショッピングカート」アプリケーションを元にして進めてみたいと思います。</p>
+
+<p><a href="]https://github.com/kogai/sample-redux-observable/tree/redux-thunk">最初はこんな状態です</a>
+<a href="アプリケーションの姿">https://www.evernote.com/l/AKiS90K33WFMOLWsEwDhEZSeLhagkl2xJkYB/image.png</a></p>
+
+<p>図のように、<code>Products</code>を在庫の許す限り<code>Cart</code>に投入できて、<code>Cart</code>の内容によって支払い総額が変わる、といったアプリケーションです。
+非同期アクションを<code>redux-thunk</code>で<code>action creator</code>の中に dispatcher を流し込んで実現しているという、シンプルなアプリケーションとしてはわりとよくある感じの実装になっているようです。
+※サーバ側の実装は煩雑さを避けるために、単なる json ファイルと setTimeout で、非同期にレスポンスが返ってくることだけを表現しています。</p>
+
+<h2>サンプルアプリを、redux-observable で再実装してみる</h2>
+
+<p>では次に、このアプリケーションの<code>redux-thunk</code>を用いている部分を<code>redux-observable</code>に置き換えてみます。
+まだこの時点では、<code>RxJS</code>を用いるメリットよりもデメリットの方が多いはずです。</p>
+
+<p><a href="https://github.com/kogai/sample-redux-observable/tree/redux-observable">次はこういう状態にします</a></p>
+
+<pre><code class="language-javascript">// actions/index.js
+import * as types from &quot;../constants/ActionTypes&quot;;
+
+export const fetchAllProducts = () =&gt; ({
+  type: types.FETCH_PRODUCTS
+});
+
+export const receiveAllProducts = products =&gt; ({
+  type: types.RECEIVE_PRODUCTS,
+  products
+});
+
+export const addToCart = productId =&gt; ({
+  type: types.ADD_TO_CART_UNSAFE,
+  productId
+});
+
+export const receiveInCart = productId =&gt; ({
+  type: types.ADD_TO_CART,
+  productId
+});
+
+export const checkout = products =&gt; ({
+  type: types.CHECKOUT_REQUEST,
+  products
+});
+
+export const checkoutSuccess = cart =&gt; ({
+  type: types.CHECKOUT_SUCCESS,
+  cart
+});
+</code></pre>
+
+<pre><code class="language-javascript">// epics/index.js
+import { Observable } from &quot;rxjs&quot;;
+import shop from &quot;../api/shop&quot;;
+import * as types from &quot;../constants/ActionTypes&quot;;
+import { receiveAllProducts, receiveInCart, checkoutSuccess } from &quot;../actions&quot;;
+
+export const allProductsEpic = action$ =&gt;
+  action$
+    .ofType(types.FETCH_PRODUCTS)
+    .mergeMap(_ =&gt; Observable.bindCallback(shop.getProducts)())
+    .map(receiveAllProducts);
+
+export const addToCartEpic = (action$, store) =&gt;
+  action$
+    .ofType(types.ADD_TO_CART_UNSAFE)
+    .map(({ productId }) =&gt; productId)
+    .filter(
+      productId =&gt; store.getState().products.byId[productId].inventory &gt; 0
+    )
+    .map(receiveInCart);
+
+export const checkoutEpic = (action$, store) =&gt;
+  action$
+    .ofType(types.CHECKOUT_REQUEST)
+    .map(({ products }) =&gt; products)
+    .mergeMap(products =&gt; Observable.bindCallback(shop.buyProducts)(products))
+    .map(_ =&gt; store.getState().cart)
+    .map(checkoutSuccess);
+</code></pre>
+
+<p>大きく変わっているのは、<code>redux-thunk</code>を用いて<code>action creator</code>の中で表現していた非同期処理を、<code>Epic</code>と呼ばれる別の構造の中で宣言することで、<code>action creator</code>が純粋で同期的な関数に戻っていることです。
+<code>Epic</code>とは<code>redux-observable</code>が提供する構造で、私は<code>redux</code>の世界に<code>RxJS</code>の<code>Observable</code>を組み込むためのもの、みたいに解釈しています。
+<code>redux-observable</code>のドキュメントには</p>
+
+<blockquote>
+<p>It is a function which takes a stream of actions and returns a stream of actions. Actions in, actions out.
+You can think of it of having roughly this type signature:
+<code>function (action$: Observable&lt;Action&gt;, store: Store): Observable&lt;Action&gt;;</code></p>
+</blockquote>
+
+<p>とあります。
+<code>action</code>の<code>Observable</code>を受け取って、変性・フィルタリングなどを加えた<code>action</code>の<code>Observable</code>を返す関数である<code>Epic</code>を<code>Middleware</code>として<code>redux</code>の世界の中に組み込んでいる感じのようです。</p>
+
+<h2>仕様をいくつか足して、アプリ仕様を複雑にしてみて、Rx が複雑性を吸収する様を見る</h2>
+
+<p>さて、ここまでだとコードが減っているわけではないですし、あまりメリットが見えて来ないかも知れません。(<code>action</code>が純粋で同期的な関数からのみ生成されるようにはなりましたが。。。)
+そこで(F)RP 的なメリットが見えやすいように、機能同士に複雑な依存関係が必要になるような仕様を追加してみたいと思います。</p>
+
+<p>例えば今の仕様だと「カートの中身」は「商品の ID を投げる<code>action</code>」のみに依存しています。
+これを別の<code>action</code>にも同時に依存しなければならないようにしてみたいと思います。</p>
+
+<p>こんな仕様です。</p>
+
+<ul>
+<li>3 個の商品を購入すると支払い総額から 1 割値引きされる</li>
+<li>購入しようとしているユーザには通常会員・プレミアム会員の 2 種があり、属性によって割引率が変わる</li>
+<li>購入した商品の総額によって、割引率が増える</li>
+</ul>
+
+<p>こうなると、「カートの中身」とは「商品の ID を投げる Action」に加えて「ユーザの属性を投げる<code>action</code>」に依存したものになります。</p>
+
+<p>実際にコードに起こしたものはこういう感じです。
+<a href="https://github.com/kogai/sample-redux-observable/tree/redux-obsrvable-complicated">少しだけ複雑なアプリケーション</a></p>
+
+<p>まず「カートの中身」を<code>Epic</code>にします。
+<code>cart reducer</code>に定義されていた「カートの中身とは、ADD_TO_CART アクションで渡ってくる商品 ID をとりまとめたもの」という定義を<code>Epic</code>として再定義する感じです。
+ですので、<code>Epic</code>の中に定義された関数は、<code>reducers/index.js</code>に定義されていたユーティリティ関数を少し改修したものが多いです。</p>
+
+<pre><code class="language-javascript">export const cartEpic = (action$, store) =&gt; {
+  const productId$ = Observable.merge(
+    action$.ofType(ADD_TO_CART).map(({ productId }) =&gt; productId),
+    action$.ofType(CHECKOUT_REQUEST).mapTo(null)
+  );
+
+  const addedIds$ = productId$.scan((addedIds, id) =&gt; {
+    if (id === null) {
+      return [];
+    }
+    return addedIds.indexOf(id) !== -1 ? addedIds : [...addedIds, id];
+  }, []);
+
+  const quantityById$ = productId$.scan((quantityById, id) =&gt; {
+    if (id === null) {
+      return {};
+    }
+    return { ...quantityById, [id]: (quantityById[id] || 0) + 1 };
+  }, {});
+
+  return Observable.combineLatest(
+    addedIds$,
+    quantityById$,
+    (addedIds, quantityById) =&gt; ({ addedIds, quantityById })
+  ).map(({ addedIds, quantityById }) =&gt; {
+    const { byId } = store.getState().products;
+
+    const total = addedIds
+      .reduce((acc, id) =&gt; acc + byId[id].price * (quantityById[id] || 0), 0)
+      .toFixed(2);
+
+    const products = addedIds.map(id =&gt; ({
+      ...byId[id],
+      quantity: quantityById[id] || 0
+    }));
+
+    return updateCart({
+      total,
+      products
+    });
+  });
+};
+</code></pre>
+
+<p>次にアプリケーションにおける「ユーザー」を定義します。
+まず既存の実装をベースに、偽の API レスポンス関数を用意します。</p>
+
+<pre><code class="language-json">// こんなレスポンスを返すAPIを想定しています
+{
+  &quot;userType&quot;: 1, // 通常会員には0、プレミアム会員には1を返します
+  &quot;amount&quot;: 499 // そのユーザーの、今までの購買額を返します
+}
+</code></pre>
+
+<pre><code class="language-javascript">export const getUser = cb =&gt; setTimeout(() =&gt; cb(_user), TIMEOUT);
+</code></pre>
+
+<p>更にユーザー情報を<code>Epic</code>として定義して、ユーザー情報の取得(必要なら更新も)をアプリケーションに組み込みます。</p>
+
+<pre><code class="language-javascript">const userEpic = action$ =&gt;
+  action$
+    .ofType(ON_LOAD)
+    .mergeMap(_ =&gt; Observable.bindCallback(getUser)())
+    .map(recieveUser);
+</code></pre>
+
+<p>最後に、割引率の算出ロジックを実装します。
+まず<code>userEpic</code>がユーザー属性と購買総額に応じた割引率を取得できるように変更します。</p>
+
+<pre><code class="language-javascript">export const userEpic = action$ =&gt; {
+  const user$ = action$
+    .ofType(ON_LOAD)
+    .mergeMap(_ =&gt; Observable.bindCallback(getUser)());
+
+  const total$ = action$
+    .ofType(CHECKOUT_REQUEST)
+    .map(({ total }) =&gt; ({ amount: Number(total) }));
+
+  return user$
+    .merge(total$)
+    .scan((acc, next) =&gt; ({
+      amount: acc.amount + next.amount,
+      userType: acc.userType
+    }))
+    .map(user =&gt; ({
+      ...user,
+      // プレミアムユーザー・支払い総額が1000ドルを超えるユーザーはそれぞれ割引率が追加される
+      discountRate:
+        (user.userType === UserTypes.PREMIUM ? 0.1 : 0) +
+        (user.amount &gt; 1000 ? 0.1 : 0)
+    }))
+    .map(recieveUser);
+};
+</code></pre>
+
+<p>次に<code>userEpic</code>が生成する「割引率」を「カートの中身」に混ぜ込みます。
+これで最終的な割引率を加味した購入額をカートのチェックアウトの際に取得できるようになります。</p>
+
+<pre><code class="language-javascript">export const cartEpic = (action$, store) =&gt; {
+  // ...略
+  const discountRate$ = action$.ofType(RECEIVE_USER).pluck(&quot;discountRate&quot;);
+
+  return Observable.combineLatest(
+    addedIds$,
+    quantityById$,
+    discountRate$,
+    (addedIds, quantityById, userDiscountRate) =&gt; ({
+      addedIds,
+      quantityById,
+      userDiscountRate
+    })
+  ).map(({ addedIds, quantityById, userDiscountRate }) =&gt; {
+    // ...略
+    const totalQuantity = addedIds.reduce(
+      (acc, id) =&gt; acc + (quantityById[id] || 0),
+      0
+    );
+    const discountRate = (totalQuantity &gt;= 3 ? 0.3 : 0) + userDiscountRate;
+
+    return updateCart({
+      total,
+      products,
+      discountRate
+    });
+  });
+};
+</code></pre>
+
+<p>という感じで、難しい書き方をせずに「複数の<code>action</code>を起点に別の<code>action</code>を発行する」ような機能が実装できるのが、<code>redux-observable</code>と<code>RxJS</code>を<code>redux</code>の世界で用いるメリットということになるでしょうか。
+ここでは触れられませんでしたが、<code>Epic</code>は<code>Observable</code>を受け取って<code>Observable</code>を返す関数に過ぎないので、<a href="http://blog.mmmcorp.co.jp/blog/2016/06/25/testing-rxjs-5/">RxJS の提供するテスト手法</a>に乗っかって簡単にテストできるのもうれしいところです。</p>
+
+<h2>まとめ</h2>
+
+<p>以上、<code>redux-thunk</code>で非同期処理を取り扱っている<code>redux</code>の公式サンプルを<code>redux-observable</code>に置き換えて、少し仕様を複雑にするところまでを実装してみました。
+何かの参考になればうれしいです。
+明日の<a href="http://qiita.com/advent-calendar/2016/react">React Advent Calendar 2016</a>もお楽しみに！(地図ライブラリの話めっちゃ気になります)</p>
+
+<h2>参考</h2>
+
+<ul>
+<li><a href="https://medium.com/@benlesh/redux-observable-ec0b00d2eb52">RxJS のリードエンジニアによる redux-observable の紹介記事</a></li>
+<li><a href="https://redux-observable.js.org/">redux-observable のドキュメント兼チュートリアル</a></li>
+</ul>

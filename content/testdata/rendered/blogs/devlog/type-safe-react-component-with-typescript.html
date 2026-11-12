@@ -1,0 +1,140 @@
+<h2>React.Proptypesに感じている不満</h2>
+
+<p>React組み込みのProptypesによる型検査は、実行時検証であり、アプリケーションを起動して、実際にコンポーネントを描画してみるまでエラーに気づけない。
+また、React独自の機能であるので、他の下層DOMライブラリでも同様の型検査をできるわけではない。
+さらに、Proptypesはコンポーネントに定義するので、型定義がViewに紐付いてしまう(ドメイン知識がViewに紐付いてしまう)
+型定義の多くはドメイン知識に紐付いており、ViewではなくModel(State)レイヤーで定義したい。</p>
+
+<p>そこで本稿ではTypeScriptの静的解析の支援を受けて、型安全なコンポーネントを定義することでこの問題を解決する方法について説明したい。
+※なお、ReactにはFacebook謹製のFlowTypeがあるが、あくまでアプリケーションの主体はModel層にあり、Model層はRxJSによるState川を作る設計にしたいという理由でTypeScriptを選択している</p>
+
+<h2>導入方法</h2>
+
+<p>まず、TypeScriptとReactをインストールする。
+※TypeScriptは2.x系のバージョンがベータ版としてリリースされているので、そちらを使うのであればtypingsは不要。</p>
+
+<pre><code class="language-bash">npm i -S typescript react typings
+</code></pre>
+
+<p>次にReactの型定義ファイルを取得します</p>
+
+<pre><code class="language-bash">$(npm bin)/typings install -S react
+# TypeScript@2の場合は npm install -D @types/react
+</code></pre>
+
+<p>これで準備は完了。</p>
+
+<h2>コンポーネントの定義</h2>
+
+<p>それでは実際にコンポーネントを定義する。
+ReactにはReactComponentと、StatelessComponentという2種のコンポーネント型がある。</p>
+
+<p>ReactComponentは、一般的なReactのコンポーネントで、React.Componentを継承して定義するコンポーネント。
+StatelessComponentは、関数として定義できるコンポーネントで、(当然だが)ライフサイクルメソッド、Stateを持たない。
+Viewにロジックが入り込む余地をなくすことができるので、私は特に理由がない限りこちらのコンポーネントを使うようにしている。</p>
+
+<p>さて、ReactComponentとStatelessComponentのコンポーネント定義例を作成する前に、それぞれの型定義を確認したい。</p>
+
+<pre><code class="language-typescript">// ReactComponent
+class Component&lt;P, S&gt; implements ComponentLifecycle&lt;P, S&gt; {
+  constructor(props?: P, context?: any);
+  setState(f: (prevState: S, props: P) =&gt; S, callback?: () =&gt; any): void;
+  setState(state: S, callback?: () =&gt; any): void;
+  forceUpdate(callBack?: () =&gt; any): void;
+  render(): ReactElement&lt;any&gt;;
+  
+  props: P &amp; { children?: ReactNode };
+  state: S;
+  context: {};
+  refs: {
+    [key: string]: ReactInstance
+  };
+}
+  
+// StatelessComponent
+interface StatelessComponent&lt;P&gt; {
+  (props?: P, context?: any): ReactElement&lt;any&gt;;
+  propTypes?: ValidationMap&lt;P&gt;;
+  contextTypes?: ValidationMap&lt;any&gt;;
+  defaultProps?: P;
+  displayName?: string;
+}
+</code></pre>
+
+<p>ReactComponentは<code>P</code>,<code>S</code>、StatelessComponentは<code>P</code>という型変数を受け取ることに注目したい。
+これはPropsとStateを表す型変数で、それぞれコンポーネントのPropsとStateに受け取れる型を定義できる。
+※余談だが、コンポーネント階層に暗黙に流れていくcontextというオブジェクトもあるが、こちらはany型になっている。</p>
+
+<p>つまり、PropTypesで実行時に検証していたPropsの型を、TypeScriptのジェネリクス機能によって、静的に解析・検証ができるというだ。
+これによって、Model(Store)レイヤーで定義したインターフェースに変更があった場合でも、アプリケーションを実行することなく変更を検出・コンポーネントの定義を変更でき、非常に快適なコンポーネント作成を行うことができる。</p>
+
+<h2>作例</h2>
+
+<p>では実際にコンポーネントの作例を書いてみたい。
+例によってTodoアプリケーションを想定して、ごく簡単なTodoリストを描画したいとする。
+(なお、JSX記法を用いて仮想DOMを定義しているので、拡張子を*.tsxとしている)</p>
+
+<pre><code class="language-typescript">import { StatelessComponent, Component } from &quot;react&quot;;
+  
+// Propsの型を定義する
+interface ITodo {
+  label: string;
+  isCompleted: boolean;
+}
+  
+interface ITodos {
+  todos: ITodo[];
+}
+  
+// StatelessComponentの型引数に上で定義した型を渡す
+const Todo: StatelessComponent&lt;ITodos&gt; = ({ label, isCompleted }) =&gt; (
+  &lt;li className={ isCompleted ? &quot;Todo--is-complete&quot; : &quot;Todo&quot; }&gt;{ label }&lt;/li&gt;
+);
+  
+const Todos: StatelessComponent&lt;ITodoProps&gt; = ({ todos }) =&gt; (
+  &lt;ul&gt;
+    {todos.map(todo =&gt; &lt;Todo { ...todo }/&gt;)}
+  &lt;/ul&gt;
+);
+  
+// ReactComponentとして定義するなら...
+class Todo extends Component&lt;ITodos, void&gt; {
+  render() {
+    const { label, isCompleted } = this.props;
+    return &lt;li className={ isCompleted ? &quot;Todo--is-complete&quot; : &quot;Todo&quot; }&gt;{ label }&lt;/li&gt;
+  }
+}
+  
+class Todos extends Component&lt;ITodos, void&gt; {
+  render() {
+    const { todos } = this.props;
+    return (
+      &lt;ul&gt;
+        {todos.map(todo =&gt; &lt;Todo { ...todo }/&gt;)}
+      &lt;/ul&gt;
+    )
+  }
+}
+</code></pre>
+
+<p>この作例では必要なかったが、React.Componentの第二型引数に渡した型で、this.stateの型も定義できる。
+※個人的にはそもそもコンポーネント内部でStateを操作しないケースの方が多いと感じているが、アプリケーションのサイズに依存するだろう</p>
+
+<p>以上で型安全な子コンポーネントが作成できた。
+これらのコンポーネントの親となるルートコンポーネントでルートStateを購読し、下層のコンポーネントに流してあげることで、アプリケーションのViewとしての定義が完成する。</p>
+
+<pre><code class="language-typescript">export class RootComponent extends Component&lt;void, ITodos&gt; {
+  componentWillMount() {
+    rootModel.subscribe(state =&gt; this.setState(state));
+  }
+  
+  render() {
+    return &lt;Todos { ...this.state } /&gt;;
+  }
+}
+</code></pre>
+
+<h2>まとめ</h2>
+
+<p>以上、TypeScriptでReactコンポーネントを作成することで型安全なコンポーネントを定義する方法を紹介してみた。
+参考になればうれしい。</p>

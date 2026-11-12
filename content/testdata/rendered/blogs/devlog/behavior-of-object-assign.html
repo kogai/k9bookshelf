@@ -1,0 +1,56 @@
+<p>仕様をきちんと理解していれば自明のことですが、ハマりかけたのでメモしておきます。</p>
+
+<h2>この記事の概要</h2>
+
+<p>複数のオブジェクトを合成して新しいオブジェクトを返してくれる便利機能<code>Object.assign</code>。
+現在は<code>harmony</code>オプション付きのNode.jsでも使えないので、<code>object-assign</code>などのモジュールを経由して使っていると思います。</p>
+
+<p>私が勘違いしていたのですが、これは
+&gt;引数として渡したオブジェクトを合成したオブジェクトを返す</p>
+
+<p>という機能ではなく、
+&gt;第二引数以降に渡したオブジェクトを、第一引数に渡したオブジェクトに合成して返す</p>
+
+<p>ものなのですね。</p>
+
+<p>MDNに記載されているリファレンスにも
+&gt;１つ以上のソースオブジェクトの保有する全ての列挙プロパティの値を、ターゲットのオブジェクトへコピーします。
+&gt;戻り値はターゲットオブジェクトになります。</p>
+
+<p>と、明記されています。 <a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Object/assign">Object.assign()</a></p>
+
+<p>コードで表すと</p>
+
+<pre><code class="language-javascript">&quot;use strict&quot;;
+
+var objectAssign = require('object-assign');
+
+var obj = {
+  foo: &quot;bar&quot;
+};
+
+var obj2 = {
+  baz: &quot;foobar&quot;
+};
+
+console.log(obj); // { foo: 'bar' }
+console.log(obj2); // { baz: 'foobar' }
+
+var obj3 = objectAssign(obj, obj2);
+
+console.log(obj3); // { foo: 'bar', baz: 'foobar' }
+console.log(obj); // { foo: 'bar', baz: 'foobar' } objの中身も変わっている
+</code></pre>
+
+<p><code>obj3</code>に返されているのは<code>obj2</code>を合成した<code>obj</code>ですので、当然の挙動です。
+<code>obj</code>の中身を変更したくないのであれば、次のような書き方をする必要があります。</p>
+
+<pre><code class="language-javascript">var target = {};
+var obj4 = objectAssign(target, obj, obj2);
+
+console.log(obj4); // { foo: 'bar', baz: 'foobar' }
+console.log(obj); // { foo: 'bar' } objの中身は変わっていない
+</code></pre>
+
+<p><code>React.js</code>で作っているサイトで、<code>Inline Styles</code>を導入してみて、初めてこの挙動を知った次第です。
+きちんと仕様を理解するのが大事、というお話でした。</p>
