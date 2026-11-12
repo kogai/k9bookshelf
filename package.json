@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@bazel/bazelisk": "1.7.3",
     "@shopify/theme-lint": "3.1.0",
     "logrocket": "1.0.14"
   },
