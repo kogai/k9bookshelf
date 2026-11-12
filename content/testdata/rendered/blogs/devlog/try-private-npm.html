@@ -35,15 +35,15 @@
 <li><p><a href="https://www.npmjs.com">npmjs</a>にサインアップして課金しておきます。
 ※クレジットカード払いのみのようです。</p></li>
 
-<li><p>任意のnpmの<code>package.json</code>の<code>name</code>プロパティに自分のユーザーアカウント名を入れます
-&ldquo;`json
-public
-&ldquo;name&rdquo;: &ldquo;modulename&rdquo;</p></li>
+<li><p>任意のnpmの<code>package.json</code>の<code>name</code>プロパティに自分のユーザーアカウント名を入れます</p></li>
 </ol>
 
-<p>private
-  &ldquo;name&rdquo;: &ldquo;@username/modulename&rdquo;
-&ldquo;`</p>
+<pre><code class="language-json">  public
+  &quot;name&quot;: &quot;modulename&quot;
+
+  private
+  &quot;name&quot;: &quot;@username/modulename&quot;
+</code></pre>
 
 <ol>
 <li><code>npm publish</code>で公開します。</li>

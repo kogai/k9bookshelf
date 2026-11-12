@@ -30,25 +30,26 @@ npm install -g bower
 <p><a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-automatic-deployment-with-git-with-a-vps">解説記事</a></p>
 
 <ol>
-<li><p><code>/var/repo/site.git/</code> を作成して <code>git init —bare</code></p></li>
-
-<li><p><code>/var/repo/site.git/hooks/</code> へ移動</p></li>
-
-<li><p><code>cat &gt; post-receive</code> で<code>post-receive</code>ファイルを作成</p></li>
-
-<li><p><code>vim</code>モードにするなどして以下記入<code>:x</code>で保存</p>
+<li><code>/var/repo/site.git/</code> を作成して <code>git init —bare</code></li>
+<li><code>/var/repo/site.git/hooks/</code> へ移動</li>
+<li><code>cat &gt; post-receive</code> で<code>post-receive</code>ファイルを作成</li>
+<li><code>vim</code>モードにするなどして以下記入<code>:x</code>で保存</li>
+</ol>
 
 <pre><code class="language-bash">#!/bin/sh
 git --work-tree=/var/www/ディレクトリ名 --git-dir=/var/repo/site.git checkout -f
-</code></pre></li>
+</code></pre>
 
+<ol>
 <li><p><code>chmod +x post-receive</code></p></li>
 
-<li><p>ローカルレポジトリにgitパスをつなぎ込み</p>
+<li><p>ローカルレポジトリにgitパスをつなぎ込み</p></li>
+</ol>
 
 <pre><code class="language-shell">git remote add product ssh://root@IP/var/repo/site.git
-</code></pre></li>
+</code></pre>
 
+<ol>
 <li><p><code>SSHキー</code>の登録（新規アカウント作成時のみ）</p></li>
 
 <li><p>プッシュしてデプロイ</p></li>
