@@ -26,6 +26,13 @@ make check/theme  # テーマのビルドと lint（デプロイはしない）
 - `contents/` や Markdown の変換処理を変えたら `make golden` を実行し、`content/testdata/rendered/` の差分が意図どおりか確認してからコミットする。golden の差分は PR で実際にストアへ反映される HTML の変化として見える
 - 変更をコミットする前に `make test` を通す
 
+## Pull Request
+
+- PR はテーマ（目的）ごとに1本にする。例: コンテンツの追加・移動、ライブラリの更新、CI の修正、Content Kit の不具合修正は、それぞれ別の PR にする
+- 作業中に別テーマの問題を見つけたら、今の PR に混ぜず、main から別ブランチを切って別の PR にする
+- ライブラリの更新は、レビューしやすい単位（Go / Node.js / GitHub Actions など）で分ける
+- 依存関係のある PR は、先にマージすべきものを PR の説明に書く
+
 ## 公開レポジトリ
 
 このレポジトリは public。コミット、PR、Issue、コメントに書いたものは誰でも読める。
