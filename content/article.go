@@ -83,7 +83,8 @@ func (a *ArticleResource) Put(article Article) (*Article, error) {
 	return &response, nil
 }
 
-// NOTE: shopify.Blog isn't tagged by `omitempty`, so creating a blog through it sends empty values of every field.
+// NOTE: shopify.Blog isn't tagged by `omitempty`, so creating a blog through it sends empty values of every field
+// and the API rejects it (e.g. `commentable: must be in a valid state`).
 type newBlog struct {
 	Title  string `json:"title"`
 	Handle string `json:"handle"`
