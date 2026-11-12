@@ -1,0 +1,120 @@
+<!-- TODO: 草稿です。公開前にタイトル（【草稿】を外す）、published_at、本文を見直してください。main にマージするとすぐに公開されます -->
+
+<p>こんにちは。<a href="https://k9bookshelf.com/blogs/development/how-and-why-running-bookstore">趣味でマーチャントをやっている</a> ものです。</p>
+
+<p>このサイトのテーマやコンテンツは <a href="https://github.com/kogai/k9bookshelf">GitHub のレポジトリ</a> で管理していて、main ブランチに push すると GitHub Actions がストアにデプロイする仕組みになっています（<a href="https://k9bookshelf.com/blogs/development/to-edit-contents-in-markdown">以前の記事</a> で紹介した Content Kit を使っています）。</p>
+
+<p>ただ、ここ数年は放置気味で、気づけば CI がすべて動かなくなっていました。ちょうど昔の個人ブログ（<a href="https://github.com/kogai/blog">kogai/blog</a>）の記事をこちらに移したいと思っていたので、そのついでにレポジトリの整備まで <a href="https://claude.com/claude-code">Claude Code</a> に任せてみることにしました。</p>
+
+<!-- TODO: 任せてみようと思った動機や、普段の使い方などを追記 -->
+
+<h2>やったこと</h2>
+
+<p>最終的にマージされた PR は次のとおりです。一日でこれだけ進みました。</p>
+
+<ul>
+<li>昔のブログ記事26本の移行（<a href="https://github.com/kogai/k9bookshelf/pull/371">#371</a>、<a href="https://github.com/kogai/k9bookshelf/pull/373">#373</a>、<a href="https://github.com/kogai/k9bookshelf/pull/377">#377</a>）</li>
+<li>Bazel を廃止して素の Go に移行し、CI を復旧（<a href="https://github.com/kogai/k9bookshelf/pull/372">#372</a>）</li>
+<li>依存ライブラリの更新（<a href="https://github.com/kogai/k9bookshelf/pull/374">#374</a>）</li>
+<li>テストのハーネスと Claude Code 用の設定（<a href="https://github.com/kogai/k9bookshelf/pull/375">#375</a>、<a href="https://github.com/kogai/k9bookshelf/pull/376">#376</a>）</li>
+<li>公開レポジトリ向けの secret 混入チェック（<a href="https://github.com/kogai/k9bookshelf/pull/379">#379</a>）</li>
+<li>レポジトリの運用ルールの明文化（<a href="https://github.com/kogai/k9bookshelf/pull/380">#380</a>、<a href="https://github.com/kogai/k9bookshelf/pull/382">#382</a>）</li>
+<li>テーマのダウンロードの見直し（<a href="https://github.com/kogai/k9bookshelf/pull/381">#381</a>）</li>
+</ul>
+
+<p>以下、順に振り返ります。</p>
+
+<h2>昔のブログ記事の移行</h2>
+
+<p>最初の依頼は「kogai/blog のコンテンツを k9bookshelf のブログとして移したい」という一言だけでした。</p>
+
+<p>Claude Code はまず両方のレポジトリを読み、Content Kit の <code>deploy</code> が <strong>既存の記事の本文を更新するだけ</strong> で、ストアにないブログや記事があるとエラーになることに気づきました。そこで記事を移すだけでなく、Markdown の先頭に YAML の front matter（<code>title</code> / <code>published_at</code> / <code>tags</code>）を書けるようにして、ストアにない記事は作成するように Content Kit を拡張してくれました。</p>
+
+<pre><code class="language-md">---
+title: &quot;Article title&quot;
+published_at: &quot;2016-12-22T19:31:47+09:00&quot;
+tags:
+  - TypeScript
+---
+
+本文...
+</code></pre>
+
+<p>旧ブログの記事は日付の書式がまちまち（タイムゾーンなし、日付だけ、<code>+0900</code> など）でしたが、変換スクリプトで RFC3339 に揃え、記事内の旧ブログへのリンクも新しい URL に書き換えてくれました。</p>
+
+<p>ちなみに、最初は <code>devlog</code> という新しいブログに入れていたのですが、途中で「全部 development に入れて」とお願いして移し直しています。</p>
+
+<h3>本番で一度失敗した</h3>
+
+<p>マージ後の初回デプロイは <code>commentable: must be in a valid state</code> というエラーで失敗しました。使っていた go-shopify v2 の <code>Blog</code> 構造体に <code>omitempty</code> が付いておらず、ブログの作成時に空の <code>commentable</code> まで送っていたのが原因です。</p>
+
+<p>失敗したのはブログ作成の時点で、記事は1件も作られていませんでした。Claude Code はログから原因を特定し、title と handle だけを送る修正をすぐ別の PR にしてくれました。</p>
+
+<!-- TODO: このあたりの感想 -->
+
+<h2>動かなくなっていた CI の復旧</h2>
+
+<p>CI は <code>actions/cache@v2</code> や <code>google-github-actions/setup-gcloud@master</code> など、提供が終わったアクションを使っていたため、起動直後に失敗していました。</p>
+
+<p><code>setup-gcloud</code> を使っていた理由は、Bazel のリモートキャッシュ（<a href="https://k9bookshelf.com/blogs/development/use-remote-cache-of-bazel">以前の記事</a> で書いたもの）の認証でした。Claude Code から「Bazel ごとやめて素の <code>go test</code> / <code>go run</code> にした方がシンプルになる」と提案されたので、思い切って切り替えました。Theme Kit は Bazel の <code>http_file</code> で取得していましたが、同じチェックサムで検証しながら <code>make bin/theme</code> で取得する形になっています。</p>
+
+<!-- TODO: Bazel をやめたことへの感想（以前の記事との対比など） -->
+
+<h2>依存ライブラリの更新</h2>
+
+<p>数年分の更新が溜まっていたので、Go・Node.js・GitHub Actions をまとめて更新しました。go-shopify は v2 のままだと依存が解決できなくなっていたため、v4 に上げています。</p>
+
+<p>この時、v4 ではリクエストパスに <code>admin/api/&lt;version&gt;</code> が自動で付くため、自前で組み立てていたパスが二重になるところでした。これは後述のフェイクの Shopify サーバーを使ったテストで見つかっています。</p>
+
+<h2>ハーネスを作る</h2>
+
+<p>「移行が終わったらハーネスを整備した方がいいかもね」と言ったところ、テストと Claude Code 用の設定の両方を作ってくれました。</p>
+
+<h3>テスト</h3>
+
+<ul>
+<li><strong>golden ファイル</strong>: <code>contents/</code> 以下の全 Markdown から生成した HTML をレポジトリに保存し、変換結果を比較します。Markdown ライブラリを更新した時に、ストアに反映される HTML の差分が PR 上で見えるようになりました</li>
+<li><strong>コンテンツの検証</strong>: 置き場所、拡張子、handle、front matter の書式をチェックします</li>
+<li><strong>フェイクの Shopify Admin API</strong>: <code>httptest</code> でフェイクのサーバーを立て、deploy と download が送るリクエストを検証します</li>
+</ul>
+
+<p>download のテストを <code>go test -race</code> で動かしたところ、goroutine が共有の <code>err</code> に書き込んでいてエラーが握りつぶされるバグが見つかりました。昔の自分のコードです。</p>
+
+<h3>Claude Code 用の設定</h3>
+
+<ul>
+<li><code>CLAUDE.md</code>: レポジトリの構成、確認用のコマンド、「main へのマージは本番への反映」といったルール</li>
+<li><code>.claude/settings.json</code>: テスト系のコマンドは許可し、デプロイ系のコマンドは拒否</li>
+<li>SessionStart フック: クラウドのセッション開始時に Go と Node.js の依存をインストール</li>
+<li>PreToolUse フック: <code>git commit</code> の前に secret らしい文字列が含まれていないかチェック</li>
+</ul>
+
+<h2>運用ルールも育てていく</h2>
+
+<p>作業の途中で、気になったことをその都度伝えて <code>CLAUDE.md</code> に追記してもらいました。</p>
+
+<ul>
+<li>「公開レポジトリだからやばいことコミットしないようにして」→ secret 混入チェックと、公開レポジトリとしてのルール</li>
+<li>「PR はテーマごとに作ろう」→ 1つの PR には1つの目的、という分け方のルール</li>
+<li>「Copilot のレビューを入るようにしたから、サブエージェントのレビューと Copilot のレビューのどちらにも応答してね」→ レビューの進め方のルール</li>
+</ul>
+
+<p>レビューのルール自体もサブエージェントにレビューさせたところ、「『CI が通ったらマージする』だと、自分でマージしてよいと読める」という指摘があり、「マージはユーザーの指示があった時だけ」と明記されました。レビューの仕組みが自分のルールを直していくのは、なかなか面白い光景でした。</p>
+
+<!-- TODO: サブエージェントと Copilot のレビューを両方入れてみた感想 -->
+
+<h2>ハマったところ</h2>
+
+<p>一日の中で、思わぬところで何度かつまずきました。</p>
+
+<ul>
+<li><strong>API のレート制限</strong>: PR を開くたびにテーマをダウンロードするワークフローが、本番デプロイと Shopify Admin API のレート制限（2 calls per second）を取り合って、無関係な PR のチェックを落としていました。週次の定期実行と手動実行だけにしています</li>
+<li><strong>Rulesets と force-push</strong>: テーマ更新の PR を作る create-pull-request はブランチを force-push で更新しますが、レポジトリの Rulesets で force-push を禁止していたため拒否されていました。該当ブランチを対象から外して解決しました</li>
+<li><strong>独立にマージした PR の噛み合わせ</strong>: 依存更新とハーネスの PR を別々にマージしたら、golden ファイルが新しい Markdown ライブラリの出力と合わずに main のテストが落ちました。ただ、差分は事前に手で確認していた4記事だけで、ハーネスがちゃんと仕事をしていることの確認にもなりました</li>
+</ul>
+
+<h2>まとめ</h2>
+
+<!-- TODO: まとめを書く。例: 任せられたこと / 人間が判断したこと（マージの可否、ブログの置き場所、Rulesets の変更、devlog ブログの削除など）/ 今後やりたいこと -->
+
+<p>この記事の草稿も Claude Code に書いてもらい、人間が手を入れて公開しています。</p>
