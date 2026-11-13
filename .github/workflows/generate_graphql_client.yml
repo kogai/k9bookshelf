@@ -1,0 +1,43 @@
+name: generate graphql client
+
+# NOTE: Regenerates the GraphQL Admin API client (gqlgenc/client) from the store's schema,
+# which needs the Admin API token, and pushes the result to the branch the workflow runs on.
+# Run it from the Actions tab, choosing the branch in "Use workflow from".
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: generate-graphql-client-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions: {}
+
+jobs:
+  generate:
+    # NOTE: Never push generated code to main directly; review it in a pull request.
+    if: github.ref_name != 'main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+      - name: Generate client
+        run: make gqlgenc
+        env:
+          GRAPHQL_ADMIN_API_SECRET: ${{ secrets.GRAPHQL_ADMIN_API_SECRET }}
+      - name: Commit and push
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          if git diff --quiet -- gqlgenc/client; then
+            echo "The generated client is up to date."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gqlgenc/client
+          git commit -m "Regenerate GraphQL client"
+          git push origin "HEAD:refs/heads/${BRANCH}"
