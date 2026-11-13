@@ -3,6 +3,9 @@ name: generate graphql client
 # NOTE: Regenerates the GraphQL Admin API client (gqlgenc/client) from the store's schema,
 # which needs the Admin API token, and pushes the result to the branch the workflow runs on.
 # Run it from the Actions tab, choosing the branch in "Use workflow from".
+#
+# A push by GITHUB_TOKEN doesn't trigger other workflows, so CI and Copilot review don't run
+# on the pushed commit. Push a follow-up commit (e.g. adapting callers of the client) to run them.
 on:
   workflow_dispatch:
 
@@ -14,13 +17,16 @@ permissions: {}
 
 jobs:
   generate:
-    # NOTE: Never push generated code to main directly; review it in a pull request.
-    if: github.ref_name != 'main'
+    # NOTE: Run only on branches other than main; review the generated code in a pull request.
+    if: github.ref_type == 'branch' && github.ref != 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
       - uses: actions/checkout@v7
+        with:
+          # NOTE: Don't leave the write token in .git/config while the generator runs.
+          persist-credentials: false
       - uses: actions/setup-go@v7
         with:
           go-version-file: go.mod
@@ -28,16 +34,25 @@ jobs:
         run: make gqlgenc
         env:
           GRAPHQL_ADMIN_API_SECRET: ${{ secrets.GRAPHQL_ADMIN_API_SECRET }}
+      - name: Check the build
+        # NOTE: Only warns. The hand-written gqlgenc/client/gql.go and other callers may need to be
+        # adapted to a new client API in a follow-up commit, and CI on the pull request is the gate.
+        run: |
+          if ! go build ./... ; then
+            echo "::warning::The build fails with the regenerated client. Adapt the callers in a follow-up commit."
+          fi
       - name: Commit and push
         env:
           BRANCH: ${{ github.ref_name }}
+          GH_TOKEN: ${{ github.token }}
         run: |
-          if git diff --quiet -- gqlgenc/client; then
+          # NOTE: Stage first, since `git diff` doesn't see untracked (newly generated) files.
+          git add -A gqlgenc/client
+          if git diff --cached --quiet -- gqlgenc/client; then
             echo "The generated client is up to date."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add gqlgenc/client
           git commit -m "Regenerate GraphQL client"
-          git push origin "HEAD:refs/heads/${BRANCH}"
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:refs/heads/${BRANCH}"
