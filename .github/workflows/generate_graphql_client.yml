@@ -1,0 +1,83 @@
+name: generate graphql client
+
+# NOTE: Regenerates the GraphQL Admin API client (gqlgenc/client) from the store's schema,
+# which needs the Admin API token, and pushes the result to the branch the workflow runs on.
+# Run it from the Actions tab, choosing the branch in "Use workflow from".
+#
+# A push by GITHUB_TOKEN doesn't trigger other workflows, so CI and Copilot review don't run
+# on the pushed commit. Push a follow-up commit (e.g. adapting callers of the client) to run them.
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: generate-graphql-client-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions: {}
+
+jobs:
+  generate:
+    # NOTE: Run only on branches other than main; review the generated code in a pull request.
+    if: github.ref_type == 'branch' && github.ref != 'refs/heads/main'
+    runs-on: ubuntu-latest
+    # NOTE: The credentials live in this environment, not in repository secrets, so that only this job
+    # can read them and each run waits for approval by a required reviewer. They belong to a dedicated
+    # read-only app, separate from the one used for deploys.
+    environment: graphql-codegen
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # NOTE: Don't leave the write token in .git/config while the generator runs.
+          persist-credentials: false
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+      - name: Generate client
+        env:
+          SHOP: k9books.myshopify.com
+          # NOTE: Credentials of a Dev Dashboard app installed on the store with only read_products.
+          CLIENT_ID: ${{ secrets.SHOPIFY_CODEGEN_CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.SHOPIFY_CODEGEN_CLIENT_SECRET }}
+        # NOTE: Get a token valid for 24 hours by the client credentials grant and use it only in this step.
+        run: |
+          if [ -z "${CLIENT_ID}" ] || [ -z "${CLIENT_SECRET}" ]; then
+            echo "::error::SHOPIFY_CODEGEN_CLIENT_ID / SHOPIFY_CODEGEN_CLIENT_SECRET are not set in the graphql-codegen environment."
+            exit 1
+          fi
+          # NOTE: Pass the secret through stdin so that it doesn't appear in the process list.
+          token=$(printf '%s' "${CLIENT_SECRET}" | curl -sS --fail --max-time 30 --retry 2 --retry-connrefused \
+            "https://${SHOP}/admin/oauth/access_token" \
+            --data-urlencode grant_type=client_credentials \
+            --data-urlencode "client_id=${CLIENT_ID}" \
+            --data-urlencode client_secret@- | jq -r '.access_token // empty')
+          if [ -z "${token}" ]; then
+            echo "::error::Failed to get an Admin API access token."
+            exit 1
+          fi
+          echo "::add-mask::${token}"
+          # NOTE: .gqlgenc.yml reads the token from GRAPHQL_ADMIN_API_SECRET.
+          GRAPHQL_ADMIN_API_SECRET="${token}" make gqlgenc
+      - name: Check the build
+        # NOTE: Only warns. The hand-written gqlgenc/client/gql.go and other callers may need to be
+        # adapted to a new client API in a follow-up commit, and CI on the pull request is the gate.
+        run: |
+          if ! go build ./... ; then
+            echo "::warning::The build fails with the regenerated client. Adapt the callers in a follow-up commit."
+          fi
+      - name: Commit and push
+        env:
+          BRANCH: ${{ github.ref_name }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # NOTE: Stage first, since `git diff` doesn't see untracked (newly generated) files.
+          git add -A gqlgenc/client
+          if git diff --cached --quiet -- gqlgenc/client; then
+            echo "The generated client is up to date."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Regenerate GraphQL client"
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:refs/heads/${BRANCH}"

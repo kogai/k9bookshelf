@@ -13,7 +13,9 @@ Shopify ストア [k9bookshelf](https://k9bookshelf.com) のテーマ、コン�
   - `content/testdata/rendered/`: `contents/` から生成した HTML の golden ファイル
 - `theme/`: Shopify テーマ（Liquid）。`storefront/` の TypeScript を webpack で `theme/assets/app.min.js` にビルドする
 - `onix/`: ONIX ファイルから商品をインポートするツール
-- `gqlgenc/`: GraphQL Admin API クライアントの生成。`gqlgenc/client/` は生成コードなので手で編集しない
+- `gqlgenc/`: GraphQL Admin API クライアント。`gqlgenc/client/client.go` と `model.go` は生成コードなので手で編集しない（`gql.go` は手書き）
+  - 生成にはストアのスキーマ（Admin API の token）が必要なため、手元ではなく GitHub Actions の `generate graphql client` を作業ブランチを指定して手動実行する。生成結果はそのブランチにコミットされる。認証には、`read_products` だけを持つ Dev Dashboard のアプリ（デプロイ用とは別）の Client ID / Client secret を GitHub Environment `graphql-codegen` の `SHOPIFY_CODEGEN_CLIENT_ID` / `SHOPIFY_CODEGEN_CLIENT_SECRET` に置き、実行のたびに client credentials grant で24時間有効の token を取得する。実行にはユーザーの承認が要る
+  - そのコミットでは CI と Copilot のレビューが走らないので、呼び出し側の修正など後続のコミットを push して確認する
 
 ## 開発
 
