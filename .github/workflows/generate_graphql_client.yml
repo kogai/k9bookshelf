@@ -20,9 +20,9 @@ jobs:
     # NOTE: Run only on branches other than main; review the generated code in a pull request.
     if: github.ref_type == 'branch' && github.ref != 'refs/heads/main'
     runs-on: ubuntu-latest
-    # NOTE: The token lives in this environment, not in repository secrets, so that only this job can
-    # read it and each run waits for approval by a required reviewer. It is a dedicated read-only
-    # Admin API token, separate from the one used for deploys.
+    # NOTE: The credentials live in this environment, not in repository secrets, so that only this job
+    # can read them and each run waits for approval by a required reviewer. They belong to a dedicated
+    # read-only app, separate from the one used for deploys.
     environment: graphql-codegen
     permissions:
       contents: write
@@ -35,10 +35,24 @@ jobs:
         with:
           go-version-file: go.mod
       - name: Generate client
-        run: make gqlgenc
         env:
+          SHOP: k9books.myshopify.com
+          # NOTE: Credentials of a Dev Dashboard app installed on the store with only read_products.
+          CLIENT_ID: ${{ secrets.SHOPIFY_CODEGEN_CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.SHOPIFY_CODEGEN_CLIENT_SECRET }}
+        # NOTE: Get a token valid for 24 hours by the client credentials grant and use it only in this step.
+        run: |
+          token=$(curl -sS --fail -X POST "https://${SHOP}/admin/oauth/access_token" \
+            --data-urlencode grant_type=client_credentials \
+            --data-urlencode "client_id=${CLIENT_ID}" \
+            --data-urlencode "client_secret=${CLIENT_SECRET}" | jq -r '.access_token // empty')
+          if [ -z "${token}" ]; then
+            echo "::error::Failed to get an Admin API access token."
+            exit 1
+          fi
+          echo "::add-mask::${token}"
           # NOTE: .gqlgenc.yml reads the token from GRAPHQL_ADMIN_API_SECRET.
-          GRAPHQL_ADMIN_API_SECRET: ${{ secrets.GRAPHQL_SCHEMA_TOKEN }}
+          GRAPHQL_ADMIN_API_SECRET="${token}" make gqlgenc
       - name: Check the build
         # NOTE: Only warns. The hand-written gqlgenc/client/gql.go and other callers may need to be
         # adapted to a new client API in a follow-up commit, and CI on the pull request is the gate.
